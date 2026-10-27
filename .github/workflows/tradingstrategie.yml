@@ -1,5 +1,5 @@
 # Draait TradingStrategie in de cloud (GitHub Actions), elke 5 minuten tijdens de sessies.
-# Meldingen gaan naar je telefoon via ntfy. Zet het ntfy-onderwerp als geheim NTFY_TOPIC
+# Meldingen gaan naar je telefoon via ntfy. Zet het ntfy-onderwerp als geheim of variabele NTFY_TOPIC
 # (Settings > Secrets and variables > Actions > New repository secret).
 name: TradingStrategie
 
@@ -55,7 +55,7 @@ jobs:
       - name: Setups checken
         if: steps.window.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
         env:
-          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || vars.NTFY_TOPIC }}
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             python tradingstrategie.py --test-notify
