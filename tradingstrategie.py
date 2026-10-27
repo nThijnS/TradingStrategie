@@ -44,7 +44,8 @@ CFG = {
     # Markten die gecheckt worden; "cfg" overschrijft per markt de instellingen hieronder.
     # EURUSD-instellingen komen uit backtest_multi.py (NY AM, basis-displacement, TP op de DOL).
     "markets": [
-        dict(name="NQ", symbol="NQ=F", smt="ES=F", dec=2, cfg={}),
+        # alt: de prijs bij je broker/prop firm (US100 volgt de Nasdaq-100 index, niet de future)
+        dict(name="NQ", symbol="NQ=F", smt="ES=F", dec=2, cfg={}, alt=dict(symbol="^NDX", label="US100")),
         dict(name="EURUSD", symbol="EURUSD=X", smt="GBPUSD=X", dec=5,
              cfg=dict(tick=0.00002, disp_pct=0.6, disp_atr=1.2, tp_mode="DOL")),
     ],
@@ -463,6 +464,31 @@ def analyse_market(m, period="30d"):
     return df, setups, entries
 
 
+def alt_offset(m, df):
+    """Verschil future - indexprijs op de laatste gezamenlijke candle (None als er geen alt is)."""
+    if not m.get("alt"):
+        return None
+    try:
+        alt = fetch(m["alt"]["symbol"], "5d")
+    except Exception as ex:
+        print(f"{m['alt']['label']}: geen data ({ex})", flush=True)
+        return None
+    common = df.index.intersection(alt.index)
+    if not len(common):
+        return None
+    return float(df.loc[common[-1], "Close"] - alt.loc[common[-1], "Close"])
+
+
+def levels(s, m, off, keys=("entry", "stop", "tp")):
+    """Prijzen voor in de melding: eerst in US100 (als bekend), daarna de originele."""
+    names = {"entry": "Entry", "stop": "Stop", "tp": "TP"}
+    own = " | ".join(f"{names[k]} {px(s, s[k])}" for k in keys)
+    if off is None:
+        return own
+    alt = " | ".join(f"{names[k]} {s[k] - off:.{s.get('dec', 2)}f}" for k in keys)
+    return f"{m['alt']['label']}: {alt}\n({m['name']}: {own})"
+
+
 def scan():
     for m in CFG["markets"]:
         print(f"\n===== {m['name']} ({m['symbol']}) =====")
@@ -524,6 +550,8 @@ def check(sent):
             continue
         setups += m_setups
         last.append(f"{m['name']} {df.index[-1]:%H:%M}")
+        new = [s for s in m_setups if s["time"] >= recent] or [e["setup"] for e in entries if e["time"] >= recent]
+        off = alt_offset(m, df) if new else None   # alleen ophalen als er iets te melden is
         for s in m_setups:
             # NQ houdt de oude sleutel zodat eerder verstuurde meldingen niet opnieuw komen
             key = f"setup|{s['time'].isoformat()}|{s['side']}" + ("" if m["name"] == "NQ" else f"|{m['name']}")
@@ -531,7 +559,7 @@ def check(sent):
                 extra = f" | tegen {CFG['htf_b']}-bias" if against_bias(s) else ""
                 title = (f"{m['name']} {s['side']} {s['grade']} ({s['score']}/10)" if s["good"]
                          else f"LAGE KANS: {m['name']} {s['side']} ({s['score']}/10)")
-                notify(title, f"Entry {px(s, s['entry'])} | Stop {px(s, s['stop'])} | TP {px(s, s['tp'])} ({s['rr']:.1f}R){extra}",
+                notify(title, f"{levels(s, m, off)} ({s['rr']:.1f}R){extra}",
                        sound="Glass" if s["good"] else "Pop")
                 log(f"{s['time']:%Y-%m-%d %H:%M} {setup_text(s)}\n    {checklist(s)}")
                 sent.add(key)
@@ -540,7 +568,7 @@ def check(sent):
             if e["time"] >= recent and key not in sent:
                 st = e["setup"]
                 pre = "" if st["good"] else "LAGE KANS: "
-                notify(f"{pre}{m['name']} {st['side']}: prijs in entry-zone", f"Entry {px(st, st['entry'])} | Stop {px(st, st['stop'])}", sound="Hero")
+                notify(f"{pre}{m['name']} {st['side']}: prijs in entry-zone", levels(st, m, off, ("entry", "stop")), sound="Hero")
                 log(f"{e['time']:%Y-%m-%d %H:%M} {m['name']} {st['side']} prijs in entry-zone ({px(st, st['entry'])})")
                 sent.add(key)
     # Einde van de dag zonder setup: dat ook laten weten
