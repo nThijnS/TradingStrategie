@@ -7,6 +7,7 @@ Zelfde logica als tjr_alerts.pine:
           Silver Bullet, sterke displacement, IFVG, draw on liquidity >= 2R
 "Kans" = setup in NY AM (backtest 2025-2026: alleen die sessie was in beide jaren winstgevend).
 London en NY PM worden nog wel gemeld, maar als "lage kans". TP = vaste 1R (zie backtest.py).
+Markten: NQ (TP 1R) en EURUSD (TP op de DOL), zie "markets" en backtest_multi.py.
 Sessies: London 02:00-05:00, NY AM 09:30-11:30 en NY PM 13:30-15:30 (NY-tijd).
 Alleen meldingen, er worden geen orders geplaatst.
 
@@ -40,6 +41,13 @@ LOG_FILE = HERE / "setups.log"
 CFG = {
     "symbol": "NQ=F",          # Nasdaq futures (Yahoo); voor ES: "ES=F"
     "smt_symbol": "ES=F",      # gecorreleerd symbool voor SMT
+    # Markten die gecheckt worden; "cfg" overschrijft per markt de instellingen hieronder.
+    # EURUSD-instellingen komen uit backtest_multi.py (NY AM, basis-displacement, TP op de DOL).
+    "markets": [
+        dict(name="NQ", symbol="NQ=F", smt="ES=F", dec=2, cfg={}),
+        dict(name="EURUSD", symbol="EURUSD=X", smt="GBPUSD=X", dec=5,
+             cfg=dict(tick=0.00002, disp_pct=0.6, disp_atr=1.2, tp_mode="DOL")),
+    ],
     "trade_sess": [("02:00", "05:00"), ("09:30", "11:30"), ("13:30", "15:30")],   # London, NY AM, NY PM
     "sb_sess": [("03:00", "04:00"), ("10:00", "11:00"), ("14:00", "15:00")],      # Silver Bullet per sessie
     "asia_sess": ("20:00", "23:59"),
@@ -58,6 +66,7 @@ CFG = {
     "entry_win": 12,
     "min_rr": 2.0,             # alleen voor het DOL-vinkje in de score
     "tp_r": 1.0,               # winst nemen op 1R (backtest: beter dan de DOL als doel)
+    "tp_mode": "R",            # "R" = vaste tp_r, "DOL" = op de liquiditeit (valt terug op tp_r)
     "kans_sess": ["NY AM"],    # alleen setups in deze sessie(s) zijn "kans"
     "buf_ticks": 4,
     "tick": 0.25,
@@ -317,15 +326,17 @@ def analyse(df, es, cfg=CFG):
                         if up:
                             dol = nearest(entry + risk, [pdh[i], asiaH, londH, bRH], True)
                             dol_rr = (dol - entry) / risk if dol is not None else 0
-                            tp = entry + cfg["tp_r"] * risk
+                            tp, rr = entry + cfg["tp_r"] * risk, cfg["tp_r"]
                             span = s["leg"] - s["ext"]
                             retr = (s["leg"] - entry) / span if span > 0 else 0
                         else:
                             dol = nearest(entry - risk, [pdl[i], asiaL, londL, bRL], False)
                             dol_rr = (entry - dol) / risk if dol is not None else 0
-                            tp = entry - cfg["tp_r"] * risk
+                            tp, rr = entry - cfg["tp_r"] * risk, cfg["tp_r"]
                             span = s["ext"] - s["leg"]
                             retr = (entry - s["leg"]) / span if span > 0 else 0
+                        if cfg["tp_mode"] == "DOL" and dol is not None:
+                            tp, rr = dol, dol_rr
                         eq = None if pd.isna(bRH) or pd.isna(bRL) else (bRH + bRL) / 2
                         sign = 1 if up else -1
                         checks = {
@@ -346,7 +357,7 @@ def analyse(df, es, cfg=CFG):
                         good = score >= cfg["min_score"] and sess_name(t) in cfg["kans_sess"]
                         setups_today += 1
                         setup = dict(time=t, side=d.upper(), grade=grade, score=score, good=good,
-                                     entry=entry, stop=stop, tp=tp, rr=cfg["tp_r"], dol=dol, sweep=s["sweep_name"],
+                                     entry=entry, stop=stop, tp=tp, rr=rr, dol=dol, sweep=s["sweep_name"],
                                      bias_a=aBias, bias_b=bBias, checks=checks, entry_hit=None)
                         setups.append(setup)
                         s.update(state=3, sig=i, setup=setup)
@@ -386,9 +397,13 @@ def against_bias(s):
     return s["bias_b"] != (1 if s["side"] == "LONG" else -1)
 
 
+def px(s, v):
+    return f"{v:.{s.get('dec', 2)}f}"
+
+
 def setup_text(s):
-    return (f"[{sess_name(s['time'])}] {s['side']} {s['grade']} ({s['score']}/10, {kans(s)}{', tegen ' + CFG['htf_b'] + '-bias' if against_bias(s) else ''}) | entry {s['entry']:.2f} | stop {s['stop']:.2f} | "
-            f"TP {s['tp']:.2f} ({s['rr']:.1f}R) | sweep {s['sweep']} | "
+    return (f"{s.get('mkt', '')} [{sess_name(s['time'])}] {s['side']} {s['grade']} ({s['score']}/10, {kans(s)}{', tegen ' + CFG['htf_b'] + '-bias' if against_bias(s) else ''}) | entry {px(s, s['entry'])} | stop {px(s, s['stop'])} | "
+            f"TP {px(s, s['tp'])} ({s['rr']:.1f}R) | sweep {s['sweep']} | "
             f"{CFG['htf_b']} {bias_txt(s['bias_b'])}, {CFG['htf_a']} {bias_txt(s['bias_a'])}")
 
 
@@ -439,9 +454,23 @@ def outcome(df, s):
     return "loopt nog", 0.0
 
 
+def analyse_market(m, period="30d"):
+    """Data ophalen en analyseren voor één markt uit CFG["markets"]; setups krijgen de marktnaam mee."""
+    df, es = fetch(m["symbol"], period), fetch(m["smt"], period)
+    setups, entries = analyse(df, es, dict(CFG, **m["cfg"]))
+    for s in setups:
+        s.update(mkt=m["name"], dec=m["dec"])
+    return df, setups, entries
+
+
 def scan():
-    df, es = fetch(CFG["symbol"]), fetch(CFG["smt_symbol"])
-    setups, _ = analyse(df, es)
+    for m in CFG["markets"]:
+        print(f"\n===== {m['name']} ({m['symbol']}) =====")
+        scan_market(m)
+
+
+def scan_market(m):
+    df, setups, _ = analyse_market(m)
     trade_days = sorted({t.date() for t in df.index if t.weekday() < 5 and in_sess(t, CFG["trade_sess"])})
     weeks = max(len(trade_days) / 5, 1)
     good = [s for s in setups if s["good"]]
@@ -484,28 +513,36 @@ def scan():
 
 def check(sent):
     """Eén keer data ophalen, analyseren en nieuwe meldingen versturen."""
-    df, es = fetch(CFG["symbol"], "30d"), fetch(CFG["smt_symbol"], "30d")
-    setups, entries = analyse(df, es)
     now = datetime.now(NY)
     recent = now - timedelta(minutes=45)
-    for s in setups:
-        key = f"setup|{s['time'].isoformat()}|{s['side']}"
-        if s["time"] >= recent and key not in sent:
-            extra = f" | tegen {CFG['htf_b']}-bias" if against_bias(s) else ""
-            title = (f"TJR {s['side']} {s['grade']} ({s['score']}/10)" if s["good"]
-                     else f"LAGE KANS: TJR {s['side']} ({s['score']}/10)")
-            notify(title, f"Entry {s['entry']:.2f} | Stop {s['stop']:.2f} | TP {s['tp']:.2f} ({s['rr']:.1f}R){extra}",
-                   sound="Glass" if s["good"] else "Pop")
-            log(f"{s['time']:%Y-%m-%d %H:%M} {setup_text(s)}\n    {checklist(s)}")
-            sent.add(key)
-    for e in entries:
-        key = f"entry|{e['time'].isoformat()}|{e['setup']['side']}"
-        if e["time"] >= recent and key not in sent:
-            st = e["setup"]
-            pre = "" if st["good"] else "LAGE KANS: "
-            notify(f"{pre}TJR {st['side']}: prijs in entry-zone", f"Entry {st['entry']:.2f} | Stop {st['stop']:.2f}", sound="Hero")
-            log(f"{e['time']:%Y-%m-%d %H:%M} {st['side']} prijs in entry-zone ({st['entry']:.2f})")
-            sent.add(key)
+    setups, last = [], []
+    for m in CFG["markets"]:
+        try:
+            df, m_setups, entries = analyse_market(m)
+        except Exception as ex:  # één markt zonder data mag de andere niet blokkeren
+            print(f"{m['name']}: fout: {ex}", flush=True)
+            continue
+        setups += m_setups
+        last.append(f"{m['name']} {df.index[-1]:%H:%M}")
+        for s in m_setups:
+            # NQ houdt de oude sleutel zodat eerder verstuurde meldingen niet opnieuw komen
+            key = f"setup|{s['time'].isoformat()}|{s['side']}" + ("" if m["name"] == "NQ" else f"|{m['name']}")
+            if s["time"] >= recent and key not in sent:
+                extra = f" | tegen {CFG['htf_b']}-bias" if against_bias(s) else ""
+                title = (f"{m['name']} {s['side']} {s['grade']} ({s['score']}/10)" if s["good"]
+                         else f"LAGE KANS: {m['name']} {s['side']} ({s['score']}/10)")
+                notify(title, f"Entry {px(s, s['entry'])} | Stop {px(s, s['stop'])} | TP {px(s, s['tp'])} ({s['rr']:.1f}R){extra}",
+                       sound="Glass" if s["good"] else "Pop")
+                log(f"{s['time']:%Y-%m-%d %H:%M} {setup_text(s)}\n    {checklist(s)}")
+                sent.add(key)
+        for e in entries:
+            key = f"entry|{e['time'].isoformat()}|{e['setup']['side']}" + ("" if m["name"] == "NQ" else f"|{m['name']}")
+            if e["time"] >= recent and key not in sent:
+                st = e["setup"]
+                pre = "" if st["good"] else "LAGE KANS: "
+                notify(f"{pre}{m['name']} {st['side']}: prijs in entry-zone", f"Entry {px(st, st['entry'])} | Stop {px(st, st['stop'])}", sound="Hero")
+                log(f"{e['time']:%Y-%m-%d %H:%M} {m['name']} {st['side']} prijs in entry-zone ({px(st, st['entry'])})")
+                sent.add(key)
     # Einde van de dag zonder setup: dat ook laten weten
     today = [s for s in setups if s["time"].date() == now.date()]
     key = f"summary|{now.date().isoformat()}"
@@ -513,7 +550,7 @@ def check(sent):
         notify("TradingStrategie", "Vandaag geen TJR-setup. Geen trade is ook een goede trade.", sound="Pop")
         sent.add(key)
     STATE_FILE.write_text(json.dumps(sorted(sent)))
-    print(f"{now:%H:%M:%S} NY | laatste candle {df.index[-1]:%H:%M} | "
+    print(f"{now:%H:%M:%S} NY | laatste candle {', '.join(last)} | "
           f"vandaag {sum(s['good'] for s in today)} kans, {sum(not s['good'] for s in today)} lage kans", flush=True)
 
 
@@ -529,7 +566,7 @@ def live(interval=60):
         return datetime.now(NY).replace(hour=h, minute=m).astimezone(nl).strftime("%H:%M")
     windows = " en ".join(f"{nl_time(a)}-{nl_time(b)}" for a, b in CFG["trade_sess"])
     print(f"TradingStrategie draait, zoekt setups van {windows} Nederlandse tijd | stoppen: Ctrl+C")
-    notify("TradingStrategie", "Gestart, ik meld TJR-setups op " + CFG["symbol"])
+    notify("TradingStrategie", "Gestart, ik meld TJR-setups op " + " en ".join(m["name"] for m in CFG["markets"]))
     while True:
         try:
             check(sent)

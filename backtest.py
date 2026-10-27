@@ -47,15 +47,19 @@ def to5(m1):
 
 
 # ------------- Uitkomst per trade (op 1-minuut candles) -------------
-def simulate(m1, s, target, be_at=None):
+def simulate(m1, s, target, be_at=None, cost=COST_PTS, max_hours=None):
     """Geeft (R, minuten in trade) of None als de entry niet gevuld werd.
-    target: getal = vaste R, "DOL" = het TP van de setup. be_at: stop naar entry na zoveel R."""
+    target: getal = vaste R, "DOL" = de liquiditeit (s["dol"]) of anders het TP van de setup.
+    be_at: stop naar entry na zoveel R. max_hours: trade sluiten na zoveel uur."""
     if s["entry_hit"] is None:
         return None
     long = s["side"] == "LONG"
     e, stop = s["entry"], s["stop"]
     risk = abs(e - stop)
-    tp = s["tp"] if target == "DOL" else (e + target * risk if long else e - target * risk)
+    if target == "DOL":
+        tp = s.get("dol") or s["tp"]
+    else:
+        tp = e + target * risk if long else e - target * risk
     day_end = s["entry_hit"].normalize() + pd.Timedelta(hours=16)
     bars = m1.loc[s["entry_hit"]:day_end]
     H, L, C, T = bars["High"].values, bars["Low"].values, bars["Close"].values, bars.index
@@ -67,13 +71,16 @@ def simulate(m1, s, target, be_at=None):
                 filled, t0 = True, T[k]
             else:
                 continue
+        if max_hours is not None and (T[k] - t0).total_seconds() >= max_hours * 3600:
+            r = ((C[k] - e) if long else (e - C[k])) / risk
+            return r - cost / risk, (T[k] - t0).total_seconds() / 60
         # stop eerst (conservatief als stop en TP in dezelfde minuut vallen)
         if (L[k] <= cur_stop) if long else (H[k] >= cur_stop):
             r = (cur_stop - e) / risk if long else (e - cur_stop) / risk
-            return r - COST_PTS / risk, (T[k] - t0).total_seconds() / 60
+            return r - cost / risk, (T[k] - t0).total_seconds() / 60
         if (H[k] >= tp) if long else (L[k] <= tp):
             r = abs(tp - e) / risk
-            return r - COST_PTS / risk, (T[k] - t0).total_seconds() / 60
+            return r - cost / risk, (T[k] - t0).total_seconds() / 60
         if be_at is not None:
             fav = (H[k] - e) / risk if long else (e - L[k]) / risk
             if fav >= be_at:
@@ -81,7 +88,7 @@ def simulate(m1, s, target, be_at=None):
     if not filled:
         return None
     r = ((C[-1] - e) if long else (e - C[-1])) / risk
-    return r - COST_PTS / risk, (T[-1] - t0).total_seconds() / 60
+    return r - cost / risk, (T[-1] - t0).total_seconds() / 60
 
 
 # ------------- Statistiek -------------
