@@ -5,7 +5,8 @@ Zelfde logica als tjr_alerts.pine:
   kern:   sweep van liquiditeit -> MSS met displacement -> FVG, in het NY-window
   score:  4H bias, 1H bias, premium/discount, OTE, HTF FVG, SMT met ES,
           Silver Bullet, sterke displacement, IFVG, draw on liquidity >= 2R
-Score >= min_score = "kans", daaronder (of tegen de 1H-bias in) = "lage kans".
+"Kans" = setup in NY AM (backtest 2025-2026: alleen die sessie was in beide jaren winstgevend).
+London en NY PM worden nog wel gemeld, maar als "lage kans". TP = vaste 1R (zie backtest.py).
 Sessies: London 02:00-05:00, NY AM 09:30-11:30 en NY PM 13:30-15:30 (NY-tijd).
 Alleen meldingen, er worden geen orders geplaatst.
 
@@ -48,18 +49,20 @@ CFG = {
     "htf_piv": 3,
     "need_bias_b": False,      # False: tegen de bias mag, maar telt als lagere kans
     "piv_len": 3,
-    "disp_pct": 0.6,
-    "disp_atr": 1.2,
+    "disp_pct": 0.7,           # strenger dan 0.6/1.2: beter in de backtest
+    "disp_atr": 1.5,
     "mss_window": 20,
     "fvg_window": 3,
     "smt_len": 20,
     "entry_mode": "50%",       # of "Rand"
     "entry_win": 12,
-    "min_rr": 2.0,
+    "min_rr": 2.0,             # alleen voor het DOL-vinkje in de score
+    "tp_r": 1.0,               # winst nemen op 1R (backtest: beter dan de DOL als doel)
+    "kans_sess": ["NY AM"],    # alleen setups in deze sessie(s) zijn "kans"
     "buf_ticks": 4,
     "tick": 0.25,
-    "max_per_day": 4,          # alle setups samen, zodat je niet wordt overspoeld
-    "min_score": 4,            # vanaf deze score "kans", daaronder "lage kans"
+    "max_per_day": 6,          # alle setups samen, zodat je niet wordt overspoeld
+    "min_score": 0,            # extra eis voor "kans" (backtest: de score hielp niet, dus uit)
     "day_end": "15:30",        # na dit tijdstip: melding als er vandaag niks was
     # Pushmelding op je telefoon via de gratis app "ntfy". Het onderwerp staat in ntfy_topic.txt
     # (niet in de code, zodat het geheim blijft). Bestand weg = geen telefoonmeldingen.
@@ -313,14 +316,14 @@ def analyse(df, es, cfg=CFG):
                     if risk > 0:
                         if up:
                             dol = nearest(entry + risk, [pdh[i], asiaH, londH, bRH], True)
-                            tp = dol if dol is not None else entry + cfg["min_rr"] * risk
-                            rr = (tp - entry) / risk
+                            dol_rr = (dol - entry) / risk if dol is not None else 0
+                            tp = entry + cfg["tp_r"] * risk
                             span = s["leg"] - s["ext"]
                             retr = (s["leg"] - entry) / span if span > 0 else 0
                         else:
                             dol = nearest(entry - risk, [pdl[i], asiaL, londL, bRL], False)
-                            tp = dol if dol is not None else entry - cfg["min_rr"] * risk
-                            rr = (entry - tp) / risk
+                            dol_rr = (entry - dol) / risk if dol is not None else 0
+                            tp = entry - cfg["tp_r"] * risk
                             span = s["ext"] - s["leg"]
                             retr = (entry - s["leg"]) / span if span > 0 else 0
                         eq = None if pd.isna(bRH) or pd.isna(bRL) else (bRH + bRL) / 2
@@ -335,15 +338,15 @@ def analyse(df, es, cfg=CFG):
                             "Silver Bullet": in_sess(t, cfg["sb_sess"]),
                             "Sterke displacement": s["strong"],
                             "IFVG": s["ifvg"],
-                            f"DOL >= {cfg['min_rr']}R": dol is not None and rr >= cfg["min_rr"],
+                            f"DOL >= {cfg['min_rr']}R": dol is not None and dol_rr >= cfg["min_rr"],
                         }
                         score = sum(checks.values())
                         grade = "A+" if score >= 7 else "A" if score >= 5 else "B" if score >= 3 else "C"
                         # Tegen de HTF-bias in is altijd "lage kans", hoe hoog de score ook is
-                        good = score >= cfg["min_score"] and bBias == sign
+                        good = score >= cfg["min_score"] and sess_name(t) in cfg["kans_sess"]
                         setups_today += 1
                         setup = dict(time=t, side=d.upper(), grade=grade, score=score, good=good,
-                                     entry=entry, stop=stop, tp=tp, rr=rr, sweep=s["sweep_name"],
+                                     entry=entry, stop=stop, tp=tp, rr=cfg["tp_r"], dol=dol, sweep=s["sweep_name"],
                                      bias_a=aBias, bias_b=bBias, checks=checks, entry_hit=None)
                         setups.append(setup)
                         s.update(state=3, sig=i, setup=setup)
@@ -444,7 +447,7 @@ def scan():
     good = [s for s in setups if s["good"]]
     print(f"Data: {df.index[0]:%d-%m %H:%M} t/m {df.index[-1]:%d-%m %H:%M} NY-tijd ({len(df)} candles)")
     print(f"Setups: {len(setups)} totaal (~{len(setups) / weeks:.1f} per week): "
-          f"{len(good)} kans (score >= {CFG['min_score']}), {len(setups) - len(good)} lage kans\n")
+          f"{len(good)} kans ({'/'.join(CFG['kans_sess'])}), {len(setups) - len(good)} lage kans\n")
     totals = {True: [0.0, 0], False: [0.0, 0]}
     per_sess = {}
     by_day = {}
