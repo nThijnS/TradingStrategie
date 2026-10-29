@@ -1,13 +1,22 @@
 # Draait TradingStrategie in de cloud (GitHub Actions), elke 5 minuten tijdens de sessies.
 # Meldingen gaan naar je telefoon via ntfy. Zet het ntfy-onderwerp als geheim of variabele NTFY_TOPIC
 # (Settings > Secrets and variables > Actions > New repository secret).
+#
+# Let op: GitHub voert "schedule" maar af en toe uit (vaak uren te laat of helemaal niet).
+# Voor betrouwbare meldingen start een externe cron (bv. cron-job.org) deze workflow elke 5 minuten
+# via de API met test_notify=false. De schedule hieronder is alleen nog een reserve.
 name: TradingStrategie
 
 on:
   schedule:
     # UTC-tijden; dekt London, NY AM en NY PM in zomer- en wintertijd
     - cron: "*/5 6-10,13-21 * * 1-5"
-  workflow_dispatch: {}   # handmatig starten via de knop "Run workflow"
+  workflow_dispatch:      # handmatig via de knop "Run workflow", of extern via de API
+    inputs:
+      test_notify:
+        description: "Testmelding sturen"
+        type: boolean
+        default: true
 
 concurrency:
   group: tradingstrategie
@@ -57,7 +66,11 @@ jobs:
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || vars.NTFY_TOPIC }}
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ -z "$NTFY_TOPIC" ]; then
+            echo "::error::NTFY_TOPIC ontbreekt: zet het onder Settings > Secrets and variables > Actions"
+            exit 1
+          fi
+          if [ "${{ inputs.test_notify }}" = "true" ]; then
             python tradingstrategie.py --test-notify
           fi
           python tradingstrategie.py --once
