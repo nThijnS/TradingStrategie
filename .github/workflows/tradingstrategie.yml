@@ -1,68 +1,54 @@
-# Draait TradingStrategie in de cloud (GitHub Actions), elke 5 minuten tijdens de sessies.
-# Meldingen gaan naar je telefoon via ntfy. Zet het ntfy-onderwerp als geheim of variabele NTFY_TOPIC
-# (Settings > Secrets and variables > Actions > New repository secret).
+# Draait TradingStrategie in de cloud (GitHub Actions). Meldingen gaan naar je telefoon via ntfy.
+# Zet het ntfy-onderwerp als geheim of variabele NTFY_TOPIC (Settings > Secrets and variables > Actions).
 #
-# Let op: GitHub voert "schedule" maar af en toe uit (vaak uren te laat of helemaal niet).
-# Voor betrouwbare meldingen start een externe cron (bv. cron-job.org) deze workflow elke 5 minuten
-# via de API met test_notify=false. De schedule hieronder is alleen nog een reserve.
+# GitHub voert "schedule" maar af en toe uit (vaak uren te laat of helemaal niet). Daarom draait er een
+# keten: elke run checkt elke minuut (alleen binnen de sessies doet hij echt iets) en start na ~5u40
+# zichzelf opnieuw. Starten of herstarten: Actions > TradingStrategie > Run workflow.
+# De schedule hieronder is alleen een reserve die de keten weer opstart als die ooit stopt.
 name: TradingStrategie
 
 on:
   schedule:
-    # UTC-tijden; dekt London, NY AM en NY PM in zomer- en wintertijd
-    - cron: "*/5 6-10,13-21 * * 1-5"
-  workflow_dispatch:      # handmatig via de knop "Run workflow", of extern via de API
+    - cron: "7 */3 * * *"
+  workflow_dispatch:
     inputs:
       test_notify:
-        description: "Testmelding sturen"
+        description: "Testmelding sturen (en de keten starten)"
         type: boolean
         default: true
 
+permissions:
+  contents: read
+  actions: write   # nodig om zichzelf opnieuw te starten
+
+# Eén keten tegelijk. Testruns krijgen een eigen groep, zodat ze niet uren achter de keten wachten.
 concurrency:
-  group: tradingstrategie
+  group: ${{ github.event_name == 'workflow_dispatch' && inputs.test_notify && format('test-{0}', github.run_id) || 'tradingstrategie' }}
   cancel-in-progress: false
 
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 355
     steps:
-      - name: Binnen een sessie?
-        id: window
-        run: |
-          python3 - <<'PY' >> "$GITHUB_OUTPUT"
-          from datetime import datetime, timedelta
-          from zoneinfo import ZoneInfo
-          now = datetime.now(ZoneInfo("America/New_York"))
-          hm = now.strftime("%H:%M")
-          sess = [("02:00", "05:20"), ("09:30", "11:50"), ("13:30", "15:50")]
-          ok = now.weekday() < 5 and any(a <= hm <= b for a, b in sess)
-          print("run=" + ("true" if ok else "false"))
-          PY
-
       - uses: actions/checkout@v4
-        if: steps.window.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
 
       - uses: actions/setup-python@v5
-        if: steps.window.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
         with:
           python-version: "3.12"
           cache: pip
 
       - name: Onderdelen installeren
-        if: steps.window.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
         run: pip install -r requirements.txt
 
       # Onthoudt welke meldingen al verstuurd zijn, zodat je er niet twee keer een krijgt
       - uses: actions/cache/restore@v4
-        if: steps.window.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
         with:
           path: verstuurd.json
           key: verstuurd-${{ github.run_id }}
           restore-keys: verstuurd-
 
       - name: Setups checken
-        if: steps.window.outputs.run == 'true' || github.event_name == 'workflow_dispatch'
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || vars.NTFY_TOPIC }}
         run: |
@@ -72,11 +58,27 @@ jobs:
           fi
           if [ "${{ inputs.test_notify }}" = "true" ]; then
             python tradingstrategie.py --test-notify
+            exit 0
           fi
-          python tradingstrategie.py --once
+          # elke minuut checken, ~5u40 lang (daarna neemt de volgende run het over)
+          while [ "$SECONDS" -lt 20400 ]; do
+            python -W ignore tradingstrategie.py --once || true
+            sleep 60
+          done
 
       - uses: actions/cache/save@v4
-        if: always() && (steps.window.outputs.run == 'true' || github.event_name == 'workflow_dispatch')
+        if: always()
         with:
           path: verstuurd.json
           key: verstuurd-${{ github.run_id }}
+
+      - name: Volgende run starten
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          curl -sf -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/tradingstrategie.yml/dispatches" \
+            -d '{"ref":"${{ github.ref_name }}","inputs":{"test_notify":"false"}}'
