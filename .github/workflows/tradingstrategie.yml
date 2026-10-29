@@ -61,7 +61,9 @@ jobs:
             exit 0
           fi
           # elke minuut checken, ~5u40 lang (daarna neemt de volgende run het over)
+          # config.json (de schakelaars uit het dashboard) elke minuut opnieuw ophalen
           while [ "$SECONDS" -lt 20400 ]; do
+            git fetch -q origin "${{ github.ref_name }}" && git checkout -q FETCH_HEAD -- config.json 2>/dev/null || true
             python -W ignore tradingstrategie.py --once || true
             sleep 60
           done
