@@ -73,11 +73,56 @@ CFG = {
     "tick": 0.25,
     "max_per_day": 6,          # alle setups samen, zodat je niet wordt overspoeld
     "min_score": 0,            # extra eis voor "kans" (backtest: de score hielp niet, dus uit)
+    "no_close": False,         # TradingPool: na de sweep mag geen candle buiten het niveau sluiten
+    "need_smt": False,         # TradingPool: divergentie (SMT) verplicht bij de sweep
     "day_end": "15:30",        # na dit tijdstip: melding als er vandaag niks was
     # Pushmelding op je telefoon via de gratis app "ntfy". Het onderwerp staat in ntfy_topic.txt
     # (niet in de code, zodat het geheim blijft). Bestand weg = geen telefoonmeldingen.
     "ntfy_topic": (HERE / "ntfy_topic.txt").read_text().strip() if (HERE / "ntfy_topic.txt").exists() else "",
 }
+
+# Aan/uit-schakelaars uit het dashboard. Staan in config.json; ontbreekt iets, dan geldt de standaard.
+SETTINGS_FILE = HERE / "config.json"
+DEFAULT_SETTINGS = {
+    "actief": True,                                        # hoofdschakelaar voor alle meldingen
+    "markten": {"NQ": True, "EURUSD": True},
+    "sessies": {"London": True, "NY AM": True, "NY PM": True},
+    "alleen_kans": False,                                  # True: geen "LAGE KANS"-meldingen
+    "entry_meldingen": True,                               # "prijs in entry-zone"
+    "dagmelding": True,                                    # "vandaag geen setup" na day_end
+    "telefoon": True,                                      # ntfy-pushmeldingen
+    "max_per_day": 6,
+}
+SESS_NAMES = ["London", "NY AM", "NY PM"]                  # zelfde volgorde als trade_sess en sb_sess
+
+
+def load_settings():
+    s = json.loads(json.dumps(DEFAULT_SETTINGS))
+    try:
+        own = json.loads(SETTINGS_FILE.read_text())
+    except (OSError, ValueError):
+        return s
+    for k, v in own.items():
+        if isinstance(s.get(k), dict) and isinstance(v, dict):
+            s[k].update(v)
+        elif k in s:
+            s[k] = v
+    return s
+
+
+SET = DEFAULT_SETTINGS
+
+
+def apply_settings():
+    """config.json toepassen op CFG (markten en sessies) en SET (meldingen)."""
+    global SET
+    SET = load_settings()
+    CFG["markets"] = [m for m in CFG["markets"] if SET["markten"].get(m["name"], True)]
+    keep = [i for i, n in enumerate(SESS_NAMES) if SET["sessies"].get(n, True)]
+    CFG["trade_sess"] = [CFG["trade_sess"][i] for i in keep]
+    CFG["sb_sess"] = [CFG["sb_sess"][i] for i in keep]
+    CFG["max_per_day"] = int(SET["max_per_day"])
+
 
 BAR = timedelta(minutes=5)
 
@@ -266,8 +311,9 @@ def analyse(df, es, cfg=CFG):
                 return False
             return (H[i] > lvl and H[i - 1] <= lvl) if up else (L[i] < lvl and L[i - 1] >= lvl)
 
-        hi_hits = [nm for nm, lv in (("PDH", pdh[i]), ("Asia H", asiaH), ("London H", londH)) if poke(lv, True)]
-        lo_hits = [nm for nm, lv in (("PDL", pdl[i]), ("Asia L", asiaL), ("London L", londL)) if poke(lv, False)]
+        lv_map = {"PDH": pdh[i], "Asia H": asiaH, "London H": londH, "PDL": pdl[i], "Asia L": asiaL, "London L": londL}
+        hi_hits = [nm for nm in ("PDH", "Asia H", "London H") if poke(lv_map[nm], True)]
+        lo_hits = [nm for nm in ("PDL", "Asia L", "London L") if poke(lv_map[nm], False)]
 
         smtBull = not pd.isna(my_lo_prev[i]) and L[i] < my_lo_prev[i] and oL[i] >= o_lo_prev[i]
         smtBear = not pd.isna(my_hi_prev[i]) and H[i] > my_hi_prev[i] and oH[i] <= o_hi_prev[i]
@@ -287,8 +333,11 @@ def analyse(df, es, cfg=CFG):
             if sweep and can_setup and ok_dir and s["state"] <= 1:
                 if s["state"] == 0:
                     s.update(ext=L[i] if up else H[i], leg=H[i] if up else L[i],
-                             fT=None, fB=None, smt=False, sweep_name=sweep[0], sweep_t=t)
+                             fT=None, fB=None, smt=False, sweep_name=sweep[0], sweep_t=t, lvl=lv_map[sweep[0]])
                 s["state"], s["bar"] = 1, i
+
+            if s["state"] in (1, 2) and cfg["no_close"] and (C[i] < s["lvl"] if up else C[i] > s["lvl"]):
+                s["state"] = 0   # candle sloot buiten het geveegde niveau: geen sweep maar een uitbraak
 
             if s["state"] in (1, 2):
                 s["leg"] = max(s["leg"], H[i]) if up else min(s["leg"], L[i])
@@ -313,6 +362,8 @@ def analyse(df, es, cfg=CFG):
             if s["state"] == 2:
                 if not ok_dir:   # HTF-bias is intussen gedraaid: setup vervalt
                     s["state"] = 0
+                elif s["fT"] is not None and cfg["need_smt"] and not s["smt"]:
+                    s["state"] = 0   # geen divergentie: overslaan
                 elif s["fT"] is not None and setups_today < cfg["max_per_day"]:
                     fT, fB = s["fT"], s["fB"]
                     if up:
@@ -358,7 +409,7 @@ def analyse(df, es, cfg=CFG):
                         good = score >= cfg["min_score"] and sess_name(t) in cfg["kans_sess"]
                         setups_today += 1
                         setup = dict(time=t, side=d.upper(), grade=grade, score=score, good=good,
-                                     entry=entry, stop=stop, tp=tp, rr=rr, dol=dol, sweep=s["sweep_name"],
+                                     entry=entry, stop=stop, tp=tp, rr=rr, dol=dol, sweep=s["sweep_name"], sweep_t=s["sweep_t"], mss_t=idx[s["mss"]],
                                      bias_a=aBias, bias_b=bBias, checks=checks, entry_hit=None)
                         setups.append(setup)
                         s.update(state=3, sig=i, setup=setup)
@@ -421,7 +472,7 @@ def notify(title, msg, sound="Glass"):
 
 def push_phone(title, msg, high=False):
     """Stuurt dezelfde melding naar je telefoon via ntfy.sh."""
-    if not CFG["ntfy_topic"]:
+    if not CFG["ntfy_topic"] or not SET["telefoon"]:
         return
     req = urllib.request.Request(f"https://ntfy.sh/{CFG['ntfy_topic']}", data=msg.encode(), method="POST",
                                  headers={"Title": title, "Priority": "high" if high else "default",
@@ -539,6 +590,8 @@ def scan_market(m):
 
 def check(sent):
     """Eén keer data ophalen, analyseren en nieuwe meldingen versturen."""
+    if not SET["actief"]:
+        return
     now = datetime.now(NY)
     recent = now - timedelta(minutes=45)
     setups, last = [], []
@@ -555,6 +608,8 @@ def check(sent):
         for s in m_setups:
             # NQ houdt de oude sleutel zodat eerder verstuurde meldingen niet opnieuw komen
             key = f"setup|{s['time'].isoformat()}|{s['side']}" + ("" if m["name"] == "NQ" else f"|{m['name']}")
+            if s["time"] >= recent and key not in sent and SET["alleen_kans"] and not s["good"]:
+                sent.add(key)   # lage kans staat uit: wel onthouden, niet melden
             if s["time"] >= recent and key not in sent:
                 extra = f" | tegen {CFG['htf_b']}-bias" if against_bias(s) else ""
                 title = (f"{m['name']} {s['side']} {s['grade']} ({s['score']}/10)" if s["good"]
@@ -565,6 +620,9 @@ def check(sent):
                 sent.add(key)
         for e in entries:
             key = f"entry|{e['time'].isoformat()}|{e['setup']['side']}" + ("" if m["name"] == "NQ" else f"|{m['name']}")
+            if e["time"] >= recent and key not in sent and (
+                    not SET["entry_meldingen"] or (SET["alleen_kans"] and not e["setup"]["good"])):
+                sent.add(key)
             if e["time"] >= recent and key not in sent:
                 st = e["setup"]
                 pre = "" if st["good"] else "LAGE KANS: "
@@ -574,7 +632,8 @@ def check(sent):
     # Einde van de dag zonder setup: dat ook laten weten
     today = [s for s in setups if s["time"].date() == now.date()]
     key = f"summary|{now.date().isoformat()}"
-    if now.weekday() < 5 and now.strftime("%H:%M") >= CFG["day_end"] and not today and key not in sent:
+    if (SET["dagmelding"] and CFG["trade_sess"] and now.weekday() < 5 and now.strftime("%H:%M") >= CFG["day_end"]
+            and not today and key not in sent):
         notify("TradingStrategie", "Vandaag geen TJR-setup. Geen trade is ook een goede trade.", sound="Pop")
         sent.add(key)
     STATE_FILE.write_text(json.dumps(sorted(sent)))
@@ -623,8 +682,13 @@ if __name__ == "__main__":
     args = ap.parse_args()
     if os.environ.get("NTFY_TOPIC"):   # in de cloud komt het onderwerp uit een geheim
         CFG["ntfy_topic"] = os.environ["NTFY_TOPIC"]
+    apply_settings()
     if args.once:
-        if near_window():
+        if not SET["actief"]:
+            print("Meldingen staan uit (config.json: actief = false).")
+        elif not CFG["markets"] or not CFG["trade_sess"]:
+            print("Geen markt of sessie aan in config.json, niets te doen.")
+        elif near_window():
             check(load_sent())
         else:
             print("Buiten de sessies, niets te doen.")

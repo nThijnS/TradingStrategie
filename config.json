@@ -1,0 +1,10 @@
+{
+  "actief": true,
+  "markten": {"NQ": true, "EURUSD": true},
+  "sessies": {"London": true, "NY AM": true, "NY PM": true},
+  "alleen_kans": false,
+  "entry_meldingen": true,
+  "dagmelding": true,
+  "telefoon": true,
+  "max_per_day": 6
+}
