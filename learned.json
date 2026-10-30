@@ -1,0 +1,77 @@
+{
+ "bijgewerkt": "2026-10-30T13:34-04:00",
+ "markten": {
+  "NQ": {
+   "actief": false,
+   "cfg": {
+    "disp_pct": 0.6,
+    "disp_atr": 1.2,
+    "tp_mode": "R",
+    "tp_r": 1.5
+   },
+   "kans_sess": [
+    "London",
+    "NY AM",
+    "NY PM"
+   ],
+   "need_bias_b": false,
+   "variant": "basis · TP 1.5 · alle sessies · bias geen",
+   "score": {
+    "n": 189,
+    "gem": 0.033,
+    "score": -0.13,
+    "win": 0.397,
+    "totaal": -13.0
+   },
+   "sinds": "2026-10-30"
+  },
+  "EURUSD": {
+   "actief": true,
+   "cfg": {
+    "disp_pct": 0.7,
+    "disp_atr": 1.5,
+    "tp_mode": "R",
+    "tp_r": 1.5
+   },
+   "kans_sess": [
+    "London",
+    "NY AM",
+    "NY PM"
+   ],
+   "need_bias_b": false,
+   "variant": "strenger · TP 1.5 · alle sessies · bias geen",
+   "score": {
+    "n": 183,
+    "gem": 0.229,
+    "score": 0.059,
+    "win": 0.464,
+    "totaal": 8.5
+   },
+   "sinds": "2026-10-30"
+  },
+  "GOUD": {
+   "actief": true,
+   "cfg": {
+    "disp_pct": 0.6,
+    "disp_atr": 1.2,
+    "tp_mode": "R",
+    "tp_r": 1.0
+   },
+   "kans_sess": [
+    "London",
+    "NY AM",
+    "NY PM"
+   ],
+   "need_bias_b": true,
+   "variant": "basis · TP 1.0 · alle sessies · bias 1H mee",
+   "score": {
+    "n": 56,
+    "gem": 0.337,
+    "score": 0.073,
+    "win": 0.464,
+    "totaal": -6.1
+   },
+   "sinds": "2026-10-30"
+  }
+ }
+}

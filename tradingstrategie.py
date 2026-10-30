@@ -50,6 +50,8 @@ CFG = {
         dict(name="NQ", symbol="NQ=F", smt="ES=F", dec=2, cfg={}, alt=dict(symbol="^NDX", label="US100")),
         dict(name="EURUSD", symbol="EURUSD=X", smt="GBPUSD=X", dec=5,
              cfg=dict(tick=0.00002, disp_pct=0.6, disp_atr=1.2, tp_mode="DOL")),
+        # Kandidaat: alleen meldingen als leren.py hem aanzet (learned.json), wel altijd loggen
+        dict(name="GOUD", symbol="GC=F", smt="SI=F", dec=2, cfg=dict(tick=0.1), learn_only=True),
     ],
     "trade_sess": [("02:00", "05:00"), ("09:30", "11:30"), ("13:30", "15:30")],   # London, NY AM, NY PM
     "sb_sess": [("03:00", "04:00"), ("10:00", "11:00"), ("14:00", "15:00")],      # Silver Bullet per sessie
@@ -85,9 +87,10 @@ CFG = {
 
 # Aan/uit-schakelaars uit het dashboard. Staan in config.json; ontbreekt iets, dan geldt de standaard.
 SETTINGS_FILE = HERE / "config.json"
+LEARNED_FILE = HERE / "learned.json"   # instellingen die leren.py zelf kiest (per markt)
 DEFAULT_SETTINGS = {
     "actief": True,                                        # hoofdschakelaar voor alle meldingen
-    "markten": {"NQ": True, "EURUSD": True},
+    "markten": {"NQ": True, "EURUSD": True, "GOUD": True},
     "sessies": {"London": True, "NY AM": True, "NY PM": True},
     "alleen_kans": False,                                  # True: geen "LAGE KANS"-meldingen
     "entry_meldingen": True,                               # "prijs in entry-zone"
@@ -124,6 +127,23 @@ def apply_settings():
     CFG["trade_sess"] = [CFG["trade_sess"][i] for i in keep]
     CFG["sb_sess"] = [CFG["sb_sess"][i] for i in keep]
     CFG["max_per_day"] = int(SET["max_per_day"])
+    apply_learned()
+
+
+def apply_learned():
+    """Wat leren.py per markt heeft gekozen over de standaard heen leggen; zonder learned.json verandert er niets."""
+    try:
+        learned = json.loads(LEARNED_FILE.read_text()).get("markten", {})
+    except (OSError, ValueError):
+        learned = {}
+    for m in CFG["markets"]:
+        m.setdefault("base_cfg", dict(m["cfg"]))
+        lm = learned.get(m["name"])
+        if lm:
+            m["cfg"] = dict(m["base_cfg"], **lm["cfg"], kans_sess=lm["kans_sess"], need_bias_b=lm["need_bias_b"])
+            m["actief"], m["variant"] = bool(lm["actief"]), lm.get("variant")
+        else:
+            m["cfg"], m["actief"] = dict(m["base_cfg"]), not m.get("learn_only", False)
 
 
 BAR = timedelta(minutes=5)
@@ -686,6 +706,7 @@ def check(sent):
             print(f"{m['name']}: fout: {ex}", flush=True)
             continue
         update_logbook(book, m, df, m_setups, refs)
+        quiet = not m.get("actief", True)   # leren.py heeft deze markt op pauze gezet: wel loggen, niet melden
         setups += m_setups
         last.append(f"{m['name']} {df.index[-1]:%H:%M}")
         new = [s for s in m_setups if s["time"] >= recent] or [e["setup"] for e in entries if e["time"] >= recent]
@@ -693,6 +714,9 @@ def check(sent):
         for s in m_setups:
             # NQ houdt de oude sleutel zodat eerder verstuurde meldingen niet opnieuw komen
             key = f"setup|{s['time'].isoformat()}|{s['side']}" + ("" if m["name"] == "NQ" else f"|{m['name']}")
+            if quiet:
+                sent.add(key)
+                continue
             if s["time"] >= recent and key not in sent and SET["alleen_kans"] and not s["good"]:
                 sent.add(key)   # lage kans staat uit: wel onthouden, niet melden
             if s["time"] >= recent and key not in sent:
@@ -705,6 +729,9 @@ def check(sent):
                 sent.add(key)
         for e in entries:
             key = f"entry|{e['time'].isoformat()}|{e['setup']['side']}" + ("" if m["name"] == "NQ" else f"|{m['name']}")
+            if quiet:
+                sent.add(key)
+                continue
             if e["time"] >= recent and key not in sent and (
                     not SET["entry_meldingen"] or (SET["alleen_kans"] and not e["setup"]["good"])):
                 sent.add(key)
