@@ -48,6 +48,13 @@ jobs:
           key: verstuurd-${{ github.run_id }}
           restore-keys: verstuurd-
 
+      # Het logboek: elke setup en weigering met uitkomst (forward test), blijft van run tot run bewaard
+      - uses: actions/cache/restore@v4
+        with:
+          path: logboek.json
+          key: logboek-${{ github.run_id }}
+          restore-keys: logboek-
+
       - name: Setups checken
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || vars.NTFY_TOPIC }}
@@ -73,6 +80,20 @@ jobs:
         with:
           path: verstuurd.json
           key: verstuurd-${{ github.run_id }}
+
+      - uses: actions/cache/save@v4
+        if: always() && hashFiles('logboek.json') != ''
+        with:
+          path: logboek.json
+          key: logboek-${{ github.run_id }}
+
+      # Logboek downloaden: Actions > een run > Artifacts > logboek (daarna: python tradingstrategie.py --logboek logboek.json)
+      - uses: actions/upload-artifact@v4
+        if: always() && hashFiles('logboek.json') != ''
+        with:
+          name: logboek
+          path: logboek.json
+          retention-days: 30
 
       - name: Volgende run starten
         if: always()
