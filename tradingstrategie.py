@@ -15,6 +15,7 @@ Gebruik:
   python tradingstrategie.py               live: elke minuut checken en melden
   python tradingstrategie.py --scan        alle setups van de afgelopen 30 dagen tonen
   python tradingstrategie.py --test-notify testmelding sturen
+  python tradingstrategie.py --logboek     overzicht van alle gelogde setups, uitkomsten en weigeringen
 """
 import argparse
 import json
@@ -37,6 +38,7 @@ NY = ZoneInfo("America/New_York")
 HERE = Path(__file__).resolve().parent
 STATE_FILE = HERE / "verstuurd.json"
 LOG_FILE = HERE / "setups.log"
+LOGBOOK_FILE = HERE / "logboek.json"     # elke setup en weigering met uitkomst (forward test)
 
 CFG = {
     "symbol": "NQ=F",          # Nasdaq futures (Yahoo); voor ES: "ES=F"
@@ -216,8 +218,9 @@ def nearest(p, levels, above):
     return min(vals) if above else max(vals)
 
 
-def analyse(df, es, cfg=CFG):
-    """Loopt alle 5m-candles af en geeft een lijst setups en entry-zone events terug."""
+def analyse(df, es, cfg=CFG, refusals=None):
+    """Loopt alle 5m-candles af en geeft een lijst setups en entry-zone events terug.
+    refusals: lijst waar elke sweep die geen trade werd in komt, met de reden (voor het logboek)."""
     n = len(df)
     idx = df.index
     O, H, L, C = (df[c].tolist() for c in ["Open", "High", "Low", "Close"])
@@ -330,6 +333,15 @@ def analyse(df, es, cfg=CFG):
             ok_dir = (not cfg["need_bias_b"]) or bBias == (1 if up else -1)
             sweep = lo_hits if up else hi_hits
 
+            def refuse(reason, s=s, d=d):
+                if refusals is not None:
+                    refusals.append(dict(time=t, side=d.upper(), reason=reason, sweep=s.get("sweep_name"),
+                                         sweep_t=s.get("sweep_t"), bias_a=aBias, bias_b=bBias))
+
+            if sweep and in_trade and s["state"] <= 1 and not (can_setup and ok_dir) and refusals is not None:
+                refusals.append(dict(time=t, side=d.upper(), sweep=sweep[0], sweep_t=t, bias_a=aBias, bias_b=bBias,
+                                     reason="max setups per dag" if not can_setup else f"tegen {cfg['htf_b']}-bias"))
+
             if sweep and can_setup and ok_dir and s["state"] <= 1:
                 if s["state"] == 0:
                     s.update(ext=L[i] if up else H[i], leg=H[i] if up else L[i],
@@ -337,6 +349,7 @@ def analyse(df, es, cfg=CFG):
                 s["state"], s["bar"] = 1, i
 
             if s["state"] in (1, 2) and cfg["no_close"] and (C[i] < s["lvl"] if up else C[i] > s["lvl"]):
+                refuse("candle sloot voorbij het niveau")
                 s["state"] = 0   # candle sloot buiten het geveegde niveau: geen sweep maar een uitbraak
 
             if s["state"] in (1, 2):
@@ -351,6 +364,7 @@ def analyse(df, es, cfg=CFG):
             if s["state"] == 1:
                 s["ext"] = min(s["ext"], L[i]) if up else max(s["ext"], H[i])
                 if i - s["bar"] > cfg["mss_window"] or not in_trade:
+                    refuse("geen MSS met displacement" if in_trade else "geen MSS voor einde sessie")
                     s["state"] = 0
                 elif up and swingH is not None and C[i] > swingH and bullDisp:
                     s.update(state=2, mss=i, strong=strong,
@@ -361,8 +375,10 @@ def analyse(df, es, cfg=CFG):
 
             if s["state"] == 2:
                 if not ok_dir:   # HTF-bias is intussen gedraaid: setup vervalt
+                    refuse(f"{cfg['htf_b']}-bias gedraaid na de MSS")
                     s["state"] = 0
                 elif s["fT"] is not None and cfg["need_smt"] and not s["smt"]:
+                    refuse("geen SMT-divergentie")
                     s["state"] = 0   # geen divergentie: overslaan
                 elif s["fT"] is not None and setups_today < cfg["max_per_day"]:
                     fT, fB = s["fT"], s["fB"]
@@ -414,8 +430,10 @@ def analyse(df, es, cfg=CFG):
                         setups.append(setup)
                         s.update(state=3, sig=i, setup=setup)
                     else:
+                        refuse("stop aan de verkeerde kant van de entry")
                         s["state"] = 0
                 elif i - s["mss"] > cfg["fvg_window"] or not in_trade:
+                    refuse("geen FVG na de MSS")
                     s["state"] = 0
 
             if s["state"] == 3 and i > s["sig"]:
@@ -426,6 +444,7 @@ def analyse(df, es, cfg=CFG):
                     entries.append(dict(time=t, setup=st))
                     s["state"] = 0
                 elif i - s["sig"] > cfg["entry_win"] or (C[i] < st["stop"] if up else C[i] > st["stop"]):
+                    st["missed"] = "entry niet op tijd geraakt" if i - s["sig"] > cfg["entry_win"] else "stop geraakt voor de entry"
                     s["state"] = 0
 
     return setups, entries
@@ -506,13 +525,76 @@ def outcome(df, s):
     return "loopt nog", 0.0
 
 
-def analyse_market(m, period="30d"):
+def analyse_market(m, period="30d", refusals=None):
     """Data ophalen en analyseren voor één markt uit CFG["markets"]; setups krijgen de marktnaam mee."""
     df, es = fetch(m["symbol"], period), fetch(m["smt"], period)
-    setups, entries = analyse(df, es, dict(CFG, **m["cfg"]))
+    setups, entries = analyse(df, es, dict(CFG, **m["cfg"]), refusals)
     for s in setups:
         s.update(mkt=m["name"], dec=m["dec"])
     return df, setups, entries
+
+
+# ------------- Logboek -------------
+FINAL = ("stop", "TP", "dicht 16:00", "entry niet op tijd geraakt", "stop geraakt voor de entry")
+
+
+def load_logbook():
+    try:
+        return json.loads(LOGBOOK_FILE.read_text())
+    except (OSError, ValueError):
+        return {}
+
+
+def update_logbook(book, m, df, setups, refusals):
+    """Setups en weigeringen van één markt in het logboek zetten; uitkomsten bijwerken tot ze vaststaan."""
+    now = datetime.now(NY).isoformat(timespec="minutes")
+    for s in setups:
+        key = f"setup|{m['name']}|{s['time'].isoformat()}|{s['side']}"
+        if book.get(key, {}).get("uitkomst") in FINAL:
+            continue
+        res, r = outcome(df, s)
+        if res == "geen entry":
+            res = s.get("missed", "wacht op entry")
+        book[key] = dict(type="setup", markt=m["name"], tijd=s["time"].isoformat(), sessie=sess_name(s["time"]),
+                         kant=s["side"], grade=s["grade"], score=int(s["score"]), kans=bool(s["good"]),
+                         entry=round(float(s["entry"]), 6), stop=round(float(s["stop"]), 6), tp=round(float(s["tp"]), 6),
+                         rr=round(float(s["rr"]), 2), sweep=s["sweep"], bias_1h=int(s["bias_b"]), bias_4h=int(s["bias_a"]),
+                         checks=[k for k, v in s["checks"].items() if v], uitkomst=res, R=round(float(r), 2), bijgewerkt=now)
+    for f in refusals:
+        key = f"weigering|{m['name']}|{f['time'].isoformat()}|{f['side']}|{f['reason']}"
+        if key not in book:
+            book[key] = dict(type="weigering", markt=m["name"], tijd=f["time"].isoformat(), sessie=sess_name(f["time"]),
+                             kant=f["side"], reden=f["reason"], sweep=f["sweep"],
+                             sweep_tijd=f["sweep_t"].isoformat() if f["sweep_t"] is not None else None,
+                             bias_1h=int(f["bias_b"]), bias_4h=int(f["bias_a"]), bijgewerkt=now)
+
+
+def logbook_report(path=None):
+    if path and not Path(path).exists():
+        print(f"{path} bestaat nog niet. Download het logboek uit GitHub (Actions > een run > Artifacts > logboek),\n"
+              f"pak de zip uit in deze map en draai dit commando opnieuw.")
+        return
+    book = json.loads(Path(path).read_text()) if path else load_logbook()
+    if not book:
+        print("Logboek is nog leeg.")
+        return
+    rows = sorted(book.values(), key=lambda x: x["tijd"])
+    print(f"Logboek: {len(rows)} regels, {rows[0]['tijd'][:10]} t/m {rows[-1]['tijd'][:10]} (R zonder kosten)")
+    for mkt in sorted({x["markt"] for x in rows}):
+        mine = [x for x in rows if x["markt"] == mkt]
+        print(f"\n===== {mkt} =====")
+        for label, flt in (("kans", True), ("lage kans", False)):
+            st = [x for x in mine if x["type"] == "setup" and x["kans"] == flt]
+            done = [x for x in st if x["uitkomst"] in ("stop", "TP", "dicht 16:00")]
+            wins = sum(x["R"] > 0 for x in done)
+            print(f"Setups {label:9}: {len(st):3} | met entry en klaar: {len(done):3} | "
+                  f"win {wins / len(done) if done else 0:4.0%} | {sum(x['R'] for x in done):+6.1f}R")
+            for res in sorted({x["uitkomst"] for x in st}):
+                print(f"    {res:28} {sum(x['uitkomst'] == res for x in st)}")
+        refs = [x for x in mine if x["type"] == "weigering"]
+        print(f"Weigeringen: {len(refs)}")
+        for reason in sorted({x["reden"] for x in refs}, key=lambda r: -sum(x["reden"] == r for x in refs)):
+            print(f"    {reason:34} {sum(x['reden'] == reason for x in refs)}")
 
 
 def alt_offset(m, df):
@@ -595,12 +677,15 @@ def check(sent):
     now = datetime.now(NY)
     recent = now - timedelta(minutes=45)
     setups, last = [], []
+    book = load_logbook()
     for m in CFG["markets"]:
+        refs = []
         try:
-            df, m_setups, entries = analyse_market(m)
+            df, m_setups, entries = analyse_market(m, refusals=refs)
         except Exception as ex:  # één markt zonder data mag de andere niet blokkeren
             print(f"{m['name']}: fout: {ex}", flush=True)
             continue
+        update_logbook(book, m, df, m_setups, refs)
         setups += m_setups
         last.append(f"{m['name']} {df.index[-1]:%H:%M}")
         new = [s for s in m_setups if s["time"] >= recent] or [e["setup"] for e in entries if e["time"] >= recent]
@@ -637,6 +722,7 @@ def check(sent):
         notify("TradingStrategie", "Vandaag geen TJR-setup. Geen trade is ook een goede trade.", sound="Pop")
         sent.add(key)
     STATE_FILE.write_text(json.dumps(sorted(sent)))
+    LOGBOOK_FILE.write_text(json.dumps(book, indent=1, ensure_ascii=False))
     print(f"{now:%H:%M:%S} NY | laatste candle {', '.join(last)} | "
           f"vandaag {sum(s['good'] for s in today)} kans, {sum(not s['good'] for s in today)} lage kans", flush=True)
 
@@ -679,6 +765,8 @@ if __name__ == "__main__":
     ap.add_argument("--scan", action="store_true", help="setups van de afgelopen 30 dagen tonen")
     ap.add_argument("--test-notify", action="store_true", help="testmelding sturen")
     ap.add_argument("--once", action="store_true", help="één keer checken (voor de cloud)")
+    ap.add_argument("--logboek", nargs="?", const="", metavar="BESTAND",
+                    help="overzicht van het logboek (setups, uitkomsten, weigeringen); standaard logboek.json")
     args = ap.parse_args()
     if os.environ.get("NTFY_TOPIC"):   # in de cloud komt het onderwerp uit een geheim
         CFG["ntfy_topic"] = os.environ["NTFY_TOPIC"]
@@ -692,6 +780,8 @@ if __name__ == "__main__":
             check(load_sent())
         else:
             print("Buiten de sessies, niets te doen.")
+    elif args.logboek is not None:
+        logbook_report(args.logboek or None)
     elif args.test_notify:
         notify("TJR LONG A (6/10)", "Testmelding | Entry 29800.00 | Stop 29770.00 | TP 29870.00 (2.3R)")
     elif args.scan:
