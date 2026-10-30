@@ -1,0 +1,57 @@
+# Zelflerende stap: elke werkdag na de beurs test leren.py alle varianten op de nieuwste data,
+# bewaart de uitkomsten (leren_geheugen.json), kiest per markt de beste (learned.json) en schrijft
+# het Obsidian-journaal (journaal/). De meldingen-keten haalt learned.json elke minuut op.
+name: Leren
+
+on:
+  schedule:
+    - cron: "30 21 * * 1-5"    # 21:30 UTC = na het sluiten van NY, in zomer- en wintertijd
+  workflow_dispatch: {}
+
+permissions:
+  contents: write              # nodig om learned.json, het geheugen en het journaal terug te zetten
+
+concurrency:
+  group: leren
+  cancel-in-progress: false
+
+jobs:
+  leren:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Onderdelen installeren
+        run: pip install -r requirements.txt
+
+      # Het logboek van de meldingen-keten (voor de dagnotities met charts)
+      - uses: actions/cache/restore@v4
+        with:
+          path: logboek.json
+          key: logboek-leren-${{ github.run_id }}
+          restore-keys: logboek-
+
+      - name: Leren en journaal schrijven
+        run: python -W ignore leren.py
+
+      - name: Resultaat terugzetten in de repo
+        run: |
+          git config user.name "TradingStrategie-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add learned.json leren_geheugen.json leren_geschiedenis.json journaal
+          if git diff --cached --quiet; then
+            echo "Niets veranderd"
+            exit 0
+          fi
+          git commit -q -m "Leren $(date -u +%Y-%m-%d)"
+          for i in 1 2 3; do
+            git pull -q --rebase origin "${{ github.ref_name }}" && git push -q origin HEAD:"${{ github.ref_name }}" && exit 0
+            sleep 5
+          done
+          exit 1
