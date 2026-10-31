@@ -212,6 +212,7 @@ const URLS = {
   lab: LIVE ? `${RAW}/main/lab.json` : "lab.json",
   hist: LIVE ? `${RAW}/main/lab_geschiedenis.json` : "lab_geschiedenis.json",
   markt: n => LIVE ? `${RAW}/live/markt/${n}.json` : `markt/${n}.json`,
+  demo: LIVE ? `${RAW}/live/demo.json` : "demo.json",
 };
 const SOORT = { crypto: "Crypto", forex: "Forex", index: "Indices", grondstof: "Grondstoffen", aandeel: "Aandelen" };
 const GLOSS = {
@@ -229,7 +230,7 @@ const GLOSS = {
 const STATUS_TXT = { live: "live", vertraagd: "vertraagd", dicht: "markt dicht", storing: "storing" };
 const STATUS_CLS = { live: "p-ok", vertraagd: "p-warn", dicht: "p-idle", storing: "p-bad" };
 
-let S = null, L = null, H = [], MCACHE = {}, ERR = [];
+let S = null, L = null, H = [], D = null, MCACHE = {}, ERR = [];
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const nf = (v, d = 2) => v == null || !isFinite(v) ? "–" : Number(v).toLocaleString("nl-NL", { minimumFractionDigits: d, maximumFractionDigits: d });
@@ -355,12 +356,14 @@ function rDashboard() {
       <div class="kpi"><span class="label">Met strategie</span><span class="v">${chosen.length}</span><span class="d">rest: geen trade</span></div>
       <div class="kpi"><span class="label">Open signalen</span><span class="v ${open.length ? "up" : ""}">${open.length}</span><span class="d">${sigs.length} vandaag/recent</span></div>
       <div class="kpi"><span class="label">Datastatus</span><span class="v ${problems.length ? "warn" : "up"}">${problems.length ? problems.length + " let op" : "OK"}</span><span class="d"><a href="#datafarm">Data Farm</a></span></div>
+      <div class="kpi"><span class="label">Demo-account</span><span class="v ${D?.nav != null ? (D.nav >= D.start_saldo ? "up" : "down") : ""}" style="font-size:${D?.nav != null ? "1.35rem" : "1rem"}">${D?.nav != null ? sgn((D.nav / D.start_saldo - 1) * 100) + "%" : "niet gekoppeld"}</span><span class="d"><a href="#risk">${D?.nav != null ? (D.open_trades?.length || 0) + " open trades" : "koppelen"}</a></span></div>
       <div class="kpi"><span class="label">Laatst geleerd</span><span class="v" style="font-size:1rem">${L ? nlDate(L.gemaakt) : "–"}</span><span class="d">${switched.length ? switched.length + " wissel(s)" : "geen wissels"}</span></div>
     </section>
     <section>
       <div class="head"><h2>Trades nu</h2><a class="small" href="#risk">Positiegrootte instellen</a></div>
       <div class="grid">${sigs.length ? sigs.slice(0, 9).map(tradeCard).join("") : `<div class="empty card"><b>Geen signalen.</b><span class="muted">Geen trade is ook een goede trade. Bij een nieuwe ICT-setup krijg je een melding op je telefoon.</span></div>`}</div>
     </section>
+    ${D?.nav != null ? `<section><div class="head"><h2>Demo-account</h2><a class="small" href="#risk">Alle trades</a></div>${demoBlock(false)}</section>` : ""}
     <section>
       <div class="head"><h2>Markten</h2><a class="small" href="#markets">Alle markten</a></div>
       <div class="grid sm">${all.map(tile).join("")}</div>
@@ -686,7 +689,9 @@ function rRisk() {
   const dayLeft = (P.acc * P.dll / 100 - P.lossToday) * rate(P.ccy);
   const expMax = P.acc * P.exp / 100 * rate(P.ccy);
   $("p-risk").innerHTML = `
-    <div class="head"><div><h2>Risk Center</h2><p>Stel je prop-account in. Alle signalen rekenen daarmee je positiegrootte uit. Wordt alleen op dit apparaat bewaard.</p></div></div>
+    <div class="head"><div><h2>Risk Center</h2><p>Je demo-account dat de bot automatisch laat handelen, en je eigen prop-instellingen voor de positiegrootte.</p></div></div>
+    <section><h2>Demo-account <span class="muted" style="font:500 .85rem var(--body)">OANDA oefenaccount, nepgeld</span></h2>${demoBlock(true)}<div id="demo-eq-wrap"></div></section>
+    <h2 style="margin-top:6px">Jouw prop-instellingen</h2>
     <div class="card" style="display:grid;gap:14px">
       <div class="form">
         <label for="r-acc">Accountgrootte<input id="r-acc" type="number" min="0" step="1000" value="${P.acc}"></label>
@@ -744,7 +749,55 @@ function rRisk() {
   };
   const first = open[0];
   if (first) { $("c-m").value = first.n; $("c-e").value = first.entry; $("c-s").value = first.stop }
+  drawDemo();
   ["c-m", "c-e", "c-s"].forEach(id => $(id).addEventListener("input", calc)); calc();
+}
+
+/* ---------------- Demo-account ---------------- */
+let DCH = null;
+function demoBlock(full) {
+  if (!D) return `<div class="empty card"><span class="muted">Nog geen demo-status ontvangen. Die komt mee met de eerstvolgende cloud-verversing.</span></div>`;
+  if (D.fout) return `<div class="err">Demo-account: ${esc(D.fout)}</div>`;
+  if (!D.gekoppeld) return `<div class="card" style="display:grid;gap:8px"><b>Nog niet gekoppeld.</b>
+    <ol class="small" style="margin:0;padding-left:18px;display:grid;gap:4px">
+      <li>Maak een gratis demo-account (oefenaccount) bij OANDA en kies dollar of euro als valuta.</li>
+      <li>Maak in OANDA onder "Manage API Access" een API-sleutel aan.</li>
+      <li>Zet die in GitHub: Settings > Secrets and variables > Actions > New repository secret, naam <b>OANDA_TOKEN</b>.</li>
+      <li>Klaar: binnen 3 minuten neemt de bot de signalen automatisch op dat oefenaccount.</li></ol>
+    <div class="muted small">Het adres van de oefenomgeving staat vast in de code: met een echte sleutel kan de bot niets doen.</div></div>`;
+  if (D.uit) return `<div class="card small">${esc(D.melding)}</div>`;
+  const ccy = D.valuta === "EUR" ? "€" : "$", m = v => ccy + nf(v, 0);
+  const totPct = (D.nav / D.start_saldo - 1) * 100, dayPct = (D.nav / D.dag_start - 1) * 100, R = D.regels || {};
+  const bar = (used, max) => `<div class="barcell" style="min-width:0"><div class="b" style="left:0;width:${Math.min(100, Math.max(0, used / max * 100))}%;background:${used / max > .7 ? "var(--short)" : "var(--warn)"}"></div></div>`;
+  const tr = t => `<tr><td>${esc(t.instrument.replace("_", "/"))}<div class="muted small">${esc(t.bron)}</div></td><td class="side-${t.units > 0 ? "LONG" : "SHORT"}">${t.units > 0 ? "kopen" : "verkopen"} ${nf(Math.abs(t.units), 0)}</td>
+    <td class="n">${nf(t.prijs, 5).replace(/0+$/, "").replace(/,$/, "")}</td><td class="n">${t.stop != null ? nf(t.stop, 5).replace(/0+$/, "").replace(/,$/, "") : "–"}</td><td class="n">${t.doel != null ? nf(t.doel, 5).replace(/0+$/, "").replace(/,$/, "") : "–"}</td>
+    <td class="small">${nlDT(t.dicht || t.open)}</td><td class="n ${t.pl > 0 ? "up" : t.pl < 0 ? "down" : ""}">${sgn(t.pl, 0)}</td></tr>`;
+  const head = `<thead><tr><th>Markt</th><th>Positie</th><th class="n">Prijs</th><th class="n">Stop</th><th class="n">Doel</th><th>Tijd</th><th class="n">Winst/verlies</th></tr></thead>`;
+  return `<div class="kpis">
+      <div class="kpi"><span class="label">Waarde (NAV)</span><span class="v">${m(D.nav)}</span><span class="d">start ${m(D.start_saldo)}</span></div>
+      <div class="kpi"><span class="label">Totaal resultaat</span><span class="v ${totPct >= 0 ? "up" : "down"}">${sgn(totPct)}%</span><span class="d">${sgn(D.nav - D.start_saldo, 0)} ${ccy}</span></div>
+      <div class="kpi"><span class="label">Vandaag</span><span class="v ${dayPct >= 0 ? "up" : "down"}">${sgn(dayPct)}%</span><span class="d">open: ${sgn(D.open_pl, 0)} ${ccy}</span></div>
+      <div class="kpi"><span class="label">Open trades</span><span class="v">${D.open_trades.length}</span><span class="d">max ${R.max_open ?? "–"} · ${D.orders.length} wachtende orders</span></div>
+    </div>
+    ${D.blokkade ? `<div class="err">${esc(D.blokkade)}</div>` : ""}
+    ${full ? `<div class="cols">
+      <div class="card small" style="display:grid;gap:6px"><div class="label">Prop-regels van de demo</div>
+        <div>Risico per trade: <b>${nf(R.risico_pct)}%</b> · max ${R.max_open} trades tegelijk · daytrade: sluit na ${R.max_uren} uur (ICT om 22:00 NL)</div>
+        <div>Daglimiet ${nf(R.dagverlies_pct, 1)}%: ${nf(Math.max(0, -dayPct))}% gebruikt</div>${bar(Math.max(0, -dayPct), R.dagverlies_pct)}
+        <div>Totaallimiet ${nf(R.totaalverlies_pct, 1)}%: ${nf(Math.max(0, -totPct))}% gebruikt</div>${bar(Math.max(0, -totPct), R.totaalverlies_pct)}
+        <div class="muted">Aan te passen in config.json onder "demo". Account ${esc(D.account)} · ${esc(D.omgeving)}</div></div>
+      <div class="card"><div class="label">Verloop accountwaarde</div><div id="c-demo" class="chartbox xs"></div></div></div>` : ""}
+    <div class="card tbl"><div class="label" style="margin-bottom:6px">Open trades</div>${D.open_trades.length ? `<table>${head}<tbody>${D.open_trades.map(tr).join("")}</tbody></table>` : `<span class="muted small">Geen open trades.</span>`}</div>
+    ${full ? `<div class="card tbl"><div class="label" style="margin-bottom:6px">Gesloten trades</div>${D.gesloten.length ? `<table>${head}<tbody>${D.gesloten.map(tr).join("")}</tbody></table>` : `<span class="muted small">Nog geen gesloten trades.</span>`}</div>
+    <div class="card tbl"><div class="label" style="margin-bottom:6px">Wat de bot deed</div>${(D.log || []).length ? `<table><tbody>${D.log.map(l => `<tr><td class="small" style="white-space:nowrap">${nlDT(l.t)}</td><td><b>${esc(l.actie)}</b></td><td>${esc(titel(l.markt || ""))}</td><td class="small">${esc(l.detail)}</td></tr>`).join("")}</tbody></table>` : `<span class="muted small">Nog geen acties.</span>`}</div>` : ""}`;
+}
+function drawDemo() {
+  if (DCH) { DCH.remove(); DCH = null }
+  const box = $("c-demo"); if (!box || !window.LightweightCharts || !(D?.equity || []).length) return;
+  DCH = LightweightCharts.createChart(box, { ...chartOpts(160), timeScale: { borderColor: css("--line"), timeVisible: true } });
+  DCH.addAreaSeries({ lineColor: css("--accent"), topColor: "rgba(95,179,201,.3)", bottomColor: "rgba(95,179,201,.02)", lineWidth: 2 })
+    .setData(uniqTimes(D.equity.map(([t, v]) => [nlShift(Date.parse(t) / 1000), v])));
+  DCH.timeScale().fitContent();
 }
 
 /* ---------------- Laden en navigeren ---------------- */
@@ -755,7 +808,8 @@ async function getJSON(u, bust) {
 }
 async function load() {
   ERR = [];
-  const [s, l, h] = await Promise.allSettled([getJSON(URLS.status, true), getJSON(URLS.lab, true), getJSON(URLS.hist, true)]);
+  const [s, l, h, d] = await Promise.allSettled([getJSON(URLS.status, true), getJSON(URLS.lab, true), getJSON(URLS.hist, true), getJSON(URLS.demo, true)]);
+  D = d.status === "fulfilled" ? d.value : null;
   if (s.status === "fulfilled") S = s.value; else ERR.push("live status niet op te halen (" + s.reason.message + ")");
   if (l.status === "fulfilled") L = l.value; else ERR.push("labresultaten niet op te halen (" + l.reason.message + ")");
   if (h.status === "fulfilled") H = h.value; else ERR.push("leergeschiedenis niet op te halen");
