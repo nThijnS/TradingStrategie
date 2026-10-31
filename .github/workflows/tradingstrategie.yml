@@ -55,10 +55,19 @@ jobs:
           key: logboek-${{ github.run_id }}
           restore-keys: logboek-
 
+      # Demo-trading (OANDA-oefenaccount, nepgeld): onthoudt welke signalen al als order zijn geplaatst
+      - uses: actions/cache/restore@v4
+        with:
+          path: demo_staat.json
+          key: demo-${{ github.run_id }}
+          restore-keys: demo-
+
       - name: Setups checken
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || vars.NTFY_TOPIC }}
           GH_TOKEN: ${{ github.token }}
+          OANDA_TOKEN: ${{ secrets.OANDA_TOKEN }}               # leeg = geen demo-trading
+          OANDA_ACCOUNT: ${{ secrets.OANDA_ACCOUNT || vars.OANDA_ACCOUNT }}
         run: |
           if [ -z "$NTFY_TOPIC" ]; then
             echo "::error::NTFY_TOPIC ontbreekt: zet het onder Settings > Secrets and variables > Actions"
@@ -80,6 +89,7 @@ jobs:
               last=$SECONDS
               d=$(mktemp -d)
               if python -W ignore live_status.py --uit "$d/status.json"; then
+                python -W ignore demo_broker.py --status "$d/status.json" --uit "$d/demo.json" || true
                 (cd "$d" && git init -q -b live && git add -A \
                   && git -c user.name="TradingStrategie-bot" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -qm "Live status" \
                   && git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" live) || echo "Status pushen mislukt"
@@ -94,6 +104,12 @@ jobs:
         with:
           path: verstuurd.json
           key: verstuurd-${{ github.run_id }}
+
+      - uses: actions/cache/save@v4
+        if: always() && hashFiles('demo_staat.json') != ''
+        with:
+          path: demo_staat.json
+          key: demo-${{ github.run_id }}
 
       - uses: actions/cache/save@v4
         if: always() && hashFiles('logboek.json') != ''
