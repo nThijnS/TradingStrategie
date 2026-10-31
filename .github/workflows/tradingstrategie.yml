@@ -55,7 +55,7 @@ jobs:
           key: logboek-${{ github.run_id }}
           restore-keys: logboek-
 
-      # Demo-trading (OANDA-oefenaccount, nepgeld): onthoudt welke signalen al als order zijn geplaatst
+      # Demo-trading (Capital.com- of OANDA-demo, nepgeld): onthoudt welke signalen al als order zijn geplaatst
       - uses: actions/cache/restore@v4
         with:
           path: demo_staat.json
@@ -66,7 +66,11 @@ jobs:
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || vars.NTFY_TOPIC }}
           GH_TOKEN: ${{ github.token }}
-          OANDA_TOKEN: ${{ secrets.OANDA_TOKEN }}               # leeg = geen demo-trading
+          # demo-trading (nepgeld); zonder deze geheimen gebeurt er niets
+          CAPITAL_API_KEY: ${{ secrets.CAPITAL_API_KEY }}
+          CAPITAL_IDENTIFIER: ${{ secrets.CAPITAL_IDENTIFIER }}
+          CAPITAL_PASSWORD: ${{ secrets.CAPITAL_PASSWORD }}
+          OANDA_TOKEN: ${{ secrets.OANDA_TOKEN }}
           OANDA_ACCOUNT: ${{ secrets.OANDA_ACCOUNT || vars.OANDA_ACCOUNT }}
         run: |
           if [ -z "$NTFY_TOPIC" ]; then
