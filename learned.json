@@ -1,5 +1,5 @@
 {
- "bijgewerkt": "2026-10-30T13:41-04:00",
+ "bijgewerkt": "2026-10-30T20:57-04:00",
  "markten": {
   "NQ": {
    "actief": false,
@@ -42,8 +42,8 @@
    "variant": "strenger · TP 1.5 · alle sessies · bias geen",
    "score": {
     "n": 183,
-    "gem": 0.229,
-    "score": 0.059,
+    "gem": 0.228,
+    "score": 0.058,
     "win": 0.464,
     "totaal": 8.5
    },
@@ -66,7 +66,7 @@
    "variant": "basis · TP 1.0 · alle sessies · bias 1H mee",
    "score": {
     "n": 56,
-    "gem": 0.337,
+    "gem": 0.336,
     "score": 0.073,
     "win": 0.464,
     "totaal": -6.1

@@ -1,6 +1,6 @@
 # Huidige strategie
 
-Bijgewerkt: 2026-10-30 13:41 NY. De bot kiest dit zelf, zie [[Leren]].
+Bijgewerkt: 2026-10-30 20:57 NY. De bot kiest dit zelf, zie [[Leren]].
 
 ## NQ: pauze (wel loggen en leren)
 - Displacement: **basis**
@@ -15,7 +15,7 @@ Bijgewerkt: 2026-10-30 13:41 NY. De bot kiest dit zelf, zie [[Leren]].
 - Doel: **1.5R**
 - Sessies: **alle sessies**
 - Biasfilter: **geen**
-- Score: +0.059R per trade (voorzichtig), gemiddeld +0.229R, 183 trades, win 46%
+- Score: +0.058R per trade (voorzichtig), gemiddeld +0.228R, 183 trades, win 46%
 - Actief sinds: 2026-10-30
 
 ## GOUD: actief
@@ -23,5 +23,5 @@ Bijgewerkt: 2026-10-30 13:41 NY. De bot kiest dit zelf, zie [[Leren]].
 - Doel: **1.0R**
 - Sessies: **alle sessies**
 - Biasfilter: **1H mee**
-- Score: +0.073R per trade (voorzichtig), gemiddeld +0.337R, 56 trades, win 46%
+- Score: +0.073R per trade (voorzichtig), gemiddeld +0.336R, 56 trades, win 46%
 - Actief sinds: 2026-10-30
