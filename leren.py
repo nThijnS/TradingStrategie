@@ -250,7 +250,7 @@ def write_journal(choice, report, mem):
     (JOURNAL / "Dagen").mkdir(exist_ok=True)
     now = datetime.now(ts.NY)
     # Huidige strategie
-    lines = ["# Huidige strategie", "", f"Bijgewerkt: {now:%Y-%m-%d %H:%M} NY. De bot kiest dit zelf, zie [[Leren]].", ""]
+    lines = ["# Huidige strategie", "", f"Bijgewerkt: {now:%Y-%m-%d %H:%M} NY. De bot kiest dit zelf, zie [Leren](Leren.md).", ""]
     for name, c in choice.items():
         v = c["variant"]
         sc = c["score"]
@@ -281,7 +281,7 @@ def journal_day(day_setups):
     for s in day_setups:
         lines += [f"## {s['markt']} {s['kant']} {s['tijd'][11:16]} ({s['sessie']}, {'kans' if s['kans'] else 'lage kans'})"]
         if s.get("chart"):
-            lines.append(f"![[{s['chart']}]]")
+            lines.append(f"![chart](../charts/{s['chart']})")   # gewone link: werkt op GitHub én in Obsidian
         lines += [f"- Entry {s['entry']} | stop {s['stop']} | TP {s['tp']} ({s['rr']}R)",
                   f"- Sweep: {s['sweep']} | checks: {', '.join(s['checks']) or '-'}",
                   f"- Uitkomst: **{s['uitkomst']}** ({s['R']:+.2f}R)", ""]
