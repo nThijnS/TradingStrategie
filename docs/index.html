@@ -268,7 +268,7 @@ const INST = {
   NVDA: { label: "Aandeel-CFD (1 lot = 1 aandeel)", v: 1, ccy: "USD", step: 1, comm: 0.02, spread: 0.05 },
   MSFT: { label: "Aandeel-CFD (1 lot = 1 aandeel)", v: 1, ccy: "USD", step: 1, comm: 0.02, spread: 0.08 },
 };
-const DEF = { acc: 50000, ccy: "USD", risk: 0.5, dll: 5, mdd: 10, exp: 2, lossToday: 0, inst: {} };
+const DEF = { acc: 50000, ccy: "EUR", risk: 0.5, dll: 3, mdd: 5, exp: 1.5, lossToday: 0, inst: {} };   // Alpha Capital "Alpha Direct"
 let P = JSON.parse(JSON.stringify(DEF));
 try { const s = JSON.parse(localStorage.getItem("radar-risk") || localStorage.getItem("prop") || "{}"); Object.assign(P, s); P.inst = P.inst || {} } catch (e) {}
 const inst = n => ({ ...(INST[n] || { label: "1 lot = 1 eenheid", v: 1, ccy: "USD", step: 0.01, comm: 0, spread: 0 }), ...(P.inst[n] || {}) });
@@ -690,7 +690,7 @@ function rRisk() {
   const expMax = P.acc * P.exp / 100 * rate(P.ccy);
   $("p-risk").innerHTML = `
     <div class="head"><div><h2>Risk Center</h2><p>Je demo-account dat de bot automatisch laat handelen, en je eigen prop-instellingen voor de positiegrootte.</p></div></div>
-    <section><h2>Demo-account <span class="muted" style="font:500 .85rem var(--body)">OANDA oefenaccount, nepgeld</span></h2>${demoBlock(true)}<div id="demo-eq-wrap"></div></section>
+    <section><h2>Demo-account <span class="muted" style="font:500 .85rem var(--body)">${esc(D?.broker || "broker-demo")}, nepgeld</span></h2>${demoBlock(true)}<div id="demo-eq-wrap"></div></section>
     <h2 style="margin-top:6px">Jouw prop-instellingen</h2>
     <div class="card" style="display:grid;gap:14px">
       <div class="form">
@@ -760,17 +760,17 @@ function demoBlock(full) {
   if (D.fout) return `<div class="err">Demo-account: ${esc(D.fout)}</div>`;
   if (!D.gekoppeld) return `<div class="card" style="display:grid;gap:8px"><b>Nog niet gekoppeld.</b>
     <ol class="small" style="margin:0;padding-left:18px;display:grid;gap:4px">
-      <li>Maak een gratis demo-account (oefenaccount) bij OANDA en kies dollar of euro als valuta.</li>
-      <li>Maak in OANDA onder "Manage API Access" een API-sleutel aan.</li>
-      <li>Zet die in GitHub: Settings > Secrets and variables > Actions > New repository secret, naam <b>OANDA_TOKEN</b>.</li>
-      <li>Klaar: binnen 3 minuten neemt de bot de signalen automatisch op dat oefenaccount.</li></ol>
-    <div class="muted small">Het adres van de oefenomgeving staat vast in de code: met een echte sleutel kan de bot niets doen.</div></div>`;
+      <li>Open een gratis demo-account bij Capital.com en zet tweestapsverificatie (2FA) aan.</li>
+      <li>Ga in Capital.com naar Settings > API integrations > Generate new key. Kies daar een eigen wachtwoord voor de sleutel.</li>
+      <li>Zet in GitHub (Settings > Secrets and variables > Actions) drie geheimen: <b>CAPITAL_API_KEY</b> (de sleutel), <b>CAPITAL_IDENTIFIER</b> (je login-e-mail) en <b>CAPITAL_PASSWORD</b> (het wachtwoord van de sleutel).</li>
+      <li>Klaar: binnen 3 minuten neemt de bot de signalen automatisch op je demo-account.</li></ol>
+    <div class="muted small">Het adres van de demo-omgeving staat vast in de code: met een echte sleutel kan de bot niets doen.</div></div>`;
   if (D.uit) return `<div class="card small">${esc(D.melding)}</div>`;
   const ccy = D.valuta === "EUR" ? "€" : "$", m = v => ccy + nf(v, 0);
   const totPct = (D.nav / D.start_saldo - 1) * 100, dayPct = (D.nav / D.dag_start - 1) * 100, R = D.regels || {};
   const bar = (used, max) => `<div class="barcell" style="min-width:0"><div class="b" style="left:0;width:${Math.min(100, Math.max(0, used / max * 100))}%;background:${used / max > .7 ? "var(--short)" : "var(--warn)"}"></div></div>`;
-  const tr = t => `<tr><td>${esc(t.instrument.replace("_", "/"))}<div class="muted small">${esc(t.bron)}</div></td><td class="side-${t.units > 0 ? "LONG" : "SHORT"}">${t.units > 0 ? "kopen" : "verkopen"} ${nf(Math.abs(t.units), 0)}</td>
-    <td class="n">${nf(t.prijs, 5).replace(/0+$/, "").replace(/,$/, "")}</td><td class="n">${t.stop != null ? nf(t.stop, 5).replace(/0+$/, "").replace(/,$/, "") : "–"}</td><td class="n">${t.doel != null ? nf(t.doel, 5).replace(/0+$/, "").replace(/,$/, "") : "–"}</td>
+  const tr = t => `<tr><td>${esc(String(t.instrument || "").replace("_", "/"))}<div class="muted small">${esc(t.bron || "")}</div></td><td class="${t.units == null ? "" : "side-" + (t.units > 0 ? "LONG" : "SHORT")}">${t.units == null ? "–" : (t.units > 0 ? "kopen " : "verkopen ") + nf(Math.abs(t.units), Math.abs(t.units) < 100 ? 2 : 0)}</td>
+    <td class="n">${t.prijs != null ? nf(t.prijs, 5).replace(/0+$/, "").replace(/,$/, "") : "–"}</td><td class="n">${t.stop != null ? nf(t.stop, 5).replace(/0+$/, "").replace(/,$/, "") : "–"}</td><td class="n">${t.doel != null ? nf(t.doel, 5).replace(/0+$/, "").replace(/,$/, "") : "–"}</td>
     <td class="small">${nlDT(t.dicht || t.open)}</td><td class="n ${t.pl > 0 ? "up" : t.pl < 0 ? "down" : ""}">${sgn(t.pl, 0)}</td></tr>`;
   const head = `<thead><tr><th>Markt</th><th>Positie</th><th class="n">Prijs</th><th class="n">Stop</th><th class="n">Doel</th><th>Tijd</th><th class="n">Winst/verlies</th></tr></thead>`;
   return `<div class="kpis">
@@ -781,11 +781,12 @@ function demoBlock(full) {
     </div>
     ${D.blokkade ? `<div class="err">${esc(D.blokkade)}</div>` : ""}
     ${full ? `<div class="cols">
-      <div class="card small" style="display:grid;gap:6px"><div class="label">Prop-regels van de demo</div>
-        <div>Risico per trade: <b>${nf(R.risico_pct)}%</b> · max ${R.max_open} trades tegelijk · daytrade: sluit na ${R.max_uren} uur (ICT om 22:00 NL)</div>
-        <div>Daglimiet ${nf(R.dagverlies_pct, 1)}%: ${nf(Math.max(0, -dayPct))}% gebruikt</div>${bar(Math.max(0, -dayPct), R.dagverlies_pct)}
-        <div>Totaallimiet ${nf(R.totaalverlies_pct, 1)}%: ${nf(Math.max(0, -totPct))}% gebruikt</div>${bar(Math.max(0, -totPct), R.totaalverlies_pct)}
-        <div class="muted">Aan te passen in config.json onder "demo". Account ${esc(D.account)} · ${esc(D.omgeving)}</div></div>
+      <div class="card small" style="display:grid;gap:6px"><div class="label">Prop-regels (Alpha Capital, Alpha Direct)</div>
+        <div>Hefboom max <b>1:${R.hefboom ?? 30}</b> · geen winstdoel · risico per trade <b>${nf(R.risico_pct)}%</b> · max ${R.max_open} trades tegelijk · daytrade: sluit na ${R.max_uren} uur (ICT om 22:00 NL)</div>
+        <div>Max dagverlies ${nf(R.dagverlies_pct, 1)}%: niet onder <b>${m(D.daggrens)}</b> vandaag (${nf(Math.max(0, -dayPct))}% gebruikt)</div>${bar(Math.max(0, -dayPct), R.dagverlies_pct)}
+        <div>${R.trailing ? "Meeschuivend (trailing) max verlies" : "Max verlies"} ${nf(R.totaalverlies_pct, 1)}%: niet onder <b>${m(D.grens)}</b>${R.trailing ? ` (5% onder de hoogste waarde ${m(D.piek)})` : ""}</div>${bar(Math.max(0, (D.piek - D.nav) / D.start_saldo * 100), R.totaalverlies_pct)}
+        <div class="muted">Een trade die bij verlies (samen met de open trades) een grens zou breken, opent de bot niet.</div>
+        <div class="muted">Aan te passen in config.json onder "demo". ${esc(D.broker)} · account ${esc(D.account)} · ${esc(D.omgeving)}</div></div>
       <div class="card"><div class="label">Verloop accountwaarde</div><div id="c-demo" class="chartbox xs"></div></div></div>` : ""}
     <div class="card tbl"><div class="label" style="margin-bottom:6px">Open trades</div>${D.open_trades.length ? `<table>${head}<tbody>${D.open_trades.map(tr).join("")}</tbody></table>` : `<span class="muted small">Geen open trades.</span>`}</div>
     ${full ? `<div class="card tbl"><div class="label" style="margin-bottom:6px">Gesloten trades</div>${D.gesloten.length ? `<table>${head}<tbody>${D.gesloten.map(tr).join("")}</tbody></table>` : `<span class="muted small">Nog geen gesloten trades.</span>`}</div>
