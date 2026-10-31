@@ -82,10 +82,10 @@
 <rect x="272.6" y="104.3" width="4.0" height="17.9" fill="#3fb68b"/>
 <line x1="281.4" y1="104.3" x2="281.4" y2="122.2" stroke="#e2595b"/>
 <rect x="279.4" y="104.3" width="4.0" height="17.9" fill="#e2595b"/>
-<line x1="288.2" y1="104.3" x2="288.2" y2="116.2" stroke="#3fb68b"/>
+<line x1="288.2" y1="98.3" x2="288.2" y2="116.2" stroke="#3fb68b"/>
 <rect x="286.2" y="104.3" width="4.0" height="12.0" fill="#3fb68b"/>
 <line x1="295.0" y1="98.3" x2="295.0" y2="116.2" stroke="#3fb68b"/>
-<rect x="293.0" y="104.3" width="4.0" height="6.0" fill="#3fb68b"/>
+<rect x="293.0" y="98.3" width="4.0" height="12.0" fill="#3fb68b"/>
 <line x1="301.8" y1="104.3" x2="301.8" y2="116.2" stroke="#e2595b"/>
 <rect x="299.8" y="104.3" width="4.0" height="6.0" fill="#e2595b"/>
 <line x1="308.6" y1="110.3" x2="308.6" y2="110.3" stroke="#3fb68b"/>
