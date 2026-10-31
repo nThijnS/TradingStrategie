@@ -18,7 +18,7 @@ on:
         default: true
 
 permissions:
-  contents: read
+  contents: write  # alleen voor de branch "live" met status.json (het dashboard leest die)
   actions: write   # nodig om zichzelf opnieuw te starten
 
 # Eén keten tegelijk. Testruns krijgen een eigen groep, zodat ze niet uren achter de keten wachten.
@@ -58,6 +58,7 @@ jobs:
       - name: Setups checken
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || vars.NTFY_TOPIC }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           if [ -z "$NTFY_TOPIC" ]; then
             echo "::error::NTFY_TOPIC ontbreekt: zet het onder Settings > Secrets and variables > Actions"
@@ -69,10 +70,22 @@ jobs:
           fi
           # elke minuut checken, ~5u40 lang (daarna neemt de volgende run het over)
           # config.json (de schakelaars uit het dashboard) en learned.json (leren.py) elke minuut opnieuw ophalen
+          # elke 3 minuten: status.json (koersen, signalen, cijfers) naar de branch "live" voor het dashboard
+          last=-999
           while [ "$SECONDS" -lt 20400 ]; do
             git fetch -q origin "${{ github.ref_name }}" && git checkout -q FETCH_HEAD -- config.json 2>/dev/null || true
-            git checkout -q FETCH_HEAD -- learned.json 2>/dev/null || true   # wat leren.py heeft gekozen
+            git checkout -q FETCH_HEAD -- learned.json leren_geschiedenis.json 2>/dev/null || true   # wat leren.py heeft gekozen
             python -W ignore tradingstrategie.py --once || true
+            if [ $((SECONDS - last)) -ge 180 ]; then
+              last=$SECONDS
+              d=$(mktemp -d)
+              if python -W ignore live_status.py --uit "$d/status.json"; then
+                (cd "$d" && git init -q -b live && git add status.json \
+                  && git -c user.name="TradingStrategie-bot" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -qm "Live status" \
+                  && git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" live) || echo "Status pushen mislukt"
+              fi
+              rm -rf "$d"
+            fi
             sleep 60
           done
 
