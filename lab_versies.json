@@ -1,0 +1,186 @@
+{
+ "BTC": [
+  {
+   "sinds": "2026-10-30",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  }
+ ],
+ "ETH": [
+  {
+   "sinds": "2026-10-30",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  }
+ ],
+ "SOL": [
+  {
+   "sinds": "2026-10-30",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  }
+ ],
+ "EURUSD": [
+  {
+   "sinds": "2026-10-30",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  }
+ ],
+ "GBPUSD": [
+  {
+   "sinds": "2026-10-30",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  }
+ ],
+ "USDJPY": [
+  {
+   "sinds": "2026-10-30",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  }
+ ],
+ "NQ": [
+  {
+   "sinds": "2026-10-30",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  }
+ ],
+ "ES": [
+  {
+   "sinds": "2026-10-30",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  }
+ ],
+ "DAX": [
+  {
+   "sinds": "2026-10-30",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  }
+ ],
+ "GOUD": [
+  {
+   "sinds": "2026-10-30",
+   "strategie": "momentum",
+   "titel": "Momentum",
+   "variant": {
+    "er": 0.5
+   },
+   "variant_txt": "efficiëntie > 0.5",
+   "ondergrens": 0.053,
+   "n": 229,
+   "reden": "beste ondergrens op nieuwe data (+0.053R over 229 trades)"
+  }
+ ],
+ "ZILVER": [
+  {
+   "sinds": "2026-10-30",
+   "strategie": "trend",
+   "titel": "Trend volgen",
+   "variant": {
+    "tp": 3.0
+   },
+   "variant_txt": "doel 3R",
+   "ondergrens": 0.013,
+   "n": 110,
+   "reden": "beste ondergrens op nieuwe data (+0.013R over 110 trades)"
+  }
+ ],
+ "OLIE": [
+  {
+   "sinds": "2026-10-30",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  }
+ ],
+ "AAPL": [
+  {
+   "sinds": "2026-10-30",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  }
+ ],
+ "NVDA": [
+  {
+   "sinds": "2026-10-30",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  }
+ ],
+ "MSFT": [
+  {
+   "sinds": "2026-10-30",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  }
+ ]
+}
