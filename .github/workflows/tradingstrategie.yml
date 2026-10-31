@@ -70,17 +70,17 @@ jobs:
           fi
           # elke minuut checken, ~5u40 lang (daarna neemt de volgende run het over)
           # config.json (de schakelaars uit het dashboard) en learned.json (leren.py) elke minuut opnieuw ophalen
-          # elke 3 minuten: status.json (koersen, signalen, cijfers) naar de branch "live" voor het dashboard
+          # elke 3 minuten: status.json en markt/*.json (koersen, candles, signalen) naar de branch "live" voor het dashboard
           last=-999
           while [ "$SECONDS" -lt 20400 ]; do
             git fetch -q origin "${{ github.ref_name }}" && git checkout -q FETCH_HEAD -- config.json 2>/dev/null || true
-            git checkout -q FETCH_HEAD -- learned.json leren_geschiedenis.json 2>/dev/null || true   # wat leren.py heeft gekozen
+            git checkout -q FETCH_HEAD -- learned.json leren_geschiedenis.json lab.json 2>/dev/null || true   # keuzes van leren.py en het lab
             python -W ignore tradingstrategie.py --once || true
             if [ $((SECONDS - last)) -ge 180 ]; then
               last=$SECONDS
               d=$(mktemp -d)
               if python -W ignore live_status.py --uit "$d/status.json"; then
-                (cd "$d" && git init -q -b live && git add status.json \
+                (cd "$d" && git init -q -b live && git add -A \
                   && git -c user.name="TradingStrategie-bot" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -qm "Live status" \
                   && git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" live) || echo "Status pushen mislukt"
               fi

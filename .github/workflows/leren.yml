@@ -1,11 +1,13 @@
-# Zelflerende stap: elke werkdag na de beurs test leren.py alle varianten op de nieuwste data,
+# Zelflerende stap: elke werkdag na de beurs test leren.py alle ICT-varianten op de nieuwste data,
 # bewaart de uitkomsten (leren_geheugen.json), kiest per markt de beste (learned.json) en schrijft
 # het Obsidian-journaal (journaal/). De meldingen-keten haalt learned.json elke minuut op.
+# Daarna vergelijkt strategielab.py zes soorten strategieën op 15 markten (lab.json, voor het dashboard).
+# Het lab draait ook in het weekend, voor crypto.
 name: Leren
 
 on:
   schedule:
-    - cron: "30 21 * * 1-5"    # 21:30 UTC = na het sluiten van NY, in zomer- en wintertijd
+    - cron: "30 21 * * *"      # 21:30 UTC = na het sluiten van NY, in zomer- en wintertijd
   workflow_dispatch: {}
 
 permissions:
@@ -37,14 +39,23 @@ jobs:
           key: logboek-leren-${{ github.run_id }}
           restore-keys: logboek-
 
-      - name: Leren en journaal schrijven
-        run: python -W ignore leren.py
+      - name: Leren en journaal schrijven (werkdagen)
+        run: |
+          if [ "$(date -u +%u)" -le 5 ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            python -W ignore leren.py
+          else
+            echo "Weekend: ICT-leren overgeslagen"
+          fi
+
+      # Een fout hier mag het ICT-leren niet tegenhouden
+      - name: Strategielab (alle markten en strategieën)
+        run: python -W ignore strategielab.py || echo "::warning::strategielab mislukt"
 
       - name: Resultaat terugzetten in de repo
         run: |
           git config user.name "TradingStrategie-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add learned.json leren_geheugen.json leren_geschiedenis.json journaal
+          git add learned.json leren_geheugen.json leren_geschiedenis.json journaal lab.json lab_versies.json lab_geschiedenis.json
           if git diff --cached --quiet; then
             echo "Niets veranderd"
             exit 0
