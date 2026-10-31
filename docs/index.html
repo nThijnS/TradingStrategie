@@ -5,11 +5,12 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
 <style>
-/* Layout: one column of decision-first bands — status strip, today's trades, markets, prop-firm sizing, learning log.
-   Dark-first like a trading terminal; light variant for daylight. */
+/* Layout: sticky top bar with six sections (bottom tab bar on phones); each section is one column of
+   decision-first blocks: summary tiles, then charts, then tables. Dark terminal look, light variant for daylight. */
 :root {
-  --bg: #0d1114; --panel: #151b20; --line: #26313a; --fg: #e6ecef; --muted: #8a9aa6;
+  --bg: #0d1114; --panel: #151b20; --panel2: #1b232a; --line: #26313a; --fg: #e6ecef; --muted: #8a9aa6;
   --accent: #5fb3c9; --long: #3ecf8e; --short: #ff6b6b; --warn: #f2b84b; --idle: #5d6b75;
   --long-bg: rgba(62,207,142,.12); --short-bg: rgba(255,107,107,.12); --warn-bg: rgba(242,184,75,.13); --accent-bg: rgba(95,179,201,.12);
   --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
@@ -18,387 +19,779 @@
   color-scheme: dark;
 }
 @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
-  --bg: #f3f5f6; --panel: #ffffff; --line: #d9e0e4; --fg: #14202a; --muted: #5b6b77;
+  --bg: #f3f5f6; --panel: #ffffff; --panel2: #eef2f4; --line: #d9e0e4; --fg: #14202a; --muted: #5b6b77;
   --accent: #1f7f99; --long: #128a57; --short: #c93c3c; --warn: #a86d00; --idle: #8796a1;
   --long-bg: rgba(18,138,87,.09); --short-bg: rgba(201,60,60,.09); --warn-bg: rgba(168,109,0,.1); --accent-bg: rgba(31,127,153,.09);
   color-scheme: light; } }
 :root[data-theme="light"] {
-  --bg: #f3f5f6; --panel: #ffffff; --line: #d9e0e4; --fg: #14202a; --muted: #5b6b77;
+  --bg: #f3f5f6; --panel: #ffffff; --panel2: #eef2f4; --line: #d9e0e4; --fg: #14202a; --muted: #5b6b77;
   --accent: #1f7f99; --long: #128a57; --short: #c93c3c; --warn: #a86d00; --idle: #8796a1;
   --long-bg: rgba(18,138,87,.09); --short-bg: rgba(201,60,60,.09); --warn-bg: rgba(168,109,0,.1); --accent-bg: rgba(31,127,153,.09);
   color-scheme: light; }
 
 * { box-sizing: border-box }
-body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 var(--body);
-  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 48px; }
-.wrap { max-width: 1080px; margin: 0 auto; display: grid; gap: 34px }
+html, body { background: var(--bg) }
+body { margin: 0; color: var(--fg); font: 15px/1.5 var(--body); padding-bottom: 80px }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--panel) }
+.gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+.wrap { max-width: 1180px; margin: 0 auto }
 h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; letter-spacing: -.01em }
-h1 { font-size: 1.6rem }
-h2 { font-size: 1.25rem; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap }
-h2 small { font: 500 .8rem var(--body); color: var(--muted) }
+h1 { font-size: 1.15rem } h2 { font-size: 1.3rem } h3 { font-size: 1.05rem }
 .num, .mono { font-family: var(--mono); font-variant-numeric: tabular-nums }
-.muted { color: var(--muted) }
-.label { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600 }
-section { display: grid; gap: 14px; min-width: 0 }
+.muted { color: var(--muted) } .small { font-size: .82rem }
+.label { font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600 }
+a { color: var(--accent) }
+.up { color: var(--long) } .down { color: var(--short) } .warn { color: var(--warn) }
 
-/* status strip */
-.top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap }
-.pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 99px; font-size: .78rem; font-weight: 600; white-space: nowrap }
+/* top bar + navigation */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--panel); border-bottom: 1px solid var(--line) }
+.bar .wrap { display: flex; align-items: center; gap: 18px; min-height: 56px; flex-wrap: wrap }
+.brand { display: flex; align-items: center; gap: 10px; margin-right: auto }
+.brand .dot { width: 10px; height: 10px; border-radius: 3px; background: var(--accent); transform: rotate(45deg) }
+nav.tabs { display: flex; gap: 2px }
+nav.tabs a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: .88rem; padding: 8px 12px; border-radius: 8px; display: flex; align-items: center; gap: 7px }
+nav.tabs a svg { width: 16px; height: 16px; flex: none }
+nav.tabs a.on { color: var(--fg); background: var(--accent-bg) }
+nav.tabs a:hover { color: var(--fg) }
+.barinfo { display: flex; gap: 8px; align-items: center }
+@media (max-width: 860px) {
+  nav.tabs { position: fixed; bottom: 0; left: 0; right: 0; z-index: 6; background: var(--panel); border-top: 1px solid var(--line);
+    padding: 4px max(4px, env(safe-area-inset-right, 0px)) calc(4px + env(safe-area-inset-bottom, 0px)) max(4px, env(safe-area-inset-left, 0px)); justify-content: space-around }
+  nav.tabs a { flex-direction: column; gap: 2px; font-size: .64rem; padding: 6px 4px; flex: 1; text-align: center }
+  nav.tabs a svg { width: 20px; height: 20px }
+}
+
+main { padding-block: 22px }
+.page { display: grid; gap: 26px }
+.page[hidden] { display: none !important }
+.head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap }
+.head p { margin: 4px 0 0; color: var(--muted); max-width: 70ch; font-size: .9rem }
+section { display: grid; gap: 12px; min-width: 0 }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; min-width: 0 }
+.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)) }
+.grid.sm { grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr)) }
+.cols { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)) }
+
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 99px; font-size: .76rem; font-weight: 600; white-space: nowrap }
 .pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor }
+.pill.nodot::before { display: none }
 .p-ok { color: var(--long); background: var(--long-bg) } .p-warn { color: var(--warn); background: var(--warn-bg) }
-.p-bad { color: var(--short); background: var(--short-bg) } .p-idle { color: var(--muted); background: var(--accent-bg) }
+.p-bad { color: var(--short); background: var(--short-bg) } .p-idle { color: var(--muted); background: var(--panel2) }
 .p-acc { color: var(--accent); background: var(--accent-bg) }
-.now { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; display: grid; gap: 8px }
-.now .big { font-family: var(--display); font-size: 1.35rem; font-weight: 700; line-height: 1.25 }
-.sessbar { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px }
-.sess { font-size: .8rem; padding: 4px 10px; border: 1px solid var(--line); border-radius: 8px; color: var(--muted) }
+
+/* hero + KPI tiles */
+.hero { display: grid; gap: 10px }
+.hero .big { font-family: var(--display); font-size: clamp(1.3rem, 3vw, 1.75rem); font-weight: 700; line-height: 1.2 }
+.kpis { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: grid; gap: 2px }
+.kpi .v { font-family: var(--mono); font-size: 1.35rem; font-weight: 600 }
+.kpi .d { font-size: .76rem; color: var(--muted) }
+.sessbar { display: flex; gap: 8px; flex-wrap: wrap }
+.sess { font-size: .78rem; padding: 4px 10px; border: 1px solid var(--line); border-radius: 8px; color: var(--muted) }
 .sess.on { border-color: var(--accent); color: var(--accent); font-weight: 600 }
 
-/* trades */
-.trades { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)) }
-.trade { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 12px; border-top: 4px solid var(--idle) }
+/* signal cards */
+.trade { display: grid; gap: 12px; border-top: 4px solid var(--idle) }
 .trade.LONG { border-top-color: var(--long) } .trade.SHORT { border-top-color: var(--short) }
-.trade.info { opacity: .72 }
+.trade.info { opacity: .7 }
 .trade-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px }
-.trade-head h3 { font-size: 1.25rem }
 .side-LONG { color: var(--long) } .side-SHORT { color: var(--short) }
 .lv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px }
 .lv div { background: var(--bg); border-radius: 10px; padding: 8px 10px; min-width: 0 }
 .lv .v { font-family: var(--mono); font-weight: 600; font-size: .92rem; white-space: nowrap }
-.lv .d { font-size: .75rem; color: var(--muted) }
+.lv .d { font-size: .72rem; color: var(--muted) }
 .size { background: var(--accent-bg); border-radius: 10px; padding: 10px 12px; display: grid; gap: 2px }
-.size .v { font-family: var(--mono); font-weight: 600; font-size: 1.05rem; color: var(--accent) }
+.size .v { font-family: var(--mono); font-weight: 600; font-size: 1.02rem; color: var(--accent) }
 .chips { display: flex; flex-wrap: wrap; gap: 6px }
-.chip { font-size: .74rem; padding: 2px 8px; border-radius: 6px; background: var(--bg); color: var(--muted) }
-.chip.ok { color: var(--long) } .chip.no { color: var(--muted); text-decoration: line-through }
-.empty { background: var(--panel); border: 1px dashed var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 6px }
+.chip { font-size: .72rem; padding: 2px 8px; border-radius: 6px; background: var(--bg); color: var(--muted) }
+.chip.ok { color: var(--long) } .chip.no { text-decoration: line-through }
+.empty { border: 1px dashed var(--line); border-radius: 14px; padding: 20px; display: grid; gap: 6px; background: transparent }
 
-/* markets */
-.markets { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)) }
-.mk { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 12px; align-content: start; min-width: 0 }
-.mk-head { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start }
-.price { font-family: var(--mono); font-size: 1.4rem; font-weight: 600 }
-.up { color: var(--long) } .down { color: var(--short) }
-svg.spark { width: 100%; height: 70px; display: block }
-.kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: .86rem }
-.kv dt { color: var(--muted) } .kv dd { margin: 0; text-align: right; font-family: var(--mono) }
-.verdict { font-size: .88rem; padding: 10px 12px; border-radius: 10px; background: var(--bg) }
-.verdict.bad { color: var(--short) } .verdict.meh { color: var(--warn) }
-details summary { cursor: pointer; color: var(--accent); font-size: .85rem }
-.hist { width: 100%; border-collapse: collapse; font-size: .8rem; margin-top: 8px }
-.hist td { padding: 4px 0; border-top: 1px solid var(--line) }
-.hist td:last-child { text-align: right; font-family: var(--mono) }
+/* market tiles */
+.tile { display: grid; gap: 8px; cursor: pointer; text-decoration: none; color: inherit; transition: border-color .15s }
+.tile:hover, .tile:focus-visible { border-color: var(--accent) }
+.tile-top { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start }
+.price { font-family: var(--mono); font-size: 1.25rem; font-weight: 600 }
+.tags { display: flex; flex-wrap: wrap; gap: 6px }
+.tag { font-size: .72rem; padding: 2px 8px; border-radius: 6px; border: 1px solid var(--line); color: var(--muted) }
+.tag.trend-Uptrend { color: var(--long); border-color: currentColor } .tag.trend-Downtrend { color: var(--short); border-color: currentColor }
+.tag.vol-Hoge { color: var(--warn); border-color: currentColor }
+.filters { display: flex; gap: 6px; flex-wrap: wrap }
+button, .btn { font: 600 .82rem var(--body); color: var(--muted); background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; cursor: pointer; text-decoration: none }
+button.on, .btn.on { color: var(--accent); border-color: var(--accent); background: var(--accent-bg) }
+button:hover { color: var(--fg) }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
 
-/* prop firm */
-.prop { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 16px }
-.form { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)) }
-.form label { display: grid; gap: 4px; font-size: .8rem; color: var(--muted); font-weight: 500 }
-input, select { font: 500 .95rem var(--mono); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; width: 100%; min-width: 0 }
+/* charts */
+.chartbox { height: 400px; position: relative; border-radius: 10px; overflow: hidden }
+.chartbox.sm { height: 230px } .chartbox.xs { height: 160px }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: .76rem; color: var(--muted) }
+.legend i { display: inline-block; width: 14px; height: 0; border-top: 2px dashed; vertical-align: middle; margin-right: 5px }
+
+/* tables */
+.tbl { overflow-x: auto }
+table { width: 100%; border-collapse: collapse; font-size: .84rem }
+th { text-align: left; font-size: .68rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap }
+td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top }
+td.n, th.n { text-align: right; font-family: var(--mono); white-space: nowrap }
+tr.sel td { background: var(--accent-bg) }
+tr.link { cursor: pointer } tr.link:hover td { background: var(--panel2) }
+.barcell { position: relative; height: 14px; min-width: 120px; background: var(--panel2); border-radius: 4px }
+.barcell .b { position: absolute; top: 2px; height: 10px; border-radius: 3px }
+.barcell .z { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--muted) }
+.barcell .ci { position: absolute; top: 6px; height: 2px; background: var(--fg); opacity: .5 }
+
+/* stats */
+.stats { display: grid; gap: 1px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden }
+.stat { background: var(--panel); padding: 10px 12px; display: grid; gap: 2px }
+.stat .v { font-family: var(--mono); font-size: 1.05rem; font-weight: 600 }
+.verdict { font-size: .88rem; padding: 10px 12px; border-radius: 10px; background: var(--panel2) }
+.verdict.bad { color: var(--short) } .verdict.meh { color: var(--warn) } .verdict.good { color: var(--long) }
+
+/* timeline */
+.tl { display: grid; border-left: 2px solid var(--line); margin-left: 6px }
+.tl-item { position: relative; padding: 0 0 22px 20px; display: grid; gap: 8px; min-width: 0 }
+.tl-item::before { content: ""; position: absolute; left: -7px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent) }
+details > summary { cursor: pointer; color: var(--accent); font-size: .86rem; font-weight: 600 }
+details[open] > summary { margin-bottom: 8px }
+
+/* forms */
+.form { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr)) }
+.form label { display: grid; gap: 4px; font-size: .78rem; color: var(--muted); font-weight: 500 }
+input, select { font: 500 .92rem var(--mono); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 7px 9px; width: 100%; min-width: 0 }
 select { font-family: var(--body) }
-input:focus-visible, select:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
-.sum { display: flex; gap: 22px; flex-wrap: wrap }
-.sum div { display: grid } .sum .v { font-family: var(--mono); font-size: 1.15rem; font-weight: 600 }
+td input { padding: 5px 7px; font-size: .84rem; min-width: 80px }
 
-/* learning */
-.tl { display: grid; gap: 0; border-left: 2px solid var(--line); margin-left: 6px }
-.tl-item { position: relative; padding: 0 0 18px 20px; display: grid; gap: 4px }
-.tl-item::before { content: ""; position: absolute; left: -7px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--panel); border: 2px solid var(--accent) }
-.tl-item ul { margin: 0; padding-left: 18px; font-size: .88rem }
-
-.note { font-size: .82rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; max-width: 75ch }
 .err { background: var(--short-bg); color: var(--short); border-radius: 12px; padding: 12px 14px; font-size: .9rem }
-a { color: var(--accent) }
-button { font: 600 .82rem var(--body); color: var(--accent); background: var(--accent-bg); border: 0; border-radius: 8px; padding: 6px 12px; cursor: pointer }
-@media (prefers-reduced-motion: no-preference) { .trade, .mk { transition: border-color .2s } }
+.warnbox { background: var(--warn-bg); color: var(--warn); border-radius: 12px; padding: 12px 14px; font-size: .9rem }
+.note { font-size: .8rem; color: var(--muted); max-width: 80ch }
+.term { border-bottom: 1px dotted var(--muted); cursor: help }
+.gloss { display: grid; gap: 6px; font-size: .84rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)) }
+.gloss div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px }
+.back { text-decoration: none; font-weight: 600; font-size: .86rem }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important } }
 </style>
 
-<div class="wrap">
-  <header class="top">
-    <div>
-      <h1>TradingStrategie Radar</h1>
-      <div class="muted" id="mode">Laden…</div>
-    </div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <span id="fresh" class="pill p-idle">laden</span>
-      <button id="reload" type="button">Ververs</button>
-    </div>
-  </header>
+<header class="bar gut">
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span><h1>TradingStrategie Radar</h1></div>
+    <nav class="tabs" aria-label="Onderdelen">
+      <a href="#dashboard" data-p="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Dashboard</a>
+      <a href="#markets" data-p="markets"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4v16M17 4v16"/><rect x="4" y="8" width="6" height="8" rx="1"/><rect x="14" y="6" width="6" height="7" rx="1"/></svg>Markets</a>
+      <a href="#learning" data-p="learning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Learning</a>
+      <a href="#datafarm" data-p="datafarm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>Data Farm</a>
+      <a href="#performance" data-p="performance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20h18M5 16l5-6 4 3 6-8"/></svg>Performance</a>
+      <a href="#risk" data-p="risk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>Risk</a>
+    </nav>
+    <div class="barinfo"><span id="fresh" class="pill p-idle">laden</span><button id="reload" type="button">Ververs</button></div>
+  </div>
+</header>
 
-  <div id="error" class="err" hidden></div>
+<main class="gut"><div class="wrap">
+  <div id="error" class="err" hidden style="margin-bottom:16px"></div>
+  <div id="mode" class="muted small" style="margin-bottom:14px"></div>
 
-  <section aria-labelledby="h-now">
-    <h2 id="h-now" hidden>Wat doet de bot nu?</h2>
-    <div class="now" id="now"><div class="big">Status laden…</div></div>
-  </section>
+  <div class="page" id="p-dashboard"></div>
+  <div class="page" id="p-markets" hidden></div>
+  <div class="page" id="p-learning" hidden></div>
+  <div class="page" id="p-datafarm" hidden></div>
+  <div class="page" id="p-performance" hidden></div>
+  <div class="page" id="p-risk" hidden></div>
 
-  <section aria-labelledby="h-trades">
-    <h2 id="h-trades">Trades van vandaag <small>signalen die de bot vandaag vond, met jouw positiegrootte</small></h2>
-    <div id="trades" class="trades"></div>
-  </section>
-
-  <section aria-labelledby="h-markets">
-    <h2 id="h-markets">Markten <small>koers, strategie en hoe goed die tot nu toe was</small></h2>
-    <div id="markets" class="markets"></div>
-  </section>
-
-  <section aria-labelledby="h-prop">
-    <h2 id="h-prop">Prop firm <small>wordt alleen op dit apparaat bewaard</small></h2>
-    <div class="prop">
-      <div class="form">
-        <label for="acc">Accountgrootte ($)<input id="acc" type="number" min="0" step="1000" inputmode="decimal"></label>
-        <label for="risk">Risico per trade (%)<input id="risk" type="number" min="0" step="0.05" inputmode="decimal"></label>
-        <label for="dll">Max verlies per dag (%)<input id="dll" type="number" min="0" step="0.5" inputmode="decimal"></label>
-        <label for="mdd">Max verlies totaal (%)<input id="mdd" type="number" min="0" step="0.5" inputmode="decimal"></label>
-        <label for="in-NQ">Nasdaq handel ik als<select id="in-NQ"></select></label>
-        <label for="in-EURUSD">EUR/USD handel ik als<select id="in-EURUSD"></select></label>
-        <label for="in-GOUD">Goud handel ik als<select id="in-GOUD"></select></label>
-      </div>
-      <div class="sum" id="propsum"></div>
-      <div class="note" style="border:0;padding:0">Positiegrootte = risico in dollars ÷ (afstand instap–stop × waarde per punt). Controleer de waarde per punt bij je eigen prop firm: die verschilt per broker. Spread en commissie komen er nog bij.</div>
-    </div>
-  </section>
-
-  <section aria-labelledby="h-learn">
-    <h2 id="h-learn">Wat heeft de bot geleerd? <small>elke werkdagavond test hij 48 varianten per markt opnieuw</small></h2>
-    <div id="learn"></div>
-  </section>
-
-  <p class="note">
-    Deze pagina plaatst nooit orders en is geen financieel advies. De bot zit in een <b>forward test</b>: hij wordt getest op nieuwe dagen die hij nog niet kende.
-    Uit de backtests blijkt geen bewezen voordeel; een paar winnende trades zeggen nog niets. Neem de signalen alleen als je zelf de setup ziet en het risico accepteert.
-    <br><b>Begrippen.</b> <b>R</b> = je risico per trade (1R verliezen = stop geraakt). <b>Ondergrens</b> = de verwachte opbrengst min de onzekerheid; pas als die boven 0 ligt, laat de bot een markt meedoen.
-    <b>Drawdown</b> = het grootste verlies vanaf een top. <b>Lage kans</b> = setup buiten de sessies of filters die het best werkten.
-  </p>
-</div>
+  <p class="note" style="margin-top:34px">Alleen analyse, backtests en papertrades: deze site en de bot plaatsen nooit orders. Geen financieel advies.
+  Strategieën worden getest op data die ze nog niet kenden; een paar winnende trades zeggen niets.</p>
+</div></main>
 
 <script>
+"use strict";
 const REPO = "nThijnS/TradingStrategie";
 const LIVE = /github\.io$/.test(location.hostname);
-const SRC = LIVE ? `https://raw.githubusercontent.com/${REPO}/live/status.json` : "status.json";
-const NAMES = { NQ: "Nasdaq 100", EURUSD: "EUR/USD", GOUD: "Goud" };
-// waarde in $ van 1,0 prijsbeweging per lot/contract; stap = kleinste ordergrootte
-const INSTR = {
-  NQ: [["cfd", "US100 CFD (1 lot = $1 per punt)", 1, 0.01, "US100"], ["mnq", "MNQ micro future ($2 per punt)", 2, 1], ["nq", "NQ future ($20 per punt)", 20, 1]],
-  EURUSD: [["fx", "Forex/CFD (1 lot = $10 per pip)", 100000, 0.01], ["m6e", "M6E micro future ($1,25 per pip)", 12500, 1], ["6e", "6E future ($12,50 per pip)", 125000, 1]],
-  GOUD: [["cfd", "XAUUSD CFD (1 lot = 100 oz)", 100, 0.01], ["mgc", "MGC micro future ($10 per $1)", 10, 1], ["gc", "GC future ($100 per $1)", 100, 1]],
+const RAW = `https://raw.githubusercontent.com/${REPO}`;
+const URLS = {
+  status: LIVE ? `${RAW}/live/status.json` : "status.json",
+  lab: LIVE ? `${RAW}/main/lab.json` : "lab.json",
+  hist: LIVE ? `${RAW}/main/lab_geschiedenis.json` : "lab_geschiedenis.json",
+  markt: n => LIVE ? `${RAW}/live/markt/${n}.json` : `markt/${n}.json`,
 };
-const DEF = { acc: 50000, risk: 0.5, dll: 5, mdd: 10, NQ: "cfd", EURUSD: "fx", GOUD: "cfd" };
-let P = { ...DEF }, DATA = null;
-try { Object.assign(P, JSON.parse(localStorage.getItem("prop") || "{}")) } catch (e) {}
+const SOORT = { crypto: "Crypto", forex: "Forex", index: "Indices", grondstof: "Grondstoffen", aandeel: "Aandelen" };
+const GLOSS = {
+  "R": "Je risico per trade. 1R verliezen = je stop is geraakt. +2R = twee keer je risico gewonnen.",
+  "Verwachte opbrengst": "Gemiddeld resultaat per trade in R (expectancy). Boven 0 = de strategie verdient gemiddeld geld.",
+  "Ondergrens": "Verwachte opbrengst min de onzekerheid (1 standaardfout). De bot kiest alleen strategieën waarvan dit boven 0 ligt.",
+  "Nieuwe data": "Out-of-sample: trades in periodes die de strategie bij het kiezen nog niet had gezien (walk-forward). Dit is de eerlijke test.",
+  "Oude data": "In-sample: de beste variant achteraf gekozen op alle data. Ziet er altijd beter uit dan het is.",
+  "Walk-forward": "Kies de beste variant op 240 dagen, test die op de 60 dagen erna, schuif op en herhaal. Zo telt alleen wat op onbekende data gebeurde.",
+  "Profit factor": "Totale winst gedeeld door totaal verlies. Boven 1 = winstgevend, boven 1,5 = sterk.",
+  "Drawdown": "Het grootste verlies vanaf een eerdere top, in R. Belangrijk voor de verlieslimieten van je prop firm.",
+  "Marktconditie": "Trend (prijs beweegt efficiënt één kant op), zijwaarts (heen en weer) en hoe groot de beweging is vergeleken met het afgelopen jaar.",
+  "95%-interval": "Waar de echte verwachte opbrengst met 95% zekerheid ligt. Loopt dit door 0 heen, dan is niet bewezen dat de strategie werkt.",
+};
+const STATUS_TXT = { live: "live", vertraagd: "vertraagd", dicht: "markt dicht", storing: "storing" };
+const STATUS_CLS = { live: "p-ok", vertraagd: "p-warn", dicht: "p-idle", storing: "p-bad" };
 
+let S = null, L = null, H = [], MCACHE = {}, ERR = [];
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const nf = (v, d = 2) => v == null ? "–" : Number(v).toLocaleString("nl-NL", { minimumFractionDigits: d, maximumFractionDigits: d });
-const sgn = (v, d = 2) => v == null ? "–" : (v > 0 ? "+" : v < 0 ? "−" : "") + nf(Math.abs(v), d);
-const usd = v => "$" + Math.round(v).toLocaleString("nl-NL");
-const nlTime = iso => new Date(iso).toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit", timeZone: "Europe/Amsterdam" });
-const nlDay = iso => new Date(iso).toLocaleString("nl-NL", { weekday: "long", hour: "2-digit", minute: "2-digit", timeZone: "Europe/Amsterdam" });
-const ago = iso => { const m = Math.round((Date.now() - new Date(iso)) / 60000); return m < 1 ? "net" : m < 60 ? `${m} min geleden` : m < 1440 ? `${Math.round(m / 60)} uur geleden` : `${Math.round(m / 1440)} dagen geleden` };
+const nf = (v, d = 2) => v == null || !isFinite(v) ? "–" : Number(v).toLocaleString("nl-NL", { minimumFractionDigits: d, maximumFractionDigits: d });
+const sgn = (v, d = 2) => v == null || !isFinite(v) ? "–" : (v > 0 ? "+" : v < 0 ? "−" : "") + nf(Math.abs(v), d);
+const pct = v => v == null ? "–" : Math.round(v * 100) + "%";
+const tz = { timeZone: "Europe/Amsterdam" };
+const nlTime = iso => new Date(iso).toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit", ...tz });
+const nlDate = iso => new Date(iso).toLocaleDateString("nl-NL", { day: "numeric", month: "short", ...(new Date(iso).getFullYear() !== new Date().getFullYear() ? { year: "numeric" } : {}), ...tz });
+const nlDT = iso => new Date(iso).toLocaleString("nl-NL", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", ...tz });
+const ago = iso => { if (!iso) return "onbekend"; const m = Math.round((Date.now() - new Date(iso)) / 60000); return m < 1 ? "net" : m < 60 ? `${m} min geleden` : m < 1440 ? `${Math.round(m / 60)} uur geleden` : `${Math.round(m / 1440)} dagen geleden` };
+const term = (t, label) => `<span class="term" title="${esc(GLOSS[t] || "")}">${esc(label || t)}</span>`;
+const LM = n => L?.markten?.find(m => m.naam === n);
+const SM = n => S?.alle_markten?.find(m => m.naam === n);
+const IM = n => S?.markten?.find(m => m.naam === n);
+const titel = n => SM(n)?.titel || LM(n)?.titel || n;
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
-function plainVariant(v) {
-  if (!v) return "standaardinstellingen";
-  const p = v.split("·").map(s => s.trim()), out = [];
-  for (const x of p) {
-    if (x === "strenger") out.push("alleen sterke prijsbewegingen");
-    else if (x === "basis") out.push("normale prijsbewegingen");
-    else if (x.startsWith("TP DOL")) out.push("winst nemen bij de volgende high/low");
-    else if (x.startsWith("TP")) out.push(`winst nemen op ${x.slice(3).replace(".", ",")}× het risico`);
-    else if (x === "alle sessies") out.push("London + New York");
-    else if (x === "NY AM + London") out.push("London + New York ochtend");
-    else if (x === "NY AM") out.push("alleen New York ochtend");
-    else if (x === "bias 1H mee") out.push("alleen mee met de 1-uurs trend");
-    else if (x === "bias geen") out.push("geen trendfilter");
-  }
-  return out.join(", ");
+/* ---------------- Risk settings (bewaard op dit apparaat) ---------------- */
+// v = waarde van 1,0 prijsbeweging per lot in valuta ccy; step = kleinste ordergrootte; comm = commissie per lot heen+terug (in ccy);
+// spread in prijs-eenheden
+const INST = {
+  BTC: { label: "BTCUSD CFD (1 lot = 1 BTC)", v: 1, ccy: "USD", step: 0.01, comm: 0, spread: 20 },
+  ETH: { label: "ETHUSD CFD (1 lot = 1 ETH)", v: 1, ccy: "USD", step: 0.01, comm: 0, spread: 1.5 },
+  SOL: { label: "SOLUSD CFD (1 lot = 1 SOL)", v: 1, ccy: "USD", step: 0.1, comm: 0, spread: 0.1 },
+  EURUSD: { label: "Forex (1 lot = 100.000)", v: 100000, ccy: "USD", step: 0.01, comm: 5, spread: 0.00005 },
+  GBPUSD: { label: "Forex (1 lot = 100.000)", v: 100000, ccy: "USD", step: 0.01, comm: 5, spread: 0.00008 },
+  USDJPY: { label: "Forex (1 lot = 100.000, winst in yen)", v: 100000, ccy: "JPY", step: 0.01, comm: 5, spread: 0.008 },
+  NQ: { label: "US100 CFD ($1 per punt)", v: 1, ccy: "USD", step: 0.01, comm: 0, spread: 1.5, presets: [["US100 CFD ($1 per punt)", 1, 0.01], ["MNQ micro future ($2 per punt)", 2, 1], ["NQ future ($20 per punt)", 20, 1]] },
+  ES: { label: "US500 CFD ($1 per punt)", v: 1, ccy: "USD", step: 0.01, comm: 0, spread: 0.5, presets: [["US500 CFD ($1 per punt)", 1, 0.01], ["MES micro future ($5 per punt)", 5, 1], ["ES future ($50 per punt)", 50, 1]] },
+  DAX: { label: "GER40 CFD (€1 per punt)", v: 1, ccy: "EUR", step: 0.01, comm: 0, spread: 1.5 },
+  GOUD: { label: "XAUUSD CFD (1 lot = 100 oz)", v: 100, ccy: "USD", step: 0.01, comm: 0, spread: 0.3, presets: [["XAUUSD CFD (100 oz)", 100, 0.01], ["MGC micro future ($10 per $1)", 10, 1], ["GC future ($100 per $1)", 100, 1]] },
+  ZILVER: { label: "XAGUSD CFD (1 lot = 5.000 oz)", v: 5000, ccy: "USD", step: 0.01, comm: 0, spread: 0.03 },
+  OLIE: { label: "USOIL CFD (1 lot = 100 vaten)", v: 100, ccy: "USD", step: 0.01, comm: 0, spread: 0.04 },
+  AAPL: { label: "Aandeel-CFD (1 lot = 1 aandeel)", v: 1, ccy: "USD", step: 1, comm: 0.02, spread: 0.05 },
+  NVDA: { label: "Aandeel-CFD (1 lot = 1 aandeel)", v: 1, ccy: "USD", step: 1, comm: 0.02, spread: 0.05 },
+  MSFT: { label: "Aandeel-CFD (1 lot = 1 aandeel)", v: 1, ccy: "USD", step: 1, comm: 0.02, spread: 0.08 },
+};
+const DEF = { acc: 50000, ccy: "USD", risk: 0.5, dll: 5, mdd: 10, exp: 2, lossToday: 0, inst: {} };
+let P = JSON.parse(JSON.stringify(DEF));
+try { const s = JSON.parse(localStorage.getItem("radar-risk") || localStorage.getItem("prop") || "{}"); Object.assign(P, s); P.inst = P.inst || {} } catch (e) {}
+const inst = n => ({ ...(INST[n] || { label: "1 lot = 1 eenheid", v: 1, ccy: "USD", step: 0.01, comm: 0, spread: 0 }), ...(P.inst[n] || {}) });
+function rate(ccy) { // waarde van 1 eenheid ccy in USD
+  if (ccy === "USD") return 1;
+  if (ccy === "EUR") return SM("EURUSD")?.koers || 1.1;
+  if (ccy === "JPY") return 1 / (SM("USDJPY")?.koers || 150);
+  return 1;
 }
-
-function verdict(m) {
-  const s = m.keuze?.score;
-  if (!s) return ["meh", "Nog niet getest door het leerproces."];
-  const base = `${s.n} trades getest, ${Math.round(s.win * 100)}% gewonnen, gemiddeld ${sgn(s.gem)}R per trade (recente trades tellen zwaarder), totaal ${sgn(s.totaal, 1)}R.`;
-  if (!m.actief) return ["bad", `Op pauze. Geen variant was goed genoeg: de ondergrens is ${sgn(s.score)}R. ${base}`];
-  if (s.totaal < 0) return ["meh", `Doet mee, maar twijfelachtig: recent positief (ondergrens ${sgn(s.score)}R), over alles samen negatief. ${base}`];
-  return ["meh", `Doet mee: licht positief (ondergrens ${sgn(s.score)}R), nog niet bewezen. ${base}`];
+const accSym = () => P.ccy === "EUR" ? "€" : "$";
+const money = usdVal => accSym() + Math.round(usdVal / rate(P.ccy)).toLocaleString("nl-NL");
+function sizing(n, entry, stop) {
+  const I = inst(n), dist = Math.abs(entry - stop), perUnitUSD = I.v * rate(I.ccy);
+  const riskUSD = P.acc * P.risk / 100 * rate(P.ccy);
+  const perLot = (dist + (I.spread || 0)) * perUnitUSD + (I.comm || 0) * rate(I.ccy);
+  const lots = perLot > 0 ? Math.floor(riskUSD / perLot / I.step + 1e-9) * I.step : 0;
+  return { I, lots, real: lots * perLot, riskUSD, perStep: perLot * I.step, costUSD: lots * ((I.spread || 0) * perUnitUSD + (I.comm || 0) * rate(I.ccy)) };
 }
+function saveP() { try { localStorage.setItem("radar-risk", JSON.stringify(P)) } catch (e) {} }
 
-function marketState(m) {
-  if (m.fout) return ["p-bad", "datafout"];
-  if (!DATA.sessie) return ["p-idle", "buiten sessie"];
-  if (m.data_min_oud > DATA.vers_min) return ["p-warn", "data vertraagd"];
-  if (!m.actief) return ["p-idle", "op pauze"];
-  if ((m.setups || []).some(s => s.telt && ["nieuw", "wacht op entry", "actief"].includes(s.status))) return ["p-ok", "signaal"];
-  return ["p-acc", "zoekt setups"];
+/* ---------------- Signalen ---------------- */
+const LIVE_ST = ["nieuw", "wacht op entry", "actief"];
+function allSignals() {
+  const out = [];
+  for (const m of S?.markten || []) for (const s of m.setups || [])
+    out.push({ n: m.naam, bron: "ICT", tijd: s.tijd, kant: s.kant, entry: s.entry, stop: s.stop, tp: s.tp, rr: s.rr, status: s.status,
+      uitleg: s.uitleg, R: s.R, telt: s.telt, kans: s.kans, redenen: s.redenen, missend: s.missend, grade: `${s.grade} · ${s.score}/10`,
+      tegen: s.tegen_bias, waarom: s.telt ? "" : (!m.actief ? "deze markt staat bij ICT op pauze" : "lage kans (buiten de beste sessie of filters)") });
+  for (const m of S?.alle_markten || []) for (const s of m.signalen || [])
+    out.push({ n: m.naam, bron: m.keuze?.titel || "Strategie", tijd: s.t, kant: s.kant, entry: s.entry, stop: s.stop, tp: s.tp, rr: s.rr,
+      status: s.status, uitleg: s.status, R: s.R, telt: true, redenen: [m.keuze?.variant_txt].filter(Boolean), missend: [], grade: "papertrade" });
+  return out.sort((a, b) => (LIVE_ST.includes(b.status) - LIVE_ST.includes(a.status)) || (b.telt - a.telt) || b.tijd.localeCompare(a.tijd));
 }
-
-function spark(m) {
-  const pts = m.chart || [];
-  if (pts.length < 2) return "";
-  const lines = [];
-  for (const s of m.setups || []) if (["nieuw", "wacht op entry", "actief"].includes(s.status)) lines.push(["entry", s.entry, "var(--accent)"], ["stop", s.stop, "var(--short)"], ["tp", s.tp, "var(--long)"]);
-  const vals = pts.map(p => p[1]).concat(lines.map(l => l[1]));
-  const lo = Math.min(...vals), hi = Math.max(...vals), W = 300, H = 70, pad = 4;
-  const x = i => pad + i * (W - 2 * pad) / (pts.length - 1), y = v => H - pad - (v - lo) / ((hi - lo) || 1) * (H - 2 * pad);
-  const d = pts.map((p, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(p[1]).toFixed(1)}`).join("");
-  const up = pts.at(-1)[1] >= pts[0][1], col = up ? "var(--long)" : "var(--short)";
-  return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Koers laatste ${Math.round(pts.length / 12)} uur">
-    <path d="${d}L${x(pts.length - 1)},${H}L${x(0)},${H}Z" fill="${col}" opacity=".1"/>
-    ${lines.map(l => `<line x1="0" x2="${W}" y1="${y(l[1])}" y2="${y(l[1])}" stroke="${l[2]}" stroke-dasharray="4 3" stroke-width="1" vector-effect="non-scaling-stroke"/>`).join("")}
-    <path d="${d}" fill="none" stroke="${col}" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
-    <circle cx="${x(pts.length - 1)}" cy="${y(pts.at(-1)[1])}" r="2.5" fill="${col}"/></svg>`;
-}
-
-function sizing(mkt, s) {
-  const opt = INSTR[mkt].find(o => o[0] === P[mkt]) || INSTR[mkt][0];
-  const riskUsd = P.acc * P.risk / 100, dist = Math.abs(s.entry - s.stop);
-  const raw = riskUsd / (dist * opt[2]);
-  const lots = Math.floor(raw / opt[3]) * opt[3];
-  const real = lots * dist * opt[2];
-  return { opt, riskUsd, lots, real, oneUnit: dist * opt[2] };
-}
-
-function tradeCard(m, s) {
-  const alt = m.alt && P.NQ === "cfd" && m.naam === "NQ" ? m.alt : null;
+function tradeCard(s) {
+  const sm = SM(s.n), d = sm?.dec ?? (IM(s.n)?.dec ?? 2);
+  const alt = s.n === "NQ" && /US100/.test(inst("NQ").label) ? IM("NQ")?.alt : null;
   const shift = v => alt ? v - alt.verschil : v;
-  const d = m.dec, pts = Math.abs(s.entry - s.stop), tpd = Math.abs(s.tp - s.entry);
-  const unit = m.naam === "EURUSD" ? ["pips", 10000] : ["punten", 1];
-  const z = sizing(m.naam, s);
-  const stat = { "nieuw": "p-ok", "wacht op entry": "p-ok", "actief": "p-acc", "verlopen": "p-idle", "afgerond": s.R > 0 ? "p-ok" : "p-bad" }[s.status];
-  const statTxt = s.status === "afgerond" ? `${s.uitleg} ${sgn(s.R)}R` : s.status === "verlopen" ? s.uitleg : s.status;
-  const live = ["nieuw", "wacht op entry", "actief"].includes(s.status);
-  const sizeTxt = z.lots > 0
-    ? `${nf(z.lots, z.opt[3] < 1 ? 2 : 0)} ${z.opt[3] < 1 ? "lot" : "contract(en)"} <span class="muted" style="font:400 .8rem var(--body)">risico ${usd(z.real)}</span>`
-    : `Te klein voor 1 ${z.opt[3] < 1 ? "x 0,01 lot" : "contract"} (dat is ${usd(z.oneUnit * z.opt[3])} risico)`;
-  return `<article class="trade ${s.kant}${s.telt ? "" : " info"}">
+  const dist = Math.abs(s.entry - s.stop), tpd = Math.abs(s.tp - s.entry);
+  const pip = sm?.soort === "forex" ? (s.n === "USDJPY" ? ["pips", 100] : ["pips", 10000]) : ["punten", 1];
+  const live = LIVE_ST.includes(s.status);
+  const z = sizing(s.n, s.entry, s.stop);
+  const stat = s.status === "afgerond" ? (s.R > 0 ? "p-ok" : "p-bad") : live ? (s.status === "actief" ? "p-acc" : "p-ok") : "p-idle";
+  const statTxt = s.status === "afgerond" ? `afgerond ${sgn(s.R)}R` : s.status === "verlopen" ? s.uitleg : s.status;
+  const unit = z.I.step < 1 ? "lot" : (/aandeel/i.test(z.I.label) ? "aandelen" : "contract(en)");
+  const sizeTxt = z.lots > 0 ? `${nf(z.lots, z.I.step < 1 ? 2 : 0)} ${unit} <span class="muted" style="font:400 .78rem var(--body)">risico ${money(z.real)}, waarvan kosten ${money(z.costUSD)}</span>`
+    : `Te klein voor de kleinste positie (${money(z.perStep)} risico)`;
+  return `<article class="card trade ${s.kant}${s.telt ? "" : " info"}">
     <div class="trade-head">
-      <div><div class="label">${esc(NAMES[m.naam] || m.naam)} · ${esc(s.sessie)} · ${nlTime(s.tijd)}</div>
-        <h3><span class="side-${s.kant}">${s.kant === "LONG" ? "Kopen" : "Verkopen"}</span> <span class="muted" style="font-size:.9rem">${esc(s.grade)} · ${s.score}/10</span></h3></div>
-      <span class="pill ${stat}">${esc(statTxt)}</span>
-    </div>
+      <div><div class="label">${esc(titel(s.n))} · ${esc(s.bron)} · ${nlDT(s.tijd)}</div>
+      <h3><span class="side-${s.kant}">${s.kant === "LONG" ? "Kopen" : "Verkopen"}</span> <span class="muted" style="font-size:.85rem">${esc(s.grade)}</span></h3></div>
+      <span class="pill ${stat}">${esc(statTxt)}</span></div>
     <div class="lv">
-      <div><div class="label">Instap</div><div class="v">${nf(shift(s.entry), d)}</div><div class="d">limietorder</div></div>
-      <div><div class="label">Stop</div><div class="v">${nf(shift(s.stop), d)}</div><div class="d">${nf(pts * unit[1], 1)} ${unit[0]}</div></div>
-      <div><div class="label">Doel</div><div class="v">${nf(shift(s.tp), d)}</div><div class="d">${nf(tpd * unit[1], 1)} ${unit[0]} · ${nf(s.rr, 1)}R</div></div>
-    </div>
-    ${alt ? `<div class="muted" style="font-size:.78rem">Prijzen in US100 (future ${m.naam} min ${nf(alt.verschil, 1)}). Liggen ze anders bij jou, gebruik dan de afstanden in punten.</div>` : ""}
-    ${m.naam === "GOUD" ? `<div class="muted" style="font-size:.78rem">Prijzen van de goud-future. Spot (XAUUSD) ligt een paar dollar anders: gebruik de afstanden.</div>` : ""}
-    ${live ? `<div class="size"><div class="label">Jouw positie (${esc(z.opt[1].split(" (")[0])}, ${nf(P.risk, 2)}% risico)</div><div class="v">${sizeTxt}</div></div>` : ""}
-    <div class="chips">${s.redenen.map(r => `<span class="chip ok">✓ ${esc(r)}</span>`).join("")}${s.missend.map(r => `<span class="chip no">${esc(r)}</span>`).join("")}${s.tegen_bias ? `<span class="chip" style="color:var(--warn)">tegen de 1-uurs trend</span>` : ""}</div>
-    ${s.telt ? "" : `<div class="muted" style="font-size:.8rem">Alleen ter info: ${!m.actief ? "deze markt staat op pauze" : "lage kans (buiten de beste sessie of filters)"}. Hier krijg je geen melding voor.</div>`}
+      <div><div class="label">Instap</div><div class="v">${nf(shift(s.entry), d)}</div><div class="d">${s.bron === "ICT" ? "limietorder" : "volgende candle"}</div></div>
+      <div><div class="label">Stop</div><div class="v">${nf(shift(s.stop), d)}</div><div class="d">${nf(dist * pip[1], 1)} ${pip[0]}</div></div>
+      <div><div class="label">Doel</div><div class="v">${nf(shift(s.tp), d)}</div><div class="d">${nf(tpd * pip[1], 1)} ${pip[0]} · ${nf(s.rr, 1)}R</div></div></div>
+    ${alt ? `<div class="muted small">Prijzen in US100 (future min ${nf(alt.verschil, 1)}). Wijkt je broker af, gebruik dan de afstanden.</div>` : ""}
+    ${live ? `<div class="size"><div class="label">Jouw positie · ${esc(z.I.label)} · ${nf(P.risk, 2)}% risico</div><div class="v">${sizeTxt}</div></div>` : ""}
+    <div class="chips">${(s.redenen || []).map(r => `<span class="chip ok">✓ ${esc(r)}</span>`).join("")}${(s.missend || []).map(r => `<span class="chip no">${esc(r)}</span>`).join("")}${s.tegen ? `<span class="chip warn">tegen de 1-uurs trend</span>` : ""}</div>
+    ${s.telt ? "" : `<div class="muted small">Alleen ter info: ${esc(s.waarom)}.</div>`}
+    <a class="small" href="#markt-${esc(s.n)}">Grafiek en analyse →</a>
   </article>`;
 }
 
-function renderNow() {
-  const D = DATA, act = D.markten.filter(m => m.actief && !m.fout).map(m => NAMES[m.naam] || m.naam);
-  const paused = D.markten.filter(m => !m.actief).map(m => NAMES[m.naam] || m.naam);
-  const live = D.markten.flatMap(m => (m.setups || []).filter(s => s.telt && ["nieuw", "wacht op entry", "actief"].includes(s.status)));
+/* ---------------- Dashboard ---------------- */
+function rDashboard() {
+  const sigs = allSignals(), open = sigs.filter(s => LIVE_ST.includes(s.status) && s.telt);
+  const all = S?.alle_markten || [];
+  const live = all.filter(m => m.status === "live").length, chosen = (L?.markten || []).filter(m => m.keuze?.strategie);
+  const problems = all.filter(m => m.status === "storing" || m.status === "vertraagd");
   let big;
-  if (!D.meldingen_aan) big = "De bot staat uit (hoofdschakelaar in config.json).";
-  else if (live.length) big = `${live.length} signaal${live.length > 1 ? "en" : ""} open. Zie hieronder.`;
-  else if (D.sessie) big = `${D.sessie} loopt. De bot zoekt setups op ${act.join(" en ") || "geen markt"}.`;
-  else big = `Buiten de sessies. Volgende: ${D.volgende ? `${D.volgende.naam}, ${nlDay(D.volgende.start)}` : "onbekend"}.`;
-  $("now").innerHTML = `<div class="big">${esc(big)}</div>
-    <div class="muted">Volgt ${D.markten.length} markten. Doen mee: ${esc(act.join(", ") || "geen")}${paused.length ? `. Op pauze (wel gevolgd, geen meldingen): ${esc(paused.join(", "))}` : ""}.</div>
-    <div class="sessbar">${(D.sessies || []).map(s => `<span class="sess${s.naam === D.sessie ? " on" : ""}">${esc(s.naam)} ${esc(s.nl)}</span>`).join("")}<span class="sess">tijden in NL</span></div>`;
+  if (!S) big = "Status laden…";
+  else if (open.length) big = `${open.length} open signaal${open.length > 1 ? "en" : ""}. Bekijk ze hieronder.`;
+  else if (S.sessie) big = `${S.sessie}-sessie loopt. De bot volgt ${all.length} markten en wacht op een setup.`;
+  else big = `Geen open signalen. ${live} van de ${all.length} markten zijn nu open${S.volgende ? `; volgende ICT-sessie: ${S.volgende.naam}, ${nlDT(S.volgende.start)}` : ""}.`;
+  const lastH = H.at?.(-1);
+  const switched = lastH ? Object.entries(lastH.markten).filter(([, v]) => v.gewisseld) : [];
+  $("p-dashboard").innerHTML = `
+    <section class="hero">
+      <div class="label">Wat doet de bot nu?</div>
+      <div class="big">${esc(big)}</div>
+      <div class="sessbar">${(S?.sessies || []).map(s => `<span class="sess${s.naam === S.sessie ? " on" : ""}">ICT ${esc(s.naam)} ${esc(s.nl)}</span>`).join("")}<span class="sess">tijden in NL</span></div>
+    </section>
+    <section class="kpis">
+      <div class="kpi"><span class="label">Markten gevolgd</span><span class="v">${all.length}</span><span class="d">${live} nu live</span></div>
+      <div class="kpi"><span class="label">Met strategie</span><span class="v">${chosen.length}</span><span class="d">rest: geen trade</span></div>
+      <div class="kpi"><span class="label">Open signalen</span><span class="v ${open.length ? "up" : ""}">${open.length}</span><span class="d">${sigs.length} vandaag/recent</span></div>
+      <div class="kpi"><span class="label">Datastatus</span><span class="v ${problems.length ? "warn" : "up"}">${problems.length ? problems.length + " let op" : "OK"}</span><span class="d"><a href="#datafarm">Data Farm</a></span></div>
+      <div class="kpi"><span class="label">Laatst geleerd</span><span class="v" style="font-size:1rem">${L ? nlDate(L.gemaakt) : "–"}</span><span class="d">${switched.length ? switched.length + " wissel(s)" : "geen wissels"}</span></div>
+    </section>
+    <section>
+      <div class="head"><h2>Trades nu</h2><a class="small" href="#risk">Positiegrootte instellen</a></div>
+      <div class="grid">${sigs.length ? sigs.slice(0, 9).map(tradeCard).join("") : `<div class="empty card"><b>Geen signalen.</b><span class="muted">Geen trade is ook een goede trade. Bij een nieuwe ICT-setup krijg je een melding op je telefoon.</span></div>`}</div>
+    </section>
+    <section>
+      <div class="head"><h2>Markten</h2><a class="small" href="#markets">Alle markten</a></div>
+      <div class="grid sm">${all.map(tile).join("")}</div>
+    </section>
+    <section>
+      <div class="head"><h2>Vandaag geleerd</h2><a class="small" href="#learning">Learning Center</a></div>
+      <div class="card">${lastH ? learnSummary(lastH) : `<span class="muted">Nog geen leerdag.</span>`}</div>
+    </section>`;
+}
+function tile(m) {
+  const lm = LM(m.naam), k = lm?.keuze, sig = (m.signalen || []).some(s => LIVE_ST.includes(s.status)) || (IM(m.naam)?.setups || []).some(s => s.telt && LIVE_ST.includes(s.status));
+  const r = m.regime || lm?.regime;
+  return `<a class="card tile" href="#markt-${esc(m.naam)}">
+    <div class="tile-top"><div><div class="label">${esc(SOORT[m.soort] || m.soort)}</div><h3>${esc(m.titel)}</h3></div>
+      <span class="pill ${sig ? "p-ok" : STATUS_CLS[m.status] || "p-idle"}">${sig ? "signaal" : STATUS_TXT[m.status] || m.status}</span></div>
+    <div><span class="price">${nf(m.koers, m.dec)}</span> <span class="num ${m.verandering > 0 ? "up" : m.verandering < 0 ? "down" : ""}">${sgn(m.verandering)}%</span></div>
+    <div class="tags">${r ? `<span class="tag trend-${esc(r.trend)}">${esc(r.trend)}</span><span class="tag vol-${esc(r.vol.split(" ")[0])}">${esc(r.vol)}</span>` : ""}</div>
+    <div class="small"><span class="muted">Strategie:</span> <b>${esc(k?.titel || "nog niet getest")}</b></div>
+  </a>`;
 }
 
-function renderTrades() {
-  const all = DATA.markten.flatMap(m => (m.setups || []).map(s => [m, s]));
-  all.sort((a, b) => (b[1].telt - a[1].telt) || b[1].tijd.localeCompare(a[1].tijd));
-  $("trades").innerHTML = all.length ? all.map(([m, s]) => tradeCard(m, s)).join("")
-    : `<div class="empty"><b>Vandaag nog geen signaal.</b><span class="muted">Geen trade is ook een goede trade. De bot zoekt alleen tijdens de sessies en stuurt een melding naar je telefoon zodra er iets is.</span></div>`;
+/* ---------------- Markets ---------------- */
+let FILTER = "alle";
+function rMarkets(sub) {
+  if (sub) return rDetail(sub);
+  const all = (S?.alle_markten || []).filter(m => FILTER === "alle" || m.soort === FILTER);
+  $("p-markets").innerHTML = `
+    <div class="head"><div><h2>Markets</h2><p>Elke markt krijgt zijn eigen analyse en strategie. Klik een markt voor de grafiek en de onderbouwing.</p></div></div>
+    <div class="filters">${["alle", ...Object.keys(SOORT)].map(f => `<button type="button" data-f="${f}" class="${f === FILTER ? "on" : ""}">${f === "alle" ? "Alles" : SOORT[f]}</button>`).join("")}</div>
+    <div class="card tbl"><table><thead><tr><th>Markt</th><th class="n">Koers</th><th class="n">Vandaag</th><th>Status</th><th>${term("Marktconditie")}</th><th>Strategie</th><th class="n">${term("Ondergrens")}</th><th class="n">Trades (nieuw)</th></tr></thead><tbody>
+    ${all.map(m => { const lm = LM(m.naam), k = lm?.keuze, s = lm?.strategieen?.find(x => x.id === k?.strategie); const r = m.regime || lm?.regime;
+      return `<tr class="link" data-go="markt-${esc(m.naam)}"><td><b>${esc(m.titel)}</b><div class="muted small">${esc(m.symbool)}</div></td>
+      <td class="n">${nf(m.koers, m.dec)}</td><td class="n ${m.verandering > 0 ? "up" : m.verandering < 0 ? "down" : ""}">${sgn(m.verandering)}%</td>
+      <td><span class="pill ${STATUS_CLS[m.status]}">${STATUS_TXT[m.status] || m.status}</span></td>
+      <td>${r ? `${esc(r.trend)}<div class="muted small">${esc(r.vol)}${r.veranderend ? " · verandert" : ""}</div>` : "–"}</td>
+      <td>${esc(k?.titel || "–")}${k?.variant_txt ? `<div class="muted small">${esc(k.variant_txt)}</div>` : ""}</td>
+      <td class="n ${s?.nieuw?.ondergrens > 0 ? "up" : ""}">${s ? sgn(s.nieuw.ondergrens, 3) : "–"}</td><td class="n">${s?.nieuw?.n ?? "–"}</td></tr>` }).join("")}
+    </tbody></table></div>`;
+  $("p-markets").querySelectorAll("[data-f]").forEach(b => b.onclick = () => { FILTER = b.dataset.f; rMarkets() });
+  $("p-markets").querySelectorAll("[data-go]").forEach(r => r.onclick = () => location.hash = r.dataset.go);
 }
 
-function renderMarkets() {
-  $("markets").innerHTML = DATA.markten.map(m => {
-    const [cls, txt] = marketState(m), [vc, vt] = verdict(m), f = m.forward || {};
-    const ch = m.verandering;
-    return `<article class="mk">
-      <div class="mk-head"><div><div class="label">${esc(m.symbool)}</div><h3>${esc(NAMES[m.naam] || m.naam)}</h3></div><span class="pill ${cls}">${txt}</span></div>
-      ${m.fout ? `<div class="err">${esc(m.fout)}. Er worden geen signalen getoond tot de data terug is.</div>` : `
-      <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap"><span class="price">${nf(m.koers, m.dec)}</span>
-        <span class="num ${ch > 0 ? "up" : ch < 0 ? "down" : ""}">${sgn(ch)}%</span>
-        <span class="muted" style="font-size:.78rem">laatste candle ${nlTime(m.laatste_candle)} NL${m.data_min_oud > DATA.vers_min ? ` · ${m.data_min_oud} min oud` : ""}</span></div>
-      ${spark(m)}`}
-      <div><div class="label">Strategie</div><div style="font-size:.9rem">Liquiditeit-sweep + structuurbreuk (ICT), ${esc(plainVariant(m.variant))}.</div></div>
-      <div class="verdict ${vc}">${esc(vt)}</div>
-      <dl class="kv">
-        <dt>Forward test sinds</dt><dd>${f.sinds ? new Date(f.sinds).toLocaleDateString("nl-NL") : "net begonnen"}</dd>
-        <dt>Setups / afgerond</dt><dd>${f.setups ?? 0} / ${f.afgerond ?? 0}</dd>
-        <dt>Resultaat (zonder kosten)</dt><dd class="${f.R > 0 ? "up" : f.R < 0 ? "down" : ""}">${sgn(f.R ?? 0)}R</dd>
-        <dt>Weigeringen</dt><dd>${f.weigeringen ?? 0}</dd>
-      </dl>
-      ${(f.laatste || []).length ? `<details><summary>Laatste setups</summary><table class="hist">${f.laatste.map(x => `<tr><td>${new Date(x.tijd).toLocaleDateString("nl-NL", { day: "numeric", month: "short" })} ${nlTime(x.tijd)} · ${x.kant === "LONG" ? "kopen" : "verkopen"}${x.kans ? "" : " (lage kans)"} · ${esc(x.uitkomst)}</td><td>${sgn(x.R)}R</td></tr>`).join("")}</table></details>` : ""}
-      ${(m.weigeringen_vandaag || []).length ? `<details><summary>Vandaag afgewezen (${m.weigeringen_vandaag.length})</summary><table class="hist">${m.weigeringen_vandaag.map(x => `<tr><td>${nlTime(x.tijd)} · ${x.kant === "LONG" ? "kopen" : "verkopen"}</td><td style="font-family:var(--body)">${esc(x.reden)}</td></tr>`).join("")}</table></details>` : ""}
-    </article>`;
-  }).join("");
+let CH = null, TF = "1h";
+async function loadMarkt(n) {
+  const c = MCACHE[n];
+  if (c && Date.now() - c.at < 120000) return c.data;
+  const data = await getJSON(URLS.markt(n), true);
+  MCACHE[n] = { at: Date.now(), data };
+  return data;
 }
-
-function renderProp() {
-  const riskUsd = P.acc * P.risk / 100, day = P.acc * P.dll / 100, tot = P.acc * P.mdd / 100;
-  $("propsum").innerHTML = `<div><span class="label">Risico per trade</span><span class="v">${usd(riskUsd)}</span></div>
-    <div><span class="label">Verliezers tot daglimiet</span><span class="v">${riskUsd ? Math.floor(day / riskUsd) : "–"}</span></div>
-    <div><span class="label">Verliezers tot totaallimiet</span><span class="v">${riskUsd ? Math.floor(tot / riskUsd) : "–"}</span></div>`;
+const NLF = new Intl.DateTimeFormat("en-US", { ...tz, hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" });
+function nlShift(ts) { // lightweight-charts toont UTC: verschuif naar Nederlandse tijd
+  const p = Object.fromEntries(NLF.formatToParts(new Date(ts * 1000)).map(x => [x.type, x.value]));
+  return Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute, +p.second) / 1000;
 }
-
-function renderLearn() {
-  const h = DATA.leren || [];
-  if (!h.length) { $("learn").innerHTML = `<div class="empty">Nog geen leerdag.</div>`; return }
-  const items = [];
-  for (let i = h.length - 1; i >= 0; i--) {
-    const cur = h[i].keuze, prev = i ? h[i - 1].keuze : null, lines = [];
-    for (const [k, c] of Object.entries(cur)) {
-      const p = prev?.[k], n = NAMES[k] || k;
-      if (!p) lines.push(`${n}: ${c.actief ? "doet mee" : "op pauze"} met ${plainVariant(c.variant)} (ondergrens ${sgn(c.score.score)}R, ${c.score.n} trades).`);
-      else if (p.actief !== c.actief) lines.push(`${n}: ${c.actief ? "weer aangezet" : "op pauze gezet"} (ondergrens ${sgn(p.score.score)} → ${sgn(c.score.score)}R).`);
-      else if (p.variant !== c.variant) lines.push(`${n}: gewisseld naar ${plainVariant(c.variant)}, omdat die duidelijk beter scoorde (${sgn(p.score.score)} → ${sgn(c.score.score)}R).`);
-      else lines.push(`${n}: niets veranderd (${c.score.n} trades, ondergrens ${sgn(c.score.score)}R). Een wissel moet minstens 0,05R beter zijn.`);
-    }
-    items.push(`<div class="tl-item"><div class="label">${new Date(h[i].t).toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long" })}</div><ul>${lines.map(l => `<li>${esc(l)}</li>`).join("")}</ul></div>`);
+function chartOpts(h) {
+  return { autoSize: true, height: h, layout: { background: { type: "solid", color: css("--panel") }, textColor: css("--muted"), fontFamily: "JetBrains Mono, monospace", fontSize: 11 },
+    grid: { vertLines: { color: css("--line") }, horzLines: { color: css("--line") } }, rightPriceScale: { borderColor: css("--line") },
+    timeScale: { borderColor: css("--line"), timeVisible: true }, crosshair: { mode: 0 } };
+}
+function drawCandles(data) {
+  const box = $("cbox"); if (!box) return;
+  if (!window.LightweightCharts) { box.innerHTML = `<div class="err">Grafiekbibliotheek niet geladen.</div>`; return }
+  if (CH) { CH.remove(); CH = null }
+  const rows = data.candles?.[TF] || [];
+  if (!rows.length) { box.innerHTML = `<div class="empty" style="height:100%">Geen ${TF}-data voor deze markt.</div>`; return }
+  box.innerHTML = "";
+  CH = LightweightCharts.createChart(box, chartOpts(400));
+  const ser = CH.addCandlestickSeries({ upColor: css("--long"), downColor: css("--short"), borderVisible: false, wickUpColor: css("--long"), wickDownColor: css("--short"),
+    priceFormat: { type: "price", precision: data.dec, minMove: 1 / 10 ** data.dec } });
+  const bars = rows.map(r => ({ time: nlShift(r[0]), open: r[1], high: r[2], low: r[3], close: r[4] }));
+  ser.setData(bars);
+  const times = bars.map(b => b.time);
+  const snap = iso => { const t = nlShift(Date.parse(iso) / 1000); if (t < times[0] || t > times.at(-1) + 86400) return null; let lo = 0, hi = times.length - 1; while (lo < hi) { const mid = (lo + hi + 1) >> 1; if (times[mid] <= t) lo = mid; else hi = mid - 1 } return times[lo] };
+  const sigs = [...(data.ict_setups || []).map(s => ({ ...s, t: s.tijd, bron: "ICT" })), ...(data.lab_laatste || []).map(s => ({ ...s, status: "afgerond" })), ...(data.signalen || [])];
+  const markers = [], seen = new Set();
+  for (const s of sigs) {
+    const t = snap(s.t); if (t == null) continue;
+    const text = (s.bron === "ICT" ? "ICT " : "") + (s.status === "afgerond" && s.R != null ? sgn(s.R, 1) + "R" : s.status || "");
+    if (seen.has(t + text)) continue; seen.add(t + text);
+    markers.push({ time: t, position: s.kant === "LONG" ? "belowBar" : "aboveBar", color: s.kant === "LONG" ? css("--long") : css("--short"), shape: s.kant === "LONG" ? "arrowUp" : "arrowDown", text });
   }
-  $("learn").innerHTML = `<div class="tl">${items.join("")}</div>
-    <p class="muted" style="font-size:.82rem;margin:4px 0 0">Volledig leerjournaal met grafieken: <a href="https://github.com/${REPO}/tree/main/journaal" target="_blank" rel="noopener">map journaal op GitHub</a>.</p>`;
+  ser.setMarkers(markers.sort((a, b) => a.time - b.time));
+  for (const s of sigs.filter(s => LIVE_ST.includes(s.status))) {
+    ser.createPriceLine({ price: s.entry, color: css("--accent"), lineWidth: 1, lineStyle: 2, title: "instap" });
+    ser.createPriceLine({ price: s.stop, color: css("--short"), lineWidth: 1, lineStyle: 2, title: "stop" });
+    ser.createPriceLine({ price: s.tp, color: css("--long"), lineWidth: 1, lineStyle: 2, title: "doel" });
+  }
+  CH.timeScale().fitContent();
+  if (bars.length > 150) CH.timeScale().setVisibleLogicalRange({ from: bars.length - 150, to: bars.length + 3 });
+}
+async function rDetail(n) {
+  const m = SM(n), lm = LM(n), im = IM(n);
+  if (!m && !lm) { $("p-markets").innerHTML = `<a class="back" href="#markets">← Markets</a><div class="err">Markt ${esc(n)} niet gevonden.</div>`; return }
+  const k = lm?.keuze, r = m?.regime || lm?.regime, chosen = lm?.strategieen?.find(s => s.id === k?.strategie);
+  const strat = (lm?.strategieen || []).slice().sort((a, b) => (b.nieuw.ondergrens ?? -9) - (a.nieuw.ondergrens ?? -9));
+  const sigs = allSignals().filter(s => s.n === n);
+  const maxAbs = Math.max(0.3, ...strat.flatMap(s => [Math.abs(s.nieuw.ci95?.[0] ?? 0), Math.abs(s.nieuw.ci95?.[1] ?? 0)]));
+  const x = v => 50 + 50 * Math.max(-1, Math.min(1, v / maxAbs));
+  const tf = m?.timeframes || {};
+  $("p-markets").innerHTML = `
+    <a class="back" href="#markets">← Markets</a>
+    <div class="head"><div><div class="label">${esc(SOORT[m?.soort || lm?.soort] || "")} · ${esc(m?.symbool || lm?.symbool)}</div><h2 style="font-size:1.7rem">${esc(titel(n))}</h2></div>
+      <div style="text-align:right"><div class="price" style="font-size:1.6rem">${nf(m?.koers, m?.dec)}</div>
+      <span class="num ${m?.verandering > 0 ? "up" : m?.verandering < 0 ? "down" : ""}">${sgn(m?.verandering)}% vandaag</span> <span class="pill ${STATUS_CLS[m?.status] || "p-idle"}">${STATUS_TXT[m?.status] || "onbekend"}</span></div></div>
+    <section class="card" style="display:grid;gap:10px">
+      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
+        <div class="filters" id="tfs">${["5m", "15m", "1h", "4h", "1d"].map(t => `<button type="button" data-tf="${t}" class="${t === TF ? "on" : ""}">${t}</button>`).join("")}</div>
+        <div class="legend"><span><i style="color:var(--accent)"></i>instap</span><span><i style="color:var(--short)"></i>stop</span><span><i style="color:var(--long)"></i>doel</span><span>▲▼ signalen</span></div></div>
+      <div id="cbox" class="chartbox"><div class="empty" style="height:100%">Grafiek laden…</div></div>
+      <div class="muted small">Laatste candle ${m?.laatste_candle ? nlDT(m.laatste_candle) : "–"} (NL-tijd) · ${esc(m?.bron || "")}</div>
+    </section>
+    <div class="cols">
+      <div class="card" style="display:grid;gap:8px;align-content:start"><div class="label">${term("Marktconditie")}</div>
+        ${r ? `<div class="tags"><span class="tag trend-${esc(r.trend)}">${esc(r.trend)}</span><span class="tag vol-${esc(r.vol.split(" ")[0])}">${esc(r.vol)}</span>${r.veranderend ? `<span class="tag warn">verandert</span>` : ""}</div><div class="small">${esc(r.uitleg)}</div>` : `<span class="muted">Nog niet bepaald.</span>`}</div>
+      <div class="card" style="display:grid;gap:8px;align-content:start"><div class="label">Gekozen strategie</div>
+        <h3>${esc(k?.titel || "Nog niet getest")}</h3>${k?.variant_txt ? `<div class="muted small">Variant: ${esc(k.variant_txt)} · sinds ${esc(k.sinds)}</div>` : ""}
+        <div class="small">${esc(k?.reden_vandaag || "")}${chosen ? `. ${esc(chosen.uitleg)}` : ""}</div>
+        <div class="muted small">Wanneer verandert dit? Als een andere strategie op ${term("Nieuwe data", "nieuwe data")} minstens ${nf(L?.instellingen?.wissel_marge ?? 0.05)}R per trade beter scoort, of als deze onder 0 zakt (dan: geen trade).</div></div>
+      <div class="card" style="display:grid;gap:6px;align-content:start"><div class="label">Data</div>
+        <div class="small">Laatste verwerking door het lab: <b>${L ? nlDT(L.gemaakt) : "–"}</b></div>
+        <div class="small">Historie: ${lm?.data?.candles ?? "–"} uur-candles (${lm?.data?.van ? nlDate(lm.data.van) : "–"} – ${lm?.data?.tot ? nlDate(lm.data.tot) : "–"})</div>
+        <div class="small">Live: ${["5m", "1h", "1d"].map(t => `${t} ${tf[t]?.candles ?? "–"}`).join(" · ")} candles</div>
+        ${im ? `<div class="small">Ook gevolgd door de ICT-bot (telefoonmeldingen): ${im.actief ? "aan" : "op pauze"}.</div>` : ""}</div>
+    </div>
+    <section><h2>Signalen</h2><div class="grid">${sigs.length ? sigs.map(tradeCard).join("") : `<div class="empty card"><span class="muted">Geen recente signalen voor deze markt.</span></div>`}</div>
+      ${(lm?.laatste_signalen || []).length ? `<div class="card tbl"><div class="label" style="margin-bottom:6px">Laatste papertrades van ${esc(k?.titel)}</div><table><tbody>${lm.laatste_signalen.slice().reverse().map(s => `<tr><td>${nlDT(s.t)}</td><td class="side-${s.kant}">${s.kant === "LONG" ? "kopen" : "verkopen"}</td><td class="n">${nf(s.entry, m?.dec)}</td><td class="n ${s.R > 0 ? "up" : "down"}">${sgn(s.R)}R</td></tr>`).join("")}</tbody></table></div>` : ""}</section>
+    <section><div class="head"><h2>Strategieën vergeleken</h2><a class="small" href="#performance" data-pm="${esc(n)}">Alle cijfers en grafieken →</a></div>
+      <div class="card tbl"><table><thead><tr><th>Strategie</th><th class="n">${term("Oude data")}</th><th class="n">${term("Nieuwe data")}</th><th class="n">Trades</th><th class="n">${term("Ondergrens")}</th><th class="n">${term("Profit factor", "PF")}</th><th class="n">${term("Drawdown", "Max DD")}</th><th>${term("95%-interval", "Nieuwe data, 95%")}</th></tr></thead><tbody>
+      ${strat.map(s => { const nw = s.nieuw; const ci = nw.ci95 || [0, 0];
+        return `<tr class="${s.id === k?.strategie ? "sel" : ""}"><td><b>${esc(s.titel)}</b><div class="muted small">${esc(s.variant_txt)} · ${s.varianten_getest} varianten</div></td>
+        <td class="n">${sgn(s.historisch.expectancy)}R</td><td class="n ${nw.expectancy > 0 ? "up" : "down"}">${sgn(nw.expectancy)}R</td><td class="n">${nw.n ?? 0}</td>
+        <td class="n ${nw.ondergrens > 0 ? "up" : ""}">${sgn(nw.ondergrens, 3)}</td><td class="n">${nf(nw.pf)}</td><td class="n">${nf(nw.max_dd, 1)}R</td>
+        <td><div class="barcell"><div class="z" style="left:50%"></div><div class="ci" style="left:${x(ci[0])}%;width:${Math.max(1, x(ci[1]) - x(ci[0]))}%"></div>
+        <div class="b" style="left:${Math.min(50, x(nw.expectancy ?? 0))}%;width:${Math.abs(x(nw.expectancy ?? 0) - 50)}%;background:${(nw.expectancy ?? 0) > 0 ? "var(--long)" : "var(--short)"};opacity:.75"></div></div></td></tr>` }).join("")}
+      </tbody></table></div>
+      ${(lm?.afgewezen || []).length ? `<div class="card"><div class="label">Afgewezen</div><ul class="small" style="margin:6px 0 0;padding-left:18px">${lm.afgewezen.map(a => `<li><b>${esc(a.strategie)}</b>: ${esc(a.reden)}</li>`).join("")}</ul></div>` : ""}
+      <p class="note">Kosten (spread + commissie, ${nf((lm?.kosten ?? 0) * 100, 3)}% van de prijs) zijn al afgetrokken. Testperiode nieuwe data: ${esc(lm?.benchmark?.testperiode?.join(" t/m ") || "–")}. Ter vergelijking: kopen en vasthouden gaf ${sgn(lm?.benchmark?.kopen_houden_pct, 1)}% in die periode; geen trade = 0R.</p>
+    </section>`;
+  $("tfs").querySelectorAll("button").forEach(b => b.onclick = async () => { TF = b.dataset.tf; $("tfs").querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); drawCandles(await loadMarkt(n)) });
+  $("p-markets").querySelector("[data-pm]")?.addEventListener("click", () => { PERF.m = n; PERF.s = null });
+  try { drawCandles(await loadMarkt(n)) } catch (e) { if ($("cbox")) $("cbox").innerHTML = `<div class="err">Grafiekdata niet beschikbaar (${esc(e.message)}).</div>` }
 }
 
-function render() {
-  if (!DATA) return;
-  const age = (Date.now() - new Date(DATA.gemaakt)) / 60000;
-  const f = $("fresh");
-  f.className = "pill " + (age < 10 ? "p-ok" : age < 30 ? "p-warn" : "p-bad");
-  f.textContent = `bijgewerkt ${ago(DATA.gemaakt)}`;
-  $("mode").textContent = LIVE ? "Live: ververst elke minuut vanuit de cloud" : "Momentopname. De live versie staat op GitHub Pages.";
-  if (!LIVE) $("mode").innerHTML = `Momentopname van ${esc(nlDay(DATA.gemaakt))}. <a href="https://nthijns.github.io/TradingStrategie/" target="_blank" rel="noopener">Open de live versie</a>`;
-  renderNow(); renderTrades(); renderMarkets(); renderProp(); renderLearn();
+/* ---------------- Learning ---------------- */
+function learnSummary(h) {
+  const ms = Object.entries(h.markten);
+  const chosen = ms.filter(([, v]) => v.keuze !== "Geen trade");
+  const sw = ms.filter(([, v]) => v.gewisseld);
+  return `<div class="small" style="display:grid;gap:6px">
+    <div>${nlDT(h.t)}: <b>${ms.length} markten</b> geanalyseerd, per markt ${Math.max(0, ...ms.map(([, v]) => v.getest.length))} soorten strategieën met hun varianten.</div>
+    <div>Gekozen: ${chosen.length ? chosen.map(([k, v]) => `<b>${esc(titel(k))}</b> → ${esc(v.keuze)}`).join(", ") : "geen enkele markt"}; de rest: geen trade.</div>
+    <div>${sw.length ? `Veranderd: ${sw.map(([k, v]) => `${esc(titel(k))} (${esc(v.keuze)})`).join(", ")}.` : "Niets veranderd."}</div></div>`;
+}
+function rLearning() {
+  const days = H.slice().reverse();
+  const ins = L?.instellingen || {};
+  const ver = (L?.markten || []).filter(m => m.versies?.length);
+  $("p-learning").innerHTML = `
+    <div class="head"><div><h2>Learning Center</h2><p>Elke avond test de bot per markt alle strategieën opnieuw op de nieuwste data en kiest voorzichtig.</p></div></div>
+    <div class="cols">
+      <div class="card" style="display:grid;gap:6px"><div class="label">Zo voorkomt hij overfitting</div><ul class="small" style="margin:0;padding-left:18px;display:grid;gap:4px">
+        <li>${term("Walk-forward")}: kiezen op ${ins.train_dagen ?? 240} dagen, testen op de ${ins.test_dagen ?? 60} dagen erna.</li>
+        <li>Alleen resultaten op ${term("Nieuwe data", "nieuwe data")} tellen, na kosten.</li>
+        <li>Minstens ${ins.min_trades_nieuw ?? 30} trades op nieuwe data nodig.</li>
+        <li>Pas wisselen als de nieuwe ${nf(ins.wissel_marge ?? 0.05)}R per trade beter is.</li>
+        <li>Niets boven 0? Dan geen trade.</li></ul></div>
+      <div class="card" style="display:grid;gap:6px;align-content:start"><div class="label">Laatste run</div><div class="small">Strategielab: <b>${L ? nlDT(L.gemaakt) : "nog niet"}</b></div>
+        <div class="small">ICT-leren: <b>${S?.geleerd_op ? nlDT(S.geleerd_op) : "–"}</b></div><div class="small muted">Bron: ${esc(ins.bron || "–")}</div></div>
+    </div>
+    <section><h2>Tijdlijn</h2>
+      ${days.length ? `<div class="tl">${days.map((h, i) => dayBlock(h, i === 0)).join("")}</div>` : `<div class="empty card">Nog geen leerdag.</div>`}</section>
+    <section><h2>Strategieversies per markt</h2><p class="muted small" style="margin:0">Elke keuze wordt bewaard: je ziet wat er veranderde en waarom, en een keuze is terug te draaien.</p>
+      <div class="grid">${ver.map(m => { const v = m.versies.slice().reverse(), cur = v[0], prev = v[1], s = m.sinds_keuze;
+        return `<div class="card" style="display:grid;gap:8px;align-content:start"><div class="tile-top"><h3>${esc(m.titel)}</h3><span class="pill ${cur.strategie ? "p-ok" : "p-idle"}">${esc(cur.titel)}</span></div>
+          <div class="small">${esc(cur.reden)}</div>
+          ${prev ? `<div class="small"><span class="muted">Vorige:</span> ${esc(prev.titel)} (ondergrens ${sgn(prev.ondergrens, 3)}) → nu ${esc(cur.titel)} (${sgn(cur.ondergrens, 3)})</div>` : ""}
+          <div class="small"><span class="muted">Sinds de keuze (${esc(cur.sinds)}):</span> ${s?.n ? `${s.n} trades, ${sgn(s.netto)}R` : "nog geen trades op nieuwe dagen"}</div>
+          <details><summary>${v.length} versie(s)</summary><table><tbody>${v.map(x => `<tr><td>${esc(x.sinds)}</td><td>${esc(x.titel)}<div class="muted small">${esc(x.variant_txt || "")}</div></td><td class="n">${sgn(x.ondergrens, 3)}</td></tr>`).join("")}</tbody></table></details></div>` }).join("")}</div></section>
+    ${(S?.leren || []).length ? `<section><h2>ICT-bot (telefoonmeldingen)</h2><div class="card small" style="display:grid;gap:4px">${Object.entries(S.leren.at(-1).keuze).map(([k, c]) => `<div><b>${esc(titel(k))}</b>: ${c.actief ? "doet mee" : "op pauze"} · ${esc(c.variant)} · ${term("Ondergrens")} ${sgn(c.score.score, 3)}R over ${c.score.n} trades</div>`).join("")}<div class="muted">leren.py kiest elke werkdag de beste van 48 ICT-varianten; die keuze stuurt de telefoonmeldingen.</div></div></section>` : ""}`;
+}
+function dayBlock(h, open) {
+  const ms = Object.entries(h.markten);
+  return `<div class="tl-item"><div class="label">${new Date(h.t).toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long", ...tz })}</div>
+    ${learnSummary(h)}
+    <details ${open ? "open" : ""}><summary>Per markt: getest, gekozen en afgewezen</summary>
+    <div class="tbl"><table><thead><tr><th>Markt</th><th>Conditie</th><th>Gekozen</th><th>Getest (ondergrens op nieuwe data)</th><th>Afgewezen</th></tr></thead><tbody>
+    ${ms.map(([k, v]) => `<tr><td><a href="#markt-${esc(k)}">${esc(titel(k))}</a></td><td class="small">${esc(v.regime)}</td>
+      <td><b>${esc(v.keuze)}</b>${v.gewisseld ? ` <span class="pill p-acc nodot">nieuw</span>` : ""}<div class="muted small">${esc(v.reden)}</div></td>
+      <td class="small">${v.getest.map(g => `<div>${esc(g.strategie)}: <span class="${g.ondergrens > 0 ? "up" : "muted"}">${sgn(g.ondergrens, 3)}</span> <span class="muted">(${g.n} tr., oude data ${sgn(g.historisch)})</span></div>`).join("")}</td>
+      <td class="small">${v.afgewezen.map(a => `<div><b>${esc(a.strategie)}</b>: ${esc(a.reden)}</div>`).join("") || "–"}</td></tr>`).join("")}
+    </tbody></table></div></details></div>`;
 }
 
+/* ---------------- Data Farm ---------------- */
+function rDatafarm() {
+  const all = S?.alle_markten || [];
+  const statAge = S ? (Date.now() - new Date(S.gemaakt)) / 60000 : null;
+  const labAge = L ? (Date.now() - new Date(L.gemaakt)) / 3600000 : null;
+  const warns = [];
+  if (LIVE && statAge != null && statAge > 10) warns.push(`Het dashboard is ${Math.round(statAge)} minuten niet ververst. Draait de cloud-keten (GitHub > Actions > TradingStrategie)?`);
+  if (labAge != null && labAge > 30) warns.push(`Het strategielab draaide ${Math.round(labAge)} uur geleden voor het laatst (verwacht: elke avond).`);
+  for (const m of all) if (m.status === "vertraagd" || m.status === "storing") warns.push(`${m.titel}: markt is open, maar de laatste candle is ${m.data_min_oud} minuten oud (${m.status}).`);
+  const q = t => (t?.dubbel || 0) + (t?.leeg || 0) + (t?.ongeldig || 0);
+  $("p-datafarm").innerHTML = `
+    <div class="head"><div><h2>Data Farm</h2><p>Is de data vers en goed? Het verversen van het dashboard en het binnenkomen van nieuwe koersen zijn twee verschillende dingen; hieronder staan ze apart.</p></div></div>
+    <section class="kpis">
+      <div class="kpi"><span class="label">Dashboard ververst</span><span class="v" style="font-size:1rem">${S ? ago(S.gemaakt) : "–"}</span><span class="d">elke 3 min vanuit de cloud</span></div>
+      <div class="kpi"><span class="label">Nieuwste koers</span><span class="v" style="font-size:1rem">${all.length ? ago(all.map(m => m.laatste_candle).filter(Boolean).sort().at(-1)) : "–"}</span><span class="d">${all.filter(m => m.status === "live").length} markten live</span></div>
+      <div class="kpi"><span class="label">Strategielab</span><span class="v" style="font-size:1rem">${L ? ago(L.gemaakt) : "–"}</span><span class="d">elke avond</span></div>
+      <div class="kpi"><span class="label">ICT-leren</span><span class="v" style="font-size:1rem">${S?.geleerd_op ? ago(S.geleerd_op) : "–"}</span><span class="d">werkdagen, avond</span></div>
+      <div class="kpi"><span class="label">Fouten</span><span class="v ${(S?.fouten || []).length ? "down" : "up"}">${(S?.fouten || []).length}</span><span class="d">bij laatste verversing</span></div>
+    </section>
+    ${warns.length ? `<div class="warnbox"><b>Let op</b><ul style="margin:6px 0 0;padding-left:18px">${warns.map(w => `<li>${esc(w)}</li>`).join("")}</ul></div>` : `<div class="card small up">Alles werkt: geen verouderde data of fouten.</div>`}
+    ${(S?.fouten || []).length ? `<div class="err"><b>Fouten</b><ul style="margin:6px 0 0;padding-left:18px">${S.fouten.map(f => `<li>${esc(f)}</li>`).join("")}</ul></div>` : ""}
+    <section><h2>Per markt</h2><div class="card tbl"><table><thead><tr><th>Markt</th><th>Bron</th><th>Status</th><th>Laatste candle</th><th class="n">5m</th><th class="n">1h</th><th class="n">1d</th><th>Historie (lab)</th><th class="n">Problemen</th><th>Analyse</th></tr></thead><tbody>
+      ${all.map(m => { const lm = LM(m.naam), tf = m.timeframes || {}, issues = q(tf["5m"]) + q(tf["1h"]) + q(tf["1d"]) + q(lm?.data);
+        return `<tr><td><b>${esc(m.titel)}</b><div class="muted small">${esc(m.symbool)}</div></td><td class="small">Yahoo Finance</td>
+        <td><span class="pill ${STATUS_CLS[m.status]}">${STATUS_TXT[m.status] || m.status}</span>${m.fout ? `<div class="down small">${esc(m.fout)}</div>` : ""}</td>
+        <td class="small">${m.laatste_candle ? nlDT(m.laatste_candle) : "–"}<div class="muted">${m.data_min_oud != null ? m.data_min_oud + " min oud" : ""}</div></td>
+        <td class="n">${tf["5m"]?.candles ?? "–"}</td><td class="n">${tf["1h"]?.candles ?? "–"}</td><td class="n">${tf["1d"]?.candles ?? "–"}</td>
+        <td class="small">${lm?.data?.candles ?? "–"} uur-candles<div class="muted">${lm?.data?.van ? nlDate(lm.data.van) + " – " + nlDate(lm.data.tot) : ""}</div></td>
+        <td class="n ${issues ? "warn" : ""}" title="dubbel, leeg of onmogelijk (bv. high onder low): verwijderd">${issues}</td>
+        <td class="small">${lm?.fout ? `<span class="down">${esc(lm.fout)}</span>` : L ? "lab " + nlDate(L.gemaakt) : "–"}${IM(m.naam) ? "<div class='muted'>+ ICT elke minuut</div>" : ""}</td></tr>` }).join("")}
+    </tbody></table></div>
+    <p class="note">Bron: ${esc(all[0]?.bron || "Yahoo Finance")}. "Markt dicht" is normaal buiten de handelsuren (feestdagen herkent hij niet). Problemen = candles die dubbel, leeg of onmogelijk waren en daarom niet gebruikt zijn.</p></section>
+    <section><h2>Versiegeschiedenis</h2><div class="card tbl"><table><tbody>${(S?.versies || []).map(v => `<tr><td class="n">${esc(v.versie)}</td><td class="small" style="white-space:nowrap">${esc(v.datum)}</td><td class="small">${esc(v.wat)}</td></tr>`).join("")}</tbody></table></div></section>`;
+}
+
+/* ---------------- Performance ---------------- */
+const PERF = { m: null, s: null };
+let PCH = [];
+function rPerformance() {
+  PCH.forEach(c => c.remove()); PCH = [];
+  const ms = (L?.markten || []).filter(m => m.strategieen);
+  if (!ms.length) { $("p-performance").innerHTML = `<h2>Performance</h2><div class="empty card">Nog geen labresultaten.</div>`; return }
+  if (!PERF.m || !LM(PERF.m)?.strategieen) PERF.m = (ms.find(m => m.keuze?.strategie) || ms[0]).naam;
+  const lm = LM(PERF.m);
+  const sorted = lm.strategieen.slice().sort((a, b) => (b.nieuw.ondergrens ?? -9) - (a.nieuw.ondergrens ?? -9));
+  if (!PERF.s || !lm.strategieen.find(s => s.id === PERF.s)) PERF.s = lm.keuze?.strategie || sorted[0].id;
+  const st = lm.strategieen.find(s => s.id === PERF.s), nw = st.nieuw, hs = st.historisch;
+  const minN = L.instellingen?.min_trades_nieuw || 30;
+  const verdict = !nw.n ? ["bad", "Geen trades op nieuwe data."] : nw.n < minN ? ["meh", `Te weinig trades (${nw.n}) om iets te zeggen.`]
+    : nw.ondergrens > 0 ? ["good", `Positief op nieuwe data, ook na aftrek van de onzekerheid. Geen garantie: het 95%-interval loopt van ${sgn(nw.ci95[0])} tot ${sgn(nw.ci95[1])}R per trade.`]
+    : nw.expectancy > 0 ? ["meh", `Licht positief, maar binnen de onzekerheid: niet bewezen (95%: ${sgn(nw.ci95[0])} tot ${sgn(nw.ci95[1])}R).`]
+    : ["bad", `Verliest op nieuwe data (${sgn(nw.expectancy)}R per trade na kosten).`];
+  const gap = hs.expectancy != null && nw.expectancy != null ? hs.expectancy - nw.expectancy : null;
+  $("p-performance").innerHTML = `
+    <div class="head"><div><h2>Performance</h2><p>Resultaten na kosten op ${term("Nieuwe data", "nieuwe data")}, per markt en strategie.</p></div></div>
+    <div class="card tbl"><div class="label" style="margin-bottom:6px">Overzicht: gekozen strategie per markt (klik voor details)</div><table><thead><tr><th>Markt</th><th>Gekozen</th><th class="n">Trades</th><th class="n">Win</th><th class="n">${term("Verwachte opbrengst", "Per trade")}</th><th class="n">${term("Ondergrens")}</th><th class="n">Netto</th><th class="n">${term("Drawdown", "Max DD")}</th><th class="n">Kopen-houden</th></tr></thead><tbody>
+      ${ms.map(m => { const s = m.strategieen.find(x => x.id === m.keuze?.strategie), n = s?.nieuw;
+        return `<tr class="link ${m.naam === PERF.m ? "sel" : ""}" data-m="${esc(m.naam)}"><td><b>${esc(m.titel)}</b></td><td>${esc(m.keuze?.titel || "–")}</td>
+        <td class="n">${n?.n ?? "–"}</td><td class="n">${n ? pct(n.win) : "–"}</td><td class="n ${n?.expectancy > 0 ? "up" : n ? "down" : ""}">${n ? sgn(n.expectancy) + "R" : "–"}</td>
+        <td class="n">${n ? sgn(n.ondergrens, 3) : "–"}</td><td class="n">${n ? sgn(n.netto, 1) + "R" : "0R"}</td><td class="n">${n ? nf(n.max_dd, 1) + "R" : "–"}</td><td class="n">${sgn(m.benchmark?.kopen_houden_pct, 1)}%</td></tr>` }).join("")}
+    </tbody></table></div>
+    <div class="form" style="grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr))">
+      <label for="pm">Markt<select id="pm">${ms.map(m => `<option value="${esc(m.naam)}" ${m.naam === PERF.m ? "selected" : ""}>${esc(m.titel)}</option>`).join("")}</select></label>
+      <label for="ps">Strategie<select id="ps">${sorted.map(s => `<option value="${s.id}" ${s.id === PERF.s ? "selected" : ""}>${esc(s.titel)}${s.id === lm.keuze?.strategie ? " (gekozen)" : ""}</option>`).join("")}</select></label></div>
+    <div class="verdict ${verdict[0]}">${esc(verdict[1])}</div>
+    <div class="stats">
+      ${[["Trades", nw.n ?? 0], ["Winrate", pct(nw.win)], ["Gem. winst", sgn(nw.gem_winst) + "R"], ["Gem. verlies", sgn(nw.gem_verlies) + "R"],
+         [term("Verwachte opbrengst"), sgn(nw.expectancy, 3) + "R"], [term("Profit factor"), nf(nw.pf)], ["Netto (na kosten)", sgn(nw.netto, 1) + "R"],
+         ["Bruto (voor kosten)", nw.bruto == null ? "–" : sgn(nw.bruto, 1) + "R"], [term("Drawdown", "Max drawdown"), nf(nw.max_dd, 1) + "R"], ["Gem. risk/reward", nf(nw.gem_rr, 1)],
+         [term("95%-interval"), nw.ci95 ? `${sgn(nw.ci95[0])} … ${sgn(nw.ci95[1])}` : "–"], ["t-waarde", nf(nw.t_stat) + (nw.t_stat > 2 ? " ✓" : "")]]
+        .map(([k, v]) => `<div class="stat"><span class="label">${k}</span><span class="v">${v}</span></div>`).join("")}
+    </div>
+    <div class="muted small">Testperiode: ${nw.van ? nlDate(nw.van) + " – " + nlDate(nw.tot) : "–"} · ${st.varianten_getest} varianten getest · nu: ${esc(st.variant_txt)} · kosten ${nf(lm.kosten * 100, 3)}% per trade.
+      ${term("Oude data")}: ${sgn(hs.expectancy)}R per trade over ${hs.n} trades${gap != null && gap > 0.03 ? ` <span class="warn">(${nf(gap)}R beter dan op nieuwe data: zoveel valt weg als je eerlijk test)</span>` : ""}.</div>
+    <div class="cols">
+      <div class="card"><div class="label">Equity curve (R, cumulatief)</div><div id="c-eq" class="chartbox sm"></div></div>
+      <div class="card"><div class="label">${term("Drawdown")} (R)</div><div id="c-dd" class="chartbox sm"></div></div>
+      <div class="card"><div class="label">Resultaat per maand (R)</div><div id="c-mo" class="chartbox sm"></div></div>
+      <div class="card"><div class="label">Alle strategieën op ${esc(lm.titel)} (nieuwe data)</div><div id="c-all" class="chartbox sm"></div><div id="c-all-leg" class="legend" style="margin-top:6px"></div></div>
+    </div>
+    <div class="cols">
+      <div class="card tbl"><div class="label">Per ${term("Marktconditie", "marktconditie")}</div><table><thead><tr><th>Conditie</th><th class="n">Trades</th><th class="n">Totaal</th><th class="n">Per trade</th></tr></thead><tbody>
+        ${Object.entries(nw.per_conditie || {}).sort((a, b) => b[1][0] - a[1][0]).map(([k, v]) => `<tr><td>${esc(k)}</td><td class="n">${v[0]}</td><td class="n ${v[1] > 0 ? "up" : "down"}">${sgn(v[1], 1)}R</td><td class="n">${sgn(v[2])}R</td></tr>`).join("")}</tbody></table></div>
+      <div class="card" style="display:grid;gap:8px;align-content:start"><div class="label">Benchmark</div>
+        <div class="small">Geen trade: <b class="num">0R</b> (de bot kiest dit als niets beter is)</div>
+        <div class="small">Kopen en vasthouden: <b class="num">${sgn(lm.benchmark?.kopen_houden_pct, 1)}%</b> in dezelfde periode</div>
+        <div class="small">Deze strategie: <b class="num ${nw.netto > 0 ? "up" : "down"}">${sgn(nw.netto, 1)}R</b>; bij ${nf(P.risk, 2)}% risico per trade ≈ <b class="num">${sgn((nw.netto || 0) * P.risk, 1)}%</b> op je account</div>
+        <div class="small">Beste andere: ${(() => { const o = sorted.find(s => s.id !== st.id); return o ? `${esc(o.titel)} ${sgn(o.nieuw.netto, 1)}R` : "–" })()}</div></div>
+    </div>`;
+  $("pm").onchange = e => { PERF.m = e.target.value; PERF.s = null; rPerformance() };
+  $("ps").onchange = e => { PERF.s = e.target.value; rPerformance() };
+  $("p-performance").querySelectorAll("[data-m]").forEach(r => r.onclick = () => { PERF.m = r.dataset.m; PERF.s = null; rPerformance() });
+  drawPerf(lm, st);
+}
+function uniqTimes(arr) { let last = -Infinity; return arr.map(([t, v]) => { t = Math.max(t, last + 1); last = t; return { time: t, value: v } }) }
+function drawPerf(lm, st) {
+  if (!window.LightweightCharts) return;
+  const tr = st.nieuw.trades || [];
+  const mk = id => { const c = LightweightCharts.createChart($(id), { ...chartOpts(230), timeScale: { borderColor: css("--line"), timeVisible: false } }); PCH.push(c); return c };
+  let cum = 0, peak = 0;
+  const eq = [], dd = [];
+  for (const [t, r] of tr) { cum += r; peak = Math.max(peak, cum); eq.push([t, +cum.toFixed(3)]); dd.push([t, +(cum - peak).toFixed(3)]) }
+  if (!tr.length) ["c-eq", "c-dd", "c-mo"].forEach(id => $(id).innerHTML = `<div class="empty" style="height:100%">Geen trades</div>`);
+  else {
+    const c1 = mk("c-eq"); c1.addAreaSeries({ lineColor: css("--accent"), topColor: "rgba(95,179,201,.35)", bottomColor: "rgba(95,179,201,.02)", lineWidth: 2 }).setData(uniqTimes(eq)); c1.timeScale().fitContent();
+    const c2 = mk("c-dd"); c2.addBaselineSeries({ baseValue: { type: "price", price: 0 }, topLineColor: css("--short"), bottomLineColor: css("--short"), topFillColor1: "rgba(0,0,0,0)", topFillColor2: "rgba(0,0,0,0)",
+      bottomFillColor1: "rgba(255,107,107,.08)", bottomFillColor2: "rgba(255,107,107,.4)", lineWidth: 1 }).setData(uniqTimes(dd)); c2.timeScale().fitContent();
+    const c3 = mk("c-mo");
+    c3.addHistogramSeries({ priceFormat: { type: "price", precision: 1, minMove: 0.1 } }).setData(Object.entries(st.nieuw.per_maand || {}).map(([k, v]) => ({ time: k + "-01", value: v[1], color: v[1] >= 0 ? css("--long") : css("--short") })));
+    c3.timeScale().fitContent();
+  }
+  const c4 = mk("c-all"), pal = [css("--accent"), css("--long"), css("--warn"), css("--short"), "#a78bfa", css("--muted")];
+  const leg = [];
+  lm.strategieen.forEach((s, i) => {
+    const t = s.nieuw.trades || []; if (!t.length) return;
+    let c = 0; const pts = t.map(([ts, r]) => [ts, +(c += r).toFixed(3)]);
+    c4.addLineSeries({ color: pal[i % pal.length], lineWidth: s.id === st.id ? 3 : 1, priceLineVisible: false, lastValueVisible: false }).setData(uniqTimes(pts));
+    leg.push(`<span style="color:${pal[i % pal.length]}">● ${esc(s.titel)} ${sgn(s.nieuw.netto, 0)}R</span>`);
+  });
+  c4.timeScale().fitContent(); $("c-all-leg").innerHTML = leg.join("");
+}
+
+/* ---------------- Risk ---------------- */
+function rRisk() {
+  const ms = S?.alle_markten || [];
+  const open = allSignals().filter(s => LIVE_ST.includes(s.status) && s.telt);
+  const exposure = open.reduce((a, s) => a + sizing(s.n, s.entry, s.stop).real, 0);
+  const riskUSD = P.acc * P.risk / 100 * rate(P.ccy);
+  const dayLeft = (P.acc * P.dll / 100 - P.lossToday) * rate(P.ccy);
+  const expMax = P.acc * P.exp / 100 * rate(P.ccy);
+  $("p-risk").innerHTML = `
+    <div class="head"><div><h2>Risk Center</h2><p>Stel je prop-account in. Alle signalen rekenen daarmee je positiegrootte uit. Wordt alleen op dit apparaat bewaard.</p></div></div>
+    <div class="card" style="display:grid;gap:14px">
+      <div class="form">
+        <label for="r-acc">Accountgrootte<input id="r-acc" type="number" min="0" step="1000" value="${P.acc}"></label>
+        <label for="r-ccy">Valuta account<select id="r-ccy"><option value="USD" ${P.ccy === "USD" ? "selected" : ""}>Dollar ($)</option><option value="EUR" ${P.ccy === "EUR" ? "selected" : ""}>Euro (€)</option></select></label>
+        <label for="r-risk">Risico per trade (%)<input id="r-risk" type="number" min="0" step="0.05" value="${P.risk}"></label>
+        <label for="r-dll">Max verlies per dag (%)<input id="r-dll" type="number" min="0" step="0.5" value="${P.dll}"></label>
+        <label for="r-mdd">Max verlies totaal (%)<input id="r-mdd" type="number" min="0" step="0.5" value="${P.mdd}"></label>
+        <label for="r-exp">Max open risico samen (%)<input id="r-exp" type="number" min="0" step="0.25" value="${P.exp}"></label>
+        <label for="r-lt">Verlies vandaag al (${accSym()})<input id="r-lt" type="number" min="0" step="10" value="${P.lossToday}"></label>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><span class="label">Risico per trade</span><span class="v">${money(riskUSD)}</span></div>
+        <div class="kpi"><span class="label">Ruimte vandaag</span><span class="v ${dayLeft < riskUSD ? "down" : ""}">${money(Math.max(0, dayLeft))}</span><span class="d">${riskUSD ? Math.max(0, Math.floor(dayLeft / riskUSD)) : "–"} verliezende trades</span></div>
+        <div class="kpi"><span class="label">Tot totaallimiet</span><span class="v">${P.risk ? Math.floor(P.mdd / P.risk) : "–"}</span><span class="d">verliezende trades op rij</span></div>
+        <div class="kpi"><span class="label">Nu open risico</span><span class="v ${exposure > expMax ? "down" : ""}">${money(exposure)}</span><span class="d">max ${money(expMax)} · ${open.length} signalen</span></div>
+      </div>
+      ${exposure > expMax ? `<div class="warnbox">Neem je alle open signalen, dan riskeer je ${money(exposure)}: meer dan je maximum van ${money(expMax)}. Neem er minder of verklein je risico per trade.</div>` : ""}
+      ${dayLeft < riskUSD ? `<div class="err">Je dagruimte is kleiner dan één trade. Stop voor vandaag.</div>` : ""}
+      <div class="muted small">Wisselkoersen uit de live data: EUR/USD ${nf(rate("EUR"), 4)}, USD/JPY ${nf(1 / rate("JPY"), 2)}. Lotgrootte = risico ÷ ((afstand tot stop + spread) × waarde per punt + commissie).</div>
+    </div>
+    <section><h2>Instrumenten</h2>
+      <div class="warnbox small">Contractgrootte, waarde per punt, spread en commissie verschillen per broker en prop firm. Controleer ze in je platform (contract specifications) en pas ze hier aan.</div>
+      <div class="card tbl"><table><thead><tr><th>Markt</th><th>Type</th><th class="n">Waarde per 1,0 beweging per lot</th><th>Valuta</th><th class="n">Kleinste positie</th><th class="n">Spread (prijs)</th><th class="n">Commissie per lot</th><th></th></tr></thead><tbody>
+      ${ms.map(m => { const I = inst(m.naam);
+        return `<tr><td><b>${esc(m.titel)}</b></td>
+        <td>${I.presets ? `<select id="pr-${m.naam}" data-k="${m.naam}" data-f="preset">${I.presets.map(p => `<option ${p[0] === I.label ? "selected" : ""}>${esc(p[0])}</option>`).join("")}</select>` : `<span class="small">${esc(I.label)}</span>`}</td>
+        <td class="n"><input id="v-${m.naam}" aria-label="waarde ${esc(m.titel)}" data-k="${m.naam}" data-f="v" type="number" step="any" value="${I.v}"></td><td>${esc(I.ccy)}</td>
+        <td class="n"><input id="st-${m.naam}" aria-label="kleinste positie ${esc(m.titel)}" data-k="${m.naam}" data-f="step" type="number" step="any" value="${I.step}"></td>
+        <td class="n"><input id="sp-${m.naam}" aria-label="spread ${esc(m.titel)}" data-k="${m.naam}" data-f="spread" type="number" step="any" value="${I.spread}"></td>
+        <td class="n"><input id="cm-${m.naam}" aria-label="commissie ${esc(m.titel)}" data-k="${m.naam}" data-f="comm" type="number" step="any" value="${I.comm}"></td>
+        <td>${P.inst[m.naam] ? `<button type="button" data-reset="${m.naam}">standaard</button>` : ""}</td></tr>` }).join("")}
+      </tbody></table></div></section>
+    <section><h2>Rekenhulp</h2><div class="card" style="display:grid;gap:12px">
+      <div class="form">
+        <label for="c-m">Markt<select id="c-m">${ms.map(m => `<option value="${m.naam}">${esc(m.titel)}</option>`).join("")}</select></label>
+        <label for="c-e">Instap<input id="c-e" type="number" step="any"></label>
+        <label for="c-s">Stop<input id="c-s" type="number" step="any"></label></div>
+      <div id="c-out" class="size"></div></div></section>
+    <section><h2>Begrippen</h2><div class="gloss">${Object.entries(GLOSS).map(([k, v]) => `<div><b>${esc(k)}</b><br><span class="muted">${esc(v)}</span></div>`).join("")}</div></section>`;
+  const num = (id, k) => $(id).addEventListener("change", () => { const v = parseFloat($(id).value); if (!isNaN(v) && v >= 0) { P[k] = v; saveP(); rRisk() } });
+  [["r-acc", "acc"], ["r-risk", "risk"], ["r-dll", "dll"], ["r-mdd", "mdd"], ["r-exp", "exp"], ["r-lt", "lossToday"]].forEach(a => num(...a));
+  $("r-ccy").onchange = e => { P.ccy = e.target.value; saveP(); rRisk() };
+  $("p-risk").querySelectorAll("[data-k]").forEach(el => el.addEventListener("change", () => {
+    const k = el.dataset.k, f = el.dataset.f; P.inst[k] = P.inst[k] || {};
+    if (f === "preset") { const p = INST[k].presets.find(x => x[0] === el.value); Object.assign(P.inst[k], { label: p[0], v: p[1], step: p[2] }) }
+    else { const v = parseFloat(el.value); if (!isNaN(v) && v >= 0) P.inst[k][f] = v }
+    saveP(); rRisk();
+  }));
+  $("p-risk").querySelectorAll("[data-reset]").forEach(b => b.onclick = () => { delete P.inst[b.dataset.reset]; saveP(); rRisk() });
+  const calc = () => {
+    const n = $("c-m").value, e = parseFloat($("c-e").value), s = parseFloat($("c-s").value);
+    if (!isFinite(e) || !isFinite(s) || e === s) { $("c-out").innerHTML = `<span class="muted small">Vul een instap en stop in.</span>`; return }
+    const z = sizing(n, e, s);
+    $("c-out").innerHTML = `<div class="label">${esc(z.I.label)}</div><div class="v">${z.lots > 0 ? nf(z.lots, z.I.step < 1 ? 2 : 0) + (z.I.step < 1 ? " lot" : " stuks/contracten") : "te klein"}</div><div class="small">Risico ${money(z.real)} (doel ${money(z.riskUSD)}), waarvan kosten ${money(z.costUSD)}</div>`;
+  };
+  const first = open[0];
+  if (first) { $("c-m").value = first.n; $("c-e").value = first.entry; $("c-s").value = first.stop }
+  ["c-m", "c-e", "c-s"].forEach(id => $(id).addEventListener("input", calc)); calc();
+}
+
+/* ---------------- Laden en navigeren ---------------- */
+async function getJSON(u, bust) {
+  const r = await fetch(u + (LIVE && bust ? `?t=${Date.now()}` : ""), { cache: "no-store" });
+  if (!r.ok) throw new Error(`${u.split("/").pop()}: ${r.status}`);
+  return r.json();
+}
 async function load() {
-  try {
-    const r = await fetch(SRC + (LIVE ? `?t=${Date.now()}` : ""), { cache: "no-store" });
-    if (!r.ok) throw new Error(`status ${r.status}`);
-    DATA = await r.json();
-    $("error").hidden = true;
-  } catch (e) {
-    $("error").hidden = false;
-    $("error").textContent = `Kon de status niet ophalen (${e.message}). ${LIVE ? "Draait de cloud-keten nog? Kijk bij GitHub > Actions > TradingStrategie." : ""}`;
-  }
-  render();
+  ERR = [];
+  const [s, l, h] = await Promise.allSettled([getJSON(URLS.status, true), getJSON(URLS.lab, true), getJSON(URLS.hist, true)]);
+  if (s.status === "fulfilled") S = s.value; else ERR.push("live status niet op te halen (" + s.reason.message + ")");
+  if (l.status === "fulfilled") L = l.value; else ERR.push("labresultaten niet op te halen (" + l.reason.message + ")");
+  if (h.status === "fulfilled") H = h.value; else ERR.push("leergeschiedenis niet op te halen");
+  MCACHE = {};
+  $("error").hidden = !ERR.length;
+  $("error").textContent = ERR.length ? "Let op: " + ERR.join("; ") + "." + (LIVE ? " Draait de cloud-keten nog? Kijk bij GitHub > Actions." : "") : "";
+  route(true);
 }
-
-function initForm() {
-  for (const k of ["acc", "risk", "dll", "mdd"]) {
-    $(k).value = P[k];
-    $(k).addEventListener("input", () => { const v = parseFloat($(k).value); if (!isNaN(v) && v >= 0) { P[k] = v; save() } });
-  }
-  for (const k of Object.keys(INSTR)) {
-    $("in-" + k).innerHTML = INSTR[k].map(o => `<option value="${o[0]}">${esc(o[1])}</option>`).join("");
-    $("in-" + k).value = P[k];
-    $("in-" + k).addEventListener("change", () => { P[k] = $("in-" + k).value; save() });
-  }
+function header() {
+  const f = $("fresh");
+  if (!S) { f.className = "pill p-bad"; f.textContent = "geen data"; return }
+  const age = (Date.now() - new Date(S.gemaakt)) / 60000;
+  f.className = "pill " + (!LIVE ? "p-idle" : age < 10 ? "p-ok" : age < 30 ? "p-warn" : "p-bad");
+  f.textContent = `ververst ${ago(S.gemaakt)}`;
+  $("mode").innerHTML = LIVE ? "Live: data elke 3 minuten vanuit de cloud. Alleen analyse en papertrades."
+    : `Momentopname van ${esc(nlDT(S.gemaakt))}. <a href="https://nthijns.github.io/TradingStrategie/" target="_blank" rel="noopener">Open de live versie</a>`;
 }
-function save() { try { localStorage.setItem("prop", JSON.stringify(P)) } catch (e) {} render() }
-
-initForm();
+const RENDER = { dashboard: rDashboard, markets: rMarkets, learning: rLearning, datafarm: rDatafarm, performance: rPerformance, risk: rRisk };
+let CUR = null;
+function route(force) {
+  const h = location.hash.slice(1) || "dashboard";
+  const page = h.startsWith("markt-") ? "markets" : (RENDER[h] ? h : "dashboard"), sub = h.startsWith("markt-") ? h.slice(6) : null;
+  const key = page + (sub || "");
+  document.querySelectorAll(".page").forEach(p => p.hidden = p.id !== "p-" + page);
+  document.querySelectorAll("nav.tabs a").forEach(a => a.classList.toggle("on", a.dataset.p === page));
+  header();
+  if (!force && key === CUR) return;
+  if (key !== CUR) window.scrollTo(0, 0);
+  CUR = key;
+  // invulvelden niet onder je vingers verversen
+  if (force && page === "risk" && document.activeElement?.closest?.("#p-risk")) return;
+  try { RENDER[page](sub) } catch (e) { $("p-" + page).innerHTML = `<div class="err">Dit onderdeel kon niet worden getoond (${esc(e.message)}).</div>`; console.error(e) }
+}
+window.addEventListener("hashchange", () => route(false));
 $("reload").addEventListener("click", load);
 load();
-if (LIVE) setInterval(load, 60000);
-setInterval(render, 30000);
+if (LIVE) setInterval(load, 3 * 60000);
+setInterval(header, 30000);
 </script>
