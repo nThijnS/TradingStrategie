@@ -851,5 +851,870 @@
     ]
    }
   }
+ },
+ {
+  "t": "2026-10-31T20:19-04:00",
+  "markten": {
+   "BTC": {
+    "regime": "Downtrend, normale volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade",
+    "afgewezen": [],
+    "getest": [
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 149,
+      "nieuw": -0.051,
+      "ondergrens": -0.156,
+      "historisch": 0.018
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 477,
+      "nieuw": -0.112,
+      "ondergrens": -0.169,
+      "historisch": -0.109
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 131,
+      "nieuw": -0.111,
+      "ondergrens": -0.216,
+      "historisch": -0.098
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 319,
+      "nieuw": -0.172,
+      "ondergrens": -0.234,
+      "historisch": -0.112
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 227,
+      "nieuw": -0.188,
+      "ondergrens": -0.273,
+      "historisch": -0.182
+     }
+    ]
+   },
+   "ETH": {
+    "regime": "Downtrend, normale volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade",
+    "afgewezen": [
+     {
+      "strategie": "Momentum",
+      "reden": "op oude data +0.02R per trade, op nieuwe data -0.03R: houdt geen stand"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 147,
+      "nieuw": 0.014,
+      "ondergrens": -0.095,
+      "historisch": 0.038
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 432,
+      "nieuw": -0.045,
+      "ondergrens": -0.103,
+      "historisch": -0.047
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 223,
+      "nieuw": -0.023,
+      "ondergrens": -0.111,
+      "historisch": -0.067
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 185,
+      "nieuw": -0.025,
+      "ondergrens": -0.118,
+      "historisch": 0.019
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 205,
+      "nieuw": -0.191,
+      "ondergrens": -0.266,
+      "historisch": -0.108
+     }
+    ]
+   },
+   "SOL": {
+    "regime": "Downtrend, normale volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade",
+    "afgewezen": [],
+    "getest": [
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 148,
+      "nieuw": 0.087,
+      "ondergrens": -0.024,
+      "historisch": 0.032
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 530,
+      "nieuw": -0.046,
+      "ondergrens": -0.101,
+      "historisch": -0.032
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 189,
+      "nieuw": -0.135,
+      "ondergrens": -0.225,
+      "historisch": -0.035
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 130,
+      "nieuw": -0.166,
+      "ondergrens": -0.255,
+      "historisch": -0.086
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 283,
+      "nieuw": -0.219,
+      "ondergrens": -0.287,
+      "historisch": -0.14
+     }
+    ]
+   },
+   "EURUSD": {
+    "regime": "Zijwaarts, normale volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade",
+    "afgewezen": [
+     {
+      "strategie": "ICT / Smart Money",
+      "reden": "op oude data +0.33R per trade, op nieuwe data -0.10R: houdt geen stand"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 233,
+      "nieuw": -0.019,
+      "ondergrens": -0.103,
+      "historisch": -0.038
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 486,
+      "nieuw": -0.075,
+      "ondergrens": -0.129,
+      "historisch": -0.065
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 401,
+      "nieuw": -0.071,
+      "ondergrens": -0.131,
+      "historisch": -0.053
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 237,
+      "nieuw": -0.093,
+      "ondergrens": -0.165,
+      "historisch": -0.016
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 141,
+      "nieuw": -0.084,
+      "ondergrens": -0.178,
+      "historisch": -0.077
+     },
+     {
+      "strategie": "ICT / Smart Money",
+      "varianten": 48,
+      "n": 106,
+      "nieuw": -0.099,
+      "ondergrens": -0.214,
+      "historisch": 0.332
+     }
+    ]
+   },
+   "GBPUSD": {
+    "regime": "Uptrend, lage volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade",
+    "afgewezen": [
+     {
+      "strategie": "Trend volgen",
+      "reden": "op oude data +0.01R per trade, op nieuwe data -0.01R: houdt geen stand"
+     },
+     {
+      "strategie": "Mean reversion",
+      "reden": "op oude data +0.07R per trade, op nieuwe data -0.05R: houdt geen stand"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 423,
+      "nieuw": -0.046,
+      "ondergrens": -0.106,
+      "historisch": -0.037
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 152,
+      "nieuw": -0.013,
+      "ondergrens": -0.108,
+      "historisch": 0.005
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 226,
+      "nieuw": -0.04,
+      "ondergrens": -0.125,
+      "historisch": -0.096
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 213,
+      "nieuw": -0.048,
+      "ondergrens": -0.127,
+      "historisch": 0.073
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 335,
+      "nieuw": -0.087,
+      "ondergrens": -0.155,
+      "historisch": -0.034
+     }
+    ]
+   },
+   "USDJPY": {
+    "regime": "Zijwaarts, normale volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade",
+    "afgewezen": [
+     {
+      "strategie": "Momentum",
+      "reden": "op oude data +0.00R per trade, op nieuwe data -0.05R: houdt geen stand"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "op oude data +0.01R per trade, op nieuwe data -0.05R: houdt geen stand"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 143,
+      "nieuw": -0.005,
+      "ondergrens": -0.083,
+      "historisch": -0.025
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 524,
+      "nieuw": -0.049,
+      "ondergrens": -0.101,
+      "historisch": -0.018
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 378,
+      "nieuw": -0.048,
+      "ondergrens": -0.11,
+      "historisch": 0.001
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 268,
+      "nieuw": -0.052,
+      "ondergrens": -0.127,
+      "historisch": 0.006
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 347,
+      "nieuw": -0.096,
+      "ondergrens": -0.15,
+      "historisch": -0.119
+     }
+    ]
+   },
+   "NQ": {
+    "regime": "Downtrend, hoge volatiliteit",
+    "keuze": "Trend volgen",
+    "variant": "doel 2R",
+    "gewisseld": true,
+    "reden": "beste ondergrens op nieuwe data (+0.018R over 105 trades)",
+    "afgewezen": [
+     {
+      "strategie": "ICT / Smart Money",
+      "reden": "op oude data +0.25R per trade, op nieuwe data -0.09R: houdt geen stand"
+     },
+     {
+      "strategie": "Momentum",
+      "reden": "op oude data +0.05R per trade, op nieuwe data -0.04R: houdt geen stand"
+     },
+     {
+      "strategie": "Breakout",
+      "reden": "op oude data +0.03R per trade, op nieuwe data -0.10R: houdt geen stand"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "op oude data +0.06R per trade, op nieuwe data -0.02R: houdt geen stand"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 105,
+      "nieuw": 0.118,
+      "ondergrens": 0.018,
+      "historisch": 0.169
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 166,
+      "nieuw": 0.047,
+      "ondergrens": -0.036,
+      "historisch": -0.013
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 346,
+      "nieuw": -0.041,
+      "ondergrens": -0.105,
+      "historisch": 0.047
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 196,
+      "nieuw": -0.022,
+      "ondergrens": -0.11,
+      "historisch": 0.058
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 415,
+      "nieuw": -0.097,
+      "ondergrens": -0.151,
+      "historisch": 0.026
+     },
+     {
+      "strategie": "ICT / Smart Money",
+      "varianten": 48,
+      "n": 61,
+      "nieuw": -0.094,
+      "ondergrens": -0.242,
+      "historisch": 0.25
+     }
+    ]
+   },
+   "ES": {
+    "regime": "Zijwaarts, normale volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade",
+    "afgewezen": [
+     {
+      "strategie": "Momentum",
+      "reden": "op oude data +0.10R per trade, op nieuwe data +0.05R: houdt geen stand"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "op oude data +0.01R per trade, op nieuwe data -0.12R: houdt geen stand"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 106,
+      "nieuw": 0.065,
+      "ondergrens": -0.036,
+      "historisch": -0.028
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 209,
+      "nieuw": 0.047,
+      "ondergrens": -0.036,
+      "historisch": 0.101
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 188,
+      "nieuw": -0.07,
+      "ondergrens": -0.149,
+      "historisch": -0.003
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 392,
+      "nieuw": -0.099,
+      "ondergrens": -0.156,
+      "historisch": -0.03
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 190,
+      "nieuw": -0.122,
+      "ondergrens": -0.206,
+      "historisch": 0.008
+     }
+    ]
+   },
+   "DAX": {
+    "regime": "Zijwaarts, normale volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade",
+    "afgewezen": [
+     {
+      "strategie": "Momentum",
+      "reden": "op oude data +0.00R per trade, op nieuwe data -0.02R: houdt geen stand"
+     },
+     {
+      "strategie": "Breakout",
+      "reden": "op oude data +0.00R per trade, op nieuwe data +0.00R: houdt geen stand"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "op oude data +0.14R per trade, op nieuwe data +0.00R: houdt geen stand"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 73,
+      "nieuw": 0.07,
+      "ondergrens": -0.025,
+      "historisch": 0.096
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 224,
+      "nieuw": 0.001,
+      "ondergrens": -0.059,
+      "historisch": 0.001
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 69,
+      "nieuw": 0.005,
+      "ondergrens": -0.086,
+      "historisch": -0.081
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 193,
+      "nieuw": -0.021,
+      "ondergrens": -0.087,
+      "historisch": 0.001
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 77,
+      "nieuw": 0.001,
+      "ondergrens": -0.106,
+      "historisch": 0.136
+     }
+    ]
+   },
+   "GOUD": {
+    "regime": "Downtrend, lage volatiliteit",
+    "keuze": "Momentum",
+    "variant": "efficiëntie > 0.5",
+    "gewisseld": false,
+    "reden": "de huidige strategie is nog steeds de beste op nieuwe data",
+    "afgewezen": [
+     {
+      "strategie": "ICT / Smart Money",
+      "reden": "op oude data +0.22R per trade, op nieuwe data +0.00R: houdt geen stand"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "op oude data +0.03R per trade, op nieuwe data -0.06R: houdt geen stand"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 238,
+      "nieuw": 0.124,
+      "ondergrens": 0.046,
+      "historisch": 0.073
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 237,
+      "nieuw": 0.106,
+      "ondergrens": 0.039,
+      "historisch": 0.019
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 323,
+      "nieuw": 0.107,
+      "ondergrens": 0.039,
+      "historisch": 0.081
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 102,
+      "nieuw": 0.022,
+      "ondergrens": -0.078,
+      "historisch": -0.017
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 178,
+      "nieuw": -0.06,
+      "ondergrens": -0.151,
+      "historisch": 0.025
+     },
+     {
+      "strategie": "ICT / Smart Money",
+      "varianten": 48,
+      "n": 57,
+      "nieuw": 0.004,
+      "ondergrens": -0.163,
+      "historisch": 0.224
+     }
+    ]
+   },
+   "ZILVER": {
+    "regime": "Downtrend, normale volatiliteit",
+    "keuze": "Trend volgen",
+    "variant": "doel 3R",
+    "gewisseld": false,
+    "reden": "de huidige strategie is nog steeds de beste op nieuwe data",
+    "afgewezen": [
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "op oude data +0.05R per trade, op nieuwe data +0.06R: houdt geen stand"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 108,
+      "nieuw": 0.137,
+      "ondergrens": 0.036,
+      "historisch": 0.057
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 168,
+      "nieuw": 0.059,
+      "ondergrens": -0.036,
+      "historisch": 0.048
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 400,
+      "nieuw": -0.12,
+      "ondergrens": -0.178,
+      "historisch": -0.073
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 305,
+      "nieuw": -0.146,
+      "ondergrens": -0.212,
+      "historisch": -0.102
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 203,
+      "nieuw": -0.159,
+      "ondergrens": -0.231,
+      "historisch": -0.143
+     }
+    ]
+   },
+   "OLIE": {
+    "regime": "Uptrend, normale volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade",
+    "afgewezen": [],
+    "getest": [
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 190,
+      "nieuw": 0.084,
+      "ondergrens": -0.007,
+      "historisch": 0.127
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 380,
+      "nieuw": -0.027,
+      "ondergrens": -0.089,
+      "historisch": -0.028
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 273,
+      "nieuw": -0.05,
+      "ondergrens": -0.123,
+      "historisch": -0.042
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 113,
+      "nieuw": -0.078,
+      "ondergrens": -0.162,
+      "historisch": -0.086
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 227,
+      "nieuw": -0.116,
+      "ondergrens": -0.186,
+      "historisch": -0.113
+     }
+    ]
+   },
+   "AAPL": {
+    "regime": "Zijwaarts, lage volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade",
+    "afgewezen": [
+     {
+      "strategie": "Trend volgen",
+      "reden": "te weinig trades op nieuwe data (25 < 30)"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 107,
+      "nieuw": 0.007,
+      "ondergrens": -0.064,
+      "historisch": 0.032
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 25,
+      "nieuw": 0.008,
+      "ondergrens": -0.09,
+      "historisch": -0.062
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 131,
+      "nieuw": -0.059,
+      "ondergrens": -0.12,
+      "historisch": -0.089
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 72,
+      "nieuw": -0.03,
+      "ondergrens": -0.128,
+      "historisch": -0.076
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 182,
+      "nieuw": -0.084,
+      "ondergrens": -0.138,
+      "historisch": -0.118
+     }
+    ]
+   },
+   "NVDA": {
+    "regime": "Downtrend, normale volatiliteit",
+    "keuze": "Mean reversion",
+    "variant": "band 2.0 st.dev.",
+    "gewisseld": true,
+    "reden": "beste ondergrens op nieuwe data (+0.057R over 54 trades)",
+    "afgewezen": [],
+    "getest": [
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 54,
+      "nieuw": 0.149,
+      "ondergrens": 0.057,
+      "historisch": 0.088
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 36,
+      "nieuw": 0.03,
+      "ondergrens": -0.058,
+      "historisch": -0.005
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 142,
+      "nieuw": -0.035,
+      "ondergrens": -0.101,
+      "historisch": -0.034
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 186,
+      "nieuw": -0.052,
+      "ondergrens": -0.109,
+      "historisch": -0.008
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 84,
+      "nieuw": -0.151,
+      "ondergrens": -0.226,
+      "historisch": -0.122
+     }
+    ]
+   },
+   "MSFT": {
+    "regime": "Zijwaarts, normale volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade",
+    "afgewezen": [],
+    "getest": [
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 73,
+      "nieuw": -0.007,
+      "ondergrens": -0.096,
+      "historisch": 0.098
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 152,
+      "nieuw": -0.057,
+      "ondergrens": -0.113,
+      "historisch": -0.047
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 37,
+      "nieuw": -0.049,
+      "ondergrens": -0.128,
+      "historisch": -0.119
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 185,
+      "nieuw": -0.078,
+      "ondergrens": -0.132,
+      "historisch": -0.062
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 86,
+      "nieuw": -0.149,
+      "ondergrens": -0.233,
+      "historisch": -0.161
+     }
+    ]
+   }
+  }
  }
 ]

@@ -81,6 +81,18 @@
    "ondergrens": null,
    "n": 0,
    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  },
+  {
+   "sinds": "2026-10-31",
+   "strategie": "trend",
+   "titel": "Trend volgen",
+   "variant": {
+    "tp": 2.0
+   },
+   "variant_txt": "doel 2R",
+   "ondergrens": 0.018,
+   "n": 105,
+   "reden": "beste ondergrens op nieuwe data (+0.018R over 105 trades)"
   }
  ],
  "ES": [
@@ -169,6 +181,18 @@
    "ondergrens": null,
    "n": 0,
    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  },
+  {
+   "sinds": "2026-10-31",
+   "strategie": "meanrev",
+   "titel": "Mean reversion",
+   "variant": {
+    "k": 2.0
+   },
+   "variant_txt": "band 2.0 st.dev.",
+   "ondergrens": 0.057,
+   "n": 54,
+   "reden": "beste ondergrens op nieuwe data (+0.057R over 54 trades)"
   }
  ],
  "MSFT": [
