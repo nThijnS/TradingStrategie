@@ -1,0 +1,44 @@
+# Leest instrumentgegevens bij Capital.com (demo, alleen lezen: geen orders) en zet rapport/instrumenten.json
+# in de repo. Handmatig starten: Actions > Instrumenten controleren > Run workflow.
+name: Instrumenten controleren
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  instrumenten:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Onderdelen installeren
+        run: pip install -r requirements.txt
+
+      - name: Instrumenten uitlezen
+        env:
+          CAPITAL_API_KEY: ${{ secrets.CAPITAL_API_KEY }}
+          CAPITAL_IDENTIFIER: ${{ secrets.CAPITAL_IDENTIFIER }}
+          CAPITAL_PASSWORD: ${{ secrets.CAPITAL_PASSWORD }}
+        run: python -W ignore capital_instrumenten.py
+
+      - name: Resultaat terugzetten in de repo
+        run: |
+          git config user.name "TradingStrategie-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add rapport/instrumenten.json
+          git diff --cached --quiet && exit 0
+          git commit -q -m "Instrumentgegevens Capital.com"
+          for i in 1 2 3; do
+            git pull -q --rebase origin "${{ github.ref_name }}" && git push -q origin HEAD:"${{ github.ref_name }}" && exit 0
+            sleep 5
+          done
+          exit 1

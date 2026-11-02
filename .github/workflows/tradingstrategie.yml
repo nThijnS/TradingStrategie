@@ -55,23 +55,37 @@ jobs:
           key: logboek-${{ github.run_id }}
           restore-keys: logboek-
 
-      # Demo-trading (Capital.com- of OANDA-demo, nepgeld): onthoudt welke signalen al als order zijn geplaatst
+      # Orderjournaal (broker.py): welke signalen al als order zijn verstuurd. Demo en live apart.
       - uses: actions/cache/restore@v4
         with:
           path: demo_staat.json
           key: demo-${{ github.run_id }}
           restore-keys: demo-
 
+      - uses: actions/cache/restore@v4
+        with:
+          path: live_staat.json
+          key: live-${{ github.run_id }}
+          restore-keys: live-
+
       - name: Setups checken
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || vars.NTFY_TOPIC }}
           GH_TOKEN: ${{ github.token }}
-          # demo-trading (nepgeld); zonder deze geheimen gebeurt er niets
+          # Orderuitvoering (broker.py). Demo is standaard; zonder deze geheimen gebeurt er niets.
           CAPITAL_API_KEY: ${{ secrets.CAPITAL_API_KEY }}
           CAPITAL_IDENTIFIER: ${{ secrets.CAPITAL_IDENTIFIER }}
           CAPITAL_PASSWORD: ${{ secrets.CAPITAL_PASSWORD }}
-          OANDA_TOKEN: ${{ secrets.OANDA_TOKEN }}
-          OANDA_ACCOUNT: ${{ secrets.OANDA_ACCOUNT || vars.OANDA_ACCOUNT }}
+          CAPITAL_DEMO_ACCOUNT_ID: ${{ secrets.CAPITAL_DEMO_ACCOUNT_ID }}
+          # Live (echt geld): alleen actief als config.json, deze variabele EN alle live-geheimen kloppen (zie broker.py)
+          CAPITAL_MODUS: ${{ vars.CAPITAL_MODUS }}
+          CAPITAL_LIVE_BEVESTIGING: ${{ secrets.CAPITAL_LIVE_BEVESTIGING }}
+          CAPITAL_LIVE_API_KEY: ${{ secrets.CAPITAL_LIVE_API_KEY }}
+          CAPITAL_LIVE_IDENTIFIER: ${{ secrets.CAPITAL_LIVE_IDENTIFIER }}
+          CAPITAL_LIVE_PASSWORD: ${{ secrets.CAPITAL_LIVE_PASSWORD }}
+          CAPITAL_LIVE_ACCOUNT_ID: ${{ secrets.CAPITAL_LIVE_ACCOUNT_ID }}
+          # Noodstop: de variabele NOODSTOP=1 werkt vanaf de volgende run. Direct (binnen ~3 min): "noodstop": true in config.json
+          NOODSTOP: ${{ vars.NOODSTOP }}
         run: |
           if [ -z "$NTFY_TOPIC" ]; then
             echo "::error::NTFY_TOPIC ontbreekt: zet het onder Settings > Secrets and variables > Actions"
@@ -88,12 +102,13 @@ jobs:
           while [ "$SECONDS" -lt 20400 ]; do
             git fetch -q origin "${{ github.ref_name }}" && git checkout -q FETCH_HEAD -- config.json 2>/dev/null || true
             git checkout -q FETCH_HEAD -- learned.json leren_geschiedenis.json lab.json 2>/dev/null || true   # keuzes van leren.py en het lab
+            git checkout -q FETCH_HEAD -- NOODSTOP 2>/dev/null || rm -f NOODSTOP    # noodstop-bestand: elke minuut volgen
             python -W ignore tradingstrategie.py --once || true
             if [ $((SECONDS - last)) -ge 180 ]; then
               last=$SECONDS
               d=$(mktemp -d)
               if python -W ignore live_status.py --uit "$d/status.json"; then
-                python -W ignore demo_broker.py --status "$d/status.json" --uit "$d/demo.json" || true
+                python -W ignore broker.py --status "$d/status.json" --uit "$d/demo.json" || true
                 (cd "$d" && git init -q -b live && git add -A \
                   && git -c user.name="TradingStrategie-bot" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -qm "Live status" \
                   && git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" live) || echo "Status pushen mislukt"
@@ -114,6 +129,12 @@ jobs:
         with:
           path: demo_staat.json
           key: demo-${{ github.run_id }}
+
+      - uses: actions/cache/save@v4
+        if: always() && hashFiles('live_staat.json') != ''
+        with:
+          path: live_staat.json
+          key: live-${{ github.run_id }}
 
       - uses: actions/cache/save@v4
         if: always() && hashFiles('logboek.json') != ''
