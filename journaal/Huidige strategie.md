@@ -1,6 +1,6 @@
 # Huidige strategie
 
-Bijgewerkt: 2026-10-30 21:02 NY. De bot kiest dit zelf, zie [Leren](Leren.md).
+Bijgewerkt: 2026-11-01 19:59 NY. De bot kiest dit zelf, zie [Leren](Leren.md).
 
 ## NQ: pauze (wel loggen en leren)
 - Displacement: **basis**
