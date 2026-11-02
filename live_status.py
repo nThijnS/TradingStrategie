@@ -175,15 +175,21 @@ def decimals(price):
     return 5 if price < 5 else 3 if price < 200 else 2
 
 
-def lab_signals(m, df1h, choice, market_open=True):
-    """Signalen van de strategie die het lab koos, op de nieuwste 1-uurs candles (papertrades)."""
+def closed_bars(df, bar, now):
+    """Alleen afgesloten candles: Yahoo levert de lopende candle mee, en daarop kan een signaal nog verdwijnen."""
+    return df[df.index + bar <= now] if len(df) else df
+
+
+def lab_signals(m, df1h, choice, market_open=True, now=None):
+    """Signalen van de strategie die het lab koos, op afgesloten 1-uurs candles (zoals in de backtest)."""
     sid = (choice or {}).get("strategie")
+    df1h = closed_bars(df1h, pd.Timedelta(hours=1), pd.Timestamp(now or datetime.now(ts.NY)))
     if not sid or sid == "ict" or len(df1h) < 300:
         return []
     X = lab.indicators(df1h)
     up, dn, stopd, target = lab.signals(sid, X, choice["variant"])
     out = []
-    for x in lab.simulate(X, up, dn, stopd, target, m["kosten"]):
+    for x in lab.simulate(X, up, dn, stopd, target, m["kosten"], lab.fin_rate(m)):
         if x["t"] < X.index[-1] - pd.Timedelta(hours=36):
             continue
         out.append(dict(t=x["t"].isoformat(), kant=x["kant"], entry=x["entry"], stop=x["stop"], tp=x["tp"], rr=round(x["rr"], 2),
@@ -238,7 +244,7 @@ def all_markets(now, outdir, ict):
                             sinds=choice.get("sinds"), reden=choice.get("reden_vandaag")) if choice else None
         sig = []
         try:
-            sig = lab_signals(m, clean["1h"], choice, row["open"]) if row["status"] != "storing" else []
+            sig = lab_signals(m, clean["1h"], choice, row["open"], now) if row["status"] != "storing" else []
         except Exception as ex:
             row["fout"] = f"signalen: {ex}"
         row["signalen"] = sig
@@ -280,7 +286,7 @@ def build(outdir=HERE):
     return dict(gemaakt=now.isoformat(timespec="seconds"), sessie=sess, volgende=nxt, sessies=sessions,
                 meldingen_aan=bool(ts.SET["actief"]), vers_min=FRESH_MIN, geleerd_op=learned.get("bijgewerkt"),
                 lab_gemaakt=lab_made, leren=history, markten=markets, alle_markten=alle, fouten=errors,
-                logboek_regels=len(book), versies=APP_VERSIONS, modus="alleen analyse en papertrades: er worden nooit orders geplaatst")
+                logboek_regels=len(book), versies=APP_VERSIONS, modus="analyse en signalen; orders alleen via broker.py (demo standaard, live alleen na opt-in, zie demo.json)")
 
 
 if __name__ == "__main__":

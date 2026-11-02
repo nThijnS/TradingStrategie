@@ -1,10 +1,38 @@
 {
   "actief": true,
-  "markten": {"NQ": true, "EURUSD": true},
-  "sessies": {"London": true, "NY AM": true, "NY PM": true},
+  "markten": {
+    "NQ": true,
+    "EURUSD": true
+  },
+  "sessies": {
+    "London": true,
+    "NY AM": true,
+    "NY PM": true
+  },
   "alleen_kans": false,
   "entry_meldingen": true,
   "dagmelding": true,
   "telefoon": true,
-  "max_per_day": 6
+  "max_per_day": 6,
+  "broker": {
+    "modus": "demo"
+  },
+  "noodstop": false,
+  "live": {
+    "limieten_gevalideerd": false,
+    "strategieen": [],
+    "limieten": {
+      "risico_pct": 0.25,
+      "max_open_risico_pct": 0.75,
+      "dagverlies_pct": 2.0,
+      "totaalverlies_pct": 5.0,
+      "trailing": true,
+      "max_open": 2,
+      "max_per_groep": 1,
+      "hefboom": 10
+    }
+  },
+  "demo": {
+    "risico_pct": 0.5
+  }
 }

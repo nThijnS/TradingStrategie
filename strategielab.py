@@ -2,7 +2,13 @@
 """
 Strategielab: vergelijkt per markt verschillende soorten strategieën en kiest er voorzichtig één.
 
-Draait elke dag na de beurs (workflow leren.yml, na leren.py). Plaatst nooit orders: alleen backtest en papertrade.
+Draait elke dag na de beurs (workflow leren.yml, na leren.py). Plaatst zelf geen orders; de signalen van de gekozen
+strategie gaan via live_status.py naar broker.py, dat ze op het DEMO-account neemt (live alleen na opt-in en alleen
+voor strategieën die de eigenaar in config.json live.strategieen vrijgeeft).
+
+LET OP (zie rapport/2_onderzoek.md): de keuze hieronder gebruikt de walk-forward-testtrades ook om tussen strategieën
+te kiezen. Dat geeft selectiebias; het resultaat "op nieuwe data" is daardoor te rooskleurig. Geschikt voor de
+demo-forward-test, niet als bewijs. onderzoek.py toetst met een onaangeroerde eindtest.
 
 1. Haalt per markt ~2 jaar 1-uurs candles op (Yahoo Finance) en controleert de datakwaliteit.
 2. Test zes soorten strategieën: ICT (uit het geheugen van leren.py), trend volgen, momentum, mean reversion,
@@ -192,8 +198,24 @@ def signals(sid, X, v):
     raise ValueError(sid)
 
 
-def simulate(X, up, dn, stopd, target, cost):
-    """Instap op de open van de volgende candle; stop en doel op high/low (stop eerst als beide geraakt)."""
+FIN = dict(crypto=0.20, forex=0.02)   # financiering per jaar over de positiewaarde (ruim geschat); rest 6,5%
+
+
+def fin_rate(m):
+    return FIN.get(m.get("soort"), 0.065)
+
+
+def nights(a, b, hour_utc=22):
+    """Hoe vaak de trade over het dagelijkse rollmoment (17:00 NY ≈ 22:00 UTC) heen ging: dan betaal je financiering."""
+    first = a.normalize() + pd.Timedelta(hours=hour_utc)
+    if first <= a:
+        first += pd.Timedelta(days=1)
+    return 0 if b < first else int((b - first) / pd.Timedelta(days=1)) + 1
+
+
+def simulate(X, up, dn, stopd, target, cost, fin=0.0):
+    """Instap op de open van de volgende candle; stop en doel op high/low (stop eerst als beide geraakt).
+    Kosten: spread/commissie (deel van de prijs) plus financiering per nacht (fin = rente per jaar)."""
     o, h, l, c = (X[k].to_numpy() for k in ("o", "h", "l", "c"))
     mid, sd = X["mid"].to_numpy(), stopd.to_numpy()
     times, trend, vol = X.index, X["trend"].to_numpy(), X["vol"].to_numpy()
@@ -226,7 +248,8 @@ def simulate(X, up, dn, stopd, target, cost):
         if exitp is None:
             exitp = c[j]
         gross = (exitp - e) * side / risk
-        out.append(dict(t=times[i + 1], R=gross - cost * e / risk, bruto=gross, rr=abs(tp - e) / risk, open=bool(still_open),
+        fin_r = fin / 365 * nights(times[i + 1], times[j]) * e / risk if fin else 0.0
+        out.append(dict(t=times[i + 1], R=gross - cost * e / risk - fin_r, bruto=gross, rr=abs(tp - e) / risk, open=bool(still_open),
                         kant="LONG" if side > 0 else "SHORT", trend=trend[i], vol=vol[i],
                         entry=float(e), stop=float(stop), tp=float(tp), i=int(i)))
         busy = j
@@ -349,7 +372,7 @@ def analyse_market(m, df, versions):
             by_variant = {}
             for v in info["varianten"]:
                 up, dn, stopd, target = signals(sid, X, v)
-                by_variant[json.dumps(v)] = simulate(X, up, dn, stopd, target, m["kosten"])
+                by_variant[json.dumps(v)] = simulate(X, up, dn, stopd, target, m["kosten"], fin_rate(m))
         hist_key = max(by_variant, key=lambda k: np.mean([x["R"] for x in by_variant[k]]) if len(by_variant[k]) >= MIN_TRAIN else -9)
         oos, picks = walk_forward(by_variant, start, end)
         now_key = current_variant(by_variant, end) or hist_key
