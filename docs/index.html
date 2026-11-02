@@ -198,7 +198,7 @@ td input { padding: 5px 7px; font-size: .84rem; min-width: 80px }
   <div class="page" id="p-performance" hidden></div>
   <div class="page" id="p-risk" hidden></div>
 
-  <p class="note" style="margin-top:34px">Alleen analyse, backtests en papertrades: deze site en de bot plaatsen nooit orders. Geen financieel advies.
+  <p class="note" style="margin-top:34px">Deze site toont analyse, backtests en signalen. De bot plaatst automatisch orders op een Capital.com-<b>demo</b>-account (nepgeld); live (echt geld) staat uit en kan alleen na een bewuste opt-in van de eigenaar. Geen financieel advies.
   Strategieën worden getest op data die ze nog niet kenden; een paar winnende trades zeggen niets.</p>
 </div></main>
 
@@ -356,14 +356,14 @@ function rDashboard() {
       <div class="kpi"><span class="label">Met strategie</span><span class="v">${chosen.length}</span><span class="d">rest: geen trade</span></div>
       <div class="kpi"><span class="label">Open signalen</span><span class="v ${open.length ? "up" : ""}">${open.length}</span><span class="d">${sigs.length} vandaag/recent</span></div>
       <div class="kpi"><span class="label">Datastatus</span><span class="v ${problems.length ? "warn" : "up"}">${problems.length ? problems.length + " let op" : "OK"}</span><span class="d"><a href="#datafarm">Data Farm</a></span></div>
-      <div class="kpi"><span class="label">Demo-account</span><span class="v ${D?.nav != null ? (D.nav >= D.start_saldo ? "up" : "down") : ""}" style="font-size:${D?.nav != null ? "1.35rem" : "1rem"}">${D?.nav != null ? sgn((D.nav / D.start_saldo - 1) * 100) + "%" : "niet gekoppeld"}</span><span class="d"><a href="#risk">${D?.nav != null ? (D.open_trades?.length || 0) + " open trades" : "koppelen"}</a></span></div>
+      <div class="kpi"><span class="label">${D?.modus === "live" ? "LIVE-account" : "Demo-account"}</span><span class="v ${D?.nav != null ? (D.nav >= D.start_saldo ? "up" : "down") : ""}" style="font-size:${D?.nav != null ? "1.35rem" : "1rem"}">${D?.nav != null ? sgn((D.nav / D.start_saldo - 1) * 100) + "%" : "niet gekoppeld"}</span><span class="d"><a href="#risk">${D?.nav != null ? (D.open_trades?.length || 0) + " open trades" : "koppelen"}</a></span></div>
       <div class="kpi"><span class="label">Laatst geleerd</span><span class="v" style="font-size:1rem">${L ? nlDate(L.gemaakt) : "–"}</span><span class="d">${switched.length ? switched.length + " wissel(s)" : "geen wissels"}</span></div>
     </section>
     <section>
       <div class="head"><h2>Trades nu</h2><a class="small" href="#risk">Positiegrootte instellen</a></div>
       <div class="grid">${sigs.length ? sigs.slice(0, 9).map(tradeCard).join("") : `<div class="empty card"><b>Geen signalen.</b><span class="muted">Geen trade is ook een goede trade. Bij een nieuwe ICT-setup krijg je een melding op je telefoon.</span></div>`}</div>
     </section>
-    ${D?.nav != null ? `<section><div class="head"><h2>Demo-account</h2><a class="small" href="#risk">Alle trades</a></div>${demoBlock(false)}</section>` : ""}
+    ${D?.nav != null ? `<section><div class="head"><h2>${D?.modus === "live" ? "LIVE-account (echt geld)" : "Demo-account"}</h2><a class="small" href="#risk">Alle trades</a></div>${demoBlock(false)}</section>` : ""}
     <section>
       <div class="head"><h2>Markten</h2><a class="small" href="#markets">Alle markten</a></div>
       <div class="grid sm">${all.map(tile).join("")}</div>
@@ -689,8 +689,8 @@ function rRisk() {
   const dayLeft = (P.acc * P.dll / 100 - P.lossToday) * rate(P.ccy);
   const expMax = P.acc * P.exp / 100 * rate(P.ccy);
   $("p-risk").innerHTML = `
-    <div class="head"><div><h2>Risk Center</h2><p>Je demo-account dat de bot automatisch laat handelen, en je eigen prop-instellingen voor de positiegrootte.</p></div></div>
-    <section><h2>Demo-account <span class="muted" style="font:500 .85rem var(--body)">${esc(D?.broker || "broker-demo")}, nepgeld</span></h2>${demoBlock(true)}<div id="demo-eq-wrap"></div></section>
+    <div class="head"><div><h2>Risk Center</h2><p>Het Capital.com-account dat de bot automatisch laat handelen (standaard demo; live alleen na opt-in), en je eigen prop-instellingen voor de positiegrootte.</p></div></div>
+    <section><h2>${D?.modus === "live" ? "LIVE-account" : "Demo-account"} <span class="muted" style="font:500 .85rem var(--body)">${esc(D?.broker || "Capital.com")}, ${D?.modus === "live" ? "ECHT GELD" : "nepgeld"}</span></h2>${demoBlock(true)}<div id="demo-eq-wrap"></div></section>
     <h2 style="margin-top:6px">Jouw prop-instellingen</h2>
     <div class="card" style="display:grid;gap:14px">
       <div class="form">
@@ -757,14 +757,21 @@ function rRisk() {
 let DCH = null;
 function demoBlock(full) {
   if (!D) return `<div class="empty card"><span class="muted">Nog geen demo-status ontvangen. Die komt mee met de eerstvolgende cloud-verversing.</span></div>`;
-  if (D.fout) return `<div class="err">Demo-account: ${esc(D.fout)}</div>`;
+  const modeBar = `<div class="card small" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+    <b style="padding:2px 8px;border-radius:6px;background:${D.modus === "live" ? "var(--short)" : "var(--line)"}">${D.modus === "live" ? "LIVE — ECHT GELD" : D.modus === "geblokkeerd" ? "LIVE GEBLOKKEERD" : "DEMO — nepgeld"}</b>
+    <span>${esc(D.omgeving || "")}</span>
+    <span class="muted">laatste API-controle: ${D.laatste_api_controle ? nlDT(D.laatste_api_controle) : "–"}</span>
+    ${D.noodstop ? `<b class="down">NOODSTOP: ${esc(D.noodstop)}</b>` : ""}
+    ${(D.onbekend || []).length ? `<b class="down">${D.onbekend.length} order(s) met onbekende uitkomst: wordt nagezocht</b>` : ""}</div>`;
+  if (D.fout) return modeBar + `<div class="err">Broker: ${esc(D.fout)}</div>`;
+  if (D.modus === "geblokkeerd") return modeBar + `<div class="err">${esc(D.blokkade || "")}</div>`;
   if (!D.gekoppeld) return `<div class="card" style="display:grid;gap:8px"><b>Nog niet gekoppeld.</b>
     <ol class="small" style="margin:0;padding-left:18px;display:grid;gap:4px">
       <li>Open een gratis demo-account bij Capital.com en zet tweestapsverificatie (2FA) aan.</li>
       <li>Ga in Capital.com naar Settings > API integrations > Generate new key. Kies daar een eigen wachtwoord voor de sleutel.</li>
       <li>Zet in GitHub (Settings > Secrets and variables > Actions) drie geheimen: <b>CAPITAL_API_KEY</b> (de sleutel), <b>CAPITAL_IDENTIFIER</b> (je login-e-mail) en <b>CAPITAL_PASSWORD</b> (het wachtwoord van de sleutel).</li>
       <li>Klaar: binnen 3 minuten neemt de bot de signalen automatisch op je demo-account.</li></ol>
-    <div class="muted small">Het adres van de demo-omgeving staat vast in de code: met een echte sleutel kan de bot niets doen.</div></div>`;
+    <div class="muted small">Standaard demo. Live (echt geld) werkt alleen na een bewuste opt-in van de eigenaar met aparte live-geheimen en een gecontroleerd account-ID.</div>${D.melding ? `<div class="muted small">${esc(D.melding)}</div>` : ""}</div>`;
   if (D.uit) return `<div class="card small">${esc(D.melding)}</div>`;
   const ccy = D.valuta === "EUR" ? "€" : "$", m = v => ccy + nf(v, 0);
   const totPct = (D.nav / D.start_saldo - 1) * 100, dayPct = (D.nav / D.dag_start - 1) * 100, R = D.regels || {};
@@ -773,7 +780,7 @@ function demoBlock(full) {
     <td class="n">${t.prijs != null ? nf(t.prijs, 5).replace(/0+$/, "").replace(/,$/, "") : "–"}</td><td class="n">${t.stop != null ? nf(t.stop, 5).replace(/0+$/, "").replace(/,$/, "") : "–"}</td><td class="n">${t.doel != null ? nf(t.doel, 5).replace(/0+$/, "").replace(/,$/, "") : "–"}</td>
     <td class="small">${nlDT(t.dicht || t.open)}</td><td class="n ${t.pl > 0 ? "up" : t.pl < 0 ? "down" : ""}">${sgn(t.pl, 0)}</td></tr>`;
   const head = `<thead><tr><th>Markt</th><th>Positie</th><th class="n">Prijs</th><th class="n">Stop</th><th class="n">Doel</th><th>Tijd</th><th class="n">Winst/verlies</th></tr></thead>`;
-  return `<div class="kpis">
+  return modeBar + `<div class="kpis">
       <div class="kpi"><span class="label">Waarde (NAV)</span><span class="v">${m(D.nav)}</span><span class="d">start ${m(D.start_saldo)}</span></div>
       <div class="kpi"><span class="label">Totaal resultaat</span><span class="v ${totPct >= 0 ? "up" : "down"}">${sgn(totPct)}%</span><span class="d">${sgn(D.nav - D.start_saldo, 0)} ${ccy}</span></div>
       <div class="kpi"><span class="label">Vandaag</span><span class="v ${dayPct >= 0 ? "up" : "down"}">${sgn(dayPct)}%</span><span class="d">open: ${sgn(D.open_pl, 0)} ${ccy}</span></div>
@@ -782,11 +789,11 @@ function demoBlock(full) {
     ${D.blokkade ? `<div class="err">${esc(D.blokkade)}</div>` : ""}
     ${full ? `<div class="cols">
       <div class="card small" style="display:grid;gap:6px"><div class="label">Prop-regels (Alpha Capital, Alpha Direct)</div>
-        <div>Hefboom max <b>1:${R.hefboom ?? 30}</b> · geen winstdoel · risico per trade <b>${nf(R.risico_pct)}%</b> · max ${R.max_open} trades tegelijk · daytrade: sluit na ${R.max_uren} uur (ICT om 22:00 NL)</div>
+        <div>Hefboom max <b>1:${R.hefboom ?? 30}</b> · geen winstdoel · risico per trade <b>${nf(R.risico_pct)}%</b> (incl. spread en slippage)${R.min_rr ? ` · risk/reward minstens <b>1:${R.min_rr}</b>` : " · doel per markt en strategie uit de data"} · alle open trades samen max <b>${nf(R.max_open_risico_pct)}%</b> · max ${R.max_open} trades tegelijk · max ${R.max_per_groep ?? 1} per gecorreleerde groep · daytrade: sluit na ${R.max_uren} uur (ICT om 22:00 NL)</div>
         <div>Max dagverlies ${nf(R.dagverlies_pct, 1)}%: niet onder <b>${m(D.daggrens)}</b> vandaag (${nf(Math.max(0, -dayPct))}% gebruikt)</div>${bar(Math.max(0, -dayPct), R.dagverlies_pct)}
         <div>${R.trailing ? "Meeschuivend (trailing) max verlies" : "Max verlies"} ${nf(R.totaalverlies_pct, 1)}%: niet onder <b>${m(D.grens)}</b>${R.trailing ? ` (5% onder de hoogste waarde ${m(D.piek)})` : ""}</div>${bar(Math.max(0, (D.piek - D.nav) / D.start_saldo * 100), R.totaalverlies_pct)}
         <div class="muted">Een trade die bij verlies (samen met de open trades) een grens zou breken, opent de bot niet.</div>
-        <div class="muted">Aan te passen in config.json onder "demo". ${esc(D.broker)} · account ${esc(D.account)} · ${esc(D.omgeving)}</div></div>
+        <div class="muted">Aan te passen in config.json onder "demo" (live: onder "live"). ${esc(D.broker)} · account ${esc(D.account)} · ${esc(D.omgeving)}</div></div>
       <div class="card"><div class="label">Verloop accountwaarde</div><div id="c-demo" class="chartbox xs"></div></div></div>` : ""}
     <div class="card tbl"><div class="label" style="margin-bottom:6px">Open trades</div>${D.open_trades.length ? `<table>${head}<tbody>${D.open_trades.map(tr).join("")}</tbody></table>` : `<span class="muted small">Geen open trades.</span>`}</div>
     ${full ? `<div class="card tbl"><div class="label" style="margin-bottom:6px">Gesloten trades</div>${D.gesloten.length ? `<table>${head}<tbody>${D.gesloten.map(tr).join("")}</tbody></table>` : `<span class="muted small">Nog geen gesloten trades.</span>`}</div>
