@@ -1,7 +1,7 @@
 {
- "bijgewerkt": "2026-11-02T20:08-05:00",
+ "bijgewerkt": "2026-11-02T20:40-05:00",
  "markten": {
-  "NQ": {
+  "EURUSD": {
    "actief": false,
    "cfg": {
     "disp_pct": 0.6,
@@ -10,27 +10,60 @@
     "tp_r": 2.0
    },
    "kans_sess": [
+    "London",
+    "NY AM",
+    "NY PM"
+   ],
+   "need_bias_b": false,
+   "variant": "basis · TP 2.0 · alle sessies · bias geen",
+   "score": {
+    "n": 58,
+    "gem": -0.156,
+    "score": -0.433,
+    "win": 0.379,
+    "totaal": -9.03
+   },
+   "sinds": "2026-10-30",
+   "selectie": {
+    "status": "pauze",
+    "strategie": null,
+    "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze"
+   }
+  },
+  "NQ": {
+   "actief": false,
+   "cfg": {
+    "disp_pct": 0.7,
+    "disp_atr": 1.5,
+    "tp_mode": "DOL"
+   },
+   "kans_sess": [
     "NY AM",
     "London"
    ],
-   "need_bias_b": true,
-   "variant": "basis · TP 2.0 · NY AM + London · bias 1H mee",
+   "need_bias_b": false,
+   "variant": "strenger · TP DOL · NY AM + London · bias geen",
    "score": {
-    "n": 67,
-    "gem": 0.089,
-    "score": -0.2,
-    "win": 0.403,
-    "totaal": -0.6
+    "n": 39,
+    "gem": -0.151,
+    "score": -0.5,
+    "win": 0.359,
+    "totaal": -5.9
    },
-   "sinds": "2026-11-02"
+   "sinds": "2026-11-02",
+   "selectie": {
+    "status": "onderzoek",
+    "strategie": null,
+    "reden": "huidige strategie haalt de poort niet meer; geen strategie haalt de poort; trend is in train en validatie positief en wordt gevolgd zonder orders"
+   }
   },
-  "EURUSD": {
+  "GOUD": {
    "actief": false,
    "cfg": {
     "disp_pct": 0.7,
     "disp_atr": 1.5,
     "tp_mode": "R",
-    "tp_r": 1.5
+    "tp_r": 2.0
    },
    "kans_sess": [
     "London",
@@ -38,39 +71,20 @@
     "NY PM"
    ],
    "need_bias_b": false,
-   "variant": "strenger · TP 1.5 · alle sessies · bias geen",
+   "variant": "strenger · TP 2.0 · alle sessies · bias geen",
    "score": {
-    "n": 183,
-    "gem": 0.165,
-    "score": -0.006,
-    "win": 0.454,
-    "totaal": 3.4
+    "n": 27,
+    "gem": 0.132,
+    "score": -0.16,
+    "win": 0.444,
+    "totaal": 3.57
    },
-   "sinds": "2026-10-30"
-  },
-  "GOUD": {
-   "actief": false,
-   "cfg": {
-    "disp_pct": 0.6,
-    "disp_atr": 1.2,
-    "tp_mode": "R",
-    "tp_r": 1.0
-   },
-   "kans_sess": [
-    "London",
-    "NY AM",
-    "NY PM"
-   ],
-   "need_bias_b": true,
-   "variant": "basis · TP 1.0 · alle sessies · bias 1H mee",
-   "score": {
-    "n": 56,
-    "gem": 0.218,
-    "score": -0.059,
-    "win": 0.429,
-    "totaal": -11.0
-   },
-   "sinds": "2026-10-30"
+   "sinds": "2026-10-30",
+   "selectie": {
+    "status": "onderzoek",
+    "strategie": null,
+    "reden": "huidige strategie haalt de poort niet meer; geen strategie haalt de poort; meanrev is in train en validatie positief en wordt gevolgd zonder orders"
+   }
   }
  }
 }

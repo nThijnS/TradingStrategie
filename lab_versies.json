@@ -9,6 +9,20 @@
    "ondergrens": null,
    "n": 0,
    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  },
+  {
+   "sinds": "2026-10-30",
+   "status": "pauze",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+   "geblokkeerd": {},
+   "onderzoek": null
   }
  ],
  "ETH": [
@@ -21,6 +35,20 @@
    "ondergrens": null,
    "n": 0,
    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  },
+  {
+   "sinds": "2026-10-30",
+   "status": "pauze",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+   "geblokkeerd": {},
+   "onderzoek": null
   }
  ],
  "SOL": [
@@ -33,6 +61,29 @@
    "ondergrens": null,
    "n": 0,
    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  },
+  {
+   "sinds": "2026-11-02",
+   "status": "onderzoek",
+   "strategie": null,
+   "titel": "Onderzoek: Volatiliteit (squeeze) (geen orders)",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort; volatiliteit is in train en validatie positief en wordt gevolgd zonder orders",
+   "geblokkeerd": {},
+   "onderzoek": {
+    "strategie": "volatiliteit",
+    "titel": "Volatiliteit (squeeze)",
+    "variant_txt": "squeeze onderste 10%",
+    "redenen": [
+     "P2: validatie -0.046R bij 1.5x kosten, ondergrens -0.264R",
+     "P4: Deflated Sharpe 0.12 (< 0.95, 10 varianten geprobeerd)",
+     "P5: zonder de 5 beste validatietrades niet positief"
+    ]
+   }
   }
  ],
  "EURUSD": [
@@ -45,6 +96,20 @@
    "ondergrens": null,
    "n": 0,
    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  },
+  {
+   "sinds": "2026-10-30",
+   "status": "pauze",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+   "geblokkeerd": {},
+   "onderzoek": null
   }
  ],
  "GBPUSD": [
@@ -57,6 +122,29 @@
    "ondergrens": null,
    "n": 0,
    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  },
+  {
+   "sinds": "2026-11-02",
+   "status": "onderzoek",
+   "strategie": null,
+   "titel": "Onderzoek: Mean reversion (geen orders)",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort; meanrev is in train en validatie positief en wordt gevolgd zonder orders",
+   "geblokkeerd": {},
+   "onderzoek": {
+    "strategie": "meanrev",
+    "titel": "Mean reversion",
+    "variant_txt": "band 2.5 st.dev.",
+    "redenen": [
+     "P2: validatie -0.011R bij 1.5x kosten, ondergrens -0.290R",
+     "P4: Deflated Sharpe 0.28 (< 0.95, 10 varianten geprobeerd)",
+     "P5: zonder de 5 beste validatietrades niet positief"
+    ]
+   }
   }
  ],
  "USDJPY": [
@@ -69,6 +157,20 @@
    "ondergrens": null,
    "n": 0,
    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  },
+  {
+   "sinds": "2026-10-30",
+   "status": "pauze",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+   "geblokkeerd": {},
+   "onderzoek": null
   }
  ],
  "NQ": [
@@ -93,6 +195,30 @@
    "ondergrens": 0.018,
    "n": 105,
    "reden": "beste ondergrens op nieuwe data (+0.018R over 105 trades)"
+  },
+  {
+   "sinds": "2026-11-02",
+   "status": "onderzoek",
+   "strategie": null,
+   "titel": "Onderzoek: Trend volgen (geen orders)",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "huidige strategie haalt de poort niet meer; geen strategie haalt de poort; trend is in train en validatie positief en wordt gevolgd zonder orders",
+   "geblokkeerd": {},
+   "onderzoek": {
+    "strategie": "trend",
+    "titel": "Trend volgen",
+    "variant_txt": "doel 3R",
+    "redenen": [
+     "P1: te weinig data (128 train, 24 validatie; minimaal 30/30)",
+     "P2: validatie +0.213R bij 1.5x kosten, ondergrens -0.253R",
+     "P4: Deflated Sharpe 0.17 (< 0.95, 58 varianten geprobeerd)",
+     "P5: zonder de 5 beste validatietrades niet positief"
+    ]
+   }
   }
  ],
  "ES": [
@@ -105,6 +231,27 @@
    "ondergrens": null,
    "n": 0,
    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  },
+  {
+   "sinds": "2026-11-02",
+   "status": "onderzoek",
+   "strategie": null,
+   "titel": "Onderzoek: Momentum (geen orders)",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort; momentum is in train en validatie positief en wordt gevolgd zonder orders",
+   "geblokkeerd": {},
+   "onderzoek": {
+    "strategie": "momentum",
+    "titel": "Momentum",
+    "variant_txt": "efficiëntie > 0.5",
+    "redenen": [
+     "P4: Deflated Sharpe 0.25 (< 0.95, 10 varianten geprobeerd)"
+    ]
+   }
   }
  ],
  "DAX": [
@@ -117,6 +264,20 @@
    "ondergrens": null,
    "n": 0,
    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  },
+  {
+   "sinds": "2026-10-30",
+   "status": "pauze",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+   "geblokkeerd": {},
+   "onderzoek": null
   }
  ],
  "GOUD": [
@@ -131,6 +292,29 @@
    "ondergrens": 0.053,
    "n": 229,
    "reden": "beste ondergrens op nieuwe data (+0.053R over 229 trades)"
+  },
+  {
+   "sinds": "2026-11-02",
+   "status": "onderzoek",
+   "strategie": null,
+   "titel": "Onderzoek: Mean reversion (geen orders)",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "huidige strategie haalt de poort niet meer; geen strategie haalt de poort; meanrev is in train en validatie positief en wordt gevolgd zonder orders",
+   "geblokkeerd": {},
+   "onderzoek": {
+    "strategie": "meanrev",
+    "titel": "Mean reversion",
+    "variant_txt": "band 2.5 st.dev.",
+    "redenen": [
+     "P2: validatie +0.112R bij 1.5x kosten, ondergrens -0.071R",
+     "P4: Deflated Sharpe 0.03 (< 0.95, 58 varianten geprobeerd)",
+     "P5: zonder de 5 beste validatietrades niet positief"
+    ]
+   }
   }
  ],
  "ZILVER": [
@@ -145,6 +329,20 @@
    "ondergrens": 0.013,
    "n": 110,
    "reden": "beste ondergrens op nieuwe data (+0.013R over 110 trades)"
+  },
+  {
+   "sinds": "2026-11-02",
+   "status": "pauze",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "huidige strategie haalt de poort niet meer; geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+   "geblokkeerd": {},
+   "onderzoek": null
   }
  ],
  "OLIE": [
@@ -157,6 +355,20 @@
    "ondergrens": null,
    "n": 0,
    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  },
+  {
+   "sinds": "2026-10-30",
+   "status": "pauze",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+   "geblokkeerd": {},
+   "onderzoek": null
   }
  ],
  "AAPL": [
@@ -169,6 +381,20 @@
    "ondergrens": null,
    "n": 0,
    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  },
+  {
+   "sinds": "2026-10-30",
+   "status": "pauze",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+   "geblokkeerd": {},
+   "onderzoek": null
   }
  ],
  "NVDA": [
@@ -193,6 +419,20 @@
    "ondergrens": 0.057,
    "n": 54,
    "reden": "beste ondergrens op nieuwe data (+0.057R over 54 trades)"
+  },
+  {
+   "sinds": "2026-11-02",
+   "status": "pauze",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "huidige strategie haalt de poort niet meer; geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+   "geblokkeerd": {},
+   "onderzoek": null
   }
  ],
  "MSFT": [
@@ -205,6 +445,20 @@
    "ondergrens": null,
    "n": 0,
    "reden": "geen enkele strategie heeft op nieuwe data een ondergrens boven 0: geen trade"
+  },
+  {
+   "sinds": "2026-10-30",
+   "status": "pauze",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+   "geblokkeerd": {},
+   "onderzoek": null
   }
  ]
 }

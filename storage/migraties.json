@@ -55,5 +55,21 @@
     }
    }
   }
+ },
+ {
+  "migratie": "002",
+  "t": "2026-11-03T02:40:01",
+  "backup": "backups/20261103-024001-002",
+  "rijen": 4880,
+  "opnieuw": {
+   "histdata": 4580,
+   "yahoo": 284,
+   "ongewijzigd_oud": 8,
+   "niet_gevonden": 8
+  },
+  "R_veranderd": 0,
+  "keuze": {
+   "met_kosten_r": 4864
+  }
  }
 ]
