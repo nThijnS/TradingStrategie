@@ -92,11 +92,17 @@ def gate(train, val, n_trials, rng=None):
 
 
 def pick_variant(by_variant, cut):
-    """Beste variant op ALLEEN train (voor `cut`), met minstens MIN_TRAIN trades."""
+    """Beste variant op ALLEEN train (voor `cut`), met minstens MIN_TRAIN trades. Een variant die in train te weinig
+    handelt om in een validatieperiode van VAL_DAYS dagen MIN_VAL trades te halen, kan P1 nooit halen en doet niet
+    mee (alleen de tradefrequentie in train telt, niet de uitkomsten in de validatie)."""
+    starts = [x["t"] for trades in by_variant.values() for x in trades if x["t"] < cut]
+    days = max(1.0, (cut - min(starts)).total_seconds() / 86400) if starts else 1.0
     best, best_m = None, None
     for k, trades in by_variant.items():
         tr = [x for x in trades if x["t"] < cut]
-        if len(tr) >= MIN_TRAIN and (best_m is None or _mean(tr) > best_m):
+        if len(tr) < MIN_TRAIN or len(tr) / days * VAL_DAYS < MIN_VAL:
+            continue
+        if best_m is None or _mean(tr) > best_m:
             best, best_m = k, _mean(tr)
     return best
 
@@ -111,7 +117,10 @@ def evaluate_family(market, sid, by_variant, cut, n_trials, keep=None):
     if k is not None and k not in cands:
         cands.append(k)
     if not cands:
-        out.update(variant=None, poort=dict(geslaagd=False, redenen=[f"P1: geen variant met {MIN_TRAIN} trades in train"]))
+        out.update(variant=None, poort=dict(geslaagd=False, train=dict(n=0), validatie=dict(n=0), ondergrens=None, dsr=0.0,
+                                            validatie_kosten15=None,
+                                            redenen=[f"P1: geen variant handelt vaak genoeg ({MIN_TRAIN} trades in train en "
+                                                     f"naar verwachting {MIN_VAL} per {VAL_DAYS} dagen)"]))
         return out
     for key in cands:
         trades = by_variant[key]

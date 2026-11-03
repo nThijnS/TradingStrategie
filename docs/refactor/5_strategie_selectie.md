@@ -14,7 +14,7 @@
 
 - `learning/selector.py`: één selector per markt. **ICT is één familie** naast trend, momentum, mean reversion, breakout en volatiliteit.
 - De stappen staan bovenaan dat bestand. Kort:
-  1. **Variant kiezen op train alleen.** Train = alles vóór de laatste 180 dagen.
+  1. **Variant kiezen op train alleen.** Train = alles vóór de laatste 180 dagen. Een variant doet alleen mee als hij in train vaak genoeg handelt om in 180 dagen 30 trades te halen; anders kan hij P1 nooit halen.
   2. **Poort P1–P5 op de laatste 180 dagen.** Dezelfde poort als `research/protocol.py`:
      - P1: genoeg data (≥ 30 trades in train én in validatie);
      - P2: positief bij 1,5× kosten, met een block-bootstrap-ondergrens > 0;
@@ -47,20 +47,11 @@
 | Status | Markten |
 |---|---|
 | actief | – |
-| onderzoek (geen orders) | SOL (Volatiliteit), GBPUSD (Mean reversion), NQ (Trend), ES (Momentum), DAX (Mean reversion), GOUD (ICT) |
-| pauze | BTC, ETH, EURUSD, USDJPY, ZILVER, OLIE, AAPL, NVDA, MSFT |
+| onderzoek (geen orders) | SOL (Volatiliteit), GBPUSD (Mean reversion), NQ (Trend), ES (Momentum), GOUD (Mean reversion) |
+| pauze | BTC, ETH, EURUSD, USDJPY, DAX, ZILVER, OLIE, AAPL, NVDA, MSFT |
 
 - Het dichtst bij komt **ES / Momentum**: 40 validatietrades, +0,301R bij 1,5× kosten en een ondergrens van +0,061R. Het faalt alleen op P4: Deflated Sharpe 0,25.
-- **ICT** faalt op alle drie de markten ook op P1: de op train gekozen variant heeft maar 14–18 trades in de validatie.
-- Faalredenen over alle 78 combinaties:
-
-  | Criterium | Aantal |
-  |---|---|
-  | P4 | 78 |
-  | P2 | 77 |
-  | P5 | 77 |
-  | P3 | 49 |
-  | P1 | 19 |
+- **ICT** wordt nu met een brede variant getoetst die genoeg handelt (39–58 validatietrades). Het faalt op de uitkomsten: in de validatie is het gemiddelde negatief (EURUSD −0,16R, NQ −0,15R). In een eerdere versie koos de selector smalle varianten met maar 14–18 trades. Die konden P1 nooit halen; dat is gerepareerd.
 
 **Gevolg voor de demo-orders na de merge.**
 

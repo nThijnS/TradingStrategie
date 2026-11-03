@@ -61,6 +61,11 @@ class Gate(unittest.TestCase):
         by = {"a": trades(0.4, 0.1, seed=4), "b": trades(0.1, 0.9, seed=5)}
         self.assertEqual(family("trend", by)["variant"], "a")
 
+    def test_variant_that_trades_too_rarely_is_skipped(self):
+        # b is in train beter, maar handelt zo weinig dat hij nooit 30 validatietrades haalt: a wordt gekozen
+        by = {"a": trades(0.2, 0.2, n_train=120, seed=11), "b": trades(0.9, 0.9, n_train=40, n_val=10, seed=12)}
+        self.assertEqual(family("trend", by)["variant"], "a")
+
     def test_bootstrap_reproducible(self):
         by = {"a": trades(0.3, 0.3, seed=6)}
         self.assertEqual(family("trend", by)["poort"], family("trend", by)["poort"])
