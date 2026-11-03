@@ -1,0 +1,59 @@
+[
+ {
+  "migratie": "001",
+  "t": "2026-11-03T02:07:55",
+  "backup": "backups/20261103-020755-001",
+  "rijen": 4880,
+  "opnieuw": {
+   "histdata": 4580,
+   "yahoo": 284,
+   "ongewijzigd_oud": 8,
+   "niet_gevonden": 8
+  },
+  "R_veranderd": 775,
+  "keuze": {
+   "EURUSD": {
+    "voor": {
+     "variant": "strenger · TP 1.5 · alle sessies · bias geen",
+     "actief": true,
+     "score": 0.058,
+     "n": 183
+    },
+    "na": {
+     "variant": "strenger · TP 1.5 · alle sessies · bias geen",
+     "actief": false,
+     "score": -0.006,
+     "n": 183
+    }
+   },
+   "GOUD": {
+    "voor": {
+     "variant": "basis · TP 1.0 · alle sessies · bias 1H mee",
+     "actief": true,
+     "score": 0.073,
+     "n": 56
+    },
+    "na": {
+     "variant": "basis · TP 1.0 · alle sessies · bias 1H mee",
+     "actief": false,
+     "score": -0.059,
+     "n": 56
+    }
+   },
+   "NQ": {
+    "voor": {
+     "variant": "basis · TP 1.5 · alle sessies · bias geen",
+     "actief": false,
+     "score": -0.13,
+     "n": 189
+    },
+    "na": {
+     "variant": "basis · TP 2.0 · NY AM + London · bias 1H mee",
+     "actief": false,
+     "score": -0.2,
+     "n": 67
+    }
+   }
+  }
+ }
+]
