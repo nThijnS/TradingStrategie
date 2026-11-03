@@ -42,28 +42,36 @@ def svg_chart(df, s, width=640, height=260):
     return "\n".join(parts)
 
 
+def write_selection(results):
+    """Huidige strategie.md: per markt welke strategie de selector koos (actief/onderzoek/pauze) en waarom."""
+    paths.JOURNAL.mkdir(exist_ok=True)
+    now = datetime.now(NY)
+    order = {"actief": 0, "onderzoek": 1, "pauze": 2}
+    rows = sorted((r for r in results if r.get("keuze")), key=lambda r: (order.get(r["keuze"].get("status"), 3), r["naam"]))
+    lines = ["# Huidige strategie", "", f"Bijgewerkt: {now:%Y-%m-%d %H:%M} NY. De bot kiest dit per markt zelf uit alle "
+             "strategieën (ICT is er één van) met een vaste poort tegen overfitting; zie learning/selector.py.", "",
+             "| markt | status | strategie | ondergrens validatie | sinds | reden |", "|---|---|---|---|---|---|"]
+    for r in rows:
+        k = r["keuze"]
+        lb = f"{k['ondergrens']:+.3f}R ({k['n']} trades)" if k.get("ondergrens") is not None else "-"
+        lines.append(f"| {r['naam']} | {k.get('status', '-')} | {k.get('titel', '-')} {k.get('variant_txt') or ''} | {lb} | "
+                     f"{k.get('sinds', '-')} | {k.get('reden_vandaag', '')} |")
+    lines += ["", "Status: **actief** = haalt de poort, signalen tellen (orders op het demo-account); **onderzoek** = in train "
+              "en validatie positief maar nog niet genoeg bewijs, wordt gevolgd zonder orders; **pauze** = niets."]
+    (paths.JOURNAL / "Huidige strategie.md").write_text("\n".join(lines) + "\n")
+
+
 def write_journal(choice, report, mem):
     paths.JOURNAL.mkdir(exist_ok=True)
     (paths.JOURNAL / "charts").mkdir(exist_ok=True)
     (paths.JOURNAL / "Dagen").mkdir(exist_ok=True)
     now = datetime.now(NY)
-    # Huidige strategie
-    lines = ["# Huidige strategie", "", f"Bijgewerkt: {now:%Y-%m-%d %H:%M} NY. De bot kiest dit zelf, zie [Leren](Leren.md).", ""]
-    for name, c in choice.items():
-        v = c["variant"]
-        sc = c["score"]
-        lines += [f"## {name}: {'actief' if c['actief'] else 'pauze (wel loggen en leren)'}",
-                  f"- Displacement: **{v['disp']}**", f"- Doel: **{'DOL (liquiditeit)' if v['target'] == 'DOL' else v['target'] + 'R'}**",
-                  f"- Sessies: **{v['sessies']}**", f"- Biasfilter: **{v['bias']}**",
-                  f"- Score: {sc['score']:+.3f}R per trade (voorzichtig), gemiddeld {sc['gem']:+.3f}R, {sc['n']} trades, win {sc['win']:.0%}",
-                  f"- Actief sinds: {c['sinds']}", ""]
-    (paths.JOURNAL / "Huidige strategie.md").write_text("\n".join(lines))
     # Leerlog: nieuwste bovenaan
     log = paths.JOURNAL / "Leren.md"
     old = log.read_text().split("\n", 2)[2] if log.exists() else ""
     entry = [f"## {now:%Y-%m-%d %H:%M} NY", ""]
     for name, r in report.items():
-        entry += [f"### {name}: {r['waarom']}", f"Geheugen: {r['n_data']} uitkomsten.", "",
+        entry += [f"### {name} (ICT-varianten, ter informatie): {r['waarom']}", f"Geheugen: {r['n_data']} uitkomsten.", "",
                   "| variant | trades | win | gem R | score | totaal R |", "|---|---|---|---|---|---|"]
         entry += [f"| {t['variant']} | {t['n']} | {t['win']:.0%} | {t['gem']:+.3f} | {t['score']:+.3f} | {t['totaal']:+.1f} |" for t in r["top"]]
         v = r.get("validatie")

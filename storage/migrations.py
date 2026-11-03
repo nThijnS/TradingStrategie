@@ -14,6 +14,11 @@ Migratie 001 (leergeheugen, simulatie v2)
     zoals ze waren en houden sim=1 (ze tellen wel mee, zoals voorheen).
   Daarna kiest het leren mogelijk een andere variant. Draai deze migratie pas na de merge, lokaal (HistData nodig),
   en commit het resultaat zelf. Zolang ze niet gedraaid is, mengt het geheugen oude (sim=1) en nieuwe (sim=2) rijen.
+
+Migratie 002 (kosten per trade)
+  Voegt aan elke sim=2-rij `kosten_r` toe (kosten / risico), zodat de selector ICT net als de andere strategieën bij
+  1,5x kosten kan toetsen. R verandert niet (gecontroleerd); rijen waarvan R niet exact terug te rekenen is, krijgen
+  geen kosten_r en tellen in de toets met hun gewone R (minder streng; dat staat in de poortuitleg).
 """
 import hashlib
 import json
@@ -23,7 +28,8 @@ from datetime import datetime
 
 from storage import jsonstore, paths
 
-MIGRATIONS = {"001": "leergeheugen opnieuw uitrekenen met de centrale engine (simulatie v2)"}
+MIGRATIONS = {"001": "leergeheugen opnieuw uitrekenen met de centrale engine (simulatie v2)",
+              "002": "leergeheugen: kosten per trade in R (kosten_r) toevoegen, voor de kostentoets van de selector"}
 
 
 # ------------- Backup -------------
@@ -60,7 +66,7 @@ def log(entry):
 
 
 # ------------- 001: leergeheugen simulatie v2 -------------
-def m001_compute(mem):
+def m001_compute(mem, field="R"):
     import pandas as pd
     from backtesting import engine
     from core import config, data
@@ -94,12 +100,20 @@ def m001_compute(mem):
                     stats["ongewijzigd_oud" if r["t"] < first else "niet_gevonden"] += 1
                     continue
                 s, cfg = found
-                R = leren.simulate5(B, s, r["target"], leren.COST.get(m["name"], 0), cfg["tp_r"])
-                if R is None:
+                out = leren.outcome_row(B, s, r["target"], leren.COST.get(m["name"], 0), cfg["tp_r"])
+                if out is None:
                     new[k] = r
                     stats["niet_gevonden"] += 1
                     continue
-                new[k] = dict(r, R=round(float(R), 3), sim=leren.SIM_VERSION)
+                R, cost_r = out
+                if field == "R":
+                    new[k] = dict(r, R=round(float(R), 3), sim=leren.SIM_VERSION)
+                elif r.get("sim") == leren.SIM_VERSION and abs(round(float(R), 3) - r["R"]) < 1e-9:
+                    new[k] = dict(r, kosten_r=round(float(cost_r), 4))      # alleen toevoegen; R moet exact gelijk zijn
+                else:
+                    new[k] = r
+                    stats["niet_gevonden"] += 1
+                    continue
                 stats[source] += 1
             print(f"{m['name']} {source}: {len(rows)} rijen", flush=True)
     return new, stats
@@ -119,21 +133,23 @@ def m001_impact(old, new):
 
 
 def run(cmd, mid):
-    if mid != "001":
+    if mid not in MIGRATIONS:
         sys.exit(f"onbekende migratie {mid}")
     old = jsonstore.load(paths.LEREN_MEMORY, {})
-    new, stats = m001_compute(old)
+    new, stats = m001_compute(old, "R" if mid == "001" else "kosten_r")
+    if mid == "002":
+        assert all(new[k]["R"] == old[k]["R"] for k in old), "002 mag geen R veranderen"
     changed = sum(1 for k in old if old[k].get("R") != new[k].get("R"))
-    impact = m001_impact(old, new)
+    impact = m001_impact(old, new) if mid == "001" else dict(met_kosten_r=sum("kosten_r" in r for r in new.values()))
     print(json.dumps(dict(rijen=len(old), opnieuw=stats, R_veranderd=changed, keuze=impact), ensure_ascii=False, indent=1))
     if cmd != "uitvoeren":
         print("proefrun: niets geschreven")
         return
-    d = backup([paths.LEREN_MEMORY, paths.LEARNED], "001")
+    d = backup([paths.LEREN_MEMORY, paths.LEARNED], mid)
     jsonstore.save(paths.LEREN_MEMORY, new, compact=True)
     check = jsonstore.load(paths.LEREN_MEMORY)
     assert check == new and len(check) == len(old), "controle na schrijven mislukt"
-    log(dict(migratie="001", t=datetime.now().isoformat(timespec="seconds"), backup=str(d.relative_to(paths.ROOT)),
+    log(dict(migratie=mid, t=datetime.now().isoformat(timespec="seconds"), backup=str(d.relative_to(paths.ROOT)),
              rijen=len(old), opnieuw=stats, R_veranderd=changed, keuze=impact))
     print(f"klaar; backup in {d}. Draai daarna `python leren.py --geen-data` om de keuze te vernieuwen.")
 
