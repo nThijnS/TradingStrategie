@@ -17,12 +17,22 @@ from test_administratie import NOW, DepositRounds  # noqa: E402
 NODE = shutil.which("node")
 
 
-def figures(demo):
+def page_call(fn, *args):
+    """fn(*args) uit docs/index.html in Node, met de opmaakhulpjes nf en sgn uit de pagina zelf."""
     html = (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
-    fn = re.search(r"^function demoFigures\(D\) \{.*?^\}$", html, re.S | re.M).group(0)
-    js = (f"const nlDT = s => String(s);\n{fn}\n"
-          f"process.stdout.write(JSON.stringify(demoFigures({json.dumps(demo)})));")
+    helpers = "\n".join(re.search(rf"^const {h} = .*$", html, re.M).group(0) for h in ("nf", "sgn"))
+    src = re.search(rf"^function {fn}\(.*?^\}}$", html, re.S | re.M).group(0)
+    js = (f"const nlDT = s => String(s);\n{helpers}\n{src}\n"
+          f"process.stdout.write(JSON.stringify({fn}(...{json.dumps(list(args))})));")
     return json.loads(subprocess.run([NODE, "-e", js], capture_output=True, text=True, check=True).stdout)
+
+
+def figures(demo):
+    return page_call("demoFigures", demo)
+
+
+def warnings(demo):
+    return page_call("admWarnings", demo, "€")
 
 
 @unittest.skipUnless(NODE, "node niet gevonden")
@@ -75,6 +85,37 @@ class DemoFigures(DepositRounds):
         self.assertTrue(F["provisional"])
         self.assertIsNone(F["result"])
         self.assertEqual(F["series"], [])                  # de oude reeks kan de storting bevatten
+
+    def test_unresolved_warning_not_shown_twice(self):
+        d = self.demo()
+        self.assertIn(f"id {d['administratie']['onverklaard'][0]['id']})", d["blokkade"])
+        self.assertEqual(warnings(d), [])                  # de blokkaderegel noemt haar al
+
+    def test_unresolved_warning_shown_once_under_other_block(self):
+        d = self.demo()
+        d["blokkade"] = "noodstop staat aan: geen nieuwe orders"
+        w = warnings(d)
+        self.assertEqual(len(w), 1)
+        self.assertIn("+1.000,00 €", w[0])
+
+    def test_second_unresolved_post_still_shown(self):
+        d = self.demo()
+        extra = dict(d["administratie"]["onverklaard"][0], id="2026-11-03T15:00:00+00:00|50.0", verschil=50.0)
+        d["administratie"]["onverklaard"].append(extra)
+        w = warnings(d)
+        self.assertEqual(len(w), 1)
+        self.assertIn("+50,00 €", w[0])
+
+    def test_problem_in_block_not_shown_twice(self):
+        d = self.demo(provisional=False)
+        d["administratie"]["problemen"] = ["startkapitaal onbekend: leg administratie.startkapitaal vast in config.json"]
+        d["blokkade"] = "saldo-administratie klopt niet: " + d["administratie"]["problemen"][0] + ". Geen nieuwe orders."
+        self.assertEqual(warnings(d), [])
+        d["blokkade"] = None
+        self.assertEqual(len(warnings(d)), 1)
+
+    def test_no_warnings_after_recording(self):
+        self.assertEqual(warnings(self.demo(provisional=False)), [])
 
     def test_without_administration_unchanged(self):
         d = dict(nav=1010.0, start_saldo=1000.0, dag_start=1000.0, piek=1020.0, equity=[["2026-11-03T14:00+00:00", 1010.0]])
