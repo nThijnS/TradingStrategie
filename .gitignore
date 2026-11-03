@@ -1,7 +1,23 @@
 .venv/
-verstuurd.json
-setups.log
 __pycache__/
 .DS_Store
 ntfy_topic.txt
+dashboard.html
+# Historische data (HistData, groot en met licentie): lokaal, ook als symlink
+data
 data/
+# Staat van de keten: staat in de GitHub Actions-cache, nooit in de repo
+verstuurd.json
+setups.log
+logboek.json
+demo_staat.json
+live_staat.json
+*.tmp
+# Afgeleide uitvoer (gaat naar de branch "live" of is een test)
+status.json
+demo.json
+markt/
+lab_test.json
+.cache_live/
+# Back-ups van migraties (storage/migrations.py)
+backups/
