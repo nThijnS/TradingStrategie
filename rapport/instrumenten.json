@@ -1,0 +1,2053 @@
+{
+ "gemaakt": "2026-11-03T13:16:24+00:00",
+ "omgeving": "demo (alleen lezen)",
+ "huidig": {
+  "GOUD": {
+   "epic": "GOLD",
+   "naam": "Gold",
+   "type": "COMMODITIES",
+   "valuta": "USD",
+   "lotSize": 1,
+   "scalingFactor": 1,
+   "decimalen": 2,
+   "minDealSize": {
+    "unit": "POINTS",
+    "value": 0.01
+   },
+   "maxDealSize": {
+    "unit": "POINTS",
+    "value": 50000
+   },
+   "minSizeIncrement": {
+    "unit": "POINTS",
+    "value": 0.01
+   },
+   "minStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 0.001
+   },
+   "maxStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 100
+   },
+   "marge": {
+    "factor": 5,
+    "eenheid": "PERCENTAGE"
+   },
+   "financiering": {
+    "longRate": -0.0152051,
+    "shortRate": 0.0069851,
+    "swapChargeTimestamp": 1793743200000,
+    "swapChargeInterval": 1440
+   },
+   "handelsuren": {
+    "mon": [
+     "00:00 - 21:59",
+     "23:00 - 00:00"
+    ],
+    "tue": [
+     "00:00 - 21:59",
+     "23:00 - 00:00"
+    ],
+    "wed": [
+     "00:00 - 21:59",
+     "23:00 - 00:00"
+    ],
+    "thu": [
+     "00:00 - 21:59",
+     "23:00 - 00:00"
+    ],
+    "fri": [
+     "00:00 - 21:59"
+    ],
+    "sat": [],
+    "sun": [
+     "23:00 - 00:00"
+    ],
+    "zone": "UTC"
+   },
+   "status": "TRADEABLE",
+   "vertraging": 0,
+   "bid": 3934.64,
+   "ask": 3935.39,
+   "spread": 0.75,
+   "spread_pct": 0.01906,
+   "uurcandles_bij_broker": {
+    "aantal": 1000,
+    "van": "2026-09-03T00:00:00",
+    "tot": "2026-11-03T13:00:00"
+   },
+   "bruikbaar_voor_broker_py": true,
+   "problemen": []
+  },
+  "ZILVER": {
+   "epic": "SILVER",
+   "naam": "Silver",
+   "type": "COMMODITIES",
+   "valuta": "USD",
+   "lotSize": 1,
+   "scalingFactor": 1,
+   "decimalen": 3,
+   "minDealSize": {
+    "unit": "POINTS",
+    "value": 1
+   },
+   "maxDealSize": {
+    "unit": "POINTS",
+    "value": 100000
+   },
+   "minSizeIncrement": {
+    "unit": "POINTS",
+    "value": 0.1
+   },
+   "minStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 0.01
+   },
+   "maxStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 100
+   },
+   "marge": {
+    "factor": 10,
+    "eenheid": "PERCENTAGE"
+   },
+   "financiering": {
+    "longRate": -0.015571,
+    "shortRate": 0.007351,
+    "swapChargeTimestamp": 1793743200000,
+    "swapChargeInterval": 1440
+   },
+   "handelsuren": {
+    "mon": [
+     "00:00 - 21:59",
+     "23:00 - 00:00"
+    ],
+    "tue": [
+     "00:00 - 21:59",
+     "23:00 - 00:00"
+    ],
+    "wed": [
+     "00:00 - 21:59",
+     "23:00 - 00:00"
+    ],
+    "thu": [
+     "00:00 - 21:59",
+     "23:00 - 00:00"
+    ],
+    "fri": [
+     "00:00 - 21:59"
+    ],
+    "sat": [],
+    "sun": [
+     "23:00 - 00:00"
+    ],
+    "zone": "UTC"
+   },
+   "status": "TRADEABLE",
+   "vertraging": 0,
+   "bid": 49.659,
+   "ask": 49.709,
+   "spread": 0.05,
+   "spread_pct": 0.10064,
+   "uurcandles_bij_broker": {
+    "aantal": 1000,
+    "van": "2026-09-03T00:00:00",
+    "tot": "2026-11-03T13:00:00"
+   },
+   "bruikbaar_voor_broker_py": true,
+   "problemen": []
+  },
+  "OLIE": {
+   "epic": "OIL_CRUDE",
+   "naam": "Crude Oil Spot",
+   "type": "COMMODITIES",
+   "valuta": "USD",
+   "lotSize": 1,
+   "scalingFactor": 1,
+   "decimalen": 3,
+   "minDealSize": {
+    "unit": "POINTS",
+    "value": 1
+   },
+   "maxDealSize": {
+    "unit": "POINTS",
+    "value": 125000
+   },
+   "minSizeIncrement": {
+    "unit": "POINTS",
+    "value": 0.1
+   },
+   "minStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 0.01
+   },
+   "maxStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 100
+   },
+   "marge": {
+    "factor": 10,
+    "eenheid": "PERCENTAGE"
+   },
+   "financiering": {
+    "longRate": -0.01096,
+    "shortRate": -0.01096,
+    "swapChargeTimestamp": 1793743200000,
+    "swapChargeInterval": 1440
+   },
+   "handelsuren": {
+    "mon": [
+     "00:00 - 22:00",
+     "23:00 - 00:00"
+    ],
+    "tue": [
+     "00:00 - 22:00",
+     "23:00 - 00:00"
+    ],
+    "wed": [
+     "00:00 - 22:00",
+     "23:00 - 00:00"
+    ],
+    "thu": [
+     "00:00 - 22:00",
+     "23:00 - 00:00"
+    ],
+    "fri": [
+     "00:00 - 22:00"
+    ],
+    "sat": [],
+    "sun": [
+     "23:00 - 00:00"
+    ],
+    "zone": "UTC"
+   },
+   "status": "TRADEABLE",
+   "vertraging": 0,
+   "bid": 96.45,
+   "ask": 96.49,
+   "spread": 0.04,
+   "spread_pct": 0.04146,
+   "uurcandles_bij_broker": {
+    "aantal": 1000,
+    "van": "2026-09-03T01:00:00",
+    "tot": "2026-11-03T13:00:00"
+   },
+   "bruikbaar_voor_broker_py": true,
+   "problemen": []
+  },
+  "NQ": {
+   "epic": "US100",
+   "naam": "US Tech 100",
+   "type": "INDICES",
+   "valuta": "USD",
+   "lotSize": 1,
+   "scalingFactor": 1,
+   "decimalen": 1,
+   "minDealSize": {
+    "unit": "POINTS",
+    "value": 0.001
+   },
+   "maxDealSize": {
+    "unit": "POINTS",
+    "value": 1250
+   },
+   "minSizeIncrement": {
+    "unit": "POINTS",
+    "value": 0.001
+   },
+   "minStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 0.01
+   },
+   "maxStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 100
+   },
+   "marge": {
+    "factor": 5,
+    "eenheid": "PERCENTAGE"
+   },
+   "financiering": {
+    "longRate": -0.0224013,
+    "shortRate": 0.0001791,
+    "swapChargeTimestamp": 1793743200000,
+    "swapChargeInterval": 1440
+   },
+   "handelsuren": {
+    "mon": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "tue": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "wed": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "thu": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "fri": [
+     "00:00 - 22:00"
+    ],
+    "sat": [],
+    "sun": [
+     "23:00 - 00:00"
+    ],
+    "zone": "UTC"
+   },
+   "status": "TRADEABLE",
+   "vertraging": 0,
+   "bid": 28081.4,
+   "ask": 28083.2,
+   "spread": 1.8,
+   "spread_pct": 0.00641,
+   "uurcandles_bij_broker": {
+    "aantal": 1000,
+    "van": "2026-09-04T10:00:00",
+    "tot": "2026-11-03T13:00:00"
+   },
+   "bruikbaar_voor_broker_py": true,
+   "problemen": []
+  },
+  "ES": {
+   "epic": "US500",
+   "naam": "US 500",
+   "type": "INDICES",
+   "valuta": "USD",
+   "lotSize": 1,
+   "scalingFactor": 1,
+   "decimalen": 1,
+   "minDealSize": {
+    "unit": "POINTS",
+    "value": 0.01
+   },
+   "maxDealSize": {
+    "unit": "POINTS",
+    "value": 2250
+   },
+   "minSizeIncrement": {
+    "unit": "POINTS",
+    "value": 0.01
+   },
+   "minStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 0.01
+   },
+   "maxStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 100
+   },
+   "marge": {
+    "factor": 5,
+    "eenheid": "PERCENTAGE"
+   },
+   "financiering": {
+    "longRate": -0.0224013,
+    "shortRate": 0.0001791,
+    "swapChargeTimestamp": 1793743200000,
+    "swapChargeInterval": 1440
+   },
+   "handelsuren": {
+    "mon": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "tue": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "wed": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "thu": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "fri": [
+     "00:00 - 22:00"
+    ],
+    "sat": [],
+    "sun": [
+     "23:00 - 00:00"
+    ],
+    "zone": "UTC"
+   },
+   "status": "TRADEABLE",
+   "vertraging": 0,
+   "bid": 7532.4,
+   "ask": 7533.0,
+   "spread": 0.6,
+   "spread_pct": 0.00797,
+   "uurcandles_bij_broker": {
+    "aantal": 1000,
+    "van": "2026-09-04T10:00:00",
+    "tot": "2026-11-03T13:00:00"
+   },
+   "bruikbaar_voor_broker_py": true,
+   "problemen": []
+  },
+  "DAX": {
+   "epic": "DE40",
+   "naam": "Germany 40",
+   "type": "INDICES",
+   "valuta": "EUR",
+   "lotSize": 1,
+   "scalingFactor": 1,
+   "decimalen": 1,
+   "minDealSize": {
+    "unit": "POINTS",
+    "value": 0.001
+   },
+   "maxDealSize": {
+    "unit": "POINTS",
+    "value": 1000
+   },
+   "minSizeIncrement": {
+    "unit": "POINTS",
+    "value": 0.001
+   },
+   "minStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 0.01
+   },
+   "maxStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 100
+   },
+   "marge": {
+    "factor": 5,
+    "eenheid": "PERCENTAGE"
+   },
+   "financiering": {
+    "longRate": -0.0180156,
+    "shortRate": -0.0042067,
+    "swapChargeTimestamp": 1793743200000,
+    "swapChargeInterval": 1440
+   },
+   "handelsuren": {
+    "mon": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "tue": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "wed": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "thu": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "fri": [
+     "00:00 - 22:00"
+    ],
+    "sat": [],
+    "sun": [
+     "23:00 - 00:00"
+    ],
+    "zone": "UTC"
+   },
+   "status": "TRADEABLE",
+   "vertraging": 0,
+   "bid": 25836.2,
+   "ask": 25838.0,
+   "spread": 1.8,
+   "spread_pct": 0.00697,
+   "uurcandles_bij_broker": {
+    "aantal": 1000,
+    "van": "2026-09-04T10:00:00",
+    "tot": "2026-11-03T13:00:00"
+   },
+   "bruikbaar_voor_broker_py": true,
+   "problemen": []
+  },
+  "EURUSD": {
+   "epic": "EURUSD",
+   "naam": "EUR/USD",
+   "type": "CURRENCIES",
+   "valuta": "USD",
+   "lotSize": 1,
+   "scalingFactor": 1,
+   "decimalen": 5,
+   "minDealSize": {
+    "unit": "POINTS",
+    "value": 100
+   },
+   "maxDealSize": {
+    "unit": "POINTS",
+    "value": 45000000
+   },
+   "minSizeIncrement": {
+    "unit": "POINTS",
+    "value": 100
+   },
+   "minStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 0.01
+   },
+   "maxStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 100
+   },
+   "marge": {
+    "factor": 3.333333,
+    "eenheid": "PERCENTAGE"
+   },
+   "financiering": {
+    "longRate": -0.00801,
+    "shortRate": -0.00021,
+    "swapChargeTimestamp": 1793743200000,
+    "swapChargeInterval": 1440
+   },
+   "handelsuren": {
+    "mon": [
+     "00:00 - 21:59:50",
+     "22:05 - 00:00"
+    ],
+    "tue": [
+     "00:00 - 21:59:50",
+     "22:05 - 00:00"
+    ],
+    "wed": [
+     "00:00 - 21:59:50",
+     "22:05 - 00:00"
+    ],
+    "thu": [
+     "00:00 - 21:59:50",
+     "22:05 - 00:00"
+    ],
+    "fri": [
+     "00:00 - 21:59:50"
+    ],
+    "sat": [],
+    "sun": [
+     "22:00 - 00:00"
+    ],
+    "zone": "UTC"
+   },
+   "status": "TRADEABLE",
+   "vertraging": 0,
+   "bid": 1.11825,
+   "ask": 1.11832,
+   "spread": 7e-05,
+   "spread_pct": 0.00626,
+   "uurcandles_bij_broker": {
+    "aantal": 1000,
+    "van": "2026-09-06T21:00:00",
+    "tot": "2026-11-03T13:00:00"
+   },
+   "bruikbaar_voor_broker_py": true,
+   "problemen": []
+  },
+  "GBPUSD": {
+   "epic": "GBPUSD",
+   "naam": "GBP/USD",
+   "type": "CURRENCIES",
+   "valuta": "USD",
+   "lotSize": 1,
+   "scalingFactor": 1,
+   "decimalen": 5,
+   "minDealSize": {
+    "unit": "POINTS",
+    "value": 100
+   },
+   "maxDealSize": {
+    "unit": "POINTS",
+    "value": 40000000
+   },
+   "minSizeIncrement": {
+    "unit": "POINTS",
+    "value": 100
+   },
+   "minStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 0.01
+   },
+   "maxStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 100
+   },
+   "marge": {
+    "factor": 3.333333,
+    "eenheid": "PERCENTAGE"
+   },
+   "financiering": {
+    "longRate": -0.00414,
+    "shortRate": -0.00408,
+    "swapChargeTimestamp": 1793743200000,
+    "swapChargeInterval": 1440
+   },
+   "handelsuren": {
+    "mon": [
+     "00:00 - 21:59:50",
+     "22:05 - 00:00"
+    ],
+    "tue": [
+     "00:00 - 21:59:50",
+     "22:05 - 00:00"
+    ],
+    "wed": [
+     "00:00 - 21:59:50",
+     "22:05 - 00:00"
+    ],
+    "thu": [
+     "00:00 - 21:59:50",
+     "22:05 - 00:00"
+    ],
+    "fri": [
+     "00:00 - 21:59:50"
+    ],
+    "sat": [],
+    "sun": [
+     "22:00 - 00:00"
+    ],
+    "zone": "UTC"
+   },
+   "status": "TRADEABLE",
+   "vertraging": 0,
+   "bid": 1.34168,
+   "ask": 1.34181,
+   "spread": 0.00013,
+   "spread_pct": 0.00969,
+   "uurcandles_bij_broker": {
+    "aantal": 1000,
+    "van": "2026-09-06T21:00:00",
+    "tot": "2026-11-03T13:00:00"
+   },
+   "bruikbaar_voor_broker_py": true,
+   "problemen": []
+  },
+  "USDJPY": {
+   "epic": "USDJPY",
+   "naam": "USD/JPY",
+   "type": "CURRENCIES",
+   "valuta": "JPY",
+   "lotSize": 1,
+   "scalingFactor": 1,
+   "decimalen": 3,
+   "minDealSize": {
+    "unit": "POINTS",
+    "value": 100
+   },
+   "maxDealSize": {
+    "unit": "POINTS",
+    "value": 50000000
+   },
+   "minSizeIncrement": {
+    "unit": "POINTS",
+    "value": 100
+   },
+   "minStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 0.01
+   },
+   "maxStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 100
+   },
+   "marge": {
+    "factor": 3.333333,
+    "eenheid": "PERCENTAGE"
+   },
+   "financiering": {
+    "longRate": 0.00362,
+    "shortRate": -0.01184,
+    "swapChargeTimestamp": 1793743200000,
+    "swapChargeInterval": 1440
+   },
+   "handelsuren": {
+    "mon": [
+     "00:00 - 21:59:50",
+     "22:05 - 00:00"
+    ],
+    "tue": [
+     "00:00 - 21:59:50",
+     "22:05 - 00:00"
+    ],
+    "wed": [
+     "00:00 - 21:59:50",
+     "22:05 - 00:00"
+    ],
+    "thu": [
+     "00:00 - 21:59:50",
+     "22:05 - 00:00"
+    ],
+    "fri": [
+     "00:00 - 21:59:50"
+    ],
+    "sat": [],
+    "sun": [
+     "22:00 - 00:00"
+    ],
+    "zone": "UTC"
+   },
+   "status": "TRADEABLE",
+   "vertraging": 0,
+   "bid": 158.221,
+   "ask": 158.233,
+   "spread": 0.012,
+   "spread_pct": 0.00758,
+   "uurcandles_bij_broker": {
+    "aantal": 1000,
+    "van": "2026-09-06T21:00:00",
+    "tot": "2026-11-03T13:00:00"
+   },
+   "bruikbaar_voor_broker_py": true,
+   "problemen": []
+  },
+  "BTC": {
+   "epic": "BTCUSD",
+   "naam": "Bitcoin/USD",
+   "type": "CRYPTOCURRENCIES",
+   "valuta": "USD",
+   "lotSize": 1,
+   "scalingFactor": 1,
+   "decimalen": 2,
+   "minDealSize": {
+    "unit": "POINTS",
+    "value": 0.0001
+   },
+   "maxDealSize": {
+    "unit": "POINTS",
+    "value": 50
+   },
+   "minSizeIncrement": {
+    "unit": "POINTS",
+    "value": 0.0001
+   },
+   "minStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 0.01
+   },
+   "maxStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 100
+   },
+   "marge": {
+    "factor": 50,
+    "eenheid": "PERCENTAGE"
+   },
+   "financiering": {
+    "longRate": -0.0616438,
+    "shortRate": 0.0136986,
+    "swapChargeTimestamp": 1793743200000,
+    "swapChargeInterval": 1440
+   },
+   "handelsuren": {
+    "mon": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "tue": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "wed": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "thu": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "fri": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "sat": [
+     "00:00 - 06:00",
+     "08:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "sun": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "zone": "UTC"
+   },
+   "status": "TRADEABLE",
+   "vertraging": 0,
+   "bid": 77250.0,
+   "ask": 77300.0,
+   "spread": 50.0,
+   "spread_pct": 0.0647,
+   "uurcandles_bij_broker": {
+    "aantal": 1000,
+    "van": "2026-09-22T09:00:00",
+    "tot": "2026-11-03T13:00:00"
+   },
+   "bruikbaar_voor_broker_py": true,
+   "problemen": []
+  },
+  "ETH": {
+   "epic": "ETHUSD",
+   "naam": "Ethereum/USD",
+   "type": "CRYPTOCURRENCIES",
+   "valuta": "USD",
+   "lotSize": 1,
+   "scalingFactor": 1,
+   "decimalen": 2,
+   "minDealSize": {
+    "unit": "POINTS",
+    "value": 0.001
+   },
+   "maxDealSize": {
+    "unit": "POINTS",
+    "value": 1000
+   },
+   "minSizeIncrement": {
+    "unit": "POINTS",
+    "value": 0.001
+   },
+   "minStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 0.01
+   },
+   "maxStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 100
+   },
+   "marge": {
+    "factor": 50,
+    "eenheid": "PERCENTAGE"
+   },
+   "financiering": {
+    "longRate": -0.0616438,
+    "shortRate": 0.0136986,
+    "swapChargeTimestamp": 1793743200000,
+    "swapChargeInterval": 1440
+   },
+   "handelsuren": {
+    "mon": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "tue": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "wed": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "thu": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "fri": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "sat": [
+     "00:00 - 06:00",
+     "08:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "sun": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "zone": "UTC"
+   },
+   "status": "TRADEABLE",
+   "vertraging": 0,
+   "bid": 2277.12,
+   "ask": 2278.87,
+   "spread": 1.75,
+   "spread_pct": 0.07682,
+   "uurcandles_bij_broker": {
+    "aantal": 1000,
+    "van": "2026-09-22T09:00:00",
+    "tot": "2026-11-03T13:00:00"
+   },
+   "bruikbaar_voor_broker_py": true,
+   "problemen": []
+  },
+  "SOL": {
+   "epic": "SOLUSD",
+   "naam": "Solana/USD",
+   "type": "CRYPTOCURRENCIES",
+   "valuta": "USD",
+   "lotSize": 1,
+   "scalingFactor": 1,
+   "decimalen": 4,
+   "minDealSize": {
+    "unit": "POINTS",
+    "value": 0.1
+   },
+   "maxDealSize": {
+    "unit": "POINTS",
+    "value": 6100
+   },
+   "minSizeIncrement": {
+    "unit": "POINTS",
+    "value": 0.1
+   },
+   "minStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 0.01
+   },
+   "maxStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 100
+   },
+   "marge": {
+    "factor": 50,
+    "eenheid": "PERCENTAGE"
+   },
+   "financiering": {
+    "longRate": -0.0616438,
+    "shortRate": 0.0136986,
+    "swapChargeTimestamp": 1793743200000,
+    "swapChargeInterval": 1440
+   },
+   "handelsuren": {
+    "mon": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "tue": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "wed": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "thu": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "fri": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "sat": [
+     "00:00 - 06:00",
+     "08:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "sun": [
+     "00:00 - 22:00",
+     "22:05 - 00:00"
+    ],
+    "zone": "UTC"
+   },
+   "status": "TRADEABLE",
+   "vertraging": 0,
+   "bid": 92.5181,
+   "ask": 92.9819,
+   "spread": 0.4638,
+   "spread_pct": 0.50005,
+   "uurcandles_bij_broker": {
+    "aantal": 1000,
+    "van": "2026-09-22T09:00:00",
+    "tot": "2026-11-03T13:00:00"
+   },
+   "bruikbaar_voor_broker_py": true,
+   "problemen": []
+  },
+  "AAPL": {
+   "epic": "AAPL",
+   "naam": "Apple Inc",
+   "type": "SHARES",
+   "valuta": "USD",
+   "lotSize": 1,
+   "scalingFactor": 1,
+   "decimalen": 2,
+   "minDealSize": {
+    "unit": "POINTS",
+    "value": 0.1
+   },
+   "maxDealSize": {
+    "unit": "POINTS",
+    "value": 5150
+   },
+   "minSizeIncrement": {
+    "unit": "POINTS",
+    "value": 0.01
+   },
+   "minStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 0.01
+   },
+   "maxStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 100
+   },
+   "marge": {
+    "factor": 20,
+    "eenheid": "PERCENTAGE"
+   },
+   "financiering": {
+    "longRate": -0.0224013,
+    "shortRate": 0.0001791,
+    "swapChargeTimestamp": 1793743200000,
+    "swapChargeInterval": 1440
+   },
+   "handelsuren": {
+    "mon": [
+     "01:00 - 00:00"
+    ],
+    "tue": [
+     "00:00 - 01:15",
+     "01:15 - 00:00"
+    ],
+    "wed": [
+     "00:00 - 01:15",
+     "01:15 - 00:00"
+    ],
+    "thu": [
+     "00:00 - 01:15",
+     "01:15 - 00:00"
+    ],
+    "fri": [
+     "00:00 - 01:15",
+     "01:15 - 22:00"
+    ],
+    "sat": [],
+    "sun": [],
+    "zone": "UTC"
+   },
+   "status": "TRADEABLE",
+   "vertraging": 0,
+   "bid": 325.13,
+   "ask": 325.56,
+   "spread": 0.43,
+   "spread_pct": 0.13217,
+   "uurcandles_bij_broker": {
+    "aantal": 1000,
+    "van": "2026-08-25T13:00:00",
+    "tot": "2026-11-03T13:00:00"
+   },
+   "bruikbaar_voor_broker_py": true,
+   "problemen": []
+  },
+  "NVDA": {
+   "epic": "NVDA",
+   "naam": "NVIDIA Corp",
+   "type": "SHARES",
+   "valuta": "USD",
+   "lotSize": 1,
+   "scalingFactor": 1,
+   "decimalen": 2,
+   "minDealSize": {
+    "unit": "POINTS",
+    "value": 0.1
+   },
+   "maxDealSize": {
+    "unit": "POINTS",
+    "value": 15000
+   },
+   "minSizeIncrement": {
+    "unit": "POINTS",
+    "value": 0.1
+   },
+   "minStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 0.01
+   },
+   "maxStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 100
+   },
+   "marge": {
+    "factor": 20,
+    "eenheid": "PERCENTAGE"
+   },
+   "financiering": {
+    "longRate": -0.0224013,
+    "shortRate": 0.0001791,
+    "swapChargeTimestamp": 1793743200000,
+    "swapChargeInterval": 1440
+   },
+   "handelsuren": {
+    "mon": [
+     "01:00 - 00:00"
+    ],
+    "tue": [
+     "00:00 - 01:15",
+     "01:15 - 00:00"
+    ],
+    "wed": [
+     "00:00 - 01:15",
+     "01:15 - 00:00"
+    ],
+    "thu": [
+     "00:00 - 01:15",
+     "01:15 - 00:00"
+    ],
+    "fri": [
+     "00:00 - 01:15",
+     "01:15 - 22:00"
+    ],
+    "sat": [],
+    "sun": [],
+    "zone": "UTC"
+   },
+   "status": "TRADEABLE",
+   "vertraging": 0,
+   "bid": 205.55,
+   "ask": 206.01,
+   "spread": 0.46,
+   "spread_pct": 0.22354,
+   "uurcandles_bij_broker": {
+    "aantal": 1000,
+    "van": "2026-08-25T13:00:00",
+    "tot": "2026-11-03T13:00:00"
+   },
+   "bruikbaar_voor_broker_py": true,
+   "problemen": []
+  },
+  "MSFT": {
+   "epic": "MSFT",
+   "naam": "Microsoft Corp",
+   "type": "SHARES",
+   "valuta": "USD",
+   "lotSize": 1,
+   "scalingFactor": 1,
+   "decimalen": 2,
+   "minDealSize": {
+    "unit": "POINTS",
+    "value": 0.01
+   },
+   "maxDealSize": {
+    "unit": "POINTS",
+    "value": 2750
+   },
+   "minSizeIncrement": {
+    "unit": "POINTS",
+    "value": 0.01
+   },
+   "minStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 0.01
+   },
+   "maxStopOrProfitDistance": {
+    "unit": "PERCENTAGE",
+    "value": 100
+   },
+   "marge": {
+    "factor": 20,
+    "eenheid": "PERCENTAGE"
+   },
+   "financiering": {
+    "longRate": -0.0224013,
+    "shortRate": 0.0001791,
+    "swapChargeTimestamp": 1793743200000,
+    "swapChargeInterval": 1440
+   },
+   "handelsuren": {
+    "mon": [
+     "01:00 - 00:00"
+    ],
+    "tue": [
+     "00:00 - 01:15",
+     "01:15 - 00:00"
+    ],
+    "wed": [
+     "00:00 - 01:15",
+     "01:15 - 00:00"
+    ],
+    "thu": [
+     "00:00 - 01:15",
+     "01:15 - 00:00"
+    ],
+    "fri": [
+     "00:00 - 01:15",
+     "01:15 - 22:00"
+    ],
+    "sat": [],
+    "sun": [],
+    "zone": "UTC"
+   },
+   "status": "TRADEABLE",
+   "vertraging": 0,
+   "bid": 503.64,
+   "ask": 504.42,
+   "spread": 0.78,
+   "spread_pct": 0.15475,
+   "uurcandles_bij_broker": {
+    "aantal": 1000,
+    "van": "2026-08-25T13:00:00",
+    "tot": "2026-11-03T13:00:00"
+   },
+   "bruikbaar_voor_broker_py": true,
+   "problemen": []
+  }
+ },
+ "kandidaten": {
+  "AUDUSD": {
+   "zoekterm": "AUD/USD",
+   "zoekresultaten": [
+    {
+     "epic": "AUDUSD",
+     "naam": "AUD/USD",
+     "type": "CURRENCIES"
+    },
+    {
+     "epic": "EURUSD",
+     "naam": "EUR/USD",
+     "type": "CURRENCIES"
+    }
+   ],
+   "epic": "AUDUSD",
+   "details": {
+    "epic": "AUDUSD",
+    "naam": "AUD/USD",
+    "type": "CURRENCIES",
+    "valuta": "USD",
+    "lotSize": 1,
+    "scalingFactor": 1,
+    "decimalen": 5,
+    "minDealSize": {
+     "unit": "POINTS",
+     "value": 100
+    },
+    "maxDealSize": {
+     "unit": "POINTS",
+     "value": 75000000
+    },
+    "minSizeIncrement": {
+     "unit": "POINTS",
+     "value": 100
+    },
+    "minStopOrProfitDistance": {
+     "unit": "PERCENTAGE",
+     "value": 0.01
+    },
+    "maxStopOrProfitDistance": {
+     "unit": "PERCENTAGE",
+     "value": 100
+    },
+    "marge": {
+     "factor": 5,
+     "eenheid": "PERCENTAGE"
+    },
+    "financiering": {
+     "longRate": -0.00188,
+     "shortRate": -0.00634,
+     "swapChargeTimestamp": 1793743200000,
+     "swapChargeInterval": 1440
+    },
+    "handelsuren": {
+     "mon": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "tue": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "wed": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "thu": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "fri": [
+      "00:00 - 21:59:50"
+     ],
+     "sat": [],
+     "sun": [
+      "22:00 - 00:00"
+     ],
+     "zone": "UTC"
+    },
+    "status": "TRADEABLE",
+    "vertraging": 0,
+    "bid": 0.6984,
+    "ask": 0.69846,
+    "spread": 6e-05,
+    "spread_pct": 0.00859,
+    "uurcandles_bij_broker": {
+     "aantal": 1000,
+     "van": "2026-09-06T21:00:00",
+     "tot": "2026-11-03T13:00:00"
+    },
+    "bruikbaar_voor_broker_py": true,
+    "problemen": []
+   }
+  },
+  "USDCAD": {
+   "zoekterm": "USD/CAD",
+   "zoekresultaten": [
+    {
+     "epic": "USDCAD",
+     "naam": "USD/CAD",
+     "type": "CURRENCIES"
+    },
+    {
+     "epic": "USDCHF",
+     "naam": "USD/CHF",
+     "type": "CURRENCIES"
+    },
+    {
+     "epic": "USDCZK",
+     "naam": "USD/CZK",
+     "type": "CURRENCIES"
+    },
+    {
+     "epic": "USDZAR",
+     "naam": "USD/ZAR",
+     "type": "CURRENCIES"
+    }
+   ],
+   "epic": "USDCAD",
+   "details": {
+    "epic": "USDCAD",
+    "naam": "USD/CAD",
+    "type": "CURRENCIES",
+    "valuta": "CAD",
+    "lotSize": 1,
+    "scalingFactor": 1,
+    "decimalen": 5,
+    "minDealSize": {
+     "unit": "POINTS",
+     "value": 100
+    },
+    "maxDealSize": {
+     "unit": "POINTS",
+     "value": 25000000
+    },
+    "minSizeIncrement": {
+     "unit": "POINTS",
+     "value": 100
+    },
+    "minStopOrProfitDistance": {
+     "unit": "PERCENTAGE",
+     "value": 0.01
+    },
+    "maxStopOrProfitDistance": {
+     "unit": "PERCENTAGE",
+     "value": 100
+    },
+    "marge": {
+     "factor": 3.333333,
+     "eenheid": "PERCENTAGE"
+    },
+    "financiering": {
+     "longRate": 0.00015,
+     "shortRate": -0.00837,
+     "swapChargeTimestamp": 1793743200000,
+     "swapChargeInterval": 1440
+    },
+    "handelsuren": {
+     "mon": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "tue": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "wed": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "thu": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "fri": [
+      "00:00 - 21:59:50"
+     ],
+     "sat": [],
+     "sun": [
+      "22:00 - 00:00"
+     ],
+     "zone": "UTC"
+    },
+    "status": "TRADEABLE",
+    "vertraging": 0,
+    "bid": 1.39741,
+    "ask": 1.39761,
+    "spread": 0.0002,
+    "spread_pct": 0.01431,
+    "uurcandles_bij_broker": {
+     "aantal": 1000,
+     "van": "2026-09-06T21:00:00",
+     "tot": "2026-11-03T13:00:00"
+    },
+    "bruikbaar_voor_broker_py": true,
+    "problemen": []
+   }
+  },
+  "USDCHF": {
+   "zoekterm": "USD/CHF",
+   "zoekresultaten": [
+    {
+     "epic": "USDCHF",
+     "naam": "USD/CHF",
+     "type": "CURRENCIES"
+    },
+    {
+     "epic": "USDCAD",
+     "naam": "USD/CAD",
+     "type": "CURRENCIES"
+    },
+    {
+     "epic": "USDHUF",
+     "naam": "USD/HUF",
+     "type": "CURRENCIES"
+    },
+    {
+     "epic": "USDCZK",
+     "naam": "USD/CZK",
+     "type": "CURRENCIES"
+    },
+    {
+     "epic": "USDHKD",
+     "naam": "USD/HKD",
+     "type": "CURRENCIES"
+    }
+   ],
+   "epic": "USDCHF",
+   "details": {
+    "epic": "USDCHF",
+    "naam": "USD/CHF",
+    "type": "CURRENCIES",
+    "valuta": "CHF",
+    "lotSize": 1,
+    "scalingFactor": 1,
+    "decimalen": 5,
+    "minDealSize": {
+     "unit": "POINTS",
+     "value": 100
+    },
+    "maxDealSize": {
+     "unit": "POINTS",
+     "value": 15000000
+    },
+    "minSizeIncrement": {
+     "unit": "POINTS",
+     "value": 100
+    },
+    "minStopOrProfitDistance": {
+     "unit": "PERCENTAGE",
+     "value": 0.01
+    },
+    "maxStopOrProfitDistance": {
+     "unit": "PERCENTAGE",
+     "value": 100
+    },
+    "marge": {
+     "factor": 3.333333,
+     "eenheid": "PERCENTAGE"
+    },
+    "financiering": {
+     "longRate": 0.00744,
+     "shortRate": -0.01566,
+     "swapChargeTimestamp": 1793743200000,
+     "swapChargeInterval": 1440
+    },
+    "handelsuren": {
+     "mon": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "tue": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "wed": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "thu": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "fri": [
+      "00:00 - 21:59:50"
+     ],
+     "sat": [],
+     "sun": [
+      "22:00 - 00:00"
+     ],
+     "zone": "UTC"
+    },
+    "status": "TRADEABLE",
+    "vertraging": 0,
+    "bid": 0.81919,
+    "ask": 0.81932,
+    "spread": 0.00013,
+    "spread_pct": 0.01587,
+    "uurcandles_bij_broker": {
+     "aantal": 1000,
+     "van": "2026-09-06T21:00:00",
+     "tot": "2026-11-03T13:00:00"
+    },
+    "bruikbaar_voor_broker_py": true,
+    "problemen": []
+   }
+  },
+  "NZDUSD": {
+   "zoekterm": "NZD/USD",
+   "zoekresultaten": [
+    {
+     "epic": "NZDUSD",
+     "naam": "NZD/USD",
+     "type": "CURRENCIES"
+    },
+    {
+     "epic": "NZDSGD",
+     "naam": "NZD/SGD",
+     "type": "CURRENCIES"
+    },
+    {
+     "epic": "NZDSEK",
+     "naam": "NZD/SEK",
+     "type": "CURRENCIES"
+    },
+    {
+     "epic": "AUDUSD",
+     "naam": "AUD/USD",
+     "type": "CURRENCIES"
+    }
+   ],
+   "epic": "NZDUSD",
+   "details": {
+    "epic": "NZDUSD",
+    "naam": "NZD/USD",
+    "type": "CURRENCIES",
+    "valuta": "USD",
+    "lotSize": 1,
+    "scalingFactor": 1,
+    "decimalen": 5,
+    "minDealSize": {
+     "unit": "POINTS",
+     "value": 100
+    },
+    "maxDealSize": {
+     "unit": "POINTS",
+     "value": 40000000
+    },
+    "minSizeIncrement": {
+     "unit": "POINTS",
+     "value": 100
+    },
+    "minStopOrProfitDistance": {
+     "unit": "PERCENTAGE",
+     "value": 0.01
+    },
+    "maxStopOrProfitDistance": {
+     "unit": "PERCENTAGE",
+     "value": 100
+    },
+    "marge": {
+     "factor": 5,
+     "eenheid": "PERCENTAGE"
+    },
+    "financiering": {
+     "longRate": -0.00779,
+     "shortRate": -0.00043,
+     "swapChargeTimestamp": 1793743200000,
+     "swapChargeInterval": 1440
+    },
+    "handelsuren": {
+     "mon": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "tue": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "wed": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "thu": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "fri": [
+      "00:00 - 21:59:50"
+     ],
+     "sat": [],
+     "sun": [
+      "22:00 - 00:00"
+     ],
+     "zone": "UTC"
+    },
+    "status": "TRADEABLE",
+    "vertraging": 0,
+    "bid": 0.56251,
+    "ask": 0.56266,
+    "spread": 0.00015,
+    "spread_pct": 0.02666,
+    "uurcandles_bij_broker": {
+     "aantal": 1000,
+     "van": "2026-09-06T21:00:00",
+     "tot": "2026-11-03T13:00:00"
+    },
+    "bruikbaar_voor_broker_py": true,
+    "problemen": []
+   }
+  },
+  "EURGBP": {
+   "zoekterm": "EUR/GBP",
+   "zoekresultaten": [
+    {
+     "epic": "EURGBP",
+     "naam": "EUR/GBP",
+     "type": "CURRENCIES"
+    },
+    {
+     "epic": "EURJPY",
+     "naam": "EUR/JPY",
+     "type": "CURRENCIES"
+    },
+    {
+     "epic": "EURPLN",
+     "naam": "EUR/PLN",
+     "type": "CURRENCIES"
+    }
+   ],
+   "epic": "EURGBP",
+   "details": {
+    "epic": "EURGBP",
+    "naam": "EUR/GBP",
+    "type": "CURRENCIES",
+    "valuta": "GBP",
+    "lotSize": 1,
+    "scalingFactor": 1,
+    "decimalen": 5,
+    "minDealSize": {
+     "unit": "POINTS",
+     "value": 100
+    },
+    "maxDealSize": {
+     "unit": "POINTS",
+     "value": 22500000
+    },
+    "minSizeIncrement": {
+     "unit": "POINTS",
+     "value": 100
+    },
+    "minStopOrProfitDistance": {
+     "unit": "PERCENTAGE",
+     "value": 0.01
+    },
+    "maxStopOrProfitDistance": {
+     "unit": "PERCENTAGE",
+     "value": 100
+    },
+    "marge": {
+     "factor": 3.333333,
+     "eenheid": "PERCENTAGE"
+    },
+    "financiering": {
+     "longRate": -0.00799,
+     "shortRate": -0.00023,
+     "swapChargeTimestamp": 1793743200000,
+     "swapChargeInterval": 1440
+    },
+    "handelsuren": {
+     "mon": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "tue": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "wed": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "thu": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "fri": [
+      "00:00 - 21:59:50"
+     ],
+     "sat": [],
+     "sun": [
+      "22:00 - 00:00"
+     ],
+     "zone": "UTC"
+    },
+    "status": "TRADEABLE",
+    "vertraging": 0,
+    "bid": 0.83335,
+    "ask": 0.83355,
+    "spread": 0.0002,
+    "spread_pct": 0.024,
+    "uurcandles_bij_broker": {
+     "aantal": 1000,
+     "van": "2026-09-06T21:00:00",
+     "tot": "2026-11-03T13:00:00"
+    },
+    "bruikbaar_voor_broker_py": true,
+    "problemen": []
+   }
+  },
+  "EURJPY": {
+   "zoekterm": "EUR/JPY",
+   "zoekresultaten": [
+    {
+     "epic": "EURJPY",
+     "naam": "EUR/JPY",
+     "type": "CURRENCIES"
+    },
+    {
+     "epic": "EURPLN",
+     "naam": "EUR/PLN",
+     "type": "CURRENCIES"
+    },
+    {
+     "epic": "AUDJPY",
+     "naam": "AUD/JPY",
+     "type": "CURRENCIES"
+    },
+    {
+     "epic": "EURTRY",
+     "naam": "EUR/TRY",
+     "type": "CURRENCIES"
+    },
+    {
+     "epic": "ZARJPY",
+     "naam": "ZAR/JPY",
+     "type": "CURRENCIES"
+    }
+   ],
+   "epic": "EURJPY",
+   "details": {
+    "epic": "EURJPY",
+    "naam": "EUR/JPY",
+    "type": "CURRENCIES",
+    "valuta": "JPY",
+    "lotSize": 1,
+    "scalingFactor": 1,
+    "decimalen": 3,
+    "minDealSize": {
+     "unit": "POINTS",
+     "value": 100
+    },
+    "maxDealSize": {
+     "unit": "POINTS",
+     "value": 22500000
+    },
+    "minSizeIncrement": {
+     "unit": "POINTS",
+     "value": 100
+    },
+    "minStopOrProfitDistance": {
+     "unit": "PERCENTAGE",
+     "value": 0.01
+    },
+    "maxStopOrProfitDistance": {
+     "unit": "PERCENTAGE",
+     "value": 100
+    },
+    "marge": {
+     "factor": 3.333333,
+     "eenheid": "PERCENTAGE"
+    },
+    "financiering": {
+     "longRate": -0.00028,
+     "shortRate": -0.00794,
+     "swapChargeTimestamp": 1793743200000,
+     "swapChargeInterval": 1440
+    },
+    "handelsuren": {
+     "mon": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "tue": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "wed": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "thu": [
+      "00:00 - 21:59:50",
+      "22:05 - 00:00"
+     ],
+     "fri": [
+      "00:00 - 21:59:50"
+     ],
+     "sat": [],
+     "sun": [
+      "22:00 - 00:00"
+     ],
+     "zone": "UTC"
+    },
+    "status": "TRADEABLE",
+    "vertraging": 0,
+    "bid": 176.927,
+    "ask": 176.948,
+    "spread": 0.021,
+    "spread_pct": 0.01187,
+    "uurcandles_bij_broker": {
+     "aantal": 1000,
+     "van": "2026-09-06T21:00:00",
+     "tot": "2026-11-03T13:00:00"
+    },
+    "bruikbaar_voor_broker_py": true,
+    "problemen": []
+   }
+  },
+  "US30": {
+   "zoekterm": "Wall Street",
+   "zoekresultaten": [
+    {
+     "epic": "US30",
+     "naam": "US Wall Street 30",
+     "type": "INDICES"
+    },
+    {
+     "epic": "WALLB",
+     "naam": "Wallenstam",
+     "type": "SHARES"
+    },
+    {
+     "epic": "WKP",
+     "naam": "Workspace Group",
+     "type": "SHARES"
+    },
+    {
+     "epic": "US500",
+     "naam": "US 500",
+     "type": "INDICES"
+    },
+    {
+     "epic": "MAIN",
+     "naam": "Main Street Capital Corp",
+     "type": "SHARES"
+    },
+    {
+     "epic": "EFIV",
+     "naam": "State Street SPDR S&P 500 Scored and Screened ETF",
+     "type": "SHARES"
+    },
+    {
+     "epic": "STT",
+     "naam": "State Street",
+     "type": "SHARES"
+    }
+   ],
+   "epic": null,
+   "opmerking": "geen eenduidige match: epic bewust kiezen uit de zoekresultaten"
+  },
+  "FTSE": {
+   "zoekterm": "UK 100",
+   "zoekresultaten": [
+    {
+     "epic": "UK100",
+     "naam": "UK 100",
+     "type": "INDICES"
+    },
+    {
+     "epic": "UKSUGAR",
+     "naam": "Sugar UK",
+     "type": "COMMODITIES"
+    },
+    {
+     "epic": "UKW",
+     "naam": "Greencoat UK Wind",
+     "type": "SHARES"
+    },
+    {
+     "epic": "US100",
+     "naam": "US Tech 100",
+     "type": "INDICES"
+    },
+    {
+     "epic": "BTCUSD",
+     "naam": "Bitcoin/USD",
+     "type": "CRYPTOCURRENCIES"
+    },
+    {
+     "epic": "ETHUSD",
+     "naam": "Ethereum/USD",
+     "type": "CRYPTOCURRENCIES"
+    },
+    {
+     "epic": "XRPUSD",
+     "naam": "Ripple/USD",
+     "type": "CRYPTOCURRENCIES"
+    },
+    {
+     "epic": "LRC",
+     "naam": "Coffee UK",
+     "type": "COMMODITIES"
+    }
+   ],
+   "epic": null,
+   "opmerking": "geen eenduidige match: epic bewust kiezen uit de zoekresultaten"
+  },
+  "NIKKEI": {
+   "zoekterm": "Japan 225",
+   "zoekresultaten": [
+    {
+     "epic": "J225",
+     "naam": "Japan 225",
+     "type": "INDICES"
+    },
+    {
+     "epic": "TCAP",
+     "naam": "TP ICAP",
+     "type": "SHARES"
+    },
+    {
+     "epic": "IRM",
+     "naam": "Iron Mountain",
+     "type": "SHARES"
+    },
+    {
+     "epic": "TBBK",
+     "naam": "The Bancorp Inc",
+     "type": "SHARES"
+    }
+   ],
+   "epic": null,
+   "opmerking": "geen eenduidige match: epic bewust kiezen uit de zoekresultaten"
+  },
+  "CAC": {
+   "zoekterm": "France 40",
+   "zoekresultaten": [
+    {
+     "epic": "FR40",
+     "naam": "France 40",
+     "type": "INDICES"
+    },
+    {
+     "epic": "AFP",
+     "naam": "Air France",
+     "type": "SHARES"
+    },
+    {
+     "epic": "GOLD",
+     "naam": "Gold",
+     "type": "COMMODITIES"
+    },
+    {
+     "epic": "DE40",
+     "naam": "Germany 40",
+     "type": "INDICES"
+    },
+    {
+     "epic": "NBIS",
+     "naam": "Nebius Group NV",
+     "type": "SHARES"
+    },
+    {
+     "epic": "CI",
+     "naam": "Cigna",
+     "type": "SHARES"
+    }
+   ],
+   "epic": null,
+   "opmerking": "geen eenduidige match: epic bewust kiezen uit de zoekresultaten"
+  },
+  "BRENT": {
+   "zoekterm": "Brent",
+   "zoekresultaten": [
+    {
+     "epic": "OIL_BRENT",
+     "naam": "Brent Oil Spot",
+     "type": "COMMODITIES"
+    },
+    {
+     "epic": "BNR",
+     "naam": "Brenntag",
+     "type": "SHARES"
+    },
+    {
+     "epic": "BSY",
+     "naam": "Bentley Systems, Incorporated",
+     "type": "SHARES"
+    }
+   ],
+   "epic": null,
+   "opmerking": "geen eenduidige match: epic bewust kiezen uit de zoekresultaten"
+  },
+  "KOPER": {
+   "zoekterm": "Copper",
+   "zoekresultaten": [
+    {
+     "epic": "COPPER",
+     "naam": "Copper",
+     "type": "COMMODITIES"
+    },
+    {
+     "epic": "SCCO",
+     "naam": "Southern Copper",
+     "type": "SHARES"
+    },
+    {
+     "epic": "MCU3",
+     "naam": "Copper UK",
+     "type": "COMMODITIES"
+    },
+    {
+     "epic": "0358",
+     "naam": "Jiangxi Copper",
+     "type": "SHARES"
+    },
+    {
+     "epic": "KEFI",
+     "naam": "Kefi Gold and Copper PLC",
+     "type": "SHARES"
+    }
+   ],
+   "epic": null,
+   "opmerking": "geen eenduidige match: epic bewust kiezen uit de zoekresultaten"
+  },
+  "GAS": {
+   "zoekterm": "Natural Gas",
+   "zoekresultaten": [
+    {
+     "epic": "NATURALGAS",
+     "naam": "Natural Gas",
+     "type": "COMMODITIES"
+    },
+    {
+     "epic": "CNQ",
+     "naam": "Canadian Natural Resource",
+     "type": "SHARES"
+    },
+    {
+     "epic": "KOLD",
+     "naam": "ProShares UltraShort Bloomberg Natural Gas",
+     "type": "SHARES"
+    },
+    {
+     "epic": "FCG",
+     "naam": "First Trust Natural Gas ETF",
+     "type": "SHARES"
+    },
+    {
+     "epic": "NGS",
+     "naam": "Natural Gas Services Group Inc",
+     "type": "SHARES"
+    },
+    {
+     "epic": "UNG",
+     "naam": "United States Natural Gas Fund, LP",
+     "type": "SHARES"
+    }
+   ],
+   "epic": null,
+   "opmerking": "geen eenduidige match: epic bewust kiezen uit de zoekresultaten"
+  }
+ }
+}
