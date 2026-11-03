@@ -24,6 +24,7 @@ LAB = ROOT / "lab.json"
 LAB_VERSIONS = ROOT / "lab_versies.json"
 LAB_HISTORY = ROOT / "lab_geschiedenis.json"
 LAB_TEST = ROOT / "lab_test.json"
+CANDIDATES = ROOT / "kandidaten.json"      # door het systeem gegenereerde strategievarianten (learning/generator.py)
 
 # Keten (alleen in de GitHub Actions-cache, niet in de repo)
 SENT = ROOT / "verstuurd.json"

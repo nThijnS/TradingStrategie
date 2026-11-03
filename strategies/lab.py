@@ -33,10 +33,13 @@ STRATS = {
 def vtxt(sid, v):
     if not v:
         return "standaard"
-    return {"trend": lambda: f"doel {v['tp']:g}R", "momentum": lambda: f"efficiëntie > {v['er']}",
+    base = {"trend": lambda: f"doel {v['tp']:g}R", "momentum": lambda: f"efficiëntie > {v['er']}",
             "meanrev": lambda: f"band {v['k']} st.dev.", "breakout": lambda: f"kanaal {v['n']} uur",
             "volatiliteit": lambda: f"squeeze onderste {int(v['p'] * 100)}%",
             "ict": lambda: v.get("variant", "")}[sid]()
+    extra = [f"stop {v['sm']:g}xATR" if "sm" in v else None, f"lookback {v['lb']}" if "lb" in v else None,
+             f"doel {v['tp']:g}R" if "tp" in v and sid != "trend" else None]
+    return ", ".join([base] + [x for x in extra if x])
 
 
 # ------------- Data -------------
@@ -125,24 +128,28 @@ def regime_now(df):
 
 # ------------- Strategieën -------------
 def signals(sid, X, v):
+    """Signalen (bool-reeksen op de slot), stopafstand en doel. v: de instellingen van de variant. Ontbrekende
+    instellingen hebben de oorspronkelijke vaste waarde (sm = stop in ATR, tp = doel in R, lb = lookback), zodat de
+    twee basisvarianten per familie exact hetzelfde blijven; learning/generator.py varieert ze gecontroleerd."""
     c, atr = X["c"], X["atr"]
     if sid == "trend":
         x_up = (X["e20"] > X["e50"]) & (X["e20"].shift() <= X["e50"].shift())
         x_dn = (X["e20"] < X["e50"]) & (X["e20"].shift() >= X["e50"].shift())
-        return x_up & (c > X["e200"]), x_dn & (c < X["e200"]), 2 * atr, ("R", v["tp"])
+        return x_up & (c > X["e200"]), x_dn & (c < X["e200"]), v.get("sm", 2.0) * atr, ("R", v["tp"])
     if sid == "momentum":
-        up = (c > X["h"].rolling(10).max().shift()) & (X["er"] > v["er"]) & (c > X["e50"])
-        dn = (c < X["l"].rolling(10).min().shift()) & (X["er"] > v["er"]) & (c < X["e50"])
-        return up, dn, 1.5 * atr, ("R", 2.0)
+        lb = v.get("lb", 10)
+        up = (c > X["h"].rolling(lb).max().shift()) & (X["er"] > v["er"]) & (c > X["e50"])
+        dn = (c < X["l"].rolling(lb).min().shift()) & (X["er"] > v["er"]) & (c < X["e50"])
+        return up, dn, v.get("sm", 1.5) * atr, ("R", v.get("tp", 2.0))
     if sid == "meanrev":
         rng = X["er"] < 0.3
-        return (c < X["mid"] - v["k"] * X["sd"]) & rng, (c > X["mid"] + v["k"] * X["sd"]) & rng, 1.5 * atr, ("mid",)
+        return (c < X["mid"] - v["k"] * X["sd"]) & rng, (c > X["mid"] + v["k"] * X["sd"]) & rng, v.get("sm", 1.5) * atr, ("mid",)
     if sid == "breakout":
         hi, lo = X["h"].rolling(v["n"]).max().shift(), X["l"].rolling(v["n"]).min().shift()
-        return (c > hi) & (c.shift() <= hi.shift()), (c < lo) & (c.shift() >= lo.shift()), 1.5 * atr, ("R", 2.0)
+        return (c > hi) & (c.shift() <= hi.shift()), (c < lo) & (c.shift() >= lo.shift()), v.get("sm", 1.5) * atr, ("R", v.get("tp", 2.0))
     if sid == "volatiliteit":
         sq = X["bbw_pct"].shift() < v["p"]
-        return sq & (c > X["mid"] + 2 * X["sd"]), sq & (c < X["mid"] - 2 * X["sd"]), 1.5 * atr, ("R", 2.0)
+        return sq & (c > X["mid"] + 2 * X["sd"]), sq & (c < X["mid"] - 2 * X["sd"]), v.get("sm", 1.5) * atr, ("R", v.get("tp", 2.0))
     raise ValueError(sid)
 
 
