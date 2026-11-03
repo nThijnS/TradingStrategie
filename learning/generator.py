@@ -4,6 +4,8 @@ Hoe een nieuwe kandidaat ontstaat, getoetst wordt en eventueel actief wordt
   1. Maken (dagelijks, per markt en strategiefamilie): uitgaand van de variant die op TRAIN het best is (de ouder),
      stelt de generator buren voor: één instelling één stap omhoog of omlaag in een vast raster (SPACE), bijvoorbeeld
      doel 2R -> 2,5R of stop 1,5 -> 2 x ATR. Hoogstens BUDGET nieuwe per familie per dag, nooit twee keer dezelfde.
+     Instapinstellingen (ENTRY) gaan voor doel en stop. Handelt geen variant van de familie vaak genoeg (op train),
+     dan alleen instapburen; heeft de familie die niet (meer), dan wordt hij overgeslagen en kost hij geen proef.
   2. Zeven op TRAIN (alleen data vóór de selectiegrens van vandaag): minstens MIN_TRAIN trades, vaak genoeg om
      de validatie te kunnen halen, en gemiddeld positief bij 1,5x kosten. Wie niet slaagt: "afgewezen op train".
      Validatie- en testdata worden hierbij NIET bekeken (getest: andere data na de grens geeft exact dezelfde keuzes).
@@ -38,6 +40,8 @@ SPACE = {
 }
 DEFAULTS = {"trend": dict(sm=2.0), "momentum": dict(lb=10, tp=2.0, sm=1.5), "meanrev": dict(sm=1.5),
             "breakout": dict(tp=2.0, sm=1.5), "volatiliteit": dict(tp=2.0, sm=1.5)}
+# Instellingen die bepalen WANNEER er een trade komt (en dus hoe vaak). tp en sm veranderen alleen de uitstap.
+ENTRY = {"trend": (), "momentum": ("er", "lb"), "meanrev": ("k",), "breakout": ("n",), "volatiliteit": ("p",)}
 BUDGET = 2          # nieuwe kandidaten per familie per markt per dag
 POOL_MAX = 4        # gegenereerde kandidaten per familie per markt in de pool
 LOG_MAX = 2000
@@ -63,6 +67,12 @@ def neighbors(sid, v):
             if 0 <= j < len(grid) and grid[j] != cur:
                 out.append((dict(f, **{p: grid[j]}), f"{p} {cur:g} -> {grid[j]:g}"))
     return out
+
+
+def changed(sid, parent, params):
+    """Welke instelling deze buur van de ouder verandert."""
+    f = full(sid, parent)
+    return next(p for p in SPACE[sid] if params.get(p) != f.get(p))
 
 
 def _order(market, sid, day, key):
@@ -108,12 +118,25 @@ def generate(reg, market, sid, base_variants, by_variant, cut, day, simulate_fn,
     if days is None:
         starts = [x["t"] for t in by_variant.values() for x in t if x["t"] < cut]
         days = max(1.0, (cut - min(starts)).total_seconds() / 86400) if starts else 1.0
-    parent_key = selector.pick_variant(by_variant, cut) or json.dumps(base_variants[0])
+    picked = selector.pick_variant(by_variant, cut)
+    parent_key = picked or json.dumps(base_variants[0])
     parent = json.loads(parent_key)
     props = [(n, rule) for n, rule in neighbors(sid, parent) if canon(sid, n) not in tried]
-    props.sort(key=lambda p: _order(market, sid, day, canon(sid, p[0])))
-    made_today = sum(1 for c in fam.values() if c["gemaakt"] == day)     # budget per dag, ook als de run herhaald wordt
+    # Instap eerst. Handelt geen variant vaak genoeg (op train), dan helpt een ander doel of andere stop niet:
+    # alleen instapburen, en zonder instapburen geen proeven (elke proef maakt P4 strenger voor de hele markt).
+    is_entry = lambda p: changed(sid, parent, p[0]) in ENTRY[sid]
+    if picked is None:
+        props = [p for p in props if is_entry(p)]
+    props.sort(key=lambda p: (not is_entry(p), _order(market, sid, day, canon(sid, p[0]))))
+    skipped = me.setdefault("overgeslagen", {})
+    skipped.pop(sid, None)
     events = []
+    if picked is None and not props:
+        why = ("geen variant handelt vaak genoeg en geen instapinstelling meer om te proberen"
+               if ENTRY[sid] else "geen variant handelt vaak genoeg; doel en stop veranderen het aantal trades niet")
+        skipped[sid] = dict(t=day, reden=why)
+        events.append(dict(t=day, markt=market, familie=sid, variant="", regel="", uitkomst="overgeslagen", reden=why))
+    made_today = sum(1 for c in fam.values() if c["gemaakt"] == day)     # budget per dag, ook als de run herhaald wordt
     for params, rule in props[:max(0, BUDGET - made_today)]:
         key = canon(sid, params)
         trades = simulate_fn(params)

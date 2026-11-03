@@ -50,6 +50,64 @@ class Proposals(unittest.TestCase):
         self.assertTrue(a[0].equals(b[0]) and a[2].equals(b[2]) and a[3] == b[3])
 
 
+class EntryFirst(unittest.TestCase):
+    """Instap voor doel/stop; families die te zelden handelen kosten geen proeven met kansloze exit-varianten."""
+    BASE_M = [dict(er=0.3), dict(er=0.5)]
+
+    def by(self, base, n_train):
+        return {json.dumps(v): trades(0.1, 0.1, n_train=n_train, seed=i) for i, v in enumerate(base)}
+
+    def test_entry_parameters_first(self):
+        reg = {}
+        ev = generator.generate(reg, "TEST", "momentum", self.BASE_M, self.by(self.BASE_M, 120), CUT, "2026-11-03",
+                                lambda v: trades(0.1, 0.0))
+        self.assertEqual(len(ev), generator.BUDGET)
+        self.assertTrue(all(e["regel"].split()[0] in generator.ENTRY["momentum"] for e in ev), ev)
+
+    def test_exit_variants_still_tried_when_entry_exhausted(self):
+        # trend heeft geen instapinstellingen: bij een ouder die vaak genoeg handelt, gewoon doel en stop
+        ev, _ = run({}, lambda v: trades(0.1, 0.0))
+        self.assertEqual(len(ev), generator.BUDGET)
+        self.assertTrue(all(e["regel"].split()[0] in ("tp", "sm") for e in ev))
+
+    def test_too_rare_family_without_entry_settings_costs_no_trials(self):
+        reg, calls = {}, []
+        ev = generator.generate(reg, "TEST", "trend", BASE, self.by(BASE, 20), CUT, "2026-11-03",
+                                lambda v: calls.append(v) or trades(0.1, 0.0))
+        self.assertEqual(calls, [])
+        self.assertEqual(reg["markten"]["TEST"]["proeven"], 0)
+        self.assertEqual([e["uitkomst"] for e in ev], ["overgeslagen"])
+        self.assertIn("trend", reg["markten"]["TEST"]["overgeslagen"])
+        self.assertEqual(generator.trials(reg, "TEST", 10), 10)
+        self.assertNotIn("log", reg)
+
+    def test_too_rare_family_only_gets_entry_neighbours(self):
+        reg = {}
+        ev = generator.generate(reg, "TEST", "momentum", self.BASE_M, self.by(self.BASE_M, 20), CUT, "2026-11-03",
+                                lambda v: trades(0.1, 0.0, n_train=20))
+        self.assertTrue(ev)
+        self.assertTrue(all(e["regel"].split()[0] in generator.ENTRY["momentum"] for e in ev), ev)
+        # zodra alle instapburen geprobeerd zijn: overslaan, geen proeven meer
+        for d in range(4, 12):
+            ev = generator.generate(reg, "TEST", "momentum", self.BASE_M, self.by(self.BASE_M, 20), CUT,
+                                    f"2026-11-{d:02d}", lambda v: trades(0.1, 0.0, n_train=20))
+        self.assertEqual([e["uitkomst"] for e in ev], ["overgeslagen"])
+        fam = reg["markten"]["TEST"]["families"]["momentum"]
+        self.assertTrue(all(generator.changed("momentum", self.BASE_M[0], c["params"]) in generator.ENTRY["momentum"]
+                            for c in fam.values()))
+
+    def test_entry_settings_all_change_signals(self):
+        # ENTRY klopt met strategies/lab.signals: instap verandert de signalen, tp/sm niet
+        X = lab.indicators(fixtures.hourly_bars(3000))
+        base = dict(trend=dict(tp=2.0), momentum=dict(er=0.3), meanrev=dict(k=2.0), breakout=dict(n=24), volatiliteit=dict(p=0.2))
+        for sid, v in base.items():
+            a = lab.signals(sid, X, generator.full(sid, v))
+            for n, rule in generator.neighbors(sid, v):
+                b = lab.signals(sid, X, n)
+                same = a[0].equals(b[0]) and a[1].equals(b[1])
+                self.assertEqual(not same, generator.changed(sid, v, n) in generator.ENTRY[sid], f"{sid}: {rule}")
+
+
 class TrainOnly(unittest.TestCase):
     def test_validation_data_never_influences_generation(self):
         # zelfde train, totaal andere validatie: exact dezelfde voorstellen, zeef en pool

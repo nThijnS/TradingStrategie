@@ -11,6 +11,8 @@ Het systeem stelt nu zelf nieuwe strategievarianten voor en toetst ze. De kandid
      - Efficiëntie, band, kanaal en squeeze-drempel.
    - Hoogstens 2 nieuwe per familie per dag, ook als de workflow opnieuw draait.
    - Nooit twee keer dezelfde variant.
+   - **Instap eerst.** Buren die de instap veranderen (`er`, `lb`, `k`, `n`, `p`) gaan voor buren die alleen doel of stop veranderen (`tp`, `sm`).
+   - **Families die te zelden handelen.** Haalt geen variant de frequentieregel op train, dan worden alleen instapburen geprobeerd. Een ander doel of een andere stop verandert het aantal trades niet. Heeft de familie geen instapinstelling (meer) om te proberen, zoals Trend, dan wordt ze die dag **overgeslagen**. Dat kost geen proef en wordt vastgelegd onder `overgeslagen` in `kandidaten.json`.
 2. **Zeven op train** (alleen data vóór de grens). Een kandidaat moet aan alles voldoen:
    - ≥ 30 trades;
    - vaak genoeg handelen om in 180 dagen 30 trades te halen;
@@ -46,11 +48,29 @@ Het systeem stelt nu zelf nieuwe strategievarianten voor en toetst ze. De kandid
 - De markten blijven dus op onderzoek of pauze. Er komen geen orders.
 - Rekentijd: ±11 seconden voor 15 markten.
 
+## Instap eerst (3 november 2026, na de eerste cloud-run)
+
+Wat de eerste cloud-run liet zien:
+- 117 van de 150 voorstellen veranderden alleen `tp` of `sm`.
+- Ongeveer 22 proeven gingen naar zulke exit-varianten in families die te zelden handelen. Die kunnen P1 nooit halen, maar ze telden wel mee in P4.
+
+Vergelijking op dezelfde echte data (gecachte Yahoo-data, oude en nieuwe generator vanaf een leeg register):
+
+| | Proeven | Instapvarianten | Afgewezen: te zelden | Overgeslagen |
+|---|---|---|---|---|
+| Dag 1, oud | 150 | 39 | 33 | 0 |
+| Dag 1, nieuw | 131 | 75 | 21 | 6 |
+| 10 dagen, oud | 478 | 165 | 80 | 0 |
+| 10 dagen, nieuw | 431 | 183 | 33 | 114 |
+
+De poort, de drempels, de werkwijze met alleen train en het tellen van elke geprobeerde variant zijn niet veranderd.
+
 ## Logging
 
 - **`kandidaten.json`** bevat per markt:
   - `proeven`;
   - per familie elke kandidaat met ouder, regel, aanmaakdatum, status, reden, train-maten en "na aanmaak";
+  - `overgeslagen`: families die vandaag geen proef kregen, met de reden;
   - een gebeurtenissenlog met de laatste 2 000 regels.
 - **`lab.json` → `markten[].kandidaten`:** het aantal proeven voor P4, de kandidaten van vandaag en de poolgrootte.
 - **Workflow-uitvoer:** één regel per kandidaat, bijvoorbeeld `kandidaat NQ trend: sm 2 -> 1.5 -> in pool (...)`.
