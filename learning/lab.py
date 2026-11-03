@@ -31,7 +31,7 @@ from core.markets import LAB_MARKETS as MARKETS
 from core.markets import fin_rate  # noqa: F401
 from core.sessions import NY
 from research.validation import MIN_OOS, MIN_TRAIN, TEST_D, TRAIN_D, current_variant, walk_forward  # noqa: F401
-from learning import selector
+from learning import generator, selector
 from storage import jsonstore, paths
 from strategies.lab import MAX_BARS, STRATS, indicators, nights, regime_now, signals, simulate, vtxt  # noqa: F401
 
@@ -80,7 +80,8 @@ def load(path, default):
 
 
 # ------------- Per markt -------------
-def analyse_market(m, df, versions):
+def analyse_market(m, df, versions, registry=None, day=None):
+    """registry: kandidaten.json (dict); met registry stelt de generator ook nieuwe varianten voor (learning/generator.py)."""
     df, q = clean(df)
     res = dict(naam=m["naam"], titel=m["titel"], soort=m["soort"], symbool=m["symbool"], kosten=m["kosten"], data=q)
     if len(df) < 1500:
@@ -88,8 +89,21 @@ def analyse_market(m, df, versions):
         return res, None
     X = indicators(df)
     start, end = X.index[0], X.index[-1]
+    cut = end - pd.Timedelta(days=selector.VAL_DAYS)
+    day = day or selector.now_ny().date().isoformat()
     res["regime"] = regime_now(df)
-    strategies, by_family = [], {}
+    prev = (versions.get(m["naam"]) or [None])[-1] or {}
+    protected = {_variant_key(prev.get("strategie"), prev.get("variant")), prev.get("variant_key"),
+                 (prev.get("onderzoek") or {}).get("variant_key")} - {None}
+
+    def sim(sid, v):
+        up, dn, stopd, target = signals(sid, X, v)
+        trades = simulate(X, up, dn, stopd, target, m["kosten"], fin_rate(m))
+        for x in trades:   # R bij 1,5x spread/commissie (voor de poort en de zeef van de generator)
+            x["R15"] = x["R"] - (COST_X - 1) * m["kosten"] * x["entry"] / abs(x["entry"] - x["stop"])
+        return trades
+
+    strategies, by_family, events, base_count = [], {}, [], 0
     for sid, info in STRATS.items():
         if sid == "ict":
             if m["naam"] not in ICT_MARKETS:
@@ -97,17 +111,21 @@ def analyse_market(m, df, versions):
             by_variant = ict_trades(m["naam"], X)
             if not by_variant:
                 continue
+            base_count += len(by_variant)
         else:
-            by_variant = {}
-            for v in info["varianten"]:
-                up, dn, stopd, target = signals(sid, X, v)
-                trades = simulate(X, up, dn, stopd, target, m["kosten"], fin_rate(m))
-                for x in trades:   # R bij 1,5x spread/commissie (voor de poort)
-                    x["R15"] = x["R"] - (COST_X - 1) * m["kosten"] * x["entry"] / abs(x["entry"] - x["stop"])
-                by_variant[json.dumps(v)] = trades
+            by_variant = {json.dumps(v): sim(sid, v) for v in info["varianten"]}
+            base_count += len(info["varianten"])
+            if registry is not None:
+                for k, params in generator.pool(registry, m["naam"], sid).items():
+                    by_variant[k] = sim(sid, params)
+                events += generator.generate(registry, m["naam"], sid, info["varianten"], by_variant, cut, day,
+                                             lambda v, sid=sid: sim(sid, v), protected)
+                generator.after_creation(registry, m["naam"], sid, by_variant)
         by_family[sid] = by_variant
-    cut = end - pd.Timedelta(days=selector.VAL_DAYS)
-    trials = max(2, sum(len(v) for v in by_family.values()))
+    trials = generator.trials(registry, m["naam"], base_count) if registry is not None else max(2, base_count)
+    res["kandidaten"] = dict(proeven=trials, vandaag=events,
+                             pool={sid: len(generator.pool(registry, m["naam"], sid)) for sid in by_family if sid != "ict"}
+                             if registry is not None else {})
     for sid, by_variant in by_family.items():
         info = STRATS[sid]
         hist_key = max(by_variant, key=lambda k: np.mean([x["R"] for x in by_variant[k]]) if len(by_variant[k]) >= MIN_TRAIN else -9)
@@ -177,7 +195,7 @@ def choose(res, ctx, versions, now=None):
     entry = dict(sinds=d["sinds"], status=d["status"], strategie=sid, titel=titel, variant=variant, variant_key=key,
                  variant_txt=vtxt(sid, variant) if sid else "", ondergrens=d["poort"]["ondergrens"] if d["poort"] else None,
                  n=d["poort"]["validatie"]["n"] if d["poort"] else 0, reden=d["reden"], geblokkeerd=d["geblokkeerd"],
-                 onderzoek=dict(strategie=rs["strategie"], titel=STRATS[rs["strategie"]]["titel"],
+                 onderzoek=dict(strategie=rs["strategie"], titel=STRATS[rs["strategie"]]["titel"], variant_key=rs["variant_key"],
                                 variant_txt=vtxt(rs["strategie"], json.loads(rs["variant_key"]) if rs["strategie"] != "ict"
                                                  else dict(variant=rs["variant_key"])),
                                 redenen=rs["poort"]["redenen"]) if rs else None)
@@ -251,11 +269,14 @@ def main():
     a = ap.parse_args()
     markets = [m for m in MARKETS if not a.markt or m["naam"] == a.markt]
     versions = load(VERSIONS, {})
+    registry = load(paths.CANDIDATES, None) or dict(versie=1, markten={}, log=[])
     data = fetch_all(markets)
     out, day = [], dict(t=datetime.now(NY).isoformat(timespec="minutes"), markten={})
     for m in markets:
         try:
-            res, ctx = analyse_market(m, data.get(m["naam"], pd.DataFrame()), versions)
+            res, ctx = analyse_market(m, data.get(m["naam"], pd.DataFrame()), versions, registry)
+            for ev in res.get("kandidaten", {}).get("vandaag", []):
+                print(f"  kandidaat {ev['markt']} {ev['familie']}: {ev['regel'] or '-'} -> {ev['uitkomst']} ({ev['reden']})", flush=True)
             if ctx:
                 entry, why, rejected = choose(res, ctx, versions)
                 top = sorted((s for s in res["strategieen"] if s["nieuw"].get("n")), key=lambda s: -(s["nieuw"].get("ondergrens") or -9))
@@ -281,6 +302,8 @@ def main():
         return
     jsonstore.save(LAB, lab, compact=True)
     jsonstore.save(VERSIONS, versions)
+    registry["bijgewerkt"] = datetime.now(NY).isoformat(timespec="minutes")
+    jsonstore.save(paths.CANDIDATES, registry, compact=True)
     write_learned(out)
     from learning.journal import write_selection
     write_selection(out)

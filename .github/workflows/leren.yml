@@ -1,7 +1,8 @@
 # Zelflerende stap: elke werkdag na de beurs test leren.py alle ICT-varianten op de nieuwste data,
 # bewaart de uitkomsten (leren_geheugen.json), kiest per markt de beste (learned.json) en schrijft
 # het Obsidian-journaal (journaal/). De meldingen-keten haalt learned.json elke minuut op.
-# Daarna vergelijkt strategielab.py zes soorten strategieën op 15 markten (lab.json, voor het dashboard).
+# Daarna stelt strategielab.py nieuwe strategievarianten voor (kandidaten.json, alleen op train), toetst alle
+# strategieën per markt met de vaste poort en kiest per markt actief/onderzoek/pauze (lab.json, learned.json).
 # Het lab draait ook in het weekend, voor crypto.
 name: Leren
 
@@ -55,7 +56,7 @@ jobs:
         run: |
           git config user.name "TradingStrategie-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add learned.json leren_geheugen.json leren_geschiedenis.json journaal lab.json lab_versies.json lab_geschiedenis.json
+          git add learned.json leren_geheugen.json leren_geschiedenis.json journaal lab.json lab_versies.json lab_geschiedenis.json kandidaten.json
           if git diff --cached --quiet; then
             echo "Niets veranderd"
             exit 0

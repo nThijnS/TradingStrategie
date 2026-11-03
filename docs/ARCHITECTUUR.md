@@ -25,7 +25,7 @@ storage/: paden, JSON laden/opslaan, migraties (alle lagen)
 | `strategies/` | signalen, geen uitkomsten. Interface: `strategies/base.py` (`Signal`) | `ict_tjr.py` (de ICT/TJR-strategie) |
 | `backtesting/` | **de enige trade-simulatie** (`engine.py`), ICT-koppeling (`ict.py`), statistiek, prop-firm | `engine.py` |
 | `research/` | testprotocol, HistData-backtests, chronologische validatie, experimentregistratie, archief | `protocol.py` |
-| `learning/` | per markt zelf kiezen tussen alle strategieën (ICT is er één van): actief / onderzoek / pauze; ICT-uitkomsten verzamelen; journaal | `selector.py`, `lab.py`, `ict.py` |
+| `learning/` | per markt zelf kiezen tussen alle strategieën (ICT is er één van): actief / onderzoek / pauze; ICT-uitkomsten verzamelen; journaal | `selector.py`, `generator.py`, `lab.py`, `ict.py` |
 | `risk/` | pure risicoregels (positiegrootte, limieten, correlatiegroepen) | `rules.py` |
 | `execution/` | orderuitvoering Capital.com, instrumentcontrole | `runner.py` |
 | `storage/` | bestandspaden, atomair opslaan, migraties met backup | `paths.py`, `MANIFEST.md` |
@@ -51,6 +51,10 @@ storage/: paden, JSON laden/opslaan, migraties (alle lagen)
    - De bootstrap gebruikt een vaste seed.
    - Elke onderzoeksrun schrijft commit, versies en een data-vingerafdruk naar `rapport/experimenten.jsonl`.
 6. **Oude namen blijven werken.** `tradingstrategie.py`, `leren.py`, `strategielab.py`, `live_status.py`, `broker.py`, `onderzoek.py`, `backtest.py`, `backtest_multi.py`, `capital_instrumenten.py`, `demo_broker.py`, `risico.py` en `broker_capital.py` zijn doorverwijzingen. De workflows en de Mac-starter roepen ze ongewijzigd aan.
+
+## Nieuwe varianten (automatisch)
+
+`learning/generator.py` stelt dagelijks zelf nieuwe varianten van bestaande strategieën voor en zeeft ze op train. Zie [refactor/6_kandidaat_generator.md](refactor/6_kandidaat_generator.md). Een nieuwe strategiefamilie toevoegen blijft handwerk, zie hieronder.
 
 ## Een strategie toevoegen
 

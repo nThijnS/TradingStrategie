@@ -13,6 +13,7 @@ Eén bron per gegeven:
 | Keuzegeschiedenis ICT (per dag) | `leren_geschiedenis.json` | `learning/lab.py` | dashboard | main |
 | Strategie-selectie per markt (status, poort per strategie) en lab-resultaten | `lab.json` | `learning/lab.py` | dashboard, website, broker (via status) | main |
 | **Strategieversies** lab: elke wissel, om terug te draaien | `lab_versies.json` | `learning/lab.py` | lab | main |
+| Door het systeem gegenereerde strategievarianten: pool, afgewezenen, aantal proeven per markt, gebeurtenissenlog | `kandidaten.json` | `learning/generator.py` (via `learning/lab.py`) | lab, selector (aantal proeven voor P4) | main |
 | Lab-dagregel (wat er vandaag getest en gekozen is) | `lab_geschiedenis.json` | `learning/lab.py` | website | main |
 | Forward test: elke setup en weigering | `logboek.json` | app | leren (dagnotities), dashboard | Actions-cache + run-artifact |
 | Verstuurde meldingen | `verstuurd.json` | app | app | Actions-cache |
