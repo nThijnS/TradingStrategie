@@ -1,0 +1,50 @@
+# Meet de Capital.com-feed op demo, ALLEEN LEZEN: geen orders, geen accountwijzigingen en geen schrijfrechten op de repo.
+# De uitkomst staat als artifact "feedmeting" bij de run. Zie research/feedmeting.py.
+name: Feedmeting
+
+on:
+  workflow_dispatch:
+    inputs:
+      minuten:
+        description: "Meetduur in minuten"
+        type: number
+        default: 20
+  push:
+    branches: ["research/timeframes"]
+    paths: ["research/feedmeting.py", ".github/workflows/feedmeting.yml"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: feedmeting
+  cancel-in-progress: false
+
+jobs:
+  meten:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Onderdelen installeren
+        run: pip install -r requirements.txt websockets
+
+      - name: Feed meten
+        env:
+          CAPITAL_API_KEY: ${{ secrets.CAPITAL_API_KEY }}
+          CAPITAL_IDENTIFIER: ${{ secrets.CAPITAL_IDENTIFIER }}
+          CAPITAL_PASSWORD: ${{ secrets.CAPITAL_PASSWORD }}
+        run: python -W ignore -m research.feedmeting meet --minuten "${{ inputs.minuten || 20 }}" --uit feedmeting.json
+
+      - uses: actions/upload-artifact@v4
+        if: always() && hashFiles('feedmeting.json') != ''
+        with:
+          name: feedmeting
+          path: feedmeting.json
+          retention-days: 30
