@@ -80,6 +80,14 @@ Op 3 november om ongeveer 13:23 UTC is de demo bij Capital.com aangevuld met de 
     - Is de historie niet beschikbaar, of staan er posities open, dan blijft de vorige meting staan. Een storting tijdens een open positie valt zo bij de volgende meting zonder posities alsnog op.
     - Een periode langer dan de opgevraagde historie (24 uur) geldt nooit als verklaard.
   - **Zolang er een onopgeloste post is:** geen nieuwe orders, en piek en dagstart worden niet bijgewerkt.
+  - **Dashboard tijdens een open post (`risk/administratie.report`):** saldo − inleg kan dan een niet-vastgelegde storting bevatten, dus het dashboard toont geen definitief handelsresultaat:
+    - het handelsresultaat staat als **voorlopig**. Het onverklaarde bedrag staat apart, samen met het laatst bevestigde resultaat en het tijdstip daarvan.
+      - Voorbeeld: een trade van −€ 45 plus een niet-vastgelegde storting van +€ 1.000 gaf eerst "+€ 950,05".
+      - Nu staat er "voorlopig", onverklaard +€ 1.000,00 en laatst bevestigd −€ 4,95.
+    - "Vandaag" en de gebruikte limiet-% staan als onbekend. Bij de trailing grens staat dat de hoogste waarde het onverklaarde bedrag kan bevatten.
+    - de grafiek zonder geldstromen stopt bij het laatst bevestigde punt. De punten daarna staan apart in `administratie.equity_voorlopig`; er gaat niets verloren.
+    - na vastleggen of goedkeuren is alles weer definitief, met de volledige reeks.
+    - `demo.json` velden: `handelsresultaat_status` (`definitief`/`voorlopig`), `handelsresultaat` (`null` als voorlopig), `handelsresultaat_bevestigd`, `bevestigd_t`, `onverklaard_bedrag`, `handelsresultaat_incl_onverklaard`.
   - **Oplossen:**
     - leg de geldstroom vast in die periode;
     - of zet het id in `administratie.geaccepteerd`. Dat is bedoeld voor bijvoorbeeld rente (swap) over het dagelijkse rollmoment, die niet in de tradehistorie staat en dus ook een post geeft.

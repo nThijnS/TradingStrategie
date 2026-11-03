@@ -19,7 +19,8 @@ SALDO EN GELDSTROMEN (risk/administratie.py)
   Stortingen en opnames tellen niet als handelsresultaat. Ze staan in config.json administratie.geldstromen en
   worden met de hand vastgelegd. Limieten en piek rekenen met het handelsresultaat; demo.risicokapitaal begrenst
   het vermogen waarmee de positiegrootte wordt berekend (0,5% van 10000 = hoogstens 50 per trade). Een
-  saldowijziging die de bot niet kan verklaren, blokkeert nieuwe orders tot ze is vastgelegd.
+  saldowijziging die de bot niet kan verklaren, blokkeert nieuwe orders tot ze is vastgelegd; zolang toont het
+  dashboard het handelsresultaat als voorlopig (risk/administratie.report).
 
 NOODSTOP  config.json "noodstop": true, of het bestand NOODSTOP in de repo, of omgevingsvariabele NOODSTOP=1.
   Wel:  geen nieuwe orders; wachtende (nog niet gevulde) limietorders van de bot worden geannuleerd.
@@ -592,17 +593,21 @@ def run(status, cfg, env, st_by_mode, connect=None, now=None):
         closed = b.closed()
     except BrokerError:
         closed = []
+    rep = administratie.report(a["nav"], r.adm, st, now)
+    final = rep["status"] == "definitief"     # anders kan E een niet-vastgelegde storting bevatten: geen gebruikt-%
     adm_out = dict(
         saldo_broker=round(a["nav"], 2), startkapitaal=r.adm["startkapitaal"], startkapitaal_bron=r.adm["bron"],
-        geldstromen=administratie.confirm_in_series(eq, r.adm), inleg=rv["inleg"], handelsresultaat=rv["handelsresultaat"],
-        vandaag=round(rv["risicovermogen"] - rv["dag_start"], 2), risicobasis=rv["risicobasis"],
+        geldstromen=administratie.confirm_in_series(eq, r.adm), inleg=rv["inleg"], handelsresultaat=rep["handelsresultaat"],
+        handelsresultaat_status=rep["status"], handelsresultaat_bevestigd=rep["bevestigd"], bevestigd_t=rep["bevestigd_t"],
+        onverklaard_bedrag=rep["onverklaard_bedrag"], handelsresultaat_incl_onverklaard=rep["handelsresultaat_incl_onverklaard"],
+        vandaag=round(rv["risicovermogen"] - rv["dag_start"], 2) if final else None, risicobasis=rv["risicobasis"],
         risicobasis_bron=rv["risicobasis_bron"], risicovermogen=rv["risicovermogen"],
         max_risico_per_trade=round(rv["sizing_vermogen"] * lim.risico_pct / 100, 2),
         piek_handelsresultaat=round(rv["piek"] - rv["start"], 2), problemen=adm_problems, onverklaard=jumps,
-        dag_gebruikt_pct=round(max(0.0, (rv["dag_start"] - rv["risicovermogen"]) / rv["dag_start"] * 100), 3),
+        dag_gebruikt_pct=round(max(0.0, (rv["dag_start"] - rv["risicovermogen"]) / rv["dag_start"] * 100), 3) if final else None,
         totaal_gebruikt_pct=round(max(0.0, ((rv["piek"] if lim.trailing else rv["start"]) - rv["risicovermogen"])
-                                      / (rv["piek"] if lim.trailing else rv["start"]) * 100), 3),
-        equity_zonder_geldstromen=administratie.trading_curve(eq, r.adm),
+                                      / (rv["piek"] if lim.trailing else rv["start"]) * 100), 3) if final else None,
+        equity_zonder_geldstromen=rep["equity_zonder_geldstromen"], equity_voorlopig=rep["equity_voorlopig"],
         ruw=dict(start_saldo=st["start_saldo"], piek=st["piek"], dag_start=st["dag_start"]),
         migratie=st["administratie"].get("migratie"))
     return dict(base, gekoppeld=True, account=mask(acc_id), valuta=a["ccy"], saldo=a["saldo"], nav=a["nav"], open_pl=a["open_pl"],

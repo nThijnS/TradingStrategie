@@ -33,6 +33,12 @@ SALDOCONTROLE (fail closed)
     keur je goed met administratie.geaccepteerd (id) of je legt haar vast.
   Een post is opgelost als de vastgelegde geldstromen in die periode haar verklaren of als haar id in
   administratie.geaccepteerd staat.
+
+RAPPORTAGE (report, voor het dashboard)
+  Zolang er een onopgeloste of voorlopige post is, kan NAV - inleg een niet-vastgelegde storting bevatten. Het
+  handelsresultaat heet dan "voorlopig" en heeft geen definitief getal: het dashboard krijgt het laatst bevestigde
+  resultaat (bij de vergelijkingsmeting voor de eerste post), het onverklaarde bedrag apart en NAV - inleg alleen als
+  "inclusief onverklaard". De grafiek zonder geldstromen stopt op dat moment; de punten daarna staan apart.
 """
 import json
 from collections import Counter
@@ -121,11 +127,15 @@ def fingerprint(adm):
     return json.dumps([adm["startkapitaal"], [(f["t"].isoformat(), f["bedrag"]) for f in adm["geldstromen"]]])
 
 
+def _cut(st, adm):
+    """Begin van de eerste onopgeloste saldowijziging (None als er geen is). Daarna kan de reeks een niet-vastgelegde
+    storting bevatten."""
+    return min((_t(x["van_t"]) for x in unresolved(st, adm)), default=None)
+
+
 def _peak_from_series(st, adm):
-    """Hoogste handelsresultaat in de ruwe equityreeks, alleen tot de eerste onverklaarde saldowijziging (daarna kan
-    de reeks een niet-vastgelegde storting bevatten)."""
-    open_jumps = unresolved(st, adm)
-    cut = min((_t(x["van_t"]) for x in open_jumps), default=None)
+    """Hoogste handelsresultaat in de ruwe equityreeks, alleen tot de eerste onverklaarde saldowijziging."""
+    cut = _cut(st, adm)
     pts = [v - adm["startkapitaal"] for t, v in trading_curve(st.get("equity") or [], adm) if cut is None or _t(t) <= cut]
     return max(pts) if pts else None
 
@@ -256,3 +266,25 @@ def risk_view(nav, adm, st, risicokapitaal, now):
                 risicobasis_bron="config.json demo.risicokapitaal" if risicokapitaal else "inleg (startkapitaal + geldstromen)",
                 risicovermogen=round(e, 2), sizing_vermogen=min(e, b), piek=pk, dag_start=dg, start=b,
                 naar_nav=nav - e)          # optellen bij een grens in E-termen = dezelfde grens als accountwaarde
+
+
+def report(nav, adm, st, now):
+    """Handelsresultaat en grafiek voor het dashboard (zie RAPPORTAGE boven). status "definitief": handelsresultaat =
+    NAV - inleg. status "voorlopig": handelsresultaat None, met bevestigd (+ bevestigd_t), onverklaard_bedrag en
+    handelsresultaat_incl_onverklaard; equity_zonder_geldstromen loopt dan tot bevestigd_t en equity_voorlopig bevat de
+    punten daarna (inclusief het onverklaarde bedrag)."""
+    p = round(nav - inleg(adm, now), 2)
+    curve = trading_curve(st.get("equity") or [], adm)
+    open_jumps = unresolved(st, adm)
+    if not open_jumps:
+        return dict(status="definitief", handelsresultaat=p, bevestigd=p, bevestigd_t=now.isoformat(timespec="seconds"),
+                    onverklaard_bedrag=0.0, handelsresultaat_incl_onverklaard=p,
+                    equity_zonder_geldstromen=curve, equity_voorlopig=[])
+    first = min(open_jumps, key=lambda x: _t(x["van_t"]))
+    cut = _t(first["van_t"])
+    # de vergelijkingsmeting is gedaan zonder open posities: saldo = accountwaarde, dus een bevestigd resultaat
+    return dict(status="voorlopig", handelsresultaat=None, bevestigd=round(first["van"] - inleg(adm, cut), 2),
+                bevestigd_t=first["van_t"], onverklaard_bedrag=round(sum(x["verschil"] for x in open_jumps), 2),
+                handelsresultaat_incl_onverklaard=p,
+                equity_zonder_geldstromen=[x for x in curve if _t(x[0]) <= cut],
+                equity_voorlopig=[x for x in curve if _t(x[0]) > cut])

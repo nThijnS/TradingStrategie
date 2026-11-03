@@ -356,7 +356,7 @@ function rDashboard() {
       <div class="kpi"><span class="label">Met strategie</span><span class="v">${chosen.length}</span><span class="d">rest: geen trade</span></div>
       <div class="kpi"><span class="label">Open signalen</span><span class="v ${open.length ? "up" : ""}">${open.length}</span><span class="d">${sigs.length} vandaag/recent</span></div>
       <div class="kpi"><span class="label">Datastatus</span><span class="v ${problems.length ? "warn" : "up"}">${problems.length ? problems.length + " let op" : "OK"}</span><span class="d"><a href="#datafarm">Data Farm</a></span></div>
-      <div class="kpi"><span class="label">${D?.modus === "live" ? "LIVE-account" : "Demo-account"}</span><span class="v ${D?.nav != null ? (demoResult() >= 0 ? "up" : "down") : ""}" style="font-size:${D?.nav != null ? "1.35rem" : "1rem"}">${D?.nav != null ? sgn(demoResultPct()) + "%" : "niet gekoppeld"}</span><span class="d"><a href="#risk">${D?.nav != null ? (D.open_trades?.length || 0) + " open trades" : "koppelen"}</a></span></div>
+      <div class="kpi"><span class="label">${D?.modus === "live" ? "LIVE-account" : "Demo-account"}</span><span class="v ${D?.nav == null ? "" : demoResult() == null ? "warn" : demoResult() >= 0 ? "up" : "down"}" style="font-size:${D?.nav != null && demoResult() != null ? "1.35rem" : "1rem"}">${D?.nav == null ? "niet gekoppeld" : demoResult() == null ? "voorlopig" : sgn(demoResultPct()) + "%"}</span><span class="d"><a href="#risk">${D?.nav != null ? (D.open_trades?.length || 0) + " open trades" : "koppelen"}</a></span></div>
       <div class="kpi"><span class="label">Laatst geleerd</span><span class="v" style="font-size:1rem">${L ? nlDate(L.gemaakt) : "–"}</span><span class="d">${switched.length ? switched.length + " wissel(s)" : "geen wissels"}</span></div>
     </section>
     <section>
@@ -774,11 +774,13 @@ function demoBlock(full) {
     <div class="muted small">Standaard demo. Live (echt geld) werkt alleen na een bewuste opt-in van de eigenaar met aparte live-geheimen en een gecontroleerd account-ID.</div>${D.melding ? `<div class="muted small">${esc(D.melding)}</div>` : ""}</div>`;
   if (D.uit) return `<div class="card small">${esc(D.melding)}</div>`;
   const ccy = D.valuta === "EUR" ? "€" : "$", m = v => ccy + nf(v, 0), m2 = v => ccy + nf(v, 2), A = D.administratie;
-  const totPct = demoResultPct(), dayPct = A ? A.vandaag / A.risicobasis * 100 : (D.nav / D.dag_start - 1) * 100, R = D.regels || {};
-  const dayUsed = A ? A.dag_gebruikt_pct : Math.max(0, -dayPct), totUsed = A ? A.totaal_gebruikt_pct : Math.max(0, (D.piek - D.nav) / D.start_saldo * 100);
+  const F = demoFigures(D), totPct = F.pct, dayPct = F.dayPct, dayUsed = F.dayUsed, totUsed = F.totUsed, R = D.regels || {};
+  const usedTxt = u => u == null ? "onbekend zolang de saldowijziging niet verklaard is" : nf(u) + "% gebruikt";
   const flows = A ? A.geldstromen.reduce((s, g) => s + g.bedrag, 0) : 0;
   const admBox = A ? `<div class="card small" style="display:grid;gap:4px"><div class="label">Saldo-administratie</div>
-      <div>Saldo bij ${esc(D.broker || "de broker")}: <b>${m2(A.saldo_broker)}</b> = startkapitaal ${m2(A.startkapitaal)} + geldstromen ${sgn(flows, 2)} + handelsresultaat <b>${sgn(A.handelsresultaat, 2)}</b> ${ccy}</div>
+      ${F.provisional ? `<div>Saldo bij ${esc(D.broker || "de broker")}: <b>${m2(A.saldo_broker)}</b> = startkapitaal ${m2(A.startkapitaal)} + geldstromen ${sgn(flows, 2)} + handelsresultaat en onverklaarde saldowijziging samen ${sgn(F.inclUnexplained, 2)} ${ccy}</div>
+      <div class="warn">Handelsresultaat <b>voorlopig/onbekend</b>: onverklaard <b>${sgn(F.unexplained, 2)} ${ccy}</b> (nog niet vastgelegd als geldstroom; geen winst of verlies tot het verklaard is). Laatst bevestigd: ${sgn(F.confirmed, 2)} ${ccy} op ${nlDT(F.confirmedT)}.</div>`
+      : `<div>Saldo bij ${esc(D.broker || "de broker")}: <b>${m2(A.saldo_broker)}</b> = startkapitaal ${m2(A.startkapitaal)} + geldstromen ${sgn(flows, 2)} + handelsresultaat <b>${sgn(A.handelsresultaat, 2)}</b> ${ccy}</div>`}
       ${A.geldstromen.map(g => `<div class="muted">${g.bedrag > 0 ? "Storting" : "Opname"} ${m2(Math.abs(g.bedrag))} op ${nlDT(g.t)}: ${esc(g.omschrijving)} · in de waardereeks: ${esc(g.in_equityreeks)}. Telt niet als winst.</div>`).join("")}
       <div>Risicobasis voor de positiegrootte: <b>${m2(A.risicobasis)}</b> (${esc(A.risicobasis_bron)}) · risico per trade hoogstens <b>${m2(A.max_risico_per_trade)}</b></div>
       <div class="muted">Startkapitaal: ${esc(A.startkapitaal_bron || "onbekend")}. Geldstromen leg je vast in config.json onder "administratie"; de bot leidt ze niet zelf af.</div></div>` : "";
@@ -790,8 +792,9 @@ function demoBlock(full) {
   const head = `<thead><tr><th>Markt</th><th>Positie</th><th class="n">Prijs</th><th class="n">Stop</th><th class="n">Doel</th><th>Tijd</th><th class="n">Winst/verlies</th></tr></thead>`;
   return modeBar + `<div class="kpis">
       <div class="kpi"><span class="label">Saldo bij de broker</span><span class="v">${A ? m2(D.nav) : m(D.nav)}</span><span class="d">${A ? `waarvan geldstromen ${sgn(flows, 0)} ${ccy}` : `start ${m(D.start_saldo)}`}</span></div>
-      <div class="kpi"><span class="label">Handelsresultaat</span><span class="v ${totPct >= 0 ? "up" : "down"}">${sgn(demoResult(), 2)} ${ccy}</span><span class="d">${sgn(totPct)}% ${A ? "van de risicobasis" : ""} · zonder stortingen</span></div>
-      <div class="kpi"><span class="label">Vandaag</span><span class="v ${dayPct >= 0 ? "up" : "down"}">${sgn(dayPct)}%</span><span class="d">open: ${sgn(D.open_pl, 0)} ${ccy}</span></div>
+      ${F.provisional ? `<div class="kpi"><span class="label">Handelsresultaat</span><span class="v warn">voorlopig</span><span class="d">onverklaard ${sgn(F.unexplained, 2)} ${ccy} · laatst bevestigd ${sgn(F.confirmed, 2)} ${ccy}</span></div>`
+      : `<div class="kpi"><span class="label">Handelsresultaat</span><span class="v ${totPct >= 0 ? "up" : "down"}">${sgn(F.result, 2)} ${ccy}</span><span class="d">${sgn(totPct)}% ${A ? "van de risicobasis" : ""} · zonder stortingen</span></div>`}
+      <div class="kpi"><span class="label">Vandaag</span><span class="v ${dayPct == null ? "warn" : dayPct >= 0 ? "up" : "down"}">${dayPct == null ? "voorlopig" : sgn(dayPct) + "%"}</span><span class="d">open: ${sgn(D.open_pl, 0)} ${ccy}</span></div>
       <div class="kpi"><span class="label">Open trades</span><span class="v">${D.open_trades.length}</span><span class="d">max ${R.max_open ?? "–"} · ${D.orders.length} wachtende orders</span></div>
     </div>
     ${D.blokkade ? `<div class="err">${esc(D.blokkade)}</div>` : ""}
@@ -800,22 +803,39 @@ function demoBlock(full) {
     ${full ? `<div class="cols">
       <div class="card small" style="display:grid;gap:6px"><div class="label">Prop-regels (Alpha Capital, Alpha Direct)</div>
         <div>Hefboom max <b>1:${R.hefboom ?? 30}</b> · geen winstdoel · risico per trade <b>${nf(R.risico_pct)}%</b> (incl. spread en slippage)${R.min_rr ? ` · risk/reward minstens <b>1:${R.min_rr}</b>` : " · doel per markt en strategie uit de data"} · alle open trades samen max <b>${nf(R.max_open_risico_pct)}%</b> · max ${R.max_open} trades tegelijk · max ${R.max_per_groep ?? 1} per gecorreleerde groep · daytrade: sluit na ${R.max_uren} uur (ICT om 22:00 NL)</div>
-        <div>Max dagverlies ${nf(R.dagverlies_pct, 1)}%: niet onder <b>${m(D.daggrens)}</b> vandaag (${nf(dayUsed)}% gebruikt)</div>${bar(dayUsed, R.dagverlies_pct)}
-        <div>${R.trailing ? "Meeschuivend (trailing) max verlies" : "Max verlies"} ${nf(R.totaalverlies_pct, 1)}%: niet onder <b>${m(D.grens)}</b>${R.trailing ? ` (5% onder de hoogste waarde ${m(D.piek)}${A ? ", gecorrigeerd voor geldstromen" : ""})` : ""}</div>${bar(totUsed, R.totaalverlies_pct)}
+        <div>Max dagverlies ${nf(R.dagverlies_pct, 1)}%: niet onder <b>${m(D.daggrens)}</b> vandaag (${usedTxt(dayUsed)})</div>${bar(dayUsed ?? 0, R.dagverlies_pct)}
+        <div>${R.trailing ? "Meeschuivend (trailing) max verlies" : "Max verlies"} ${nf(R.totaalverlies_pct, 1)}%: niet onder <b>${m(D.grens)}</b>${F.provisional ? " (voorlopig: grens en hoogste waarde kunnen de onverklaarde saldowijziging bevatten; gebruikt-% onbekend)" : R.trailing ? ` (5% onder de hoogste waarde ${m(D.piek)}${A ? ", gecorrigeerd voor geldstromen" : ""})` : ""}</div>${bar(totUsed ?? 0, R.totaalverlies_pct)}
         ${A ? `<div class="muted">De grenzen rekenen met het handelsresultaat op een risicobasis van ${m(A.risicobasis)}: een storting verschuift ze niet en telt niet als winst.</div>` : ""}
         <div class="muted">Een trade die bij verlies (samen met de open trades) een grens zou breken, opent de bot niet.</div>
         <div class="muted">Aan te passen in config.json onder "demo" (live: onder "live"). ${esc(D.broker)} · account ${esc(D.account)} · ${esc(D.omgeving)}</div></div>
-      <div class="card"><div class="label">${A ? "Verloop accountwaarde zonder geldstromen" : "Verloop accountwaarde"}</div><div id="c-demo" class="chartbox xs"></div></div></div>` : ""}
+      <div class="card"><div class="label">${F.seriesLabel}</div><div id="c-demo" class="chartbox xs"></div></div></div>` : ""}
     <div class="card tbl"><div class="label" style="margin-bottom:6px">Open trades</div>${D.open_trades.length ? `<table>${head}<tbody>${D.open_trades.map(tr).join("")}</tbody></table>` : `<span class="muted small">Geen open trades.</span>`}</div>
     ${full ? `<div class="card tbl"><div class="label" style="margin-bottom:6px">Gesloten trades</div>${D.gesloten.length ? `<table>${head}<tbody>${D.gesloten.map(tr).join("")}</tbody></table>` : `<span class="muted small">Nog geen gesloten trades.</span>`}</div>
     <div class="card tbl"><div class="label" style="margin-bottom:6px">Wat de bot deed</div>${(D.log || []).length ? `<table><tbody>${D.log.map(l => `<tr><td class="small" style="white-space:nowrap">${nlDT(l.t)}</td><td><b>${esc(l.actie)}</b></td><td>${esc(titel(l.markt || ""))}</td><td class="small">${esc(l.detail)}</td></tr>`).join("")}</tbody></table>` : `<span class="muted small">Nog geen acties.</span>`}</div>` : ""}`;
 }
 // Handelsresultaat zonder stortingen en opnames (demo.json administratie); oude demo.json: NAV min start.
-function demoResult() { return D?.administratie ? D.administratie.handelsresultaat : D.nav - D.start_saldo }
-function demoResultPct() { return D?.administratie ? D.administratie.handelsresultaat / D.administratie.risicobasis * 100 : (D.nav / D.start_saldo - 1) * 100 }
+// Zolang een saldowijziging onverklaard is (handelsresultaat_status "voorlopig"), is er geen definitief resultaat:
+// result, pct, dayPct en de gebruikt-% zijn dan null en de grafiek loopt tot het laatst bevestigde punt.
+// Pure functie van demo.json, zodat tests/test_dashboard.py haar los kan draaien.
+function demoFigures(D) {
+  const A = D?.administratie;
+  if (!A) return { provisional: false, result: D.nav - D.start_saldo, pct: (D.nav / D.start_saldo - 1) * 100, dayPct: (D.nav / D.dag_start - 1) * 100,
+    dayUsed: Math.max(0, (1 - D.nav / D.dag_start) * 100), totUsed: Math.max(0, (D.piek - D.nav) / D.start_saldo * 100), series: D.equity || [], seriesLabel: "Verloop accountwaarde" };
+  const provisional = A.handelsresultaat_status === "voorlopig" || (A.handelsresultaat_status == null && (A.onverklaard || []).length > 0);
+  const r = provisional ? null : A.handelsresultaat;
+  return { provisional, result: r, pct: r == null ? null : r / A.risicobasis * 100, dayPct: provisional || A.vandaag == null ? null : A.vandaag / A.risicobasis * 100,
+    dayUsed: provisional ? null : A.dag_gebruikt_pct, totUsed: provisional ? null : A.totaal_gebruikt_pct,
+    confirmed: A.handelsresultaat_bevestigd ?? null, confirmedT: A.bevestigd_t ?? null, unexplained: A.onverklaard_bedrag ?? null,
+    inclUnexplained: A.handelsresultaat_incl_onverklaard ?? null,
+    // oude demo.json zonder status, met een open post: geen punten die de onverklaarde storting kunnen bevatten
+    series: provisional && A.handelsresultaat_status == null ? [] : (A.equity_zonder_geldstromen || []),
+    seriesLabel: provisional ? `Verloop accountwaarde zonder geldstromen, tot ${A.bevestigd_t ? nlDT(A.bevestigd_t) : "de onverklaarde saldowijziging"} (daarna voorlopig)` : "Verloop accountwaarde zonder geldstromen" };
+}
+function demoResult() { return demoFigures(D).result }
+function demoResultPct() { return demoFigures(D).pct }
 function drawDemo() {
   if (DCH) { DCH.remove(); DCH = null }
-  const series = D?.administratie?.equity_zonder_geldstromen || D?.equity || [];
+  const series = D ? demoFigures(D).series : [];
   const box = $("c-demo"); if (!box || !window.LightweightCharts || !series.length) return;
   DCH = LightweightCharts.createChart(box, { ...chartOpts(160), timeScale: { borderColor: css("--line"), timeVisible: true } });
   DCH.addAreaSeries({ lineColor: css("--accent"), topColor: "rgba(95,179,201,.3)", bottomColor: "rgba(95,179,201,.02)", lineWidth: 2 })

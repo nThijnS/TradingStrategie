@@ -198,8 +198,43 @@ class Jumps(unittest.TestCase):
         self.assertEqual(adm_mod.unresolved(st, a), [])
 
 
-class RunnerWithDeposit(Base):
-    """Volledige ronde met de nep-broker op de stand van 3 november."""
+class Report(unittest.TestCase):
+    """report(): het handelsresultaat voor het dashboard is alleen definitief als er geen onopgeloste post is."""
+
+    def setUp(self):
+        self.st = copy.deepcopy(OLD_STATE)
+        self.a = load()
+        adm_mod.migrate(self.st, self.a, NOW, NOW - timedelta(hours=15))
+        adm_mod.update(self.st, self.a, dict(nav=10995.05, saldo=10995.05), NOW, "2026-11-03", NOW - timedelta(hours=15), False, [GOLD_LOSS])
+
+    def test_final_without_open_items(self):
+        r = adm_mod.report(10995.05, self.a, self.st, NOW)
+        self.assertEqual((r["status"], r["handelsresultaat"], r["onverklaard_bedrag"]), ("definitief", -4.95, 0.0))
+        self.assertEqual(r["equity_zonder_geldstromen"], adm_mod.trading_curve(self.st["equity"], self.a))
+        self.assertEqual(r["equity_voorlopig"], [])
+
+    def test_unresolved_post_gives_no_final_number(self):
+        t = NOW + timedelta(minutes=20)
+        self.st["equity"].append([t.isoformat(timespec="minutes"), 11495.05])
+        adm_mod.update(self.st, self.a, dict(nav=11495.05, saldo=11495.05), t, "2026-11-03", NOW - timedelta(hours=15), False, [GOLD_LOSS])
+        r = adm_mod.report(11495.05, self.a, self.st, t)
+        self.assertEqual((r["status"], r["handelsresultaat"], r["bevestigd"], r["onverklaard_bedrag"],
+                          r["handelsresultaat_incl_onverklaard"]), ("voorlopig", None, -4.95, 500.0, 495.05))
+        self.assertEqual(r["equity_voorlopig"], [[t.isoformat(timespec="minutes"), 1495.05]])
+        self.assertNotIn(1495.05, [v for _, v in r["equity_zonder_geldstromen"]])
+
+    def test_accepted_post_is_final_again(self):
+        t = NOW + timedelta(minutes=20)
+        adm_mod.update(self.st, self.a, dict(nav=10994.05, saldo=10994.05), t, "2026-11-03", NOW - timedelta(hours=15), False, [GOLD_LOSS])
+        pid = adm_mod.unresolved(self.st, self.a)[0]["id"]
+        ok = load(dict(ADMIN, geaccepteerd=[pid]))
+        r = adm_mod.report(10994.05, ok, self.st, t)
+        self.assertEqual((r["status"], r["handelsresultaat"]), ("definitief", -5.95))
+
+
+class DepositRounds(Base):
+    """Hulpmiddelen (geen tests) voor een volledige ronde met de nep-broker op de stand van 3 november; ook gebruikt
+    door tests/test_dashboard.py."""
 
     def c(self, **demo):
         c = cfg()
@@ -216,6 +251,19 @@ class RunnerWithDeposit(Base):
     def run_at(self, fake, c, st, now=NOW, stat=None):
         stat = stat or dict(gemaakt=(now - timedelta(minutes=1)).isoformat(), markten=[], alle_markten=[])
         return broker.run(stat, c, DEMO_ENV, st, connect=lambda m: fake, now=now)
+
+    def provisional_round(self):
+        """Ronde 1 op NOW, ronde 2 twintig minuten later met een trade van -45 en een niet-vastgelegde storting van
+        +1000 (nieuw equitypunt 11950,05)."""
+        st = copy.deepcopy(OLD_STATE)
+        self.run_at(self.fake(), self.c(), st)
+        f = self.fake(nav=11950.05)
+        f.closed = lambda: [GOLD_LOSS, dict(instrument="SILVER", dicht=(NOW + timedelta(minutes=2)).isoformat(), pl=-45.0)]
+        return st, f, self.run_at(f, self.c(), st, now=NOW + timedelta(minutes=20))
+
+
+class RunnerWithDeposit(DepositRounds):
+    """Volledige ronde met de nep-broker op de stand van 3 november."""
 
     def test_balance_shown_as_broker_balance_not_profit(self):
         st = copy.deepcopy(OLD_STATE)
@@ -311,8 +359,66 @@ class RunnerWithDeposit(Base):
                             dict(instrument="SILVER", dicht=(NOW + timedelta(minutes=2)).isoformat(), pl=-45.0)]
         out = self.run_at(f, self.c(), st, now=NOW + timedelta(minutes=3))
         self.assertIn("onverklaarde saldowijziging van +1,000.00", out["blokkade"])
-        self.assertEqual(out["administratie"]["handelsresultaat"], 950.05)     # -4,95 - 45 + 1000: zonder vastlegging nog "winst"
+        a = out["administratie"]
+        # -4,95 - 45 + 1000: geen definitief handelsresultaat, de +1000 staat apart als onverklaard
+        self.assertIsNone(a["handelsresultaat"])
+        self.assertEqual((a["handelsresultaat_status"], a["onverklaard_bedrag"], a["handelsresultaat_incl_onverklaard"],
+                          a["handelsresultaat_bevestigd"]), ("voorlopig", 1000.0, 950.05, -4.95))
         self.assertIn("Geen nieuwe orders", out["blokkade"])
+
+    def test_dashboard_value_is_provisional_while_unresolved(self):
+        st, f, out = self.provisional_round()
+        a = out["administratie"]
+        self.assertIsNotNone(out["blokkade"])                                   # orderblokkade blijft
+        self.assertIsNone(a["handelsresultaat"])
+        self.assertEqual(a["handelsresultaat_status"], "voorlopig")
+        self.assertEqual(a["onverklaard_bedrag"], 1000.0)
+        self.assertEqual(a["handelsresultaat_bevestigd"], -4.95)
+        self.assertEqual(a["bevestigd_t"], NOW.isoformat(timespec="seconds"))
+        # vandaag en de gebruikt-% rekenen met E, en E bevat de storting: niet tonen
+        self.assertEqual((a["vandaag"], a["dag_gebruikt_pct"], a["totaal_gebruikt_pct"]), (None, None, None))
+        # saldo = startkapitaal + geldstromen + (handelsresultaat + onverklaard)
+        self.assertAlmostEqual(a["startkapitaal"] + 10000.0 + a["handelsresultaat_incl_onverklaard"], a["saldo_broker"], places=2)
+
+    def test_chart_stops_at_last_confirmed_point_while_unresolved(self):
+        st, f, out = self.provisional_round()
+        a = out["administratie"]
+        cut = datetime.fromisoformat(a["bevestigd_t"])
+        conf, prov = a["equity_zonder_geldstromen"], a["equity_voorlopig"]
+        self.assertTrue(conf and prov)
+        self.assertTrue(all(datetime.fromisoformat(t) <= cut for t, _ in conf))
+        self.assertTrue(all(datetime.fromisoformat(t) > cut for t, _ in prov))
+        self.assertEqual(len(conf) + len(prov), len(out["equity"]))            # niets van de reeks verloren
+        # het laatste bevestigde punt hoort bij het bevestigde handelsresultaat; de +1000 zit alleen in het voorlopige deel
+        self.assertAlmostEqual(conf[-1][1] - a["startkapitaal"], a["handelsresultaat_bevestigd"], places=2)
+        self.assertEqual(prov[-1][1], 1950.05)
+        self.assertLess(max(v for _, v in conf), 1000.0 + 0.01)
+
+    def test_value_and_chart_final_again_after_recording(self):
+        st, f, out = self.provisional_round()
+        c = self.c()
+        c["administratie"]["geldstromen"].append(dict(t=(NOW + timedelta(minutes=1)).isoformat(), bedrag=1000.0))
+        out = self.run_at(f, c, st, now=NOW + timedelta(minutes=23))
+        a = out["administratie"]
+        self.assertIsNone(out["blokkade"])
+        self.assertEqual((a["handelsresultaat_status"], a["handelsresultaat"], a["onverklaard_bedrag"]), ("definitief", -49.95, 0.0))
+        self.assertEqual(a["equity_voorlopig"], [])
+        self.assertEqual(len(a["equity_zonder_geldstromen"]), len(out["equity"]))
+        self.assertEqual(a["equity_zonder_geldstromen"][-1][1], 950.05)       # 1000 - 4,95 - 45: geen sprong
+        self.assertIsNotNone(a["dag_gebruikt_pct"])
+
+    def test_history_unavailable_is_provisional_on_dashboard(self):
+        from execution.capital import BrokerError
+        st = copy.deepcopy(OLD_STATE)
+        self.run_at(self.fake(), self.c(), st)
+        f = self.fake(nav=11995.05)
+
+        def down():
+            raise BrokerError(503, "history")
+        f.closed = down
+        a = self.run_at(f, self.c(), st, now=NOW + timedelta(minutes=20))["administratie"]
+        self.assertEqual((a["handelsresultaat_status"], a["handelsresultaat"], a["onverklaard_bedrag"]), ("voorlopig", None, 1000.0))
+        self.assertTrue(a["equity_voorlopig"])
 
     def test_state_survives_json_round_trip(self):
         st = copy.deepcopy(OLD_STATE)
