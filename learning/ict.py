@@ -201,6 +201,10 @@ def validate(rows, v, now, days=VALIDATION_DAYS):
 
 def main():
     mem = load(MEMORY, {})
+    old_rows = sum(1 for r in mem.values() if r.get("sim") != SIM_VERSION)
+    if old_rows:
+        print(f"Let op: {old_rows} van {len(mem)} geheugenrijen zijn met de oude simulatie berekend "
+              f"(zie python -m storage.migrations).", flush=True)
     if "--histdata" in sys.argv:
         mem = collect(mem, "histdata")
     if "--geen-data" not in sys.argv:
