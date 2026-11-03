@@ -146,7 +146,6 @@ def signals(sid, X, v):
     raise ValueError(sid)
 
 
-
 def nights(a, b, hour_utc=22):
     """Hoe vaak de trade over het dagelijkse rollmoment (17:00 NY ≈ 22:00 UTC) heen ging: dan betaal je financiering."""
     return engine.rollovers(a, b, hour_utc)

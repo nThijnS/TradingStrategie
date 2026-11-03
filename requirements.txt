@@ -1,2 +1,5 @@
-yfinance
-pandas
+# Ondergrenzen: de versies waarmee de code getest is. Elke onderzoeksrun legt de exacte versies vast in
+# rapport/experimenten.jsonl (research/registry.py), zodat een resultaat later te reproduceren is.
+yfinance>=0.2.40
+pandas>=2.0
+numpy>=1.24
