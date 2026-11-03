@@ -70,8 +70,19 @@ Op 3 november om ongeveer 13:23 UTC is de demo bij Capital.com aangevuld met de 
 
 - **Geen afleiding uit de brokerhistorie.** De bot leest alleen trades uit de historie (`/history/transactions?type=TRADE`). Of een demo-aanvulling daar als storting verschijnt, is niet gecontroleerd. Daarom wordt een geldstroom nooit automatisch afgeleid.
 - **Controle via de waardereeks.** Voor elke vastgelegde geldstroom kijkt de bot of de opgeslagen waardereeks rond dat tijdstip een sprong van dat bedrag laat zien. Voor de storting van 3 november is dat zo (13:11 → 13:28 UTC: +€ 10.000,00). Dat staat als controle op het dashboard; het is geen bron.
-- **Onverklaarde saldowijzigingen.** Verandert het saldo tussen twee rondes, terwijl er geen open posities waren, geen trade is gesloten en geen geldstroom is vastgelegd, dan markeert de bot dat als onverklaarde saldowijziging. Tot die is vastgelegd, plaatst hij geen nieuwe orders, en piek en dagstart worden in die tijd niet bijgewerkt.
-  - Met open posities controleert de bot dit niet: rente en kosten zijn dan niet van een storting te scheiden.
+- **Saldocontrole (fail closed, `risk/administratie.check_balance`).** De bot vergelijkt het saldo met de vorige meting:
+  - **Formule:** verschil = saldowijziging − resultaat van de trades die in die periode sloten − vastgelegde geldstromen.
+    - Gesloten trades komen uit de gesloten-tradehistorie van de broker. De bot herkent ze aan instrument, sluittijd en bedrag, niet aan de klok, zodat een klein klokverschil met de broker niet meetelt.
+    - Blijft er iets over, dan wordt dat een **onopgeloste post**. Dat geldt ook als er in dezelfde periode een trade sloot.
+  - **Tradehistorie niet op te halen en het saldo veranderd:** de post is **voorlopig**. Ook dan komen er geen nieuwe orders.
+  - **Vergelijkingsmeting:** dat is altijd een meting zonder open posities of orders, met beschikbare historie.
+    - Ze wordt pas vervangen als het verschil is afgehandeld: verklaard, of als post bewaard.
+    - Is de historie niet beschikbaar, of staan er posities open, dan blijft de vorige meting staan. Een storting tijdens een open positie valt zo bij de volgende meting zonder posities alsnog op.
+    - Een periode langer dan de opgevraagde historie (24 uur) geldt nooit als verklaard.
+  - **Zolang er een onopgeloste post is:** geen nieuwe orders, en piek en dagstart worden niet bijgewerkt.
+  - **Oplossen:**
+    - leg de geldstroom vast in die periode;
+    - of zet het id in `administratie.geaccepteerd`. Dat is bedoeld voor bijvoorbeeld rente (swap) over het dagelijkse rollmoment, die niet in de tradehistorie staat en dus ook een post geeft.
 - **Zo leg je iets vast** in `config.json` (wordt elke ronde gelezen):
 
   ```json

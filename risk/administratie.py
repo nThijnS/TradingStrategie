@@ -17,16 +17,29 @@ BEGRIPPEN (alles in accountvaluta)
 Piek en dagstart worden als handelsresultaat bewaard (P_piek, P_dag). Een storting schuift ze dus niet op en
 telt niet als winst; de limieten (risk/rules.check_portfolio) blijven ongewijzigd en krijgen B + P_piek, B + P_dag.
 
-ONZEKERHEID
-  De bot kent geen geldstromen uit de brokerhistorie. Hij markeert wel een saldowijziging die hij niet kan
-  verklaren: zonder open posities, zonder gesloten trades en zonder vastgelegde geldstroom in die periode. Zolang
-  zo'n wijziging niet is vastgelegd (als geldstroom of in administratie.geaccepteerd) plaatst hij geen nieuwe
-  orders: anders zou een storting als winst meetellen in de limieten.
+SALDOCONTROLE (fail closed)
+  De bot kent geen geldstromen uit de brokerhistorie. Hij vergelijkt het saldo (zonder open winst/verlies) met de
+  vorige meting: verschil = saldowijziging - resultaat van de trades die in die periode sloten (uit de
+  gesloten-tradehistorie, herkend aan instrument, tijd en bedrag) - vastgelegde geldstromen. Blijft er iets over,
+  dan wordt dat een onopgeloste post. Zolang er zo'n post is, plaatst hij geen nieuwe orders en worden piek en
+  dagstart niet bijgewerkt; anders zou een storting als winst meetellen in de limieten.
+  - Vergelijkingsmeting: alleen een meting zonder open posities of orders, met beschikbare tradehistorie. Ze wordt
+    pas vervangen als het verschil is afgehandeld (verklaard, of vastgelegd als onopgeloste post).
+  - Tradehistorie niet beschikbaar en het saldo is veranderd: voorlopige post; de vergelijkingsmeting blijft staan
+    tot de historie er weer is.
+  - Open posities: geen vergelijking (rente en open resultaat lopen door); de vorige meting blijft staan, zodat een
+    storting tijdens een open positie bij de volgende meting zonder posities alsnog opvalt.
+  - Rente (swap) over het dagelijkse rollmoment staat niet in de tradehistorie en geeft dus ook een post. Die
+    keur je goed met administratie.geaccepteerd (id) of je legt haar vast.
+  Een post is opgelost als de vastgelegde geldstromen in die periode haar verklaren of als haar id in
+  administratie.geaccepteerd staat.
 """
 import json
-from datetime import datetime
+from collections import Counter
+from datetime import datetime, timedelta
 
 TOL = 0.01          # afronding van de broker (centen)
+HISTORY_H = 24      # execution/capital.closed() vraagt de gesloten trades van de laatste 24 uur op
 
 
 def _t(x):
@@ -151,21 +164,61 @@ def migrate(st, adm, now, day_start_t):
     return st["administratie"]
 
 
-def update(st, adm, a, now, day, day_start_t, positions_open, closed_since_prev):
-    """Elke ronde: piek en dagstart (als handelsresultaat) bijwerken en onverklaarde saldowijzigingen markeren.
-    a = account (nav, saldo). Geeft de bijgewerkte administratie in st."""
+def _trade_key(c):
+    return f"{c.get('instrument')}|{c.get('dicht')}|{c.get('pl')}"
+
+
+def _post(prev, now, a, bruto, adm, reden, trades=None, voorlopig=False, suffix=None):
+    t0 = _t(prev["t"])
+    return dict(id=f"{prev['t']}|{suffix or round(bruto, 2)}", van_t=prev["t"], tot_t=now.isoformat(timespec="seconds"),
+                van=prev["saldo"], naar=a["saldo"], bruto=round(bruto, 2), trades=trades,
+                verschil=round(bruto - flows_between(adm, t0, now), 2), reden=reden, voorlopig=voorlopig)
+
+
+def check_balance(s, adm, a, now, positions_open, closed_now):
+    """De saldocontrole (zie boven). closed_now = gesloten trades van de laatste 24 uur, of None als de
+    tradehistorie niet op te halen was. Werkt s["vorige"] en s["onverklaard"] bij."""
+    posts = [x for x in s.get("onverklaard", []) if not x.get("voorlopig")]     # voorlopige post: elke ronde opnieuw
+    prev = s.get("vorige")
+    keys = None if closed_now is None else [_trade_key(c) for c in closed_now]
+    me = dict(t=now.isoformat(timespec="seconds"), saldo=a["saldo"], gezien=keys)
+    if positions_open:
+        pass                                       # geen vergelijking; de vorige meting blijft staan
+    elif prev is None:
+        if keys is not None:
+            s["vorige"] = me
+    elif keys is None:                             # historie weg: niets afleiden, vorige meting houden
+        bruto = a["saldo"] - prev["saldo"]
+        if abs(bruto - flows_between(adm, _t(prev["t"]), now)) >= TOL:
+            posts.append(_post(prev, now, a, bruto, adm, "gesloten-tradehistorie niet beschikbaar: saldowijziging niet te "
+                                                         "verklaren", voorlopig=True, suffix="historie"))
+    else:
+        new = Counter(keys) - Counter(prev.get("gezien") or [])
+        amount = {}
+        for c in closed_now:
+            try:
+                amount.setdefault(_trade_key(c), float(c.get("pl") or 0.0))
+            except (TypeError, ValueError):
+                amount.setdefault(_trade_key(c), 0.0)     # onleesbaar bedrag: niet als verklaring meetellen
+        pl = sum(amount[k] * n for k, n in new.items())
+        bruto = a["saldo"] - prev["saldo"] - pl
+        too_long = now - _t(prev["t"]) > timedelta(hours=HISTORY_H - 1)
+        if too_long or abs(bruto - flows_between(adm, _t(prev["t"]), now)) >= TOL:
+            n = sum(new.values())
+            reden = (f"periode langer dan de opgevraagde tradehistorie ({HISTORY_H} uur): niet volledig te verklaren"
+                     if too_long else f"saldowijziging na aftrek van {n} gesloten trade(s) ({pl:+,.2f}) en vastgelegde "
+                                      f"geldstromen" if n else "saldowijziging zonder gesloten trade of vastgelegde geldstroom")
+            posts.append(_post(prev, now, a, bruto, adm, reden, trades=round(pl, 2)))
+        s["vorige"] = me                           # afgehandeld: verklaard, of als post bewaard
+    s["onverklaard"] = posts[-50:]
+
+
+def update(st, adm, a, now, day, day_start_t, positions_open, closed_now):
+    """Elke ronde: saldocontrole, daarna piek en dagstart (als handelsresultaat) bijwerken. a = account (nav, saldo);
+    closed_now = gesloten trades (lijst) of None als die niet op te halen waren. Geeft de administratie in st."""
     s = st["administratie"]
     p = a["nav"] - inleg(adm, now)
-    prev = s.get("vorige")
-    if prev and not prev["open"] and not positions_open and not closed_since_prev:
-        t0 = _t(prev["t"])
-        diff = a["saldo"] - prev["saldo"] - flows_between(adm, t0, now)
-        if abs(diff) >= TOL:
-            s.setdefault("onverklaard", []).append(dict(id=f"{prev['t']}|{round(diff, 2)}", van_t=prev["t"],
-                                                       tot_t=now.isoformat(timespec="seconds"), van=prev["saldo"],
-                                                       naar=a["saldo"], verschil=round(diff, 2)))
-            del s["onverklaard"][:-50]
-    s["vorige"] = dict(t=now.isoformat(timespec="seconds"), saldo=a["saldo"], open=bool(positions_open))
+    check_balance(s, adm, a, now, positions_open, closed_now)
     if unresolved(st, adm):
         # zolang een saldowijziging niet verklaard is, kan P een storting bevatten: piek en dagstart niet bijwerken
         return s
@@ -182,9 +235,10 @@ def unresolved(st, adm):
     for x in (st.get("administratie") or {}).get("onverklaard", []):
         if x["id"] in adm["geaccepteerd"]:
             continue
-        if abs(flows_between(adm, _t(x["van_t"]), _t(x["tot_t"])) - x["verschil"]) < TOL:
+        explained = abs(flows_between(adm, _t(x["van_t"]), _t(x["tot_t"])) - x.get("bruto", x["verschil"])) < TOL
+        if explained and not x.get("voorlopig") and not x.get("reden", "").startswith("periode langer"):
             continue
-        out.append(x)
+        out.append(dict(x, verschil=round(x.get("bruto", x["verschil"]) - flows_between(adm, _t(x["van_t"]), _t(x["tot_t"])), 2)))
     return out
 
 

@@ -534,10 +534,8 @@ def run(status, cfg, env, st_by_mode, connect=None, now=None):
     try:
         closed_now = b.closed()
     except BrokerError:
-        closed_now = None                                         # onbekend: dan geen saldocontrole deze ronde
-    prev_t = ((st["administratie"].get("vorige") or {}).get("t"))
-    closed_since = True if closed_now is None else any(_closed_after(c, prev_t) for c in closed_now)
-    administratie.update(st, r.adm, a, now, day, day_start_t, bool(positions or wos), closed_since)
+        closed_now = None            # historie onbekend: saldocontrole fail closed (risk/administratie.check_balance)
+    administratie.update(st, r.adm, a, now, day, day_start_t, bool(positions or wos), closed_now)
     adm_problems = r.adm["problemen"] + ([cap_problem] if cap_problem else [])
     lay = administratie.inleg(r.adm, now)
     if r.capital and r.capital + (a["nav"] - lay) > a["nav"] + administratie.TOL:
@@ -557,8 +555,9 @@ def run(status, cfg, env, st_by_mode, connect=None, now=None):
         blok = "saldo-administratie klopt niet: " + "; ".join(adm_problems) + ". Geen nieuwe orders."
     elif jumps:
         j = jumps[-1]
-        blok = (f"onverklaarde saldowijziging van {j['verschil']:+,.2f} tussen {j['van_t']} en {j['tot_t']}: leg haar vast "
-                f"in config.json administratie.geldstromen (of administratie.geaccepteerd, id {j['id']}). Geen nieuwe orders.")
+        blok = (f"onverklaarde saldowijziging van {j['verschil']:+,.2f} tussen {j['van_t']} en {j['tot_t']} "
+                f"({j.get('reden', '')}): leg haar vast in config.json administratie.geldstromen (of administratie.geaccepteerd, "
+                f"id {j['id']}). Geen nieuwe orders.")
     if not blok:
         errors = []
         for s in signals(status, now, errors):
@@ -619,17 +618,6 @@ def run(status, cfg, env, st_by_mode, connect=None, now=None):
                 gesloten=closed, equity=eq,
                 onbekend=[k for k, v in r.orders.items() if v.get("status") == "onbekend"],
                 instrumenten={m: (why or "geverifieerd") for m, why in instruments.status_per_market(r.report).items()})
-
-
-def _closed_after(c, prev_t):
-    """Is deze gesloten trade na prev_t dicht gegaan? Onleesbare tijd = ja (dan geen saldocontrole: liever niets
-    markeren dan een trade als geldstroom zien)."""
-    if not prev_t:
-        return False
-    try:
-        return datetime.fromisoformat(c["dicht"]) > datetime.fromisoformat(prev_t)
-    except (KeyError, TypeError, ValueError):
-        return True
 
 
 def label(modus):

@@ -85,15 +85,24 @@ class Migration(unittest.TestCase):
         self.assertEqual((st["piek"], st["dag_start"]), (10995.05, 995.05))
 
 
+GOLD_LOSS = dict(instrument="GOLD", dicht="2026-11-02T19:40:31+00:00", pl=-4.95)     # al gesloten vóór de metingen
+
+
 class Jumps(unittest.TestCase):
+    """Saldocontrole: verschil = saldowijziging - gesloten trades - vastgelegde geldstromen; fail closed."""
+
     def setUp(self):
         self.st = copy.deepcopy(OLD_STATE)
         self.a = load()
         adm_mod.migrate(self.st, self.a, NOW, NOW - timedelta(hours=15))
 
-    def step(self, saldo, t, open_=False, closed=False, a=None):
+    def step(self, saldo, t, open_=False, closed=(GOLD_LOSS,), a=None):
+        closed = None if closed is None else list(closed)
         adm_mod.update(self.st, a or self.a, dict(nav=saldo, saldo=saldo), t, "2026-11-03", NOW - timedelta(hours=15), open_, closed)
         return adm_mod.unresolved(self.st, a or self.a)
+
+    def prev_t(self):
+        return self.st["administratie"]["vorige"]["t"]
 
     def test_unexplained_change_is_flagged_and_freezes_peak(self):
         self.assertEqual(self.step(10995.05, NOW), [])
@@ -111,17 +120,81 @@ class Jumps(unittest.TestCase):
         ok = load(dict(ADMIN, geaccepteerd=[j[0]["id"]]))
         self.assertEqual(adm_mod.unresolved(self.st, ok), [])
 
-    def test_no_flag_with_positions_or_closed_trades(self):
+    def test_closed_trade_explains_the_change(self):
         self.step(10995.05, NOW)
-        self.assertEqual(self.step(10950.0, NOW + timedelta(minutes=3), open_=True), [])
-        self.assertEqual(self.step(10900.0, NOW + timedelta(minutes=6), closed=True), [])
+        trade = dict(instrument="SILVER", dicht=(NOW + timedelta(minutes=2)).isoformat(), pl=-45.0)
+        self.assertEqual(self.step(10950.05, NOW + timedelta(minutes=3), closed=(GOLD_LOSS, trade)), [])
+        self.assertEqual(self.prev_t(), (NOW + timedelta(minutes=3)).isoformat(timespec="seconds"))
+
+    def test_trade_with_hidden_deposit_in_same_interval_stays_unresolved(self):
+        self.step(10995.05, NOW)
+        trade = dict(instrument="SILVER", dicht=(NOW + timedelta(minutes=2)).isoformat(), pl=-45.0)
+        j = self.step(11950.05, NOW + timedelta(minutes=3), closed=(GOLD_LOSS, trade))   # -45 trade, +1000 niet vastgelegd
+        self.assertEqual([(x["verschil"], x["trades"]) for x in j], [(1000.0, -45.0)])
+        self.assertIn("1 gesloten trade", j[0]["reden"])
+        self.assertEqual(self.st["administratie"]["resultaat_piek"], 0.0)               # niet als winst geteld
+        # blijft staan in de volgende rondes, ook als de trade uit de historie verdwijnt
+        self.assertEqual(len(self.step(11950.05, NOW + timedelta(minutes=6), closed=())), 1)
+
+    def test_unreadable_trade_amount_explains_nothing(self):
+        self.step(10995.05, NOW)
+        trade = dict(instrument="SILVER", dicht=(NOW + timedelta(minutes=2)).isoformat(), pl="onbekend")
+        self.assertEqual([x["verschil"] for x in self.step(10950.05, NOW + timedelta(minutes=3), closed=(GOLD_LOSS, trade))], [-45.0])
+
+    def test_trade_recognised_by_identity_not_by_clock(self):
+        # de broker zet de sluittijd een paar seconden vóór de vorige meting (klokverschil): toch herkend als nieuw
+        self.step(10995.05, NOW)
+        trade = dict(instrument="SILVER", dicht=(NOW - timedelta(seconds=5)).isoformat(), pl=-45.0)
+        self.assertEqual(self.step(10950.05, NOW + timedelta(minutes=3), closed=(GOLD_LOSS, trade)), [])
+
+    def test_history_unavailable_is_provisional_and_keeps_the_reference(self):
+        self.step(10995.05, NOW)
+        ref = self.prev_t()
+        j = self.step(10950.05, NOW + timedelta(minutes=3), closed=None)
+        self.assertEqual(len(j), 1)
+        self.assertTrue(j[0]["voorlopig"])
+        self.assertIn("niet beschikbaar", j[0]["reden"])
+        self.assertEqual(self.prev_t(), ref)                                            # vergelijkingsmeting behouden
+        self.assertEqual(len(self.step(10950.05, NOW + timedelta(minutes=6), closed=None)), 1)   # blijft geblokkeerd
+        self.assertEqual(self.prev_t(), ref)
+        # historie terug: de trade verklaart het verschil vanaf dezelfde meting; post weg, meting vervangen
+        trade = dict(instrument="SILVER", dicht=(NOW + timedelta(minutes=2)).isoformat(), pl=-45.0)
+        self.assertEqual(self.step(10950.05, NOW + timedelta(minutes=9), closed=(GOLD_LOSS, trade)), [])
+        self.assertNotEqual(self.prev_t(), ref)
+
+    def test_history_unavailable_with_hidden_deposit_becomes_a_real_post(self):
+        self.step(10995.05, NOW)
+        self.step(11995.05, NOW + timedelta(minutes=3), closed=None)
+        j = self.step(11995.05, NOW + timedelta(minutes=6))                               # historie terug, geen trade
+        self.assertEqual([(x["verschil"], x["voorlopig"]) for x in j], [(1000.0, False)])
+
+    def test_history_unavailable_without_change_does_not_block(self):
+        self.step(10995.05, NOW)
+        self.assertEqual(self.step(10995.05, NOW + timedelta(minutes=3), closed=None), [])
+
+    def test_deposit_during_open_position_is_caught_when_flat(self):
+        self.step(10995.05, NOW)
+        ref = self.prev_t()
+        self.assertEqual(self.step(10995.05, NOW + timedelta(minutes=3), open_=True), [])
+        self.assertEqual(self.step(12995.05, NOW + timedelta(minutes=6), open_=True), [])  # met posities geen vergelijking
+        self.assertEqual(self.prev_t(), ref)
+        trade = dict(instrument="SILVER", dicht=(NOW + timedelta(minutes=8)).isoformat(), pl=10.0)
+        j = self.step(13005.05, NOW + timedelta(minutes=9), closed=(GOLD_LOSS, trade))
+        self.assertEqual([x["verschil"] for x in j], [2000.0])
+
+    def test_interval_longer_than_history_is_not_assumed_explained(self):
+        self.step(10995.05, NOW)
+        self.step(10995.05, NOW + timedelta(hours=1), open_=True)
+        j = self.step(10995.05, NOW + timedelta(hours=25))
+        self.assertEqual(len(j), 1)
+        self.assertIn("langer dan", j[0]["reden"])
 
     def test_recorded_deposit_is_not_flagged(self):
         st = copy.deepcopy(OLD_STATE)
         a = load()
         adm_mod.migrate(st, a, T0 - timedelta(minutes=5), NOW - timedelta(hours=15))
-        adm_mod.update(st, a, dict(nav=995.05, saldo=995.05), T0 - timedelta(minutes=2), "2026-11-03", NOW, False, False)
-        adm_mod.update(st, a, dict(nav=10995.05, saldo=10995.05), T0 + timedelta(minutes=1), "2026-11-03", NOW, False, False)
+        adm_mod.update(st, a, dict(nav=995.05, saldo=995.05), T0 - timedelta(minutes=2), "2026-11-03", NOW, False, [GOLD_LOSS])
+        adm_mod.update(st, a, dict(nav=10995.05, saldo=10995.05), T0 + timedelta(minutes=1), "2026-11-03", NOW, False, [GOLD_LOSS])
         self.assertEqual(adm_mod.unresolved(st, a), [])
 
 
@@ -216,6 +289,30 @@ class RunnerWithDeposit(Base):
         out = self.run_at(f, c, st, now=NOW + timedelta(minutes=6))
         self.assertIsNone(out["blokkade"])
         self.assertEqual(out["administratie"]["handelsresultaat"], -4.95)
+
+    def test_broker_history_failure_blocks_when_balance_changed(self):
+        from execution.capital import BrokerError
+        st = copy.deepcopy(OLD_STATE)
+        self.run_at(self.fake(), self.c(), st)
+        f = self.fake(nav=11995.05)
+
+        def down():
+            raise BrokerError(503, "history")
+        f.closed = down
+        out = self.run_at(f, self.c(), st, now=NOW + timedelta(minutes=3))
+        self.assertIn("niet beschikbaar", out["blokkade"])
+        self.assertEqual(out["administratie"]["onverklaard"][0]["voorlopig"], True)
+
+    def test_trade_and_unrecorded_deposit_in_one_interval_blocks(self):
+        st = copy.deepcopy(OLD_STATE)
+        self.run_at(self.fake(), self.c(), st)
+        f = self.fake(nav=11950.05)
+        f.closed = lambda: [dict(instrument="GOLD", dicht="2026-11-02T19:40:31+00:00", pl=-4.95),
+                            dict(instrument="SILVER", dicht=(NOW + timedelta(minutes=2)).isoformat(), pl=-45.0)]
+        out = self.run_at(f, self.c(), st, now=NOW + timedelta(minutes=3))
+        self.assertIn("onverklaarde saldowijziging van +1,000.00", out["blokkade"])
+        self.assertEqual(out["administratie"]["handelsresultaat"], 950.05)     # -4,95 - 45 + 1000: zonder vastlegging nog "winst"
+        self.assertIn("Geen nieuwe orders", out["blokkade"])
 
     def test_state_survives_json_round_trip(self):
         st = copy.deepcopy(OLD_STATE)
