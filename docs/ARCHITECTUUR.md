@@ -25,7 +25,7 @@ storage/: paden, JSON laden/opslaan, migraties (alle lagen)
 | `strategies/` | signalen, geen uitkomsten. Interface: `strategies/base.py` (`Signal`) | `ict_tjr.py` (de ICT/TJR-strategie) |
 | `backtesting/` | **de enige trade-simulatie** (`engine.py`), ICT-koppeling (`ict.py`), statistiek, prop-firm | `engine.py` |
 | `research/` | testprotocol, HistData-backtests, chronologische validatie, experimentregistratie, archief | `protocol.py` |
-| `learning/` | automatische keuze per markt (ICT-varianten, strategielab), Obsidian-journaal | `ict.py`, `lab.py` |
+| `learning/` | per markt zelf kiezen tussen alle strategieën (ICT is er één van): actief / onderzoek / pauze; ICT-uitkomsten verzamelen; journaal | `selector.py`, `lab.py`, `ict.py` |
 | `risk/` | pure risicoregels (positiegrootte, limieten, correlatiegroepen) | `rules.py` |
 | `execution/` | orderuitvoering Capital.com, instrumentcontrole | `runner.py` |
 | `storage/` | bestandspaden, atomair opslaan, migraties met backup | `paths.py`, `MANIFEST.md` |
@@ -41,7 +41,7 @@ storage/: paden, JSON laden/opslaan, migraties (alle lagen)
    - Een market-instap gebeurt op de open van de volgende candle.
    - Bij een limietorder telt een doel in de vulcandle niet.
    - Getest in `tests/test_strategy_learning.py`: setups veranderen niet als er later data bij komt.
-3. **Chronologisch kiezen.** Keuzes gebruiken alleen data van vóór de periode waarop ze getest worden (`research/validation.py`). Het leren rapporteert een controle op de laatste 60 dagen in het journaal.
+3. **Chronologisch kiezen.** Keuzes gebruiken alleen data van vóór de periode waarop ze getest worden. De strategie-selectie (`learning/selector.py`) kiest varianten op train en laat ze pas toe na de poort op de laatste 180 dagen. Een strategie die na inschakelen slecht presteert, gaat weer uit.
 4. **Eén bron per gegeven.**
    - Marktdefinities en kosten staan in `core/markets.py`.
    - Paden staan in `storage/paths.py`.

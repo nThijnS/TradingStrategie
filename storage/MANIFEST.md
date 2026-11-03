@@ -8,10 +8,10 @@ Eén bron per gegeven:
 | Gegeven | Enige bron | Schrijver | Lezers | Bewaard in |
 |---|---|---|---|---|
 | Instellingen (schakelaars, broker-modus, limieten) | `config.json` | eigenaar | app, broker | main |
-| Gekozen ICT-variant per markt | `learned.json` | `learning/ict.py` | app (elke minuut), dashboard | main |
+| ICT aan/uit + variant per markt (afgeleid van de strategie-selectie) | `learned.json` | `learning/lab.py` | app (elke minuut), dashboard | main |
 | ICT-uitkomsten per variant (leergeheugen) | `leren_geheugen.json` | `learning/ict.py` | leren, lab | main |
-| Keuzegeschiedenis ICT (per dag) | `leren_geschiedenis.json` | `learning/ict.py` | dashboard | main |
-| Lab-resultaten (dashboard) | `lab.json` | `learning/lab.py` | dashboard, website | main |
+| Keuzegeschiedenis ICT (per dag) | `leren_geschiedenis.json` | `learning/lab.py` | dashboard | main |
+| Strategie-selectie per markt (status, poort per strategie) en lab-resultaten | `lab.json` | `learning/lab.py` | dashboard, website, broker (via status) | main |
 | **Strategieversies** lab: elke wissel, om terug te draaien | `lab_versies.json` | `learning/lab.py` | lab | main |
 | Lab-dagregel (wat er vandaag getest en gekozen is) | `lab_geschiedenis.json` | `learning/lab.py` | website | main |
 | Forward test: elke setup en weigering | `logboek.json` | app | leren (dagnotities), dashboard | Actions-cache + run-artifact |
@@ -35,6 +35,7 @@ Ze zijn dus niet samengevoegd.
 - Geheugenrijen in `leren_geheugen.json` hebben `sim` = de versie van de trade-simulatie.
   - Zonder `sim` = de oude simulatie (v1).
   - `sim: 2` = `backtesting/engine.py`.
+  - `kosten_r` = kosten per trade in R (vanaf migratie 002), voor de kostentoets van de selector.
 - `lab.json` heeft `versie: 2`.
 
 ## Migreren

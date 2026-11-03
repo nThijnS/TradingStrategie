@@ -52,6 +52,14 @@ SIM_VERSION = 2
 
 
 # ------------- Uitkomst (backtesting/engine.py) -------------
+def outcome_row(df, s, target, cost, fallback_r=None):
+    """(netto R, kosten in R) of None; zie simulate5."""
+    tr = trade(df, s, target, LEARN_EXITS, engine.Costs(price=cost), fallback_r)
+    if tr is None or tr.reason == "open":
+        return None
+    return tr.net_r, tr.cost_r
+
+
 def simulate5(df, s, target, cost, fallback_r=None):
     """Netto R van een setup voor een doel (zie backtesting/ict.py), of None als er geen entry was of de trade
     nog loopt (dan morgen opnieuw). fallback_r: TP zonder liquiditeit bij "DOL" (de app gebruikt cfg["tp_r"])."""
@@ -93,12 +101,13 @@ def collect(mem, source="yahoo"):
                     key = f"{name}|{dname}|{target}|{s['time'].isoformat()}|{s['side']}"
                     if key in mem:
                         continue
-                    r = simulate5(B, s, target, COST.get(name, 0), cfg["tp_r"])
-                    if r is None:
+                    out = outcome_row(B, s, target, COST.get(name, 0), cfg["tp_r"])
+                    if out is None:
                         continue
+                    r, cost_r = out
                     mem[key] = dict(markt=name, disp=dname, target=target, t=s["time"].isoformat(),
                                     sess=sess_name(s["time"]), bias_mee=s["bias_b"] == (1 if s["side"] == "LONG" else -1),
-                                    R=round(float(r), 3), bron=source, sim=SIM_VERSION)
+                                    R=round(float(r), 3), kosten_r=round(float(cost_r), 4), bron=source, sim=SIM_VERSION)
                     added += 1
         print(f"{name}: {added} nieuwe uitkomsten", flush=True)
     return mem
@@ -210,30 +219,25 @@ def main():
     if "--geen-data" not in sys.argv:
         mem = collect(mem)
         jsonstore.save(MEMORY, mem, compact=True)
+    # Ranking van de ICT-varianten voor het journaal. De keuze welke strategie een markt gebruikt (ICT of een andere)
+    # maakt het strategielab (learning/lab.py + learning/selector.py); dat schrijft learned.json.
     learned_prev = load(LEARNED, {}).get("markten", {})
     prev = {k: dict(variant=_parse(v["variant"]), sinds=v.get("sinds")) for k, v in learned_prev.items() if "variant" in v}
     choice, report = choose(mem, prev)
-    jsonstore.save(LEARNED, to_app(choice))
-    hist = load(HISTORY, [])
-    hist.append(dict(t=datetime.now(NY).isoformat(timespec="minutes"),
-                     keuze={k: dict(variant=vid(c["variant"]), actief=c["actief"], score=c["score"]) for k, c in choice.items()}))
-    jsonstore.save(HISTORY, hist[-400:])
     write_journal(choice, report, mem)
-    data = {}
+    frames = {}
     if "--geen-data" not in sys.argv:
         for m in config.CFG["markets"]:
             try:
-                data[m["name"]] = data.fetch(m["symbol"], "30d")
-            except Exception:
-                pass
-    days_from_logbook(data)
+                frames[m["name"]] = data.fetch(m["symbol"], "30d")
+            except Exception as ex:
+                print(f"{m['name']}: geen chartdata ({ex})", flush=True)
+    days_from_logbook(frames)
     for name, r in report.items():
         c = choice.get(name)
-        if c:
-            print(f"{name:7} {'ACTIEF' if c['actief'] else 'pauze '} {vid(c['variant'])} | score {c['score']['score']:+.3f} "
-                  f"({c['score']['n']} trades) | {r['waarom']}")
-        else:
-            print(f"{name:7} standaard | {r['waarom']}")
+        best = r["top"][0] if r["top"] else None
+        print(f"{name:7} beste ICT-variant {best['variant'] if best else '-'} | score {best['score'] if best else 0:+.3f} "
+              f"({best['n'] if best else 0} trades) | keuze per markt: strategielab" if c or best else f"{name:7} geen data")
 
 
 def _parse(s):
