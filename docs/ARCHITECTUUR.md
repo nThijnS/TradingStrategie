@@ -1,4 +1,6 @@
-# Architectuur TradingStrategie
+# Architectuur MarketPilot
+
+MarketPilot heette eerder TradingStrategie; welke technische namen bewust gebleven zijn, staat in [MARKETPILOT.md](MARKETPILOT.md).
 
 Sinds de refactor van november 2026 (branch `refactor/clean-architecture`). Achtergrond: [refactor/](refactor/).
 
@@ -50,7 +52,7 @@ storage/: paden, JSON laden/opslaan, migraties (alle lagen)
    - Synthetische testdata gebruikt een vaste seed.
    - De bootstrap gebruikt een vaste seed.
    - Elke onderzoeksrun schrijft commit, versies en een data-vingerafdruk naar `rapport/experimenten.jsonl`.
-6. **Oude namen blijven werken.** `tradingstrategie.py`, `leren.py`, `strategielab.py`, `live_status.py`, `broker.py`, `onderzoek.py`, `backtest.py`, `backtest_multi.py`, `capital_instrumenten.py`, `demo_broker.py`, `risico.py` en `broker_capital.py` zijn doorverwijzingen. De workflows en de Mac-starter roepen ze ongewijzigd aan.
+6. **Oude namen blijven werken** (ook na de nieuwe naam MarketPilot). `tradingstrategie.py`, `leren.py`, `strategielab.py`, `live_status.py`, `broker.py`, `onderzoek.py`, `backtest.py`, `backtest_multi.py`, `capital_instrumenten.py`, `demo_broker.py`, `risico.py` en `broker_capital.py` zijn doorverwijzingen. De workflows en de Mac-starter roepen ze ongewijzigd aan.
 
 ## Nieuwe varianten (automatisch)
 

@@ -1,4 +1,4 @@
-"""DE trade-simulatie van TradingStrategie. Alle backtests, het leren, het strategielab, het onderzoek en de
+"""DE trade-simulatie van MarketPilot. Alle backtests, het leren, het strategielab, het onderzoek en de
 live-status (uitkomst van setups) gebruiken deze ene implementatie.
 
 Regels (gelden voor elke strategie en elk tijdframe):

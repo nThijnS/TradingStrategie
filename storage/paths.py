@@ -1,4 +1,4 @@
-"""Alle bestandspaden van TradingStrategie op één plek.
+"""Alle bestandspaden van MarketPilot op één plek.
 
 De bestanden blijven waar ze altijd stonden (in de hoofdmap van de repo): de lopende keten op GitHub haalt
 config.json, learned.json, lab.json en NOODSTOP elke minuut op bij pad, en de website leest raw/main/lab.json.

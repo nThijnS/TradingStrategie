@@ -20,6 +20,16 @@ LIVE_ENV = dict(CAPITAL_MODUS="live", CAPITAL_LIVE_BEVESTIGING=broker.LIVE_PHRAS
                 CAPITAL_LIVE_IDENTIFIER="me@example.com", CAPITAL_LIVE_PASSWORD="lpw", CAPITAL_LIVE_ACCOUNT_ID="LIVE123456")
 
 
+def report(**markets):
+    """Een instrumentrapport zoals execution/instruments.main() het schrijft (testwaarden, geen echte brokerdata)."""
+    from execution.instruments import SOORT
+    from execution.markets import INSTRUMENT_TYPES
+    huidig = {m: dict(epic=e, naam=f"test {m}", type=INSTRUMENT_TYPES[SOORT[m]], bruikbaar_voor_broker_py=True, problemen=[])
+              for m, e in broker.EPICS.items()}
+    huidig.update(markets)
+    return dict(gemaakt=NOW.isoformat(), omgeving="demo (alleen lezen)", huidig=huidig, kandidaten={})
+
+
 def cfg(**kw):
     c = broker.settings(Path("/nonexistent"))
     c.update(kw)
@@ -35,7 +45,8 @@ def live_cfg(**live):
 def status(kant="LONG", age_min=5):
     t = (NOW - timedelta(minutes=age_min)).isoformat()
     return dict(gemaakt=(NOW - timedelta(minutes=1)).isoformat(), markten=[],
-                alle_markten=[dict(naam="GOUD", open=True, status="live", koers=2400.0, keuze=dict(strategie="momentum", titel="Momentum"),
+                alle_markten=[dict(naam="GOUD", soort="grondstof", open=True, status="live", koers=2400.0,
+                                   keuze=dict(status="actief", strategie="momentum", titel="Momentum"),
                                    signalen=[dict(t=t, kant=kant, entry=2400.0, stop=2390.0, tp=2420.0, status="nieuw")])])
 
 
@@ -118,7 +129,9 @@ class Base(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         d = Path(self.tmp.name)
-        self.p = mock.patch.multiple(broker, STATE_FILES={"demo": d / "demo_staat.json", "live": d / "live_staat.json"}, HERE=d)
+        (d / "instrumenten.json").write_text(json.dumps(report()))
+        self.p = mock.patch.multiple(broker, STATE_FILES={"demo": d / "demo_staat.json", "live": d / "live_staat.json"}, HERE=d,
+                                     INSTRUMENTS_FILE=d / "instrumenten.json")
         self.p.start()
 
     def tearDown(self):

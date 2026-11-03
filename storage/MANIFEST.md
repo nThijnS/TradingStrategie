@@ -7,7 +7,7 @@ Eén bron per gegeven:
 
 | Gegeven | Enige bron | Schrijver | Lezers | Bewaard in |
 |---|---|---|---|---|
-| Instellingen (schakelaars, broker-modus, limieten) | `config.json` | eigenaar | app, broker | main |
+| Instellingen (schakelaars, broker-modus, limieten, risicokapitaal) en de saldo-administratie (startkapitaal, geldstromen) | `config.json` | eigenaar | app, broker | main |
 | ICT aan/uit + variant per markt (afgeleid van de strategie-selectie) | `learned.json` | `learning/lab.py` | app (elke minuut), dashboard | main |
 | ICT-uitkomsten per variant (leergeheugen) | `leren_geheugen.json` | `learning/ict.py` | leren, lab | main |
 | Keuzegeschiedenis ICT (per dag) | `leren_geschiedenis.json` | `learning/lab.py` | dashboard | main |
@@ -17,8 +17,9 @@ Eén bron per gegeven:
 | Lab-dagregel (wat er vandaag getest en gekozen is) | `lab_geschiedenis.json` | `learning/lab.py` | website | main |
 | Forward test: elke setup en weigering | `logboek.json` | app | leren (dagnotities), dashboard | Actions-cache + run-artifact |
 | Verstuurde meldingen | `verstuurd.json` | app | app | Actions-cache |
-| Orderjournaal demo / live | `demo_staat.json`, `live_staat.json` | broker | broker | Actions-cache |
+| Orderjournaal demo / live, plus `administratie` (piek en dagstart als handelsresultaat, onverklaarde saldowijzigingen, migratie met de oude waarden) | `demo_staat.json`, `live_staat.json` | broker | broker | Actions-cache |
 | Live status en candles | `status.json`, `markt/*.json`, `demo.json` | dashboard, broker | website | branch `live` |
+| Instrumentgegevens Capital.com (alleen lezen) én de vrijgave per instrument: zonder bevestiging hier geen demo-order | `rapport/instrumenten.json` | `execution/instruments.py` (workflow Instrumenten controleren) | broker | main |
 | Onderzoeksresultaten | `rapport/onderzoek.json` | `research/protocol.py` | rapport | main |
 | **Experimenten** (elke onderzoeksrun) | `rapport/experimenten.jsonl` | `research/registry.py` | eigenaar | main (lokaal toevoegen) |
 | Migraties die gedraaid zijn | `storage/migraties.json` | `storage/migrations.py` | — | main |

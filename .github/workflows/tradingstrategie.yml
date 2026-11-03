@@ -1,11 +1,13 @@
-# Draait TradingStrategie in de cloud (GitHub Actions). Meldingen gaan naar je telefoon via ntfy.
+# Draait MarketPilot in de cloud (GitHub Actions). Meldingen gaan naar je telefoon via ntfy.
 # Zet het ntfy-onderwerp als geheim of variabele NTFY_TOPIC (Settings > Secrets and variables > Actions).
 #
 # GitHub voert "schedule" maar af en toe uit (vaak uren te laat of helemaal niet). Daarom draait er een
 # keten: elke run checkt elke minuut (alleen binnen de sessies doet hij echt iets) en start na ~5u40
-# zichzelf opnieuw. Starten of herstarten: Actions > TradingStrategie > Run workflow.
+# zichzelf opnieuw. Starten of herstarten: Actions > MarketPilot > Run workflow.
 # De schedule hieronder is alleen een reserve die de keten weer opstart als die ooit stopt.
-name: TradingStrategie
+# De bestandsnaam tradingstrategie.yml en de concurrency-groep 'tradingstrategie' blijven bewust zo: de keten
+# start zichzelf via deze bestandsnaam, en een nieuwe groepsnaam zou tijdens de overgang twee ketens tegelijk toelaten.
+name: MarketPilot
 
 on:
   schedule:
@@ -110,7 +112,7 @@ jobs:
               if python -W ignore live_status.py --uit "$d/status.json"; then
                 python -W ignore broker.py --status "$d/status.json" --uit "$d/demo.json" || true
                 (cd "$d" && git init -q -b live && git add -A \
-                  && git -c user.name="TradingStrategie-bot" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -qm "Live status" \
+                  && git -c user.name="MarketPilot-bot" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -qm "Live status" \
                   && git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" live) || echo "Status pushen mislukt"
               fi
               rm -rf "$d"

@@ -19,8 +19,9 @@ from pathlib import Path
 
 import pandas as pd
 
-from learning import lab
 from app import alerts as ts
+from core import market_hours
+from learning import lab
 
 HERE = ts.HERE
 NL = ts.ZoneInfo("Europe/Amsterdam")
@@ -34,6 +35,7 @@ SOURCE = "Yahoo Finance (gratis; futures en aandelen kunnen 10-15 min vertraagd 
 
 # Versiegeschiedenis van het dashboard en de bot (nieuwste bovenaan)
 APP_VERSIONS = [
+    dict(versie="4.0", datum="2026-11-03", wat="Nieuwe naam MarketPilot. Demo-orders alleen op markten met een geverifieerd Capital.com-instrument; lab-trades sluiten bij beursslot of weekend, zoals in de backtest."),
     dict(versie="3.0", datum="2026-10-31", wat="Zes onderdelen, 15 markten, strategielab met 6 strategieën en walk-forward, candlestick-grafieken, Data Farm en Risk Center."),
     dict(versie="2.0", datum="2026-10-31", wat="Radar-dashboard: signalen van vandaag met positiegrootte voor de prop firm."),
     dict(versie="1.2", datum="2026-10-30", wat="Zelflerend: leren.py kiest elke werkdag per markt de beste ICT-variant."),
@@ -146,18 +148,8 @@ def fetch_cached(tf):
 
 
 def is_open(soort, naam, now):
-    """Is de markt nu open (NY-tijd)? Feestdagen worden niet herkend."""
-    wd, hm = now.weekday(), now.strftime("%H:%M")
-    if soort == "crypto":
-        return True
-    if soort == "aandeel":
-        return wd < 5 and "09:30" <= hm < "16:00"
-    if naam == "DAX":
-        return wd < 5 and "03:00" <= hm < "11:30"
-    # futures en forex: zondag 18:00 t/m vrijdag 17:00, dagelijks een uur pauze
-    if wd == 5 or (wd == 6 and hm < "18:00") or (wd == 4 and hm >= "17:00"):
-        return False
-    return not ("17:00" <= hm < "18:00")
+    """Is de markt nu open? Feestdagen worden niet herkend. Zie core/market_hours.py."""
+    return market_hours.is_open(soort, naam, now)
 
 
 def resample(df, rule):
@@ -182,7 +174,7 @@ def closed_bars(df, bar, now):
 
 def lab_signals(m, df1h, choice, market_open=True, now=None):
     """Signalen van de strategie die het lab koos, op afgesloten 1-uurs candles (zoals in de backtest)."""
-    sid = (choice or {}).get("strategie")
+    sid = (choice or {}).get("strategie") if (choice or {}).get("status") == "actief" else None   # alleen na de poort
     df1h = closed_bars(df1h, pd.Timedelta(hours=1), pd.Timestamp(now or datetime.now(ts.NY)))
     if not sid or sid == "ict" or len(df1h) < 300:
         return []
@@ -240,7 +232,7 @@ def all_markets(now, outdir, ict):
         lm = by_lab.get(m["naam"], {})
         choice = lm.get("keuze")
         row["regime"] = lm.get("regime")
-        row["keuze"] = dict(strategie=choice.get("strategie"), titel=choice.get("titel"), variant_txt=choice.get("variant_txt"),
+        row["keuze"] = dict(status=choice.get("status"), strategie=choice.get("strategie"), titel=choice.get("titel"), variant_txt=choice.get("variant_txt"),
                             sinds=choice.get("sinds"), reden=choice.get("reden_vandaag")) if choice else None
         sig = []
         try:

@@ -11,6 +11,11 @@ Voor elke huidige markt (broker.EPICS) en elke kandidaat uit onderzoek.py:
 Een kandidaat krijgt alleen een epic als de zoekresultaten een exacte, eenduidige match geven; anders blijft die
 leeg en moet de epic bewust worden gekozen. Schrijft rapport/instrumenten.json.
 
+Dat rapport is ook de vrijgave per instrument: execution/runner.py plaatst alleen een demo-order op een markt
+waarvan het rapport het instrument bevestigt (verified()). Zonder rapport, of met een fout of probleem in het
+rapport, wordt de markt veilig geweigerd met de reden erbij. Per order controleert de runner de gegevens
+daarnaast opnieuw bij de broker (contractgrootte, ordergrootte, decimalen, valuta, status en koers).
+
 Draait met de DEMO-geheimen (workflow "Instrumenten controleren", handmatig te starten):
     python capital_instrumenten.py
 """
@@ -18,8 +23,9 @@ import json
 import os
 from datetime import datetime, timezone
 
-from execution.runner import EPICS
 from execution.capital import Capital, BrokerError
+from core.markets import LAB_MARKETS
+from execution.markets import EPICS, INSTRUMENT_TYPES
 from storage import paths
 
 HERE = paths.ROOT
@@ -54,6 +60,12 @@ def details(b, epic):
     except BrokerError as ex:
         out["uurcandles_bij_broker"] = dict(fout=str(ex))
     problems = []
+    for k, label in (("minDealSize", "minimale ordergrootte"), ("minSizeIncrement", "stapgrootte"),
+                     ("decimalen", "prijsdecimalen"), ("valuta", "valuta")):
+        if out[k] is None or (isinstance(out[k], dict) and out[k].get("value") is None):
+            problems.append(f"{label} ontbreekt")
+    if not out["naam"]:
+        problems.append("instrumentnaam ontbreekt")
     if out["lotSize"] != 1:
         problems.append(f"lotSize {out['lotSize']} (broker.py handelt alleen bij 1)")
     if (out["scalingFactor"] or 1) != 1:
@@ -63,6 +75,46 @@ def details(b, epic):
     out["bruikbaar_voor_broker_py"] = not problems
     out["problemen"] = problems
     return out
+
+
+SOORT = {m["naam"]: m["soort"] for m in LAB_MARKETS}
+
+
+def load_report(path=None):
+    """rapport/instrumenten.json, of None als het er niet is of niet te lezen is."""
+    try:
+        return json.loads((path or OUT).read_text())
+    except (OSError, ValueError):
+        return None
+
+
+def verified(markt, epic, report):
+    """Is dit instrument voor deze markt bevestigd door het leesrapport? Geeft None (in orde) of de reden."""
+    if not report:
+        return ("instrument niet geverifieerd: rapport/instrumenten.json ontbreekt "
+                "(draai de workflow 'Instrumenten controleren', alleen lezen)")
+    if not isinstance(report, dict) or not isinstance(report.get("huidig"), dict):
+        return "instrument niet geverifieerd: rapport/instrumenten.json heeft niet de verwachte vorm"
+    if str(report.get("omgeving") or "").split(" ")[0] != "demo":
+        return f"instrumentrapport komt niet uit de demo-omgeving ({report.get('omgeving')!r})"
+    x = report["huidig"].get(markt)
+    if not isinstance(x, dict) or not x:
+        return f"instrument niet geverifieerd: {markt} staat niet in rapport/instrumenten.json"
+    if x.get("epic") != epic:
+        return f"instrument niet geverifieerd: rapport heeft epic {x.get('epic')!r}, de bot gebruikt {epic!r}"
+    if x.get("fout"):
+        return f"instrument niet geverifieerd: de broker gaf een fout ({x['fout']})"
+    if not x.get("bruikbaar_voor_broker_py"):
+        return "instrument niet bruikbaar: " + ("; ".join(x.get("problemen") or []) or "reden onbekend")
+    want = INSTRUMENT_TYPES.get(SOORT.get(markt))
+    if want and x.get("type") != want:
+        return f"instrument niet geverifieerd: type {x.get('type')!r} past niet bij een {SOORT.get(markt)}-markt (verwacht {want})"
+    return None
+
+
+def status_per_market(report):
+    """{markt: None of reden} voor alle markten met een epic (voor het dashboard en het rapport)."""
+    return {m: verified(m, e, report) for m, e in EPICS.items()}
 
 
 def main():

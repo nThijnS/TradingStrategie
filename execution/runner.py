@@ -15,12 +15,21 @@ MODUS
                     7. de live-limieten zijn binnen de veilige grenzen van risico.Limits.problems(live=True)
   Een live-verzoek dat niet aan alles voldoet, valt NIET terug op demo: dan handelt de bot helemaal niet.
 
+SALDO EN GELDSTROMEN (risk/administratie.py)
+  Stortingen en opnames tellen niet als handelsresultaat. Ze staan in config.json administratie.geldstromen en
+  worden met de hand vastgelegd. Limieten en piek rekenen met het handelsresultaat; demo.risicokapitaal begrenst
+  het vermogen waarmee de positiegrootte wordt berekend (0,5% van 10000 = hoogstens 50 per trade). Een
+  saldowijziging die de bot niet kan verklaren, blokkeert nieuwe orders tot ze is vastgelegd.
+
 NOODSTOP  config.json "noodstop": true, of het bestand NOODSTOP in de repo, of omgevingsvariabele NOODSTOP=1.
   Wel:  geen nieuwe orders; wachtende (nog niet gevulde) limietorders van de bot worden geannuleerd.
   Niet: open posities worden NIET gesloten. Die houden hun stop-loss en take-profit bij de broker; de
         tijdsluiting (daytrade) blijft wel werken. Alles sluiten doe je zelf in Capital.com.
 
 VEILIGHEID PER ORDER
+  - Alleen markten waarvan rapport/instrumenten.json het Capital.com-instrument bevestigt (execution/instruments.py).
+    Zonder rapport, of bij een fout of probleem erin, wordt de markt geweigerd met de reden in het journaal.
+  - Lab-signalen alleen van een strategie met status "actief" (door de selectiepoort, learning/selector.py).
   - Vlak voor elke order: account, posities, wachtende orders en de koers opnieuw ophalen.
   - Eén positie of order per instrument; een tweede signaal op hetzelfde instrument wordt overgeslagen.
   - Instrument en koers controleren, niveaus en grootte berekenen en de portefeuillelimieten toetsen (risico.py).
@@ -28,19 +37,27 @@ VEILIGHEID PER ORDER
   - Na de order: bevestiging ophalen en controleren dat stop-loss en take-profit op de positie of order staan.
     Kan dat niet worden bevestigd, dan wordt de positie gesloten of de order geannuleerd.
   - Time-out of netwerkfout: status "onbekend". Nooit opnieuw versturen; in de volgende rondes wordt bij de
-    broker nagezocht of de order er is.
+    broker nagezocht of de order er is. Een order die in een vorige ronde op "verzenden" bleef staan (de run
+    stopte halverwege) wordt ook zo nagezocht.
+  - Een fout bij één markt wordt in het journaal gezet; de andere markten gaan gewoon door.
+  - Lab-trades sluiten zoals in de backtest: na hoogstens max_uren, en vóór het beursslot of het weekend
+    (core/market_hours.py). Een signaal vlak voor het slot wordt overgeslagen.
 
     python broker.py --status status.json --uit demo.json
 """
 import argparse
 import json
 import os
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, time, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+from core import market_hours
+from risk import administratie
 from risk import rules as risico
+from execution import instruments
 from execution.capital import Capital, BrokerError, UnknownOutcome, InstrumentError
+from execution.markets import EPICS, MAX_BASIS_PCT
 from storage import paths
 
 HERE = paths.ROOT
@@ -48,17 +65,13 @@ SETTINGS = paths.CONFIG
 NY = ZoneInfo("America/New_York")
 LIVE_PHRASE = "IK-HANDEL-MET-ECHT-GELD"
 STATE_FILES = dict(paths.BROKER_STATE)
-
-# Capital.com-epics per markt. Bevestigd met capital_instrumenten.py (zie rapport/instrumenten.json);
-# een epic die de broker niet kent of waarvan de gegevens niet kloppen, wordt nooit verhandeld.
-EPICS = {"GOUD": "GOLD", "ZILVER": "SILVER", "OLIE": "OIL_CRUDE", "NQ": "US100", "ES": "US500", "DAX": "DE40",
-         "EURUSD": "EURUSD", "GBPUSD": "GBPUSD", "USDJPY": "USDJPY", "BTC": "BTCUSD", "ETH": "ETHUSD", "SOL": "SOLUSD",
-         "AAPL": "AAPL", "NVDA": "NVDA", "MSFT": "MSFT"}
+INSTRUMENTS_FILE = paths.INSTRUMENTS      # leesrapport van de instrumenten: de vrijgave per markt
 
 ICT_ENTRY_MIN = 45        # ICT-limietorder alleen binnen 45 min na de setup, 60 min geldig
 LAB_SIGNAL_MIN = 20       # lab-signaal (afgesloten uurcandle) alleen binnen 20 min na het sluiten van die candle
 STATUS_MAX_MIN = 8        # status.json ouder dan dit = verouderd: geen orders
 RECONCILE_MIN = 15        # zo lang zoeken we een "onbekende" order na
+CLOSE_BUFFER_MIN = 5      # lab-trade zoveel minuten vóór het beursslot of weekend sluiten
 DEFAULT_LIMITS = dict(risico_pct=0.5, max_open_risico_pct=1.5, dagverlies_pct=3.0, totaalverlies_pct=5.0, trailing=True,
                       max_open=3, max_per_groep=1, hefboom=30, min_rr=0.0)
 DEFAULTS = dict(aan=True, dag_reset="Europe/Amsterdam", max_uren=12, limieten=DEFAULT_LIMITS)
@@ -92,7 +105,19 @@ def settings(cfg_file=SETTINGS):
     s["broker"] = raw.get("broker", {})
     s["live"] = raw.get("live", {})
     s["noodstop"] = bool(raw.get("noodstop", False))
+    s["risicokapitaal"] = old.get("risicokapitaal")          # demo: vermogen waarmee de positiegrootte rekent
+    s["administratie"] = raw.get("administratie") or {}
     return s
+
+
+def risk_capital(cfg, mode):
+    """Risicokapitaal voor deze modus: (bedrag of None, probleem of None)."""
+    k = cfg.get("risicokapitaal") if mode["modus"] == "demo" else (cfg.get("live") or {}).get("risicokapitaal")
+    if k is None:
+        return None, None
+    if isinstance(k, bool) or not isinstance(k, (int, float)) or k <= 0:
+        return None, f"risicokapitaal {k!r} is geen positief getal"
+    return float(k), None
 
 
 def emergency_stop(cfg, env):
@@ -169,28 +194,56 @@ def mask(x):
 
 
 # ------------- Signalen -------------
-def signals(status, now):
-    """Signalen die meetellen en nu nog genomen kunnen worden, met de strategie erbij (voor de live-vrijgave)."""
+def signals(status, now, errors=None):
+    """Signalen die meetellen en nu nog genomen kunnen worden, met de strategie erbij (voor de live-vrijgave).
+    Onleesbare gegevens van één markt komen in `errors` (markt, reden); de andere markten gaan door."""
     out = []
+    errors = errors if errors is not None else []
     for m in status.get("markten", []):             # ICT: limietorder op de entry
-        if (m.get("data_min_oud") or 999) > 20:     # ICT-data verouderd: niet handelen
-            continue
-        for s in m.get("setups", []):
-            t = datetime.fromisoformat(s["tijd"])
-            if s.get("telt") and s["status"] in ("nieuw", "wacht op entry") and timedelta(0) <= now - t < timedelta(minutes=ICT_ENTRY_MIN):
-                out.append(dict(markt=m["naam"], strategie="ict", bron="ICT", key=f"ICT|{m['naam']}|{s['tijd']}|{s['kant']}",
-                                kant=s["kant"], entry=s["entry"], stop=s["stop"], tp=s["tp"], soort="LIMIT", ref=m.get("koers")))
+        try:
+            if (m.get("data_min_oud") or 999) > 20:     # ICT-data verouderd: niet handelen
+                continue
+            for s in m.get("setups", []):
+                t = datetime.fromisoformat(s["tijd"])
+                if s.get("telt") and s["status"] in ("nieuw", "wacht op entry") and timedelta(0) <= now - t < timedelta(minutes=ICT_ENTRY_MIN):
+                    out.append(dict(markt=m["naam"], strategie="ict", bron="ICT", key=f"ICT|{m['naam']}|{s['tijd']}|{s['kant']}",
+                                    kant=s["kant"], entry=s["entry"], stop=s["stop"], tp=s["tp"], soort="LIMIT", ref=m.get("koers"),
+                                    marktsoort=None))
+        except (KeyError, TypeError, ValueError) as ex:
+            errors.append((m.get("naam", "?"), f"ICT-signaal onleesbaar: {type(ex).__name__}: {ex}"))
     for m in status.get("alle_markten", []):        # strategielab: marktorder na een afgesloten uurcandle
-        if not m.get("open") or m.get("status") != "live":
-            continue
-        k = m.get("keuze") or {}
-        for s in m.get("signalen", []):
-            t = datetime.fromisoformat(s["t"])      # sluittijd van de signaalcandle (ligt in het verleden)
-            if s["status"] == "nieuw" and timedelta(0) <= now - t < timedelta(minutes=LAB_SIGNAL_MIN):
-                out.append(dict(markt=m["naam"], strategie=k.get("strategie") or "lab", bron=k.get("titel") or "lab",
-                                key=f"LAB|{m['naam']}|{s['t']}|{s['kant']}", kant=s["kant"], entry=s["entry"],
-                                stop=s["stop"], tp=s["tp"], soort="MARKET", ref=m.get("koers")))
+        try:
+            if not m.get("open") or m.get("status") != "live":
+                continue
+            k = m.get("keuze") or {}
+            if k.get("status") != "actief" or not k.get("strategie"):     # alleen na de selectiepoort
+                continue
+            for s in m.get("signalen", []):
+                t = datetime.fromisoformat(s["t"])      # sluittijd van de signaalcandle (ligt in het verleden)
+                if s["status"] == "nieuw" and timedelta(0) <= now - t < timedelta(minutes=LAB_SIGNAL_MIN):
+                    out.append(dict(markt=m["naam"], strategie=k["strategie"], bron=k.get("titel") or k["strategie"],
+                                    key=f"LAB|{m['naam']}|{s['t']}|{s['kant']}", kant=s["kant"], entry=s["entry"],
+                                    stop=s["stop"], tp=s["tp"], soort="MARKET", ref=m.get("koers"), marktsoort=m.get("soort")))
+        except (KeyError, TypeError, ValueError) as ex:
+            errors.append((m.get("naam", "?"), f"lab-signaal onleesbaar: {type(ex).__name__}: {ex}"))
     return out
+
+
+def close_by(s, now, max_uren):
+    """Uiterlijke sluittijd van de positie, zoals in de backtest. Geeft (tijd, None) of (None, reden)."""
+    if s["strategie"] == "ict":                     # ICT: uiterlijk 16:00 New York (backtesting/ict.LIVE_EXITS)
+        until = now.astimezone(NY).replace(hour=16, minute=0, second=0, microsecond=0)
+        return (until, None) if until > now else (None, "na 16:00 New York: ICT-trades sluiten dan")
+    until = now + timedelta(hours=max_uren)
+    end = market_hours.session_end(s.get("marktsoort"), s["markt"], now) if s.get("marktsoort") else None
+    if s.get("marktsoort") and s["marktsoort"] != "crypto" and end is None:
+        return None, "markt is volgens de handelsuren dicht"
+    if end is not None:
+        end -= timedelta(minutes=CLOSE_BUFFER_MIN)
+        if end <= now:
+            return None, f"markt sluit binnen {CLOSE_BUFFER_MIN} minuten (beursslot of weekend)"
+        until = min(until, end)
+    return until, None
 
 
 # ------------- Hoofdlogica -------------
@@ -201,6 +254,11 @@ class Run:
         self.log = st.setdefault("log", [])
         self.orders = st.setdefault("orders", {})
         self.state_file = None
+        self.report = None
+        self.adm, self.capital = None, None
+
+    def risk_view(self, nav):
+        return administratie.risk_view(nav, self.adm, self.st, self.capital, self.now)
 
     def note(self, actie, markt="", detail=""):
         self.log.append(dict(t=self.now.isoformat(timespec="seconds"), actie=actie, markt=markt, detail=detail))
@@ -220,6 +278,9 @@ class Run:
         """Orders met onbekende uitkomst nazoeken bij de broker; gevulde limietorders aan hun positie koppelen."""
         known = self.ours()
         for k, v in self.orders.items():
+            if v.get("status") == "verzenden":    # vorige ronde stopte tijdens het versturen: niet opnieuw, wel nazoeken
+                v.update(status="onbekend", reden="run stopte tijdens het versturen")
+                self.note("uitkomst onbekend", v["markt"], "vorige ronde stopte tijdens het versturen; wordt nagezocht, niet opnieuw verstuurd")
             if v.get("status") != "onbekend":
                 continue
             sent = datetime.fromisoformat(v["t"])
@@ -299,7 +360,8 @@ class Run:
             expo.append((rev.get(w["epic"], w["epic"]), w["side"]))
             if f:
                 notional += abs(w["size"] * w["level"] * f)
-        return risico.Book(equity=a["nav"], day_start=self.st["dag_start"], peak=self.st["piek"], start=self.st["start_saldo"],
+        rv = self.risk_view(a["nav"])          # handelsresultaat zonder geldstromen, op de risicobasis
+        return risico.Book(equity=rv["risicovermogen"], day_start=rv["dag_start"], peak=rv["piek"], start=rv["start"],
                            open_risks=risks, exposures=expo, used_notional=notional)
 
     def handle(self, s):
@@ -313,7 +375,13 @@ class Run:
             return skip(f"{s['markt']}:{s['strategie']} is niet vrijgegeven voor live (config.json live.strategieen)")
         epic = EPICS.get(s["markt"])
         if not epic:
-            return skip("geen geverifieerd Capital.com-instrument voor deze markt")
+            return skip("geen Capital.com-instrument voor deze markt")
+        why = instruments.verified(s["markt"], epic, self.report)
+        if why:
+            return skip(why)
+        until, why = close_by(s, self.now, self.cfg["max_uren"])
+        if why:
+            return skip(why)
         # 1. alles vers ophalen
         a, positions, wos = self.fresh()
         if any(x["epic"] == epic for x in positions + wos):
@@ -327,6 +395,9 @@ class Run:
             return skip(why)
         # 2. niveaus en grootte
         basis = (inst.bid + inst.ask) / 2 - s["ref"] if s.get("ref") else 0.0
+        if s.get("ref") and abs(basis) / s["ref"] * 100 > MAX_BASIS_PCT:
+            return skip(f"brokerkoers wijkt {abs(basis) / s['ref'] * 100:.1f}% af van de bronkoers (max {MAX_BASIS_PCT:g}%): "
+                        f"instrument of eenheid klopt mogelijk niet")
         plan, why = risico.plan_levels(s, inst, self.lim, basis)
         if why:
             return skip(why)
@@ -338,7 +409,7 @@ class Run:
                 fx_cache[e] = self.b.fx(ccy, a["ccy"]) if ccy else None
             return fx_cache[e]
 
-        why = risico.size_plan(plan, inst, self.lim, a["nav"], fxc(epic))
+        why = risico.size_plan(plan, inst, self.lim, self.risk_view(a["nav"])["sizing_vermogen"], fxc(epic))
         if why:
             return skip(why)
         # 3. limieten met de verse portefeuille
@@ -346,8 +417,6 @@ class Run:
         if why:
             return skip(why)
         # 4. journaal vóór verzenden
-        until = (datetime.now(NY).replace(hour=16, minute=0, second=0, microsecond=0) if s["strategie"] == "ict"
-                 else self.now + timedelta(hours=self.cfg["max_uren"]))
         detail = (f"{s['kant']} {plan.size:g} {epic} @ {plan.entry}, stop {plan.stop}, doel {plan.tp}, "
                   f"risico {plan.risico_acc:,.2f} {a['ccy']}")
         rec = dict(o, status="verzenden", epic=epic, side=plan.side, size=plan.size, entry=plan.entry, stop=plan.stop,
@@ -438,16 +507,43 @@ def run(status, cfg, env, st_by_mode, connect=None, now=None):
     r = Run(b, mode, cfg, st, now)
     r.acc_id = acc_id
     r.state_file = STATE_FILES[mode["modus"]]
+    r.report = instruments.load_report(INSTRUMENTS_FILE)
     a, positions, wos = r.fresh()
     if st.get("account") and st["account"] != acc_id:          # ander account dan vorige keer: tellers opnieuw
-        for k in ("start_saldo", "piek", "dag", "dag_start", "equity"):
+        for k in ("start_saldo", "piek", "dag", "dag_start", "equity", "administratie"):
             st.pop(k, None)
+        r.note("ander account", "", "tellers en administratie opnieuw begonnen; controleer config.json administratie")
     st["account"] = acc_id
-    day = datetime.now(ZoneInfo(cfg["dag_reset"])).date().isoformat()
+    local = now.astimezone(ZoneInfo(cfg["dag_reset"]))
+    day, day_start_t = local.date().isoformat(), datetime.combine(local.date(), time(0), local.tzinfo)
     st.setdefault("start_saldo", a["nav"])
+    r.adm = administratie.load(dict(administratie=cfg.get("administratie")), st["start_saldo"])
+    r.capital, cap_problem = risk_capital(cfg, mode)
+    if "administratie" not in st:                                # eenmalig: oude stand omzetten, niets overschrijven
+        administratie.migrate(st, r.adm, now, day_start_t)
+        r.note("administratie", "", "brokerstatus omgezet: piek en dagstart nu als handelsresultaat zonder geldstromen; "
+                                    "oude waarden bewaard onder administratie.migratie")
+    elif st["administratie"].get("vingerafdruk") != administratie.fingerprint(r.adm):
+        administratie.rebase(st, r.adm, now, day_start_t)       # geldstromen gewijzigd: piek en dagstart opnieuw
+        r.note("administratie", "", "startkapitaal of geldstromen gewijzigd: piek en dagstart opnieuw afgeleid "
+                                    "(oude waarden onder administratie.herberekend)")
+    # oude velden (accountwaarde inclusief geldstromen) blijven bijgewerkt, alleen ter informatie
     st["piek"] = max(st.get("piek", a["nav"]), a["nav"])
     if st.get("dag") != day:
         st["dag"], st["dag_start"] = day, max(a["nav"], a["saldo"])   # zoals prop firms: hoogste van saldo en waarde
+    try:
+        closed_now = b.closed()
+    except BrokerError:
+        closed_now = None                                         # onbekend: dan geen saldocontrole deze ronde
+    prev_t = ((st["administratie"].get("vorige") or {}).get("t"))
+    closed_since = True if closed_now is None else any(_closed_after(c, prev_t) for c in closed_now)
+    administratie.update(st, r.adm, a, now, day, day_start_t, bool(positions or wos), closed_since)
+    adm_problems = r.adm["problemen"] + ([cap_problem] if cap_problem else [])
+    lay = administratie.inleg(r.adm, now)
+    if r.capital and r.capital + (a["nav"] - lay) > a["nav"] + administratie.TOL:
+        adm_problems.append(f"saldo {a['nav']:,.2f} is lager dan risicobasis + handelsresultaat "
+                            f"({r.capital + a['nav'] - lay:,.2f}): verlaag demo.risicokapitaal of leg een geldstroom vast")
+    jumps = administratie.unresolved(st, r.adm)
     r.reconcile(positions, wos)
     r.time_exits(positions)
     blok = None
@@ -457,30 +553,63 @@ def run(status, cfg, env, st_by_mode, connect=None, now=None):
         r.cancel_ours(wos, "noodstop")
     elif made is None or now - made > timedelta(minutes=STATUS_MAX_MIN):
         blok = "status.json ontbreekt of is verouderd: geen nieuwe orders"
+    elif adm_problems:
+        blok = "saldo-administratie klopt niet: " + "; ".join(adm_problems) + ". Geen nieuwe orders."
+    elif jumps:
+        j = jumps[-1]
+        blok = (f"onverklaarde saldowijziging van {j['verschil']:+,.2f} tussen {j['van_t']} en {j['tot_t']}: leg haar vast "
+                f"in config.json administratie.geldstromen (of administratie.geaccepteerd, id {j['id']}). Geen nieuwe orders.")
     if not blok:
-        for s in signals(status, now):
+        errors = []
+        for s in signals(status, now, errors):
             if s["key"] in r.orders:
                 continue
             try:
                 r.handle(s)
-            except (BrokerError, InstrumentError) as ex:      # één signaal mag de rest niet tegenhouden
-                r.orders.setdefault(s["key"], dict(markt=s["markt"], status="fout", reden=str(ex), t=now.isoformat()))
-                r.note("fout", s["markt"], str(ex))
+            except Exception as ex:      # één signaal of markt mag de rest niet tegenhouden
+                why = str(ex) if isinstance(ex, (BrokerError, InstrumentError)) else f"{type(ex).__name__}: {ex}"
+                rec = r.orders.get(s["key"])
+                if rec and rec.get("status") == "verzenden":   # fout na het journaal: uitkomst onbekend, nazoeken
+                    rec.update(status="onbekend", reden=why)
+                    r.note("uitkomst onbekend", s["markt"], f"{why}; wordt nagezocht, niet opnieuw verstuurd")
+                else:
+                    r.orders.setdefault(s["key"], dict(markt=s["markt"], status="fout", reden=why, t=now.isoformat()))
+                    r.note("fout", s["markt"], why)
+                r.persist()
+        for markt, why in errors:
+            r.note("fout", markt, why)
     a, positions, wos = r.fresh()
     eq = st.setdefault("equity", [])
     if not eq or now - datetime.fromisoformat(eq[-1][0]) >= timedelta(minutes=15):
         eq.append([now.isoformat(timespec="minutes"), round(a["nav"], 2)])
         del eq[:-3000]
     lim = mode["limieten"]
-    floor = (st["piek"] if lim.trailing else st["start_saldo"]) * (1 - lim.totaalverlies_pct / 100)
+    rv = r.risk_view(a["nav"])
+    # grenzen in risicovermogen, omgerekend naar accountwaarde: daar moet de waarde bij de broker boven blijven
+    floor = (rv["piek"] if lim.trailing else rv["start"]) * (1 - lim.totaalverlies_pct / 100) + rv["naar_nav"]
+    day_floor = rv["dag_start"] * (1 - lim.dagverlies_pct / 100) + rv["naar_nav"]
     rev = {v: k for k, v in EPICS.items()}
     try:
         closed = b.closed()
     except BrokerError:
         closed = []
+    adm_out = dict(
+        saldo_broker=round(a["nav"], 2), startkapitaal=r.adm["startkapitaal"], startkapitaal_bron=r.adm["bron"],
+        geldstromen=administratie.confirm_in_series(eq, r.adm), inleg=rv["inleg"], handelsresultaat=rv["handelsresultaat"],
+        vandaag=round(rv["risicovermogen"] - rv["dag_start"], 2), risicobasis=rv["risicobasis"],
+        risicobasis_bron=rv["risicobasis_bron"], risicovermogen=rv["risicovermogen"],
+        max_risico_per_trade=round(rv["sizing_vermogen"] * lim.risico_pct / 100, 2),
+        piek_handelsresultaat=round(rv["piek"] - rv["start"], 2), problemen=adm_problems, onverklaard=jumps,
+        dag_gebruikt_pct=round(max(0.0, (rv["dag_start"] - rv["risicovermogen"]) / rv["dag_start"] * 100), 3),
+        totaal_gebruikt_pct=round(max(0.0, ((rv["piek"] if lim.trailing else rv["start"]) - rv["risicovermogen"])
+                                      / (rv["piek"] if lim.trailing else rv["start"]) * 100), 3),
+        equity_zonder_geldstromen=administratie.trading_curve(eq, r.adm),
+        ruw=dict(start_saldo=st["start_saldo"], piek=st["piek"], dag_start=st["dag_start"]),
+        migratie=st["administratie"].get("migratie"))
     return dict(base, gekoppeld=True, account=mask(acc_id), valuta=a["ccy"], saldo=a["saldo"], nav=a["nav"], open_pl=a["open_pl"],
-                start_saldo=st["start_saldo"], dag_start=st["dag_start"], piek=st["piek"], grens=round(floor, 2),
-                daggrens=round(st["dag_start"] * (1 - lim.dagverlies_pct / 100), 2), blokkade=blok,
+                start_saldo=st["start_saldo"], dag_start=round(rv["dag_start"] + rv["naar_nav"], 2),
+                piek=round(rv["piek"] + rv["naar_nav"], 2), grens=round(floor, 2), daggrens=round(day_floor, 2), blokkade=blok,
+                administratie=adm_out,
                 laatste_api_controle=b.laatste_ok.isoformat(timespec="seconds") if b.laatste_ok else None,
                 regels=dict(lim.__dict__, max_uren=cfg["max_uren"], risico_pct=lim.risico_pct),
                 open_trades=[dict(instrument=p["epic"], markt=rev.get(p["epic"]), units=p["size"] * p["side"], prijs=p["level"],
@@ -488,7 +617,19 @@ def run(status, cfg, env, st_by_mode, connect=None, now=None):
                              for p in positions],
                 orders=[dict(instrument=w["epic"], units=w["size"] * w["side"], prijs=w["level"], geldig_tot=w["good_till"]) for w in wos],
                 gesloten=closed, equity=eq,
-                onbekend=[k for k, v in r.orders.items() if v.get("status") == "onbekend"])
+                onbekend=[k for k, v in r.orders.items() if v.get("status") == "onbekend"],
+                instrumenten={m: (why or "geverifieerd") for m, why in instruments.status_per_market(r.report).items()})
+
+
+def _closed_after(c, prev_t):
+    """Is deze gesloten trade na prev_t dicht gegaan? Onleesbare tijd = ja (dan geen saldocontrole: liever niets
+    markeren dan een trade als geldstroom zien)."""
+    if not prev_t:
+        return False
+    try:
+        return datetime.fromisoformat(c["dicht"]) > datetime.fromisoformat(prev_t)
+    except (KeyError, TypeError, ValueError):
+        return True
 
 
 def label(modus):

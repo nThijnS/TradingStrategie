@@ -33,6 +33,23 @@
     }
   },
   "demo": {
-    "risico_pct": 0.5
+    "risico_pct": 0.5,
+    "risicokapitaal": 10000
+  },
+  "administratie": {
+    "toelichting": "Geldstromen (stortingen +, opnames -) tellen niet als handelsresultaat. Zie docs/MARKETPILOT.md.",
+    "startkapitaal": {
+      "bedrag": 1000.0,
+      "datum": "2026-10-31",
+      "bron": "eerste saldo dat de bot zag op het Capital.com-demoaccount (demo.json start_saldo)"
+    },
+    "geldstromen": [
+      {
+        "t": "2026-11-03T13:22:58+00:00",
+        "bedrag": 10000.0,
+        "omschrijving": "Demo aangevuld via Capital.com 'Aanvullen met €10.000' (bij € 995,05; het bedoelde totaal was € 10.000). Tijd van de klik volgens de klok van het platform."
+      }
+    ],
+    "geaccepteerd": []
   }
 }

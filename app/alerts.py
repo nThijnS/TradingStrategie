@@ -1,4 +1,4 @@
-"""Meldingen-app van TradingStrategie (was tradingstrategie.py): TJR / ICT confluence-meldingen op je Mac, zonder TradingView-abonnement.
+"""Meldingen-app van MarketPilot (was tradingstrategie.py; dat commando blijft werken): TJR / ICT confluence-meldingen op je Mac, zonder TradingView-abonnement.
 
 Zelfde logica als tjr_alerts.pine:
   kern:   sweep van liquiditeit -> MSS met displacement -> FVG, in het NY-window
@@ -293,7 +293,7 @@ def check(sent):
     key = f"summary|{now.date().isoformat()}"
     if (SET["dagmelding"] and CFG["trade_sess"] and now.weekday() < 5 and now.strftime("%H:%M") >= CFG["day_end"]
             and not today and key not in sent):
-        notify("TradingStrategie", "Vandaag geen TJR-setup. Geen trade is ook een goede trade.", sound="Pop")
+        notify("MarketPilot", "Vandaag geen TJR-setup. Geen trade is ook een goede trade.", sound="Pop")
         sent.add(key)
     STATE_FILE.write_text(json.dumps(sorted(sent)))
     LOGBOOK_FILE.write_text(json.dumps(book, indent=1, ensure_ascii=False))
@@ -312,8 +312,8 @@ def live(interval=60):
         h, m = map(int, hm.split(":"))
         return datetime.now(NY).replace(hour=h, minute=m).astimezone(nl).strftime("%H:%M")
     windows = " en ".join(f"{nl_time(a)}-{nl_time(b)}" for a, b in CFG["trade_sess"])
-    print(f"TradingStrategie draait, zoekt setups van {windows} Nederlandse tijd | stoppen: Ctrl+C")
-    notify("TradingStrategie", "Gestart, ik meld TJR-setups op " + " en ".join(m["name"] for m in CFG["markets"]))
+    print(f"MarketPilot draait, zoekt setups van {windows} Nederlandse tijd | stoppen: Ctrl+C")
+    notify("MarketPilot", "Gestart, ik meld TJR-setups op " + " en ".join(m["name"] for m in CFG["markets"]))
     while True:
         try:
             check(sent)
