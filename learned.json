@@ -1,5 +1,5 @@
 {
- "bijgewerkt": "2026-11-02T20:40-05:00",
+ "bijgewerkt": "2026-11-02T20:55-05:00",
  "markten": {
   "EURUSD": {
    "actief": false,
@@ -25,9 +25,9 @@
    },
    "sinds": "2026-10-30",
    "selectie": {
-    "status": "pauze",
+    "status": "onderzoek",
     "strategie": null,
-    "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze"
+    "reden": "geen strategie haalt de poort; volatiliteit is in train en validatie positief en wordt gevolgd zonder orders"
    }
   },
   "NQ": {
@@ -44,17 +44,17 @@
    "need_bias_b": false,
    "variant": "strenger · TP DOL · NY AM + London · bias geen",
    "score": {
-    "n": 39,
-    "gem": -0.151,
-    "score": -0.5,
-    "win": 0.359,
-    "totaal": -5.9
+    "n": 40,
+    "gem": -0.173,
+    "score": -0.48,
+    "win": 0.35,
+    "totaal": -6.92
    },
    "sinds": "2026-11-02",
    "selectie": {
     "status": "onderzoek",
     "strategie": null,
-    "reden": "huidige strategie haalt de poort niet meer; geen strategie haalt de poort; trend is in train en validatie positief en wordt gevolgd zonder orders"
+    "reden": "geen strategie haalt de poort; trend is in train en validatie positief en wordt gevolgd zonder orders"
    }
   },
   "GOUD": {
@@ -73,17 +73,17 @@
    "need_bias_b": false,
    "variant": "strenger · TP 2.0 · alle sessies · bias geen",
    "score": {
-    "n": 27,
-    "gem": 0.132,
-    "score": -0.16,
-    "win": 0.444,
-    "totaal": 3.57
+    "n": 28,
+    "gem": 0.091,
+    "score": -0.193,
+    "win": 0.429,
+    "totaal": 2.53
    },
    "sinds": "2026-10-30",
    "selectie": {
     "status": "onderzoek",
     "strategie": null,
-    "reden": "huidige strategie haalt de poort niet meer; geen strategie haalt de poort; meanrev is in train en validatie positief en wordt gevolgd zonder orders"
+    "reden": "geen strategie haalt de poort; breakout is in train en validatie positief en wordt gevolgd zonder orders"
    }
   }
  }

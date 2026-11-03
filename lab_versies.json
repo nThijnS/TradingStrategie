@@ -23,6 +23,30 @@
    "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
    "geblokkeerd": {},
    "onderzoek": null
+  },
+  {
+   "sinds": "2026-11-02",
+   "status": "onderzoek",
+   "strategie": null,
+   "titel": "Onderzoek: Momentum (geen orders)",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort; momentum is in train en validatie positief en wordt gevolgd zonder orders",
+   "geblokkeerd": {},
+   "onderzoek": {
+    "strategie": "momentum",
+    "titel": "Momentum",
+    "variant_key": "{\"er\": 0.5, \"lb\": 10, \"sm\": 2.0, \"tp\": 2.0}",
+    "variant_txt": "efficiëntie > 0.5, stop 2xATR, lookback 10, doel 2R",
+    "redenen": [
+     "P2: validatie +0.043R bij 1.5x kosten, ondergrens -0.180R",
+     "P4: Deflated Sharpe 0.12 (< 0.95, 20 varianten geprobeerd)",
+     "P5: zonder de 5 beste validatietrades niet positief"
+    ]
+   }
   }
  ],
  "ETH": [
@@ -49,6 +73,30 @@
    "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
    "geblokkeerd": {},
    "onderzoek": null
+  },
+  {
+   "sinds": "2026-11-02",
+   "status": "onderzoek",
+   "strategie": null,
+   "titel": "Onderzoek: Trend volgen (geen orders)",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort; trend is in train en validatie positief en wordt gevolgd zonder orders",
+   "geblokkeerd": {},
+   "onderzoek": {
+    "strategie": "trend",
+    "titel": "Trend volgen",
+    "variant_key": "{\"tp\": 3.0}",
+    "variant_txt": "doel 3R",
+    "redenen": [
+     "P2: validatie +0.034R bij 1.5x kosten, ondergrens -0.223R",
+     "P4: Deflated Sharpe 0.05 (< 0.95, 20 varianten geprobeerd)",
+     "P5: zonder de 5 beste validatietrades niet positief"
+    ]
+   }
   }
  ],
  "SOL": [
@@ -84,6 +132,20 @@
      "P5: zonder de 5 beste validatietrades niet positief"
     ]
    }
+  },
+  {
+   "sinds": "2026-11-02",
+   "status": "pauze",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+   "geblokkeerd": {},
+   "onderzoek": null
   }
  ],
  "EURUSD": [
@@ -110,6 +172,30 @@
    "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
    "geblokkeerd": {},
    "onderzoek": null
+  },
+  {
+   "sinds": "2026-11-02",
+   "status": "onderzoek",
+   "strategie": null,
+   "titel": "Onderzoek: Volatiliteit (squeeze) (geen orders)",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort; volatiliteit is in train en validatie positief en wordt gevolgd zonder orders",
+   "geblokkeerd": {},
+   "onderzoek": {
+    "strategie": "volatiliteit",
+    "titel": "Volatiliteit (squeeze)",
+    "variant_key": "{\"p\": 0.1, \"sm\": 2.0, \"tp\": 2.0}",
+    "variant_txt": "squeeze onderste 10%, stop 2xATR, doel 2R",
+    "redenen": [
+     "P2: validatie -0.014R bij 1.5x kosten, ondergrens -0.195R",
+     "P4: Deflated Sharpe 0.03 (< 0.95, 68 varianten geprobeerd)",
+     "P5: zonder de 5 beste validatietrades niet positief"
+    ]
+   }
   }
  ],
  "GBPUSD": [
@@ -206,7 +292,7 @@
    "variant_txt": "",
    "ondergrens": null,
    "n": 0,
-   "reden": "huidige strategie haalt de poort niet meer; geen strategie haalt de poort; trend is in train en validatie positief en wordt gevolgd zonder orders",
+   "reden": "geen strategie haalt de poort; trend is in train en validatie positief en wordt gevolgd zonder orders",
    "geblokkeerd": {},
    "onderzoek": {
     "strategie": "trend",
@@ -315,6 +401,30 @@
      "P5: zonder de 5 beste validatietrades niet positief"
     ]
    }
+  },
+  {
+   "sinds": "2026-11-02",
+   "status": "onderzoek",
+   "strategie": null,
+   "titel": "Onderzoek: Breakout (geen orders)",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort; breakout is in train en validatie positief en wordt gevolgd zonder orders",
+   "geblokkeerd": {},
+   "onderzoek": {
+    "strategie": "breakout",
+    "titel": "Breakout",
+    "variant_key": "{\"n\": 48, \"sm\": 1.5, \"tp\": 3.0}",
+    "variant_txt": "kanaal 48 uur, stop 1.5xATR, doel 3R",
+    "redenen": [
+     "P2: validatie +0.076R bij 1.5x kosten, ondergrens -0.132R",
+     "P4: Deflated Sharpe 0.17 (< 0.95, 68 varianten geprobeerd)",
+     "P5: zonder de 5 beste validatietrades niet positief"
+    ]
+   }
   }
  ],
  "ZILVER": [
@@ -340,7 +450,7 @@
    "variant_txt": "",
    "ondergrens": null,
    "n": 0,
-   "reden": "huidige strategie haalt de poort niet meer; geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+   "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
    "geblokkeerd": {},
    "onderzoek": null
   }
@@ -430,7 +540,7 @@
    "variant_txt": "",
    "ondergrens": null,
    "n": 0,
-   "reden": "huidige strategie haalt de poort niet meer; geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+   "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
    "geblokkeerd": {},
    "onderzoek": null
   }
