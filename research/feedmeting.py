@@ -291,9 +291,13 @@ def poll_summary(rows):
                 spread_mediaan_pct=round(float(np.median(sp)), 5) if sp else None, spread_max_pct=round(max(sp), 5) if sp else None)
 
 
+def credentials(env=os.environ):
+    """Zelfde leeswijze als de runner: geheimen kunnen een regeleinde bevatten."""
+    return tuple(env.get(k, "").strip() for k in SCRUB)
+
+
 def measure(minutes, path):
-    key, ident, pw = (os.environ.get(k) for k in SCRUB)
-    client = Capital("demo", key, ident, pw)
+    client = Capital("demo", *credentials())
     ro = ReadOnly(client)
     now = datetime.now(timezone.utc)
     out = dict(gemaakt=now.isoformat(timespec="seconds"), omgeving="demo (alleen lezen)", minuten=minutes, markten={})

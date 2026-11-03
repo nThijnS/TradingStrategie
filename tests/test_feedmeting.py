@@ -67,6 +67,12 @@ class Scrub(unittest.TestCase):
         self.assertNotIn("cst-geheim", repr(st.__dict__))
 
 
+class Credentials(unittest.TestCase):
+    def test_whitespace_stripped_like_the_runner(self):
+        env = dict(CAPITAL_API_KEY=" k\n", CAPITAL_IDENTIFIER="i\n", CAPITAL_PASSWORD="p ")
+        self.assertEqual(fm.credentials(env), ("k", "i", "p"))
+
+
 class Health(unittest.TestCase):
     def test_good_feed(self):
         self.assertEqual(fm.feed_health(GOOD, True), dict(oordeel="bruikbaar", redenen=[]))
