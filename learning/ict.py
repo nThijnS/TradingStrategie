@@ -1,5 +1,5 @@
 """
-Zelflerende laag van TradingStrategie. Draait elke werkdag na de beurs (GitHub Actions, workflow leren.yml).
+Zelflerende laag van MarketPilot. Draait elke werkdag na de beurs (GitHub Actions, workflow leren.yml).
 
 1. Haalt per markt de laatste 60 dagen 5m-data op en zoekt alle setups met elke combinatie van instellingen:
    displacement (basis/strenger) x doel (1R, 1,5R, 2R, DOL) x sessies (NY AM / + London / alle) x biasfilter (geen / 1H mee).
