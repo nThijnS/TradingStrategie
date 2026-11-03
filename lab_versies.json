@@ -305,6 +305,28 @@
      "P5: zonder de 5 beste validatietrades niet positief"
     ]
    }
+  },
+  {
+   "sinds": "2026-11-02",
+   "status": "onderzoek",
+   "strategie": null,
+   "titel": "Onderzoek: Breakout (geen orders)",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort; breakout is in train en validatie positief en wordt gevolgd zonder orders",
+   "geblokkeerd": {},
+   "onderzoek": {
+    "strategie": "breakout",
+    "titel": "Breakout",
+    "variant_key": "{\"n\": 48, \"sm\": 1.0, \"tp\": 2.0}",
+    "variant_txt": "kanaal 48 uur, stop 1xATR, doel 2R",
+    "redenen": [
+     "P4: Deflated Sharpe 0.22 (< 0.95, 68 varianten geprobeerd)"
+    ]
+   }
   }
  ],
  "ES": [

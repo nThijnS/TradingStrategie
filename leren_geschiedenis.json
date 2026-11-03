@@ -302,5 +302,43 @@
     }
    }
   }
+ },
+ {
+  "t": "2026-11-02T22:01-05:00",
+  "keuze": {
+   "EURUSD": {
+    "variant": "basis · TP 2.0 · alle sessies · bias geen",
+    "actief": false,
+    "score": {
+     "n": 58,
+     "gem": -0.156,
+     "score": -0.433,
+     "win": 0.379,
+     "totaal": -9.03
+    }
+   },
+   "NQ": {
+    "variant": "strenger · TP DOL · NY AM + London · bias geen",
+    "actief": false,
+    "score": {
+     "n": 40,
+     "gem": -0.173,
+     "score": -0.48,
+     "win": 0.35,
+     "totaal": -6.92
+    }
+   },
+   "GOUD": {
+    "variant": "strenger · TP 2.0 · alle sessies · bias geen",
+    "actief": false,
+    "score": {
+     "n": 28,
+     "gem": 0.091,
+     "score": -0.193,
+     "win": 0.429,
+     "totaal": 2.53
+    }
+   }
+  }
  }
 ]
