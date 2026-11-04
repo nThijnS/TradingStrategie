@@ -250,6 +250,7 @@ class DepositRounds(Base):
 
     def run_at(self, fake, c, st, now=NOW, stat=None):
         stat = stat or dict(gemaakt=(now - timedelta(minutes=1)).isoformat(), markten=[], alle_markten=[])
+        fake.quote_now = now
         return broker.run(stat, c, DEMO_ENV, st, connect=lambda m: fake, now=now)
 
     def provisional_round(self):
