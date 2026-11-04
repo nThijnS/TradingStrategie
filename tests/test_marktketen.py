@@ -48,7 +48,7 @@ class MultiCapital(FakeCapital):
         sp = self.specs[epic]
         return Instrument(markt=markt, epic=epic, ccy=sp["ccy"], lot_size=sp.get("lot", 1), scaling=1, min_size=sp["min"],
                           max_size=None, step=sp["step"], decimals=sp["dec"], min_stop=0.0, max_stop=None, status="TRADEABLE",
-                          quote_time=None, bid=sp["bid"], ask=sp["ask"])
+                          quote_time=self.quote_now, bid=sp["bid"], ask=sp["ask"])
 
     def market(self, epic):
         sp = self.specs.get(epic, dict(ccy="USD", bid=1.1, ask=1.1))

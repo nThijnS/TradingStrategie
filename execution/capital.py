@@ -14,7 +14,7 @@ import socket
 import time
 import urllib.error
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 from risk.rules import Instrument
 
@@ -187,7 +187,17 @@ class Capital:
                           max_size=float(max_size) if max_size else None, step=step, decimals=dec,
                           min_stop=dist(d.get("minStopOrProfitDistance")) or 0.0,
                           max_stop=dist(d.get("maxStopOrProfitDistance")), bid=bid, ask=ask, status=status,
-                          quote_time=_utc(s.get("updateTimeUTC")))
+                          quote_time=self.quote_time(s))
+
+    def quote_time(self, snapshot):
+        """Tijd van de koers in UTC, of None als die niet vaststaat. /markets/{epic} geeft geen updateTimeUTC maar alleen
+        updateTime in de tijdzone van de sessie (gemeten op 4 november 2026, alle 15 markten): timezoneOffset 1 en
+        updateTime 1 uur voor op UTC. Daarom wordt die met de verschuiving van de sessie teruggerekend."""
+        t = _utc(snapshot.get("updateTimeUTC"))
+        if t is not None:
+            return t
+        local, offset = _utc(snapshot.get("updateTime")), _num(self.sessie.get("timezoneOffset"))
+        return None if local is None or offset is None else local - timedelta(hours=offset)
 
     def fx(self, src, dst):
         """Koers om een bedrag in valuta src om te rekenen naar dst, via het forexpaar bij de broker. None = onbekend."""
@@ -281,7 +291,8 @@ def _num(x):
 
 
 def _utc(s):
-    """Tijd uit een *UTC-veld van de API. Velden zonder UTC in de naam worden bewust niet gebruikt."""
+    """Tijd uit een *UTC-veld van de API. Velden zonder UTC in de naam zijn lokale tijd en worden bewust niet gebruikt;
+    de enige uitzondering is Capital.quote_time, die de lokale tijd eerst terugrekent."""
     if not s:
         return None
     try:

@@ -5,6 +5,7 @@ import socket
 import sys
 import tempfile
 import unittest
+from dataclasses import replace
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest import mock
@@ -62,6 +63,7 @@ class FakeCapital:
         self.place_error = None
         self.drop_stop = False
         self.quote = dict(bid=2400.0, ask=2400.4)
+        self.quote_now = NOW
 
     def select_account(self, acc):
         self.calls.append(("select", acc))
@@ -80,7 +82,7 @@ class FakeCapital:
 
     def instrument(self, markt, epic):
         return Instrument(markt=markt, epic=epic, ccy="USD", lot_size=1, scaling=1, min_size=0.01, max_size=None, step=0.01,
-                          decimals=2, min_stop=0.5, max_stop=None, status="TRADEABLE", quote_time=None, **self.quote)
+                          decimals=2, min_stop=0.5, max_stop=None, status="TRADEABLE", quote_time=self.quote_now, **self.quote)
 
     def fx(self, src, dst):
         return 1.0 if src == dst else (1 / 1.1 if (src, dst) == ("USD", "EUR") else None)
@@ -140,6 +142,7 @@ class Base(unittest.TestCase):
 
     def go(self, fake, c=None, env=DEMO_ENV, st=None, stat=None, now=NOW):
         self.st = st if st is not None else {}
+        fake.quote_now = now
         return broker.run(stat or status(), c or cfg(), env, self.st, connect=lambda m: fake, now=now)
 
 
@@ -202,6 +205,24 @@ class Orders(Base):
         self.assertAlmostEqual(size, 5.04)
         self.assertEqual(out["modus"], "demo")
         self.assertEqual(list(self.st["orders"].values())[0]["status"], "geplaatst")
+
+    def refused_with(self, quote_time, reason):
+        fake = FakeCapital()
+        orig = fake.instrument
+        fake.instrument = lambda m, e: replace(orig(m, e), quote_time=quote_time)
+        out = self.go(fake)
+        self.assertEqual(fake.calls, [])
+        self.assertEqual(out["orders"], [])
+        self.assertTrue(any(reason in x["detail"] for x in self.st["log"]), self.st["log"])
+
+    def test_stale_quote_gives_no_order(self):
+        self.refused_with(NOW - timedelta(minutes=5), "s oud")
+
+    def test_unknown_quote_time_gives_no_order(self):
+        self.refused_with(None, "onbekend")
+
+    def test_quote_time_in_the_future_gives_no_order(self):
+        self.refused_with(NOW + timedelta(hours=1), "toekomst")
 
     def test_same_signal_twice_gives_one_order(self):
         fake = FakeCapital()
@@ -407,6 +428,25 @@ class CapitalClient(unittest.TestCase):
             msg = str(ex)
         self.assertNotIn("PW-123", msg)
         self.assertNotIn("KEY", msg)
+
+    def snapshot(self, **times):
+        return dict(instrument=dict(currency="USD", lotSize=1), dealingRules=dict(minDealSize=dict(value=0.01), minSizeIncrement=dict(value=0.01)),
+                    snapshot=dict(bid=4000.0, offer=4001.0, decimalPlacesFactor=2, marketStatus="TRADEABLE", **times))
+
+    def test_quote_time_converted_from_session_timezone(self):
+        c, _ = self.make({("GET", "/markets/GOLD"): (200, self.snapshot(updateTime="2026-11-04T01:49:18.756"), {})})
+        c.sessie = dict(c.sessie, timezoneOffset=1)
+        self.assertEqual(c.instrument("GOUD", "GOLD").quote_time, datetime(2026, 11, 4, 0, 49, 18, 756000, tzinfo=timezone.utc))
+
+    def test_quote_time_prefers_utc_field(self):
+        c, _ = self.make({("GET", "/markets/GOLD"): (200, self.snapshot(updateTime="2026-11-04T01:49:18", updateTimeUTC="2026-11-04T00:49:00"), {})})
+        c.sessie = dict(c.sessie, timezoneOffset=3)
+        self.assertEqual(c.instrument("GOUD", "GOLD").quote_time, datetime(2026, 11, 4, 0, 49, tzinfo=timezone.utc))
+
+    def test_quote_time_unknown_without_session_offset(self):
+        c, _ = self.make({("GET", "/markets/GOLD"): (200, self.snapshot(updateTime="2026-11-04T01:49:18"), {})})
+        c.sessie = {}
+        self.assertIsNone(c.instrument("GOUD", "GOLD").quote_time)
 
     def test_instrument_fail_closed(self):
         c, _ = self.make({("GET", "/markets/GOLD"): (200, dict(instrument=dict(currency="USD", lotSize=1), dealingRules={}, snapshot={}), {})})

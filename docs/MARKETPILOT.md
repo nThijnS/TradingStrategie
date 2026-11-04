@@ -157,7 +157,7 @@ Live (echt geld) staat los hiervan uit. `config.json` → `live.strategieen` is 
      - minimale ordergrootte en stap;
      - decimalen en valuta;
      - minimale stopafstand (als percentage);
-     - status TRADEABLE en de leeftijd van de koers.
+     - status TRADEABLE en de leeftijd van de koers. Is de koerstijd onbekend, ouder dan 180 seconden of meer dan 180 seconden in de toekomst, dan volgt een weigering.
    - Wijkt de brokerkoers meer dan 5% af van de bronkoers, dan volgt een weigering.
 6. **Grootte, risico en ordertype.**
    - De positiegrootte rekent met het risicovermogen, begrensd op de risicobasis (zie §2), en met de wisselkoers bij de broker (USD en JPY → EUR). Er wordt naar beneden afgerond op de stap.
