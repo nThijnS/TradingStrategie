@@ -111,10 +111,13 @@ def check_quote(inst: Instrument, now: datetime, max_age_s: int):
         return f"markt niet verhandelbaar (status {inst.status})"
     if not (inst.bid > 0 and inst.ask > 0 and inst.ask >= inst.bid):
         return f"ongeldige koers (bid {inst.bid}, ask {inst.ask})"
-    if inst.quote_time is not None:
-        age = (now - inst.quote_time).total_seconds()
-        if age > max_age_s:
-            return f"brokerkoers is {age:.0f} s oud (max {max_age_s} s)"
+    if inst.quote_time is None:
+        return "tijd van de brokerkoers onbekend"
+    age = (now - inst.quote_time).total_seconds()
+    if age > max_age_s:
+        return f"brokerkoers is {age:.0f} s oud (max {max_age_s} s)"
+    if age < -max_age_s:       # verkeerde tijdzone of klok: dan zegt de leeftijd niets
+        return f"tijd van de brokerkoers ligt {-age:.0f} s in de toekomst"
     return None
 
 

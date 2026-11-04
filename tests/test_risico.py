@@ -38,6 +38,10 @@ class Instrument(unittest.TestCase):
     def test_quote_checks(self):
         self.assertIsNone(r.check_quote(inst(), NOW, 180))
         self.assertIn("s oud", r.check_quote(inst(quote_time=NOW - timedelta(minutes=5)), NOW, 180))
+        self.assertIsNone(r.check_quote(inst(quote_time=NOW - timedelta(seconds=180)), NOW, 180))
+        self.assertIn("onbekend", r.check_quote(inst(quote_time=None), NOW, 180))
+        self.assertIn("toekomst", r.check_quote(inst(quote_time=NOW + timedelta(hours=1)), NOW, 180))
+        self.assertIsNone(r.check_quote(inst(quote_time=NOW + timedelta(seconds=30)), NOW, 180))
         self.assertIn("niet verhandelbaar", r.check_quote(inst(status="CLOSED"), NOW, 180))
         self.assertIn("ongeldige koers", r.check_quote(inst(bid=0), NOW, 180))
         self.assertIn("ongeldige koers", r.check_quote(inst(bid=20002, ask=20001), NOW, 180))
