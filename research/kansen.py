@@ -19,6 +19,7 @@ from backtesting import engine
 from backtesting.metrics import deflated_sharpe
 from execution.markets import EPICS
 from learning import selector
+from research import registry
 from research.tijdframes import loss_streak
 from risk import rules
 from strategies import lab as strat
@@ -161,6 +162,8 @@ def main():
             rijen.append(dict(spec, familie=fam, variant=r["variant"], geslaagd=g["geslaagd"], redenen=[x[:2] for x in g["redenen"]], ontwikkeling=samen(tr), evaluatie=samen(va),
                               ondergrens=g["ondergrens"], dsr=g["dsr"], dsr_scan=round(float(dsr), 3), toelaatbaar=toelaatbaar(g, va, mid, dsr)))
         print(m, flush=True)
+    registry.record("kansen", dict(protocol_sha256=sha, proeven_scan=scan), dict(combinaties=len(rijen), geslaagd=sum(r["geslaagd"] for r in rijen), toelaatbaar=sum(r["toelaatbaar"] for r in rijen)),
+                    {e: registry.fingerprint(df) for e, df in data.items()})
     out = dict(protocol=proto["naam"], protocol_sha256=sha, einde=str(einde), markten=len(data), swing_markten=len(swing), proeven_scan=scan,
                aanbod={k: samen(v) for k, v in aanbod.items()}, geslaagd=[r for r in rijen if r["geslaagd"]], toelaatbaar=[r for r in rijen if r["toelaatbaar"]], rijen=rijen)
     Path(a.uit).write_text(json.dumps(out, ensure_ascii=False, indent=1))
