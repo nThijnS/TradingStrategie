@@ -316,12 +316,22 @@ def credentials(env=os.environ):
     return tuple(env.get(k, "").strip() for k in SCRUB)
 
 
+def time_sample(ro, sessie, now):
+    """Welke tijd geeft de broker bij een koers? Bewaart alleen tijden en de tijdzoneverschuiving van de sessie."""
+    rows = {}
+    for name, epic in EPICS.items():
+        s = ro.get(f"/markets/{epic}").get("snapshot", {})
+        rows[name] = dict(updateTime=s.get("updateTime"), updateTimeUTC=s.get("updateTimeUTC"))
+    return dict(klok_utc=now.isoformat(), timezoneOffset=sessie.get("timezoneOffset"), server=ro.get("/time").get("serverTime"), koersen=rows)
+
+
 def measure(minutes, path):
     client = Capital("demo", *credentials())
     ro = ReadOnly(client)
     now = datetime.now(timezone.utc)
     out = dict(gemaakt=now.isoformat(timespec="seconds"), omgeving="demo (alleen lezen)", minuten=minutes, markten={})
     overlap = {}
+    out["tijd"] = time_sample(ro, client.sessie, now)
     import yfinance as yf
     for name, epic in EPICS.items():
         row = dict(epic=epic)

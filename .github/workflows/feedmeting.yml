@@ -8,7 +8,7 @@ on:
       minuten:
         description: "Meetduur in minuten"
         type: number
-        default: 20
+        default: 3
   push:
     branches: ["research/timeframes"]
     paths: ["research/feedmeting.py", ".github/workflows/feedmeting.yml"]
@@ -40,7 +40,7 @@ jobs:
           CAPITAL_API_KEY: ${{ secrets.CAPITAL_API_KEY }}
           CAPITAL_IDENTIFIER: ${{ secrets.CAPITAL_IDENTIFIER }}
           CAPITAL_PASSWORD: ${{ secrets.CAPITAL_PASSWORD }}
-        run: python -W ignore -m research.feedmeting meet --minuten "${{ inputs.minuten || 20 }}" --uit feedmeting.json
+        run: python -W ignore -m research.feedmeting meet --minuten "${{ inputs.minuten || 3 }}" --uit feedmeting.json
 
       - uses: actions/upload-artifact@v4
         if: always() && hashFiles('feedmeting.json') != ''
