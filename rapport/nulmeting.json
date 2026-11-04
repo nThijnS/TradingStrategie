@@ -1,0 +1,2419 @@
+{
+ "protocol_sha256": "aa51d1c1db408b65ee03097d04d54677e481ce054fcf4d89d8654d5e0381e62c",
+ "gemaakt": "2026-11-03T23:39+00:00",
+ "lab_van": "2026-11-02T22:01-05:00",
+ "markten": [
+  {
+   "markt": "BTC",
+   "status": "onderzoek",
+   "gevolgd": "momentum",
+   "spread_pct": 0.0647,
+   "model_pct": 0.08,
+   "families": {
+    "trend": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "doel 3R",
+     "evaluatie": {
+      "n": 47,
+      "per_week": 1.83,
+      "gem": -0.131,
+      "gem15": -0.201,
+      "totaal": -6.2,
+      "win": 0.404,
+      "gem_winst": 1.01,
+      "gem_verlies": -0.9,
+      "max_dd_r": 8.2,
+      "verliesreeks": 4,
+      "onder": -0.377,
+      "ci95": [
+       -0.404,
+       0.11
+      ],
+      "weddenschappen": 45,
+      "gem_rr": 3.0
+     },
+     "afgewezen": {}
+    },
+    "momentum": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "efficiëntie > 0.5, stop 2xATR, lookback 10, doel 2R",
+     "evaluatie": {
+      "n": 46,
+      "per_week": 1.79,
+      "gem": -0.074,
+      "gem15": -0.135,
+      "totaal": -3.4,
+      "win": 0.413,
+      "gem_winst": 1.06,
+      "gem_verlies": -0.87,
+      "max_dd_r": 8.9,
+      "verliesreeks": 9,
+      "onder": -0.338,
+      "ci95": [
+       -0.398,
+       0.137
+      ],
+      "weddenschappen": 42,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    },
+    "meanrev": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "band 2.0 st.dev.",
+     "evaluatie": {
+      "n": 139,
+      "per_week": 5.41,
+      "gem": -0.276,
+      "gem15": -0.371,
+      "totaal": -38.3,
+      "win": 0.424,
+      "gem_winst": 0.84,
+      "gem_verlies": -1.1,
+      "max_dd_r": 38.3,
+      "verliesreeks": 7,
+      "onder": -0.44,
+      "ci95": [
+       -0.457,
+       -0.228
+      ],
+      "weddenschappen": 123,
+      "gem_rr": 1.33
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 22
+     }
+    },
+    "breakout": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "kanaal 24 uur",
+     "evaluatie": {
+      "n": 173,
+      "per_week": 6.73,
+      "gem": -0.13,
+      "gem15": -0.219,
+      "totaal": -22.4,
+      "win": 0.37,
+      "gem_winst": 1.31,
+      "gem_verlies": -0.97,
+      "max_dd_r": 31.0,
+      "verliesreeks": 6,
+      "onder": -0.322,
+      "ci95": [
+       -0.345,
+       -0.044
+      ],
+      "weddenschappen": 152,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 16
+     }
+    },
+    "volatiliteit": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "squeeze onderste 20%",
+     "evaluatie": {
+      "n": 81,
+      "per_week": 3.15,
+      "gem": -0.316,
+      "gem15": -0.432,
+      "totaal": -25.6,
+      "win": 0.358,
+      "gem_winst": 1.1,
+      "gem_verlies": -1.1,
+      "max_dd_r": 26.0,
+      "verliesreeks": 7,
+      "onder": -0.617,
+      "ci95": [
+       -0.652,
+       -0.184
+      ],
+      "weddenschappen": 77,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 26
+     }
+    }
+   }
+  },
+  {
+   "markt": "ETH",
+   "status": "onderzoek",
+   "gevolgd": "trend",
+   "spread_pct": 0.0768,
+   "model_pct": 0.08,
+   "families": {
+    "trend": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "doel 3R",
+     "evaluatie": {
+      "n": 59,
+      "per_week": 2.29,
+      "gem": -0.028,
+      "gem15": -0.082,
+      "totaal": -1.7,
+      "win": 0.39,
+      "gem_winst": 1.27,
+      "gem_verlies": -0.85,
+      "max_dd_r": 9.0,
+      "verliesreeks": 5,
+      "onder": -0.314,
+      "ci95": [
+       -0.35,
+       0.136
+      ],
+      "weddenschappen": 56,
+      "gem_rr": 3.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 1
+     }
+    },
+    "momentum": {
+     "poort_redenen": [
+      "P1",
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "efficiëntie > 0.6, stop 1.5xATR, lookback 10, doel 2R",
+     "evaluatie": {
+      "n": 25,
+      "per_week": 0.97,
+      "gem": -0.496,
+      "gem15": -0.561,
+      "totaal": -12.4,
+      "win": 0.2,
+      "gem_winst": 1.56,
+      "gem_verlies": -1.01,
+      "max_dd_r": 12.4,
+      "verliesreeks": 5,
+      "onder": -0.636,
+      "ci95": [
+       -0.67,
+       -0.24
+      ],
+      "weddenschappen": 21,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 1
+     }
+    },
+    "meanrev": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "band 2.5 st.dev.",
+     "evaluatie": {
+      "n": 47,
+      "per_week": 1.83,
+      "gem": -0.298,
+      "gem15": -0.37,
+      "totaal": -14.0,
+      "win": 0.362,
+      "gem_winst": 0.97,
+      "gem_verlies": -1.01,
+      "max_dd_r": 14.0,
+      "verliesreeks": 5,
+      "onder": -0.464,
+      "ci95": [
+       -0.489,
+       -0.089
+      ],
+      "weddenschappen": 45,
+      "gem_rr": 1.38
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 1
+     }
+    },
+    "breakout": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "kanaal 24 uur",
+     "evaluatie": {
+      "n": 160,
+      "per_week": 6.22,
+      "gem": -0.207,
+      "gem15": -0.275,
+      "totaal": -33.1,
+      "win": 0.319,
+      "gem_winst": 1.49,
+      "gem_verlies": -1.0,
+      "max_dd_r": 33.9,
+      "verliesreeks": 7,
+      "onder": -0.341,
+      "ci95": [
+       -0.351,
+       -0.144
+      ],
+      "weddenschappen": 139,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 4
+     }
+    },
+    "volatiliteit": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "squeeze onderste 20%",
+     "evaluatie": {
+      "n": 77,
+      "per_week": 2.99,
+      "gem": -0.024,
+      "gem15": -0.111,
+      "totaal": -1.8,
+      "win": 0.416,
+      "gem_winst": 1.34,
+      "gem_verlies": -0.99,
+      "max_dd_r": 9.9,
+      "verliesreeks": 8,
+      "onder": -0.34,
+      "ci95": [
+       -0.378,
+       0.172
+      ],
+      "weddenschappen": 76,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 6
+     }
+    }
+   }
+  },
+  {
+   "markt": "SOL",
+   "status": "pauze",
+   "gevolgd": null,
+   "spread_pct": 0.5,
+   "model_pct": 0.12,
+   "families": {
+    "trend": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "doel 2R",
+     "evaluatie": {
+      "n": 9,
+      "per_week": 0.35,
+      "gem": -0.311,
+      "gem15": -0.473,
+      "totaal": -2.8,
+      "win": 0.111,
+      "gem_winst": 1.68,
+      "gem_verlies": -0.56,
+      "max_dd_r": 3.2,
+      "verliesreeks": 5,
+      "onder": -0.719,
+      "ci95": [
+       -0.749,
+       0.248
+      ],
+      "weddenschappen": 9,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 136
+     }
+    },
+    "momentum": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "efficiëntie > 0.5",
+     "evaluatie": {
+      "n": 5,
+      "per_week": 0.19,
+      "gem": -0.638,
+      "gem15": -0.795,
+      "totaal": -3.2,
+      "win": 0.2,
+      "gem_winst": 1.63,
+      "gem_verlies": -1.21,
+      "max_dd_r": 4.8,
+      "verliesreeks": 4,
+      "onder": -1.464,
+      "ci95": [
+       -1.464,
+       -0.004
+      ],
+      "weddenschappen": 5,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 195
+     }
+    },
+    "meanrev": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "band 2.0 st.dev.",
+     "evaluatie": {
+      "n": 7,
+      "per_week": 0.27,
+      "gem": -0.26,
+      "gem15": -0.417,
+      "totaal": -1.8,
+      "win": 0.286,
+      "gem_winst": 1.35,
+      "gem_verlies": -0.91,
+      "max_dd_r": 2.7,
+      "verliesreeks": 3,
+      "onder": -0.679,
+      "ci95": [
+       -0.855,
+       0.368
+      ],
+      "weddenschappen": 7,
+      "gem_rr": 1.6
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 484
+     }
+    },
+    "breakout": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "kanaal 24 uur",
+     "evaluatie": {
+      "n": 13,
+      "per_week": 0.51,
+      "gem": -0.304,
+      "gem15": -0.462,
+      "totaal": -4.0,
+      "win": 0.308,
+      "gem_winst": 1.26,
+      "gem_verlies": -1.0,
+      "max_dd_r": 6.5,
+      "verliesreeks": 6,
+      "onder": -1.192,
+      "ci95": [
+       -1.221,
+       0.767
+      ],
+      "weddenschappen": 10,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 746
+     }
+    },
+    "volatiliteit": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "squeeze onderste 5%, stop 1.5xATR, doel 2R",
+     "evaluatie": {
+      "n": 1,
+      "per_week": 0.04,
+      "gem": -1.373,
+      "gem15": -1.547,
+      "totaal": -1.4,
+      "win": 0.0,
+      "gem_winst": 0.0,
+      "gem_verlies": -1.37,
+      "max_dd_r": 1.4,
+      "verliesreeks": 1,
+      "onder": null,
+      "ci95": null,
+      "weddenschappen": 1,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 139
+     }
+    }
+   }
+  },
+  {
+   "markt": "EURUSD",
+   "status": "onderzoek",
+   "gevolgd": "volatiliteit",
+   "spread_pct": 0.0063,
+   "model_pct": 0.007,
+   "families": {
+    "ict": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "basis · TP 2.0 · alle sessies · bias geen"
+    },
+    "trend": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "doel 2R",
+     "evaluatie": {
+      "n": 34,
+      "per_week": 1.32,
+      "gem": -0.355,
+      "gem15": -0.389,
+      "totaal": -12.1,
+      "win": 0.294,
+      "gem_winst": 0.85,
+      "gem_verlies": -0.86,
+      "max_dd_r": 13.6,
+      "verliesreeks": 7,
+      "onder": -0.55,
+      "ci95": [
+       -0.583,
+       -0.057
+      ],
+      "weddenschappen": 34,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "markt dicht": 6
+     }
+    },
+    "momentum": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "efficiëntie > 0.3",
+     "evaluatie": {
+      "n": 106,
+      "per_week": 4.12,
+      "gem": -0.186,
+      "gem15": -0.234,
+      "totaal": -19.7,
+      "win": 0.33,
+      "gem_winst": 1.45,
+      "gem_verlies": -0.99,
+      "max_dd_r": 22.4,
+      "verliesreeks": 12,
+      "onder": -0.409,
+      "ci95": [
+       -0.442,
+       0.033
+      ],
+      "weddenschappen": 86,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "markt dicht": 8
+     }
+    },
+    "meanrev": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "band 2.5 st.dev.",
+     "evaluatie": {
+      "n": 34,
+      "per_week": 1.32,
+      "gem": 0.016,
+      "gem15": -0.035,
+      "totaal": 0.6,
+      "win": 0.441,
+      "gem_winst": 1.29,
+      "gem_verlies": -0.99,
+      "max_dd_r": 7.6,
+      "verliesreeks": 5,
+      "onder": -0.391,
+      "ci95": [
+       -0.457,
+       0.331
+      ],
+      "weddenschappen": 34,
+      "gem_rr": 1.65
+     },
+     "afgewezen": {
+      "markt dicht": 1
+     }
+    },
+    "breakout": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "kanaal 24 uur",
+     "evaluatie": {
+      "n": 130,
+      "per_week": 5.06,
+      "gem": -0.314,
+      "gem15": -0.361,
+      "totaal": -40.9,
+      "win": 0.292,
+      "gem_winst": 1.31,
+      "gem_verlies": -0.99,
+      "max_dd_r": 45.4,
+      "verliesreeks": 13,
+      "onder": -0.496,
+      "ci95": [
+       -0.526,
+       -0.257
+      ],
+      "weddenschappen": 114,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "markt dicht": 13
+     }
+    },
+    "volatiliteit": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "squeeze onderste 10%, stop 2xATR, doel 2R",
+     "evaluatie": {
+      "n": 46,
+      "per_week": 1.79,
+      "gem": 0.009,
+      "gem15": -0.032,
+      "totaal": 0.4,
+      "win": 0.435,
+      "gem_winst": 1.28,
+      "gem_verlies": -0.97,
+      "max_dd_r": 5.2,
+      "verliesreeks": 5,
+      "onder": -0.254,
+      "ci95": [
+       -0.292,
+       0.247
+      ],
+      "weddenschappen": 45,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "markt dicht": 3
+     }
+    }
+   }
+  },
+  {
+   "markt": "GBPUSD",
+   "status": "onderzoek",
+   "gevolgd": "meanrev",
+   "spread_pct": 0.0097,
+   "model_pct": 0.009,
+   "families": {
+    "trend": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "doel 3R",
+     "evaluatie": {
+      "n": 33,
+      "per_week": 1.28,
+      "gem": 0.042,
+      "gem15": -0.004,
+      "totaal": 1.4,
+      "win": 0.455,
+      "gem_winst": 1.23,
+      "gem_verlies": -0.95,
+      "max_dd_r": 7.3,
+      "verliesreeks": 5,
+      "onder": -0.358,
+      "ci95": [
+       -0.413,
+       0.259
+      ],
+      "weddenschappen": 33,
+      "gem_rr": 3.0
+     },
+     "afgewezen": {
+      "markt dicht": 4
+     }
+    },
+    "momentum": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "efficiëntie > 0.5",
+     "evaluatie": {
+      "n": 41,
+      "per_week": 1.59,
+      "gem": -0.2,
+      "gem15": -0.256,
+      "totaal": -8.2,
+      "win": 0.317,
+      "gem_winst": 1.42,
+      "gem_verlies": -0.95,
+      "max_dd_r": 14.8,
+      "verliesreeks": 14,
+      "onder": -0.576,
+      "ci95": [
+       -0.626,
+       -0.002
+      ],
+      "weddenschappen": 37,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "markt dicht": 4
+     }
+    },
+    "meanrev": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "band 2.5 st.dev.",
+     "evaluatie": {
+      "n": 43,
+      "per_week": 1.67,
+      "gem": -0.055,
+      "gem15": -0.117,
+      "totaal": -2.3,
+      "win": 0.442,
+      "gem_winst": 1.21,
+      "gem_verlies": -1.06,
+      "max_dd_r": 9.2,
+      "verliesreeks": 3,
+      "onder": -0.391,
+      "ci95": [
+       -0.428,
+       0.104
+      ],
+      "weddenschappen": 43,
+      "gem_rr": 1.61
+     },
+     "afgewezen": {}
+    },
+    "breakout": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "kanaal 48 uur",
+     "evaluatie": {
+      "n": 86,
+      "per_week": 3.34,
+      "gem": -0.321,
+      "gem15": -0.38,
+      "totaal": -27.6,
+      "win": 0.302,
+      "gem_winst": 1.3,
+      "gem_verlies": -1.02,
+      "max_dd_r": 34.0,
+      "verliesreeks": 10,
+      "onder": -0.633,
+      "ci95": [
+       -0.665,
+       -0.184
+      ],
+      "weddenschappen": 78,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "markt dicht": 8
+     }
+    },
+    "volatiliteit": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "squeeze onderste 10%",
+     "evaluatie": {
+      "n": 51,
+      "per_week": 1.98,
+      "gem": -0.034,
+      "gem15": -0.103,
+      "totaal": -1.7,
+      "win": 0.412,
+      "gem_winst": 1.44,
+      "gem_verlies": -1.06,
+      "max_dd_r": 10.6,
+      "verliesreeks": 5,
+      "onder": -0.349,
+      "ci95": [
+       -0.387,
+       0.252
+      ],
+      "weddenschappen": 48,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    }
+   }
+  },
+  {
+   "markt": "USDJPY",
+   "status": "pauze",
+   "gevolgd": null,
+   "spread_pct": 0.0076,
+   "model_pct": 0.008,
+   "families": {
+    "trend": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "doel 2.5R, stop 2xATR",
+     "evaluatie": {
+      "n": 38,
+      "per_week": 1.48,
+      "gem": -0.184,
+      "gem15": -0.216,
+      "totaal": -7.0,
+      "win": 0.395,
+      "gem_winst": 0.63,
+      "gem_verlies": -0.71,
+      "max_dd_r": 10.2,
+      "verliesreeks": 6,
+      "onder": -0.391,
+      "ci95": [
+       -0.416,
+       -0.01
+      ],
+      "weddenschappen": 37,
+      "gem_rr": 2.5
+     },
+     "afgewezen": {
+      "markt dicht": 2
+     }
+    },
+    "momentum": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "efficiëntie > 0.3, stop 1.5xATR, lookback 10, doel 3R",
+     "evaluatie": {
+      "n": 93,
+      "per_week": 3.62,
+      "gem": -0.115,
+      "gem15": -0.161,
+      "totaal": -10.7,
+      "win": 0.344,
+      "gem_winst": 1.61,
+      "gem_verlies": -1.02,
+      "max_dd_r": 16.9,
+      "verliesreeks": 12,
+      "onder": -0.405,
+      "ci95": [
+       -0.467,
+       0.136
+      ],
+      "weddenschappen": 76,
+      "gem_rr": 3.0
+     },
+     "afgewezen": {
+      "markt dicht": 8
+     }
+    },
+    "meanrev": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "band 2.0 st.dev.",
+     "evaluatie": {
+      "n": 97,
+      "per_week": 3.77,
+      "gem": -0.246,
+      "gem15": -0.295,
+      "totaal": -23.9,
+      "win": 0.412,
+      "gem_winst": 0.8,
+      "gem_verlies": -0.98,
+      "max_dd_r": 24.5,
+      "verliesreeks": 9,
+      "onder": -0.404,
+      "ci95": [
+       -0.426,
+       -0.15
+      ],
+      "weddenschappen": 86,
+      "gem_rr": 1.21
+     },
+     "afgewezen": {
+      "markt dicht": 3
+     }
+    },
+    "breakout": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "kanaal 24 uur",
+     "evaluatie": {
+      "n": 123,
+      "per_week": 4.78,
+      "gem": -0.185,
+      "gem15": -0.231,
+      "totaal": -22.7,
+      "win": 0.382,
+      "gem_winst": 1.15,
+      "gem_verlies": -1.01,
+      "max_dd_r": 26.3,
+      "verliesreeks": 8,
+      "onder": -0.4,
+      "ci95": [
+       -0.43,
+       -0.043
+      ],
+      "weddenschappen": 98,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "markt dicht": 5
+     }
+    },
+    "volatiliteit": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "squeeze onderste 20%",
+     "evaluatie": {
+      "n": 68,
+      "per_week": 2.64,
+      "gem": -0.164,
+      "gem15": -0.218,
+      "totaal": -11.1,
+      "win": 0.338,
+      "gem_winst": 1.37,
+      "gem_verlies": -0.95,
+      "max_dd_r": 13.0,
+      "verliesreeks": 6,
+      "onder": -0.368,
+      "ci95": [
+       -0.396,
+       -0.006
+      ],
+      "weddenschappen": 65,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "markt dicht": 1
+     }
+    }
+   }
+  },
+  {
+   "markt": "NQ",
+   "status": "onderzoek",
+   "gevolgd": "breakout",
+   "spread_pct": 0.0064,
+   "model_pct": 0.008,
+   "families": {
+    "ict": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "strenger · TP DOL · NY AM + London · bias geen"
+    },
+    "trend": {
+     "poort_redenen": [
+      "P1",
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "doel 3R",
+     "evaluatie": {
+      "n": 24,
+      "per_week": 0.93,
+      "gem": 0.215,
+      "gem15": 0.207,
+      "totaal": 5.2,
+      "win": 0.583,
+      "gem_winst": 0.92,
+      "gem_verlies": -0.77,
+      "max_dd_r": 3.5,
+      "verliesreeks": 3,
+      "onder": -0.247,
+      "ci95": [
+       -0.286,
+       0.584
+      ],
+      "weddenschappen": 24,
+      "gem_rr": 3.0
+     },
+     "afgewezen": {}
+    },
+    "momentum": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "efficiëntie > 0.3",
+     "evaluatie": {
+      "n": 105,
+      "per_week": 4.08,
+      "gem": 0.026,
+      "gem15": 0.013,
+      "totaal": 2.7,
+      "win": 0.4,
+      "gem_winst": 1.39,
+      "gem_verlies": -0.88,
+      "max_dd_r": 12.8,
+      "verliesreeks": 8,
+      "onder": -0.163,
+      "ci95": [
+       -0.189,
+       0.218
+      ],
+      "weddenschappen": 90,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    },
+    "meanrev": {
+     "poort_redenen": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "band 2.5 st.dev.",
+     "evaluatie": {
+      "n": 30,
+      "per_week": 1.17,
+      "gem": -0.116,
+      "gem15": -0.128,
+      "totaal": -3.5,
+      "win": 0.4,
+      "gem_winst": 1.21,
+      "gem_verlies": -1.0,
+      "max_dd_r": 5.2,
+      "verliesreeks": 4,
+      "onder": -0.367,
+      "ci95": [
+       -0.422,
+       0.224
+      ],
+      "weddenschappen": 29,
+      "gem_rr": 1.58
+     },
+     "afgewezen": {}
+    },
+    "breakout": {
+     "poort_redenen": [
+      "P4"
+     ],
+     "variant": "kanaal 48 uur, stop 1xATR, doel 2R",
+     "evaluatie": {
+      "n": 108,
+      "per_week": 4.2,
+      "gem": 0.162,
+      "gem15": 0.143,
+      "totaal": 17.5,
+      "win": 0.426,
+      "gem_winst": 1.73,
+      "gem_verlies": -1.0,
+      "max_dd_r": 10.7,
+      "verliesreeks": 9,
+      "onder": -0.031,
+      "ci95": [
+       -0.063,
+       0.367
+      ],
+      "weddenschappen": 88,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    },
+    "volatiliteit": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "squeeze onderste 10%, stop 2xATR, doel 2R",
+     "evaluatie": {
+      "n": 40,
+      "per_week": 1.56,
+      "gem": 0.039,
+      "gem15": 0.029,
+      "totaal": 1.6,
+      "win": 0.5,
+      "gem_winst": 1.0,
+      "gem_verlies": -0.92,
+      "max_dd_r": 5.9,
+      "verliesreeks": 5,
+      "onder": -0.189,
+      "ci95": [
+       -0.228,
+       0.385
+      ],
+      "weddenschappen": 40,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    }
+   }
+  },
+  {
+   "markt": "ES",
+   "status": "onderzoek",
+   "gevolgd": "momentum",
+   "spread_pct": 0.008,
+   "model_pct": 0.008,
+   "families": {
+    "trend": {
+     "poort_redenen": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "doel 3R",
+     "evaluatie": {
+      "n": 28,
+      "per_week": 1.09,
+      "gem": -0.013,
+      "gem15": -0.027,
+      "totaal": -0.4,
+      "win": 0.464,
+      "gem_winst": 0.84,
+      "gem_verlies": -0.75,
+      "max_dd_r": 6.8,
+      "verliesreeks": 3,
+      "onder": -0.336,
+      "ci95": [
+       -0.373,
+       0.172
+      ],
+      "weddenschappen": 28,
+      "gem_rr": 3.0
+     },
+     "afgewezen": {}
+    },
+    "momentum": {
+     "poort_redenen": [
+      "P4"
+     ],
+     "variant": "efficiëntie > 0.5",
+     "evaluatie": {
+      "n": 41,
+      "per_week": 1.59,
+      "gem": 0.25,
+      "gem15": 0.227,
+      "totaal": 10.3,
+      "win": 0.488,
+      "gem_winst": 1.41,
+      "gem_verlies": -0.86,
+      "max_dd_r": 3.8,
+      "verliesreeks": 3,
+      "onder": 0.033,
+      "ci95": [
+       -0.019,
+       0.513
+      ],
+      "weddenschappen": 33,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    },
+    "meanrev": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "band 2.5 st.dev.",
+     "evaluatie": {
+      "n": 42,
+      "per_week": 1.63,
+      "gem": 0.13,
+      "gem15": 0.107,
+      "totaal": 5.4,
+      "win": 0.429,
+      "gem_winst": 1.38,
+      "gem_verlies": -0.81,
+      "max_dd_r": 7.8,
+      "verliesreeks": 5,
+      "onder": -0.241,
+      "ci95": [
+       -0.297,
+       0.727
+      ],
+      "weddenschappen": 41,
+      "gem_rr": 1.57
+     },
+     "afgewezen": {}
+    },
+    "breakout": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "kanaal 48 uur",
+     "evaluatie": {
+      "n": 97,
+      "per_week": 3.77,
+      "gem": -0.231,
+      "gem15": -0.252,
+      "totaal": -22.4,
+      "win": 0.309,
+      "gem_winst": 1.23,
+      "gem_verlies": -0.89,
+      "max_dd_r": 24.6,
+      "verliesreeks": 9,
+      "onder": -0.371,
+      "ci95": [
+       -0.391,
+       -0.094
+      ],
+      "weddenschappen": 83,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    },
+    "volatiliteit": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "squeeze onderste 20%, stop 1.5xATR, doel 3R",
+     "evaluatie": {
+      "n": 78,
+      "per_week": 3.03,
+      "gem": -0.175,
+      "gem15": -0.2,
+      "totaal": -13.6,
+      "win": 0.333,
+      "gem_winst": 1.28,
+      "gem_verlies": -0.9,
+      "max_dd_r": 16.5,
+      "verliesreeks": 6,
+      "onder": -0.333,
+      "ci95": [
+       -0.358,
+       0.012
+      ],
+      "weddenschappen": 68,
+      "gem_rr": 3.0
+     },
+     "afgewezen": {}
+    }
+   }
+  },
+  {
+   "markt": "DAX",
+   "status": "pauze",
+   "gevolgd": null,
+   "spread_pct": 0.007,
+   "model_pct": 0.01,
+   "families": {
+    "trend": {
+     "poort_redenen": [
+      "P1"
+     ],
+     "variant": "doel 3R",
+     "evaluatie": {
+      "n": 18,
+      "per_week": 0.7,
+      "gem": -0.052,
+      "gem15": -0.062,
+      "totaal": -0.9,
+      "win": 0.333,
+      "gem_winst": 0.61,
+      "gem_verlies": -0.38,
+      "max_dd_r": 2.5,
+      "verliesreeks": 4,
+      "onder": -0.241,
+      "ci95": [
+       -0.309,
+       0.308
+      ],
+      "weddenschappen": 18,
+      "gem_rr": 3.0
+     },
+     "afgewezen": {}
+    },
+    "momentum": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "efficiëntie > 0.4, stop 1.5xATR, lookback 10, doel 2R",
+     "evaluatie": {
+      "n": 30,
+      "per_week": 1.17,
+      "gem": -0.14,
+      "gem15": -0.154,
+      "totaal": -4.2,
+      "win": 0.333,
+      "gem_winst": 0.88,
+      "gem_verlies": -0.65,
+      "max_dd_r": 6.9,
+      "verliesreeks": 8,
+      "onder": -0.45,
+      "ci95": [
+       -0.488,
+       -0.016
+      ],
+      "weddenschappen": 28,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    },
+    "meanrev": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "band 2.0 st.dev.",
+     "evaluatie": {
+      "n": 34,
+      "per_week": 1.32,
+      "gem": 0.157,
+      "gem15": 0.143,
+      "totaal": 5.3,
+      "win": 0.529,
+      "gem_winst": 0.81,
+      "gem_verlies": -0.58,
+      "max_dd_r": 3.4,
+      "verliesreeks": 5,
+      "onder": -0.04,
+      "ci95": [
+       -0.08,
+       0.401
+      ],
+      "weddenschappen": 34,
+      "gem_rr": 1.56
+     },
+     "afgewezen": {}
+    },
+    "breakout": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "kanaal 48 uur, stop 1.5xATR, doel 3R",
+     "evaluatie": {
+      "n": 45,
+      "per_week": 1.75,
+      "gem": -0.218,
+      "gem15": -0.231,
+      "totaal": -9.8,
+      "win": 0.333,
+      "gem_winst": 0.86,
+      "gem_verlies": -0.76,
+      "max_dd_r": 12.9,
+      "verliesreeks": 6,
+      "onder": -0.464,
+      "ci95": [
+       -0.504,
+       0.038
+      ],
+      "weddenschappen": 45,
+      "gem_rr": 3.0
+     },
+     "afgewezen": {}
+    },
+    "volatiliteit": {
+     "poort_redenen": [
+      "P1"
+     ],
+     "variant": "squeeze onderste 10%",
+     "evaluatie": {
+      "n": 11,
+      "per_week": 0.43,
+      "gem": -0.095,
+      "gem15": -0.11,
+      "totaal": -1.0,
+      "win": 0.545,
+      "gem_winst": 0.68,
+      "gem_verlies": -1.03,
+      "max_dd_r": 3.1,
+      "verliesreeks": 3,
+      "onder": -0.366,
+      "ci95": [
+       -0.465,
+       0.381
+      ],
+      "weddenschappen": 11,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    }
+   }
+  },
+  {
+   "markt": "GOUD",
+   "status": "onderzoek",
+   "gevolgd": "breakout",
+   "spread_pct": 0.0191,
+   "model_pct": 0.01,
+   "families": {
+    "ict": {
+     "poort_redenen": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "strenger · TP 2.0 · alle sessies · bias geen"
+    },
+    "trend": {
+     "poort_redenen": [
+      "P1"
+     ],
+     "variant": "doel 2R",
+     "evaluatie": {
+      "n": 36,
+      "per_week": 1.4,
+      "gem": -0.081,
+      "gem15": -0.099,
+      "totaal": -2.9,
+      "win": 0.444,
+      "gem_winst": 0.78,
+      "gem_verlies": -0.77,
+      "max_dd_r": 6.3,
+      "verliesreeks": 4,
+      "onder": -0.221,
+      "ci95": [
+       -0.25,
+       0.208
+      ],
+      "weddenschappen": 36,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    },
+    "momentum": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "efficiëntie > 0.5, stop 1xATR, lookback 10, doel 2R",
+     "evaluatie": {
+      "n": 45,
+      "per_week": 1.75,
+      "gem": -0.085,
+      "gem15": -0.119,
+      "totaal": -3.8,
+      "win": 0.356,
+      "gem_winst": 1.59,
+      "gem_verlies": -1.01,
+      "max_dd_r": 8.4,
+      "verliesreeks": 7,
+      "onder": -0.325,
+      "ci95": [
+       -0.356,
+       0.162
+      ],
+      "weddenschappen": 35,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    },
+    "meanrev": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "band 2.0 st.dev.",
+     "evaluatie": {
+      "n": 74,
+      "per_week": 2.88,
+      "gem": 0.043,
+      "gem15": 0.02,
+      "totaal": 3.2,
+      "win": 0.527,
+      "gem_winst": 0.98,
+      "gem_verlies": -1.0,
+      "max_dd_r": 4.8,
+      "verliesreeks": 4,
+      "onder": -0.078,
+      "ci95": [
+       -0.099,
+       0.194
+      ],
+      "weddenschappen": 71,
+      "gem_rr": 1.26
+     },
+     "afgewezen": {}
+    },
+    "breakout": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "kanaal 48 uur, stop 1.5xATR, doel 3R",
+     "evaluatie": {
+      "n": 84,
+      "per_week": 3.27,
+      "gem": 0.05,
+      "gem15": 0.027,
+      "totaal": 4.2,
+      "win": 0.381,
+      "gem_winst": 1.58,
+      "gem_verlies": -0.89,
+      "max_dd_r": 12.3,
+      "verliesreeks": 8,
+      "onder": -0.212,
+      "ci95": [
+       -0.252,
+       0.304
+      ],
+      "weddenschappen": 78,
+      "gem_rr": 3.0
+     },
+     "afgewezen": {}
+    },
+    "volatiliteit": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "squeeze onderste 20%, stop 2xATR, doel 2R",
+     "evaluatie": {
+      "n": 58,
+      "per_week": 2.26,
+      "gem": -0.031,
+      "gem15": -0.049,
+      "totaal": -1.8,
+      "win": 0.448,
+      "gem_winst": 1.05,
+      "gem_verlies": -0.91,
+      "max_dd_r": 5.4,
+      "verliesreeks": 6,
+      "onder": -0.203,
+      "ci95": [
+       -0.233,
+       0.14
+      ],
+      "weddenschappen": 58,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    }
+   }
+  },
+  {
+   "markt": "ZILVER",
+   "status": "pauze",
+   "gevolgd": null,
+   "spread_pct": 0.1006,
+   "model_pct": 0.06,
+   "families": {
+    "trend": {
+     "poort_redenen": [
+      "P1"
+     ],
+     "variant": "doel 2R",
+     "evaluatie": {
+      "n": 40,
+      "per_week": 1.56,
+      "gem": -0.12,
+      "gem15": -0.173,
+      "totaal": -4.8,
+      "win": 0.4,
+      "gem_winst": 0.87,
+      "gem_verlies": -0.78,
+      "max_dd_r": 8.9,
+      "verliesreeks": 4,
+      "onder": -0.38,
+      "ci95": [
+       -0.419,
+       -0.046
+      ],
+      "weddenschappen": 38,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    },
+    "momentum": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "efficiëntie > 0.3",
+     "evaluatie": {
+      "n": 97,
+      "per_week": 3.77,
+      "gem": -0.12,
+      "gem15": -0.187,
+      "totaal": -11.7,
+      "win": 0.412,
+      "gem_winst": 1.12,
+      "gem_verlies": -0.99,
+      "max_dd_r": 16.0,
+      "verliesreeks": 6,
+      "onder": -0.344,
+      "ci95": [
+       -0.363,
+       0.049
+      ],
+      "weddenschappen": 88,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 9
+     }
+    },
+    "meanrev": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "band 2.5 st.dev.",
+     "evaluatie": {
+      "n": 29,
+      "per_week": 1.13,
+      "gem": -0.079,
+      "gem15": -0.142,
+      "totaal": -2.3,
+      "win": 0.517,
+      "gem_winst": 0.85,
+      "gem_verlies": -1.07,
+      "max_dd_r": 7.6,
+      "verliesreeks": 2,
+      "onder": -0.383,
+      "ci95": [
+       -0.427,
+       0.28
+      ],
+      "weddenschappen": 29,
+      "gem_rr": 1.48
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 4
+     }
+    },
+    "breakout": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "kanaal 24 uur",
+     "evaluatie": {
+      "n": 121,
+      "per_week": 4.71,
+      "gem": -0.108,
+      "gem15": -0.173,
+      "totaal": -13.1,
+      "win": 0.421,
+      "gem_winst": 1.1,
+      "gem_verlies": -0.99,
+      "max_dd_r": 21.9,
+      "verliesreeks": 6,
+      "onder": -0.357,
+      "ci95": [
+       -0.386,
+       0.027
+      ],
+      "weddenschappen": 105,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 10
+     }
+    },
+    "volatiliteit": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "squeeze onderste 10%",
+     "evaluatie": {
+      "n": 37,
+      "per_week": 1.44,
+      "gem": -0.341,
+      "gem15": -0.41,
+      "totaal": -12.6,
+      "win": 0.297,
+      "gem_winst": 1.37,
+      "gem_verlies": -1.06,
+      "max_dd_r": 16.0,
+      "verliesreeks": 6,
+      "onder": -0.59,
+      "ci95": [
+       -0.624,
+       -0.171
+      ],
+      "weddenschappen": 36,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 7
+     }
+    }
+   }
+  },
+  {
+   "markt": "OLIE",
+   "status": "pauze",
+   "gevolgd": null,
+   "spread_pct": 0.0415,
+   "model_pct": 0.05,
+   "families": {
+    "trend": {
+     "poort_redenen": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "doel 3R",
+     "evaluatie": {
+      "n": 28,
+      "per_week": 1.09,
+      "gem": -0.129,
+      "gem15": -0.151,
+      "totaal": -3.6,
+      "win": 0.429,
+      "gem_winst": 0.81,
+      "gem_verlies": -0.84,
+      "max_dd_r": 7.8,
+      "verliesreeks": 3,
+      "onder": -0.482,
+      "ci95": [
+       -0.52,
+       0.119
+      ],
+      "weddenschappen": 27,
+      "gem_rr": 3.0
+     },
+     "afgewezen": {}
+    },
+    "momentum": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "efficiëntie > 0.3, stop 1.5xATR, lookback 10, doel 3R",
+     "evaluatie": {
+      "n": 107,
+      "per_week": 4.16,
+      "gem": -0.247,
+      "gem15": -0.278,
+      "totaal": -26.4,
+      "win": 0.299,
+      "gem_winst": 1.48,
+      "gem_verlies": -0.98,
+      "max_dd_r": 31.0,
+      "verliesreeks": 8,
+      "onder": -0.452,
+      "ci95": [
+       -0.497,
+       0.011
+      ],
+      "weddenschappen": 88,
+      "gem_rr": 3.0
+     },
+     "afgewezen": {}
+    },
+    "meanrev": {
+     "poort_redenen": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "band 2.5 st.dev.",
+     "evaluatie": {
+      "n": 33,
+      "per_week": 1.28,
+      "gem": -0.36,
+      "gem15": -0.389,
+      "totaal": -11.9,
+      "win": 0.333,
+      "gem_winst": 0.92,
+      "gem_verlies": -1.0,
+      "max_dd_r": 12.9,
+      "verliesreeks": 5,
+      "onder": -0.61,
+      "ci95": [
+       -0.667,
+       -0.181
+      ],
+      "weddenschappen": 33,
+      "gem_rr": 1.43
+     },
+     "afgewezen": {}
+    },
+    "breakout": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "kanaal 24 uur",
+     "evaluatie": {
+      "n": 134,
+      "per_week": 5.21,
+      "gem": -0.168,
+      "gem15": -0.197,
+      "totaal": -22.5,
+      "win": 0.351,
+      "gem_winst": 1.2,
+      "gem_verlies": -0.91,
+      "max_dd_r": 29.0,
+      "verliesreeks": 6,
+      "onder": -0.322,
+      "ci95": [
+       -0.343,
+       -0.048
+      ],
+      "weddenschappen": 106,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    },
+    "volatiliteit": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "squeeze onderste 10%",
+     "evaluatie": {
+      "n": 55,
+      "per_week": 2.14,
+      "gem": -0.069,
+      "gem15": -0.101,
+      "totaal": -3.8,
+      "win": 0.382,
+      "gem_winst": 1.33,
+      "gem_verlies": -0.93,
+      "max_dd_r": 13.3,
+      "verliesreeks": 7,
+      "onder": -0.406,
+      "ci95": [
+       -0.45,
+       0.215
+      ],
+      "weddenschappen": 52,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    }
+   }
+  },
+  {
+   "markt": "AAPL",
+   "status": "pauze",
+   "gevolgd": null,
+   "spread_pct": 0.1322,
+   "model_pct": 0.05,
+   "families": {
+    "trend": {
+     "poort_redenen": [
+      "P1"
+     ],
+     "variant": "doel 2R",
+     "evaluatie": {
+      "n": 7,
+      "per_week": 0.27,
+      "gem": -0.141,
+      "gem15": -0.2,
+      "totaal": -1.0,
+      "win": 0.429,
+      "gem_winst": 0.39,
+      "gem_verlies": -0.54,
+      "max_dd_r": 1.0,
+      "verliesreeks": 1,
+      "onder": -0.356,
+      "ci95": [
+       -0.395,
+       0.123
+      ],
+      "weddenschappen": 7,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    },
+    "momentum": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "efficiëntie > 0.3",
+     "evaluatie": {
+      "n": 33,
+      "per_week": 1.28,
+      "gem": -0.19,
+      "gem15": -0.284,
+      "totaal": -6.3,
+      "win": 0.394,
+      "gem_winst": 0.42,
+      "gem_verlies": -0.59,
+      "max_dd_r": 6.3,
+      "verliesreeks": 5,
+      "onder": -0.398,
+      "ci95": [
+       -0.418,
+       -0.01
+      ],
+      "weddenschappen": 33,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    },
+    "meanrev": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "band 1.5 st.dev., stop 1.5xATR",
+     "evaluatie": {
+      "n": 45,
+      "per_week": 1.75,
+      "gem": -0.235,
+      "gem15": -0.327,
+      "totaal": -10.6,
+      "win": 0.333,
+      "gem_winst": 0.42,
+      "gem_verlies": -0.56,
+      "max_dd_r": 10.9,
+      "verliesreeks": 11,
+      "onder": -0.456,
+      "ci95": [
+       -0.48,
+       -0.157
+      ],
+      "weddenschappen": 42,
+      "gem_rr": 1.21
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 2
+     }
+    },
+    "breakout": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "kanaal 24 uur",
+     "evaluatie": {
+      "n": 47,
+      "per_week": 1.83,
+      "gem": -0.247,
+      "gem15": -0.342,
+      "totaal": -11.6,
+      "win": 0.34,
+      "gem_winst": 0.4,
+      "gem_verlies": -0.58,
+      "max_dd_r": 11.8,
+      "verliesreeks": 7,
+      "onder": -0.49,
+      "ci95": [
+       -0.522,
+       -0.17
+      ],
+      "weddenschappen": 47,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    },
+    "volatiliteit": {
+     "poort_redenen": [
+      "P1"
+     ],
+     "variant": "squeeze onderste 20%",
+     "evaluatie": {
+      "n": 21,
+      "per_week": 0.82,
+      "gem": -0.386,
+      "gem15": -0.49,
+      "totaal": -8.1,
+      "win": 0.286,
+      "gem_winst": 0.39,
+      "gem_verlies": -0.7,
+      "max_dd_r": 8.9,
+      "verliesreeks": 5,
+      "onder": -0.669,
+      "ci95": [
+       -0.699,
+       -0.353
+      ],
+      "weddenschappen": 21,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 1
+     }
+    }
+   }
+  },
+  {
+   "markt": "NVDA",
+   "status": "pauze",
+   "gevolgd": null,
+   "spread_pct": 0.2235,
+   "model_pct": 0.05,
+   "families": {
+    "trend": {
+     "poort_redenen": [
+      "P1"
+     ],
+     "variant": "doel 2R",
+     "evaluatie": {
+      "n": 12,
+      "per_week": 0.47,
+      "gem": -0.016,
+      "gem15": -0.095,
+      "totaal": -0.2,
+      "win": 0.417,
+      "gem_winst": 0.51,
+      "gem_verlies": -0.39,
+      "max_dd_r": 1.4,
+      "verliesreeks": 4,
+      "onder": -0.304,
+      "ci95": [
+       -0.336,
+       0.154
+      ],
+      "weddenschappen": 12,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    },
+    "momentum": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "efficiëntie > 0.3",
+     "evaluatie": {
+      "n": 48,
+      "per_week": 1.87,
+      "gem": -0.229,
+      "gem15": -0.338,
+      "totaal": -11.0,
+      "win": 0.375,
+      "gem_winst": 0.4,
+      "gem_verlies": -0.6,
+      "max_dd_r": 11.8,
+      "verliesreeks": 6,
+      "onder": -0.456,
+      "ci95": [
+       -0.47,
+       -0.192
+      ],
+      "weddenschappen": 48,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 2
+     }
+    },
+    "meanrev": {
+     "poort_redenen": [
+      "P1"
+     ],
+     "variant": "band 2.5 st.dev.",
+     "evaluatie": {
+      "n": 4,
+      "per_week": 0.16,
+      "gem": -0.287,
+      "gem15": -0.412,
+      "totaal": -1.1,
+      "win": 0.25,
+      "gem_winst": 0.5,
+      "gem_verlies": -0.55,
+      "max_dd_r": 1.4,
+      "verliesreeks": 2,
+      "onder": null,
+      "ci95": null,
+      "weddenschappen": 4,
+      "gem_rr": 1.65
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 1
+     }
+    },
+    "breakout": {
+     "poort_redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ],
+     "variant": "kanaal 48 uur, stop 1.5xATR, doel 1.5R",
+     "evaluatie": {
+      "n": 37,
+      "per_week": 1.44,
+      "gem": -0.288,
+      "gem15": -0.393,
+      "totaal": -10.7,
+      "win": 0.378,
+      "gem_winst": 0.4,
+      "gem_verlies": -0.71,
+      "max_dd_r": 12.6,
+      "verliesreeks": 9,
+      "onder": -0.598,
+      "ci95": [
+       -0.624,
+       -0.271
+      ],
+      "weddenschappen": 37,
+      "gem_rr": 1.5
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 1
+     }
+    },
+    "volatiliteit": {
+     "poort_redenen": [
+      "P1"
+     ],
+     "variant": "squeeze onderste 20%",
+     "evaluatie": {
+      "n": 23,
+      "per_week": 0.89,
+      "gem": -0.217,
+      "gem15": -0.339,
+      "totaal": -5.0,
+      "win": 0.478,
+      "gem_winst": 0.35,
+      "gem_verlies": -0.74,
+      "max_dd_r": 7.7,
+      "verliesreeks": 5,
+      "onder": -0.671,
+      "ci95": [
+       -0.734,
+       -0.026
+      ],
+      "weddenschappen": 23,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 3
+     }
+    }
+   }
+  },
+  {
+   "markt": "MSFT",
+   "status": "pauze",
+   "gevolgd": null,
+   "spread_pct": 0.1547,
+   "model_pct": 0.05,
+   "families": {
+    "trend": {
+     "poort_redenen": [
+      "P1"
+     ],
+     "variant": "doel 2R",
+     "evaluatie": {
+      "n": 8,
+      "per_week": 0.31,
+      "gem": -0.289,
+      "gem15": -0.366,
+      "totaal": -2.3,
+      "win": 0.375,
+      "gem_winst": 0.11,
+      "gem_verlies": -0.53,
+      "max_dd_r": 2.3,
+      "verliesreeks": 3,
+      "onder": -0.488,
+      "ci95": [
+       -0.523,
+       -0.082
+      ],
+      "weddenschappen": 8,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {}
+    },
+    "momentum": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "efficiëntie > 0.3",
+     "evaluatie": {
+      "n": 35,
+      "per_week": 1.36,
+      "gem": -0.053,
+      "gem15": -0.144,
+      "totaal": -1.9,
+      "win": 0.514,
+      "gem_winst": 0.46,
+      "gem_verlies": -0.6,
+      "max_dd_r": 7.0,
+      "verliesreeks": 5,
+      "onder": -0.379,
+      "ci95": [
+       -0.408,
+       0.134
+      ],
+      "weddenschappen": 35,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 16
+     }
+    },
+    "meanrev": {
+     "poort_redenen": [
+      "P1"
+     ],
+     "variant": "band 2.5 st.dev.",
+     "evaluatie": {
+      "n": 9,
+      "per_week": 0.35,
+      "gem": -0.31,
+      "gem15": -0.416,
+      "totaal": -2.8,
+      "win": 0.444,
+      "gem_winst": 0.28,
+      "gem_verlies": -0.78,
+      "max_dd_r": 3.7,
+      "verliesreeks": 3,
+      "onder": -0.765,
+      "ci95": [
+       -0.842,
+       -0.099
+      ],
+      "weddenschappen": 9,
+      "gem_rr": 1.56
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 1
+     }
+    },
+    "breakout": {
+     "poort_redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ],
+     "variant": "kanaal 24 uur",
+     "evaluatie": {
+      "n": 45,
+      "per_week": 1.75,
+      "gem": -0.052,
+      "gem15": -0.148,
+      "totaal": -2.3,
+      "win": 0.489,
+      "gem_winst": 0.58,
+      "gem_verlies": -0.66,
+      "max_dd_r": 11.5,
+      "verliesreeks": 7,
+      "onder": -0.423,
+      "ci95": [
+       -0.45,
+       0.168
+      ],
+      "weddenschappen": 45,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 18
+     }
+    },
+    "volatiliteit": {
+     "poort_redenen": [
+      "P1"
+     ],
+     "variant": "squeeze onderste 20%",
+     "evaluatie": {
+      "n": 23,
+      "per_week": 0.89,
+      "gem": -0.095,
+      "gem15": -0.196,
+      "totaal": -2.2,
+      "win": 0.348,
+      "gem_winst": 0.54,
+      "gem_verlies": -0.43,
+      "max_dd_r": 4.7,
+      "verliesreeks": 4,
+      "onder": -0.36,
+      "ci95": [
+       -0.381,
+       0.048
+      ],
+      "weddenschappen": 23,
+      "gem_rr": 2.0
+     },
+     "afgewezen": {
+      "spread groter dan 0,25R": 12
+     }
+    }
+   }
+  }
+ ],
+ "poort_afwijzingen_per_familie": {
+  "P2": 64,
+  "P3": 39,
+  "P4": 66,
+  "P5": 64,
+  "P1": 19
+ },
+ "gevolgd_ongefilterd": {
+  "n": 427,
+  "per_week": 16.61,
+  "gem": 0.058,
+  "gem15": 0.022,
+  "totaal": 25.0,
+  "win": 0.419,
+  "gem_winst": 1.43,
+  "gem_verlies": -0.93,
+  "max_dd_r": 17.9,
+  "verliesreeks": 11,
+  "onder": -0.05,
+  "ci95": [
+   -0.064,
+   0.115
+  ],
+  "weddenschappen": 337,
+  "gem_rr": 2.3
+ },
+ "gevolgd_portefeuille": {
+  "afgewezen": {
+   "al 1 trade(s) in dezelfde richting in de gro": 9,
+   "als alle stops geraakt worden": 296,
+   "al 3 posities/orders open": 3
+  },
+  "eind": 10318.64,
+  "rendement_pct": 3.19,
+  "max_dd_pct": 4.88,
+  "slechtste_dag_pct": 1.84,
+  "grensbreuken": {},
+  "max_open": 3,
+  "max_in_groep": 2,
+  "stats": {
+   "n": 119,
+   "per_week": 4.63,
+   "gem": 0.057,
+   "gem15": 0.024,
+   "totaal": 6.8,
+   "win": 0.412,
+   "gem_winst": 1.45,
+   "gem_verlies": -0.92,
+   "max_dd_r": 9.7,
+   "verliesreeks": 8,
+   "onder": -0.039,
+   "ci95": [
+    -0.049,
+    0.13
+   ],
+   "weddenschappen": 106,
+   "gem_rr": 2.31
+  }
+ },
+ "correlatie": 0.031,
+ "echte_demo": "Eén demo-order: GOUD long op 2026-11-02 (accountresultaat -4,95 euro); op 2026-11-03 0 open trades. Te weinig om iets uit af te leiden."
+}

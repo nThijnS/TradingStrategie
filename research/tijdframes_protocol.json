@@ -1,0 +1,81 @@
+{
+  "naam": "tijdframes-v1",
+  "vastgelegd": "2026-11-04, vóór het eerste resultaat van een lagere-tijdframevariant",
+  "vraag": "Levert een bredere tijdframeopzet aantoonbaar meer valide demo-kansen op, na kosten en binnen de bestaande risicogrenzen?",
+  "orders": "nooit: dit onderzoek leest alleen lokale data en schrijft alleen rapporten",
+  "markten": {
+    "EURUSD": {"histdata": "EURUSD", "soort": "forex"},
+    "GBPUSD": {"histdata": "GBPUSD", "soort": "forex"},
+    "NQ": {"histdata": "NSXUSD", "soort": "index"},
+    "ES": {"histdata": "SPXUSD", "soort": "index"},
+    "GOUD": {"histdata": "XAUUSD", "soort": "grondstof"},
+    "ZILVER": {"histdata": "XAGUSD", "soort": "grondstof"}
+  },
+  "familie_parameters": {
+    "toelichting": "De vaste basisvarianten uit strategies/lab.py, dus 10 per variant. Zelfde aantal candles op elk tijdframe: op 15m is een 20-periodengemiddelde dus 5 uur. Geen extra parameters en geen generator. ICT valt erbuiten: dat heeft een eigen motor en gebruikt al 5m.",
+    "families": ["trend", "momentum", "meanrev", "breakout", "volatiliteit"]
+  },
+  "varianten": {
+    "V1_1h": {"titel": "Huidige 1h-baseline", "signaal": "1h", "context": [], "trigger": null},
+    "V2_4h_1h": {"titel": "4h als richtingsfilter, 1h als signaal", "signaal": "1h", "context": ["4h"], "trigger": null},
+    "V3_15m": {"titel": "4h/1h als context, 15m als setup en signaal", "signaal": "15min", "context": ["4h", "1h"], "trigger": null},
+    "V4_5m": {"titel": "4h/1h/15m als context, 5m als instaptrigger", "signaal": "15min", "context": ["4h", "1h", "15min"], "trigger": "5min"}
+  },
+  "context_regel": "Long mag alleen als op elke contexttijdframe de laatste GESLOTEN candle e20 > e50 heeft, short alleen bij e20 < e50. Geldt voor alle families, ook mean reversion (dan: tegenbeweging binnen de trend).",
+  "trigger_regel": {
+    "uitleg": "Na een 15m-setup: eerste 5m-candle die sluit voorbij de high (long) of low (short) van de 5m-candle ervoor. Instap op de open van de volgende 5m-candle. Geen trigger binnen het venster: setup vervalt. Stopafstand en doel blijven die van de 15m-setup.",
+    "venster_5m_candles": 6
+  },
+  "instap_en_uitstap": {
+    "instap": "marktorder op de open van de eerste 5m-candle na het signaal",
+    "uitstapcandles": "5m voor alle vier de varianten (stop eerst als stop en doel in dezelfde candle vallen); 1m alleen als gevoeligheidscontrole",
+    "max_uren": 12,
+    "gap_uren": 6,
+    "min_ruimte_r": 0.3,
+    "max_instapvertraging_min": {"1h": 20, "15min": 15},
+    "sluitbuffer_min": 5
+  },
+  "kosten": {
+    "basis": "max(modelkosten uit core/markets.py, gemeten spread uit rapport/instrumenten.json van 2026-11-03)",
+    "slippage": "0,5 x de basis, als prijsbedrag, gelijk voor elk tijdframe",
+    "poort": "P2 rekent daarbovenop 1,5x kosten (selector.COST_X)",
+    "financiering": "fin_rate per markt, per rollover",
+    "beperking": "de spreadmeting is één momentopname; de spread per uur is onbekend tot de feedmeting draait"
+  },
+  "uitvoerbaarheid": {
+    "max_spread_r": 0.25,
+    "min_stop_pct": 0.01,
+    "risico_pct": 0.5,
+    "hefboom": 30,
+    "bron": "ongewijzigde waarden uit risk/rules.Limits, config.json demo en rapport/instrumenten.json"
+  },
+  "perioden": {
+    "ontwikkeling": "start data tot einde data min 180 dagen: kiest de parameters (selector.pick_variant) en de strategie per markt",
+    "evaluatie": "de laatste 180 dagen: nooit gebruikt voor keuzes",
+    "evaluatie_delen": "E1 = eerste 90 dagen, E2 = rest",
+    "waarschuwing": "De 1h-families zijn eerder al op deze periode bekeken (lab en 626-variantenonderzoek). Voor V1/V2 is de evaluatie dus niet maagdelijk."
+  },
+  "poort": {
+    "regel": "selector.gate ongewijzigd (P1-P5 en drempels)",
+    "proeven_per_markt": 40,
+    "proeven_totaal": 240
+  },
+  "portefeuille": {
+    "A_poort": "alleen markt/familie die P1-P5 haalt: wat de bot mag handelen",
+    "B_onderzoek": "per markt de combinatie met de hoogste gemiddelde R in ontwikkeling, mits positief; alleen om te meten, niet om te handelen",
+    "regels": "risk.rules.check_portfolio met de ongewijzigde demo-limieten, startwaarde 10000"
+  },
+  "besluitregel": {
+    "uitleg": "Een variant is alleen interessant als alle onderdelen gelden in portefeuille B in de evaluatie, en hij gaat pas verder met een bewezen markt via de ongewijzigde poort.",
+    "meer_kansen": "minstens 1,5x zoveel uitgevoerde trades per week als V1_1h",
+    "na_kosten": "gemiddelde R bij 1,5x kosten > 0 en block-bootstrap 95%-ondergrens (eenzijdig) > 0",
+    "meerdere_perioden": "gemiddelde R > 0 in zowel E1 als E2",
+    "risico": "geen breuk van de dag- of trailinggrens in de portefeuillesimulatie",
+    "anders": "baseline behouden"
+  },
+  "buiten_de_toets": {
+    "1m": "alleen datakwaliteit en uitvoerbaarheid, geen strategievariant",
+    "nieuws": "niet getest: er is geen tijdgestempelde bron in het project",
+    "overige_9_markten": "alleen 1h-nulmeting op Yahoo: er is geen 15m/5m-historie"
+  }
+}
