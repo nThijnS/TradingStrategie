@@ -1,0 +1,5469 @@
+{
+ "protocol": "tijdframes-v1",
+ "protocol_sha256": "aa51d1c1db408b65ee03097d04d54677e481ce054fcf4d89d8654d5e0381e62c",
+ "periode": {
+  "ontwikkeling": [
+   "2025-03-02",
+   "2026-04-26"
+  ],
+  "evaluatie": [
+   "2026-04-26",
+   "2026-10-23"
+  ],
+  "splitsing_e1_e2": "2026-07-25"
+ },
+ "kosten_frac": {
+  "EURUSD": 0.000105,
+  "GBPUSD": 0.000145,
+  "NQ": 0.00012,
+  "ES": 0.00012,
+  "GOUD": 0.000286,
+  "ZILVER": 0.00151
+ },
+ "kwaliteit_1m": {
+  "EURUSD": {
+   "markt": "EURUSD",
+   "candles": 672705,
+   "verwacht": 651359,
+   "ontbreekt_pct": 0.93,
+   "gaten_boven_30min": 18,
+   "langste_gat_min": 1380,
+   "platte_candles_pct": 1.02,
+   "dubbel": 0
+  },
+  "GBPUSD": {
+   "markt": "GBPUSD",
+   "candles": 671442,
+   "verwacht": 651359,
+   "ontbreekt_pct": 1.0,
+   "gaten_boven_30min": 17,
+   "langste_gat_min": 1380,
+   "platte_candles_pct": 1.09,
+   "dubbel": 0
+  },
+  "NQ": {
+   "markt": "NQ",
+   "candles": 618020,
+   "verwacht": 651314,
+   "ontbreekt_pct": 5.42,
+   "gaten_boven_30min": 480,
+   "langste_gat_min": 1380,
+   "platte_candles_pct": 0.03,
+   "dubbel": 0
+  },
+  "ES": {
+   "markt": "ES",
+   "candles": 616384,
+   "verwacht": 651314,
+   "ontbreekt_pct": 5.68,
+   "gaten_boven_30min": 479,
+   "langste_gat_min": 1380,
+   "platte_candles_pct": 0.48,
+   "dubbel": 0
+  },
+  "GOUD": {
+   "markt": "GOUD",
+   "candles": 641242,
+   "verwacht": 651359,
+   "ontbreekt_pct": 1.88,
+   "gaten_boven_30min": 60,
+   "langste_gat_min": 1380,
+   "platte_candles_pct": 0.08,
+   "dubbel": 0
+  },
+  "ZILVER": {
+   "markt": "ZILVER",
+   "candles": 640048,
+   "verwacht": 651359,
+   "ontbreekt_pct": 2.04,
+   "gaten_boven_30min": 57,
+   "langste_gat_min": 1380,
+   "platte_candles_pct": 0.21,
+   "dubbel": 0
+  }
+ },
+ "varianten": {
+  "V1_1h": {
+   "titel": "Huidige 1h-baseline",
+   "tellers": {
+    "ruw": 24083,
+    "uitgevoerd": 16052,
+    "strategie heeft al een positie": 7541,
+    "markt dicht": 452,
+    "spread groter dan 0,25R": 38
+   },
+   "per_markt": {
+    "EURUSD": {
+     "status": "pauze",
+     "keuze": "volatiliteit|{\"p\": 0.2}",
+     "ontwikkeling": {
+      "n": 175,
+      "per_week": 2.92,
+      "gem": 0.045,
+      "bruto": 0.122,
+      "gem15": 0.009,
+      "totaal": 7.9,
+      "win": 0.44,
+      "gem_winst": 1.31,
+      "gem_verlies": -0.95,
+      "max_dd_r": 10.5,
+      "verliesreeks": 8,
+      "onder": -0.103,
+      "ci95": [
+       -0.128,
+       0.149
+      ],
+      "weddenschappen": 154,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 84,
+      "per_week": 3.27,
+      "gem": -0.158,
+      "bruto": -0.053,
+      "gem15": -0.207,
+      "totaal": -13.3,
+      "win": 0.321,
+      "gem_winst": 1.45,
+      "gem_verlies": -0.92,
+      "max_dd_r": 18.7,
+      "verliesreeks": 6,
+      "onder": -0.377,
+      "ci95": [
+       -0.405,
+       -0.048
+      ],
+      "weddenschappen": 74,
+      "gem_rr": 2.0
+     },
+     "uitgevoerd_per_week": 2.86
+    },
+    "GBPUSD": {
+     "status": "pauze",
+     "keuze": null,
+     "ontwikkeling": {
+      "n": 100,
+      "per_week": 1.67,
+      "gem": -0.019,
+      "bruto": 0.08,
+      "gem15": -0.067,
+      "totaal": -1.9,
+      "win": 0.41,
+      "gem_winst": 1.44,
+      "gem_verlies": -1.04,
+      "max_dd_r": 24.7,
+      "verliesreeks": 12,
+      "onder": -0.352,
+      "ci95": [
+       -0.401,
+       0.267
+      ],
+      "weddenschappen": 96,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 0,
+      "per_week": 0.0
+     },
+     "uitgevoerd_per_week": 2.94
+    },
+    "NQ": {
+     "status": "onderzoek",
+     "keuze": "meanrev|{\"k\": 2.5}",
+     "ontwikkeling": {
+      "n": 102,
+      "per_week": 1.7,
+      "gem": 0.141,
+      "bruto": 0.177,
+      "gem15": 0.125,
+      "totaal": 14.4,
+      "win": 0.529,
+      "gem_winst": 1.14,
+      "gem_verlies": -0.98,
+      "max_dd_r": 8.0,
+      "verliesreeks": 5,
+      "onder": -0.074,
+      "ci95": [
+       -0.115,
+       0.338
+      ],
+      "weddenschappen": 92,
+      "gem_rr": 1.63
+     },
+     "evaluatie": {
+      "n": 30,
+      "per_week": 1.17,
+      "gem": 0.169,
+      "bruto": 0.202,
+      "gem15": 0.157,
+      "totaal": 5.1,
+      "win": 0.5,
+      "gem_winst": 1.3,
+      "gem_verlies": -0.97,
+      "max_dd_r": 3.9,
+      "verliesreeks": 3,
+      "onder": -0.102,
+      "ci95": [
+       -0.151,
+       0.469
+      ],
+      "weddenschappen": 29,
+      "gem_rr": 1.55
+     },
+     "uitgevoerd_per_week": 2.94
+    },
+    "ES": {
+     "status": "pauze",
+     "keuze": "volatiliteit|{\"p\": 0.1}",
+     "ontwikkeling": {
+      "n": 108,
+      "per_week": 1.8,
+      "gem": 0.101,
+      "bruto": 0.171,
+      "gem15": 0.074,
+      "totaal": 10.9,
+      "win": 0.454,
+      "gem_winst": 1.34,
+      "gem_verlies": -0.93,
+      "max_dd_r": 15.2,
+      "verliesreeks": 10,
+      "onder": -0.111,
+      "ci95": [
+       -0.159,
+       0.305
+      ],
+      "weddenschappen": 98,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 51,
+      "per_week": 1.98,
+      "gem": -0.248,
+      "bruto": -0.177,
+      "gem15": -0.276,
+      "totaal": -12.6,
+      "win": 0.294,
+      "gem_winst": 1.45,
+      "gem_verlies": -0.96,
+      "max_dd_r": 15.4,
+      "verliesreeks": 7,
+      "onder": -0.523,
+      "ci95": [
+       -0.568,
+       0.185
+      ],
+      "weddenschappen": 43,
+      "gem_rr": 2.0
+     },
+     "uitgevoerd_per_week": 2.95
+    },
+    "GOUD": {
+     "status": "onderzoek",
+     "keuze": "momentum|{\"er\": 0.5}",
+     "ontwikkeling": {
+      "n": 102,
+      "per_week": 1.7,
+      "gem": 0.134,
+      "bruto": 0.195,
+      "gem15": 0.108,
+      "totaal": 13.7,
+      "win": 0.441,
+      "gem_winst": 1.35,
+      "gem_verlies": -0.83,
+      "max_dd_r": 9.2,
+      "verliesreeks": 5,
+      "onder": -0.096,
+      "ci95": [
+       -0.139,
+       0.338
+      ],
+      "weddenschappen": 82,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 50,
+      "per_week": 1.94,
+      "gem": 0.027,
+      "bruto": 0.08,
+      "gem15": 0.005,
+      "totaal": 1.4,
+      "win": 0.44,
+      "gem_winst": 1.23,
+      "gem_verlies": -0.91,
+      "max_dd_r": 9.0,
+      "verliesreeks": 4,
+      "onder": -0.282,
+      "ci95": [
+       -0.319,
+       0.226
+      ],
+      "weddenschappen": 42,
+      "gem_rr": 2.0
+     },
+     "uitgevoerd_per_week": 2.69
+    },
+    "ZILVER": {
+     "status": "pauze",
+     "keuze": "volatiliteit|{\"p\": 0.1}",
+     "ontwikkeling": {
+      "n": 89,
+      "per_week": 1.49,
+      "gem": 0.083,
+      "bruto": 0.293,
+      "gem15": -0.021,
+      "totaal": 7.4,
+      "win": 0.472,
+      "gem_winst": 1.42,
+      "gem_verlies": -1.11,
+      "max_dd_r": 14.2,
+      "verliesreeks": 5,
+      "onder": -0.246,
+      "ci95": [
+       -0.29,
+       0.302
+      ],
+      "weddenschappen": 86,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 43,
+      "per_week": 1.67,
+      "gem": -0.067,
+      "bruto": 0.076,
+      "gem15": -0.136,
+      "totaal": -2.9,
+      "win": 0.372,
+      "gem_winst": 1.34,
+      "gem_verlies": -0.9,
+      "max_dd_r": 11.0,
+      "verliesreeks": 5,
+      "onder": -0.398,
+      "ci95": [
+       -0.423,
+       0.072
+      ],
+      "weddenschappen": 41,
+      "gem_rr": 2.0
+     },
+     "uitgevoerd_per_week": 2.63
+    }
+   },
+   "poort": [
+    {
+     "markt": "EURUSD",
+     "familie": "trend",
+     "variant": "{\"tp\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 71,
+      "gem": -0.086,
+      "totaal": -6.14,
+      "win": 0.366,
+      "se": 0.123
+     },
+     "validatie": {
+      "n": 40,
+      "gem": -0.31,
+      "totaal": -12.41,
+      "win": 0.275,
+      "se": 0.15
+     },
+     "ondergrens": -0.512,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.3}",
+     "geslaagd": false,
+     "train": {
+      "n": 267,
+      "gem": 0.004,
+      "totaal": 1.15,
+      "win": 0.434,
+      "se": 0.074
+     },
+     "validatie": {
+      "n": 111,
+      "gem": -0.13,
+      "totaal": -14.48,
+      "win": 0.36,
+      "se": 0.12
+     },
+     "ondergrens": -0.385,
+     "dsr": 0.003,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.5}",
+     "geslaagd": false,
+     "train": {
+      "n": 106,
+      "gem": -0.111,
+      "totaal": -11.72,
+      "win": 0.434,
+      "se": 0.106
+     },
+     "validatie": {
+      "n": 37,
+      "gem": -0.013,
+      "totaal": -0.5,
+      "win": 0.459,
+      "se": 0.187
+     },
+     "ondergrens": -0.355,
+     "dsr": 0.001,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "familie": "breakout",
+     "variant": "{\"n\": 24}",
+     "geslaagd": false,
+     "train": {
+      "n": 320,
+      "gem": -0.024,
+      "totaal": -7.63,
+      "win": 0.409,
+      "se": 0.066
+     },
+     "validatie": {
+      "n": 140,
+      "gem": -0.166,
+      "totaal": -23.25,
+      "win": 0.343,
+      "se": 0.1
+     },
+     "ondergrens": -0.367,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.2}",
+     "geslaagd": false,
+     "train": {
+      "n": 175,
+      "gem": 0.045,
+      "totaal": 7.91,
+      "win": 0.44,
+      "se": 0.093
+     },
+     "validatie": {
+      "n": 84,
+      "gem": -0.158,
+      "totaal": -13.3,
+      "win": 0.321,
+      "se": 0.132
+     },
+     "ondergrens": -0.376,
+     "dsr": 0.007,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "trend",
+     "variant": "{\"tp\": 3.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 84,
+      "gem": -0.138,
+      "totaal": -11.6,
+      "win": 0.333,
+      "se": 0.116
+     },
+     "validatie": {
+      "n": 35,
+      "gem": 0.001,
+      "totaal": 0.02,
+      "win": 0.457,
+      "se": 0.208
+     },
+     "ondergrens": -0.297,
+     "dsr": 0.002,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.3}",
+     "geslaagd": false,
+     "train": {
+      "n": 277,
+      "gem": -0.099,
+      "totaal": -27.51,
+      "win": 0.383,
+      "se": 0.071
+     },
+     "validatie": {
+      "n": 118,
+      "gem": -0.184,
+      "totaal": -21.75,
+      "win": 0.347,
+      "se": 0.112
+     },
+     "ondergrens": -0.406,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.5}",
+     "geslaagd": false,
+     "train": {
+      "n": 103,
+      "gem": -0.167,
+      "totaal": -17.18,
+      "win": 0.408,
+      "se": 0.106
+     },
+     "validatie": {
+      "n": 44,
+      "gem": -0.062,
+      "totaal": -2.72,
+      "win": 0.432,
+      "se": 0.175
+     },
+     "ondergrens": -0.362,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "breakout",
+     "variant": "{\"n\": 48}",
+     "geslaagd": false,
+     "train": {
+      "n": 236,
+      "gem": -0.084,
+      "totaal": -19.77,
+      "win": 0.419,
+      "se": 0.075
+     },
+     "validatie": {
+      "n": 90,
+      "gem": -0.298,
+      "totaal": -26.86,
+      "win": 0.311,
+      "se": 0.119
+     },
+     "ondergrens": -0.538,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.1}",
+     "geslaagd": false,
+     "train": {
+      "n": 100,
+      "gem": -0.019,
+      "totaal": -1.93,
+      "win": 0.41,
+      "se": 0.131
+     },
+     "validatie": {
+      "n": 50,
+      "gem": -0.272,
+      "totaal": -13.58,
+      "win": 0.34,
+      "se": 0.169
+     },
+     "ondergrens": -0.492,
+     "dsr": 0.001,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "trend",
+     "variant": "{\"tp\": 3.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 79,
+      "gem": 0.054,
+      "totaal": 4.24,
+      "win": 0.481,
+      "se": 0.111
+     },
+     "validatie": {
+      "n": 25,
+      "gem": -0.102,
+      "totaal": -2.55,
+      "win": 0.44,
+      "se": 0.185
+     },
+     "ondergrens": -0.458,
+     "dsr": 0.021,
+     "redenen": [
+      "P1",
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.3}",
+     "geslaagd": false,
+     "train": {
+      "n": 291,
+      "gem": -0.082,
+      "totaal": -23.81,
+      "win": 0.395,
+      "se": 0.069
+     },
+     "validatie": {
+      "n": 118,
+      "gem": -0.019,
+      "totaal": -2.22,
+      "win": 0.398,
+      "se": 0.112
+     },
+     "ondergrens": -0.182,
+     "dsr": 0.001,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.5}",
+     "geslaagd": false,
+     "train": {
+      "n": 102,
+      "gem": 0.141,
+      "totaal": 14.36,
+      "win": 0.529,
+      "se": 0.114
+     },
+     "validatie": {
+      "n": 30,
+      "gem": 0.169,
+      "totaal": 5.08,
+      "win": 0.5,
+      "se": 0.215
+     },
+     "ondergrens": -0.096,
+     "dsr": 0.231,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "breakout",
+     "variant": "{\"n\": 24}",
+     "geslaagd": false,
+     "train": {
+      "n": 336,
+      "gem": -0.148,
+      "totaal": -49.63,
+      "win": 0.372,
+      "se": 0.062
+     },
+     "validatie": {
+      "n": 153,
+      "gem": -0.048,
+      "totaal": -7.29,
+      "win": 0.405,
+      "se": 0.095
+     },
+     "ondergrens": -0.193,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.1}",
+     "geslaagd": false,
+     "train": {
+      "n": 103,
+      "gem": 0.056,
+      "totaal": 5.74,
+      "win": 0.398,
+      "se": 0.127
+     },
+     "validatie": {
+      "n": 46,
+      "gem": -0.037,
+      "totaal": -1.7,
+      "win": 0.413,
+      "se": 0.182
+     },
+     "ondergrens": -0.279,
+     "dsr": 0.026,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "trend",
+     "variant": null,
+     "geslaagd": false,
+     "train": {
+      "n": 0
+     },
+     "validatie": {
+      "n": 0
+     },
+     "ondergrens": null,
+     "dsr": 0.0,
+     "redenen": [
+      "P1"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.5}",
+     "geslaagd": false,
+     "train": {
+      "n": 121,
+      "gem": -0.083,
+      "totaal": -10.01,
+      "win": 0.388,
+      "se": 0.106
+     },
+     "validatie": {
+      "n": 51,
+      "gem": 0.319,
+      "totaal": 16.26,
+      "win": 0.51,
+      "se": 0.182
+     },
+     "ondergrens": 0.071,
+     "dsr": 0.035,
+     "redenen": [
+      "P3",
+      "P4"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 240,
+      "gem": -0.15,
+      "totaal": -36.11,
+      "win": 0.396,
+      "se": 0.066
+     },
+     "validatie": {
+      "n": 101,
+      "gem": 0.135,
+      "totaal": 13.64,
+      "win": 0.515,
+      "se": 0.113
+     },
+     "ondergrens": -0.121,
+     "dsr": 0.001,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "breakout",
+     "variant": "{\"n\": 48}",
+     "geslaagd": false,
+     "train": {
+      "n": 246,
+      "gem": -0.104,
+      "totaal": -25.48,
+      "win": 0.382,
+      "se": 0.072
+     },
+     "validatie": {
+      "n": 106,
+      "gem": -0.202,
+      "totaal": -21.44,
+      "win": 0.358,
+      "se": 0.108
+     },
+     "ondergrens": -0.348,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.1}",
+     "geslaagd": false,
+     "train": {
+      "n": 108,
+      "gem": 0.101,
+      "totaal": 10.87,
+      "win": 0.454,
+      "se": 0.12
+     },
+     "validatie": {
+      "n": 51,
+      "gem": -0.248,
+      "totaal": -12.64,
+      "win": 0.294,
+      "se": 0.171
+     },
+     "ondergrens": -0.52,
+     "dsr": 0.011,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "trend",
+     "variant": null,
+     "geslaagd": false,
+     "train": {
+      "n": 0
+     },
+     "validatie": {
+      "n": 0
+     },
+     "ondergrens": null,
+     "dsr": 0.0,
+     "redenen": [
+      "P1"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.5}",
+     "geslaagd": false,
+     "train": {
+      "n": 102,
+      "gem": 0.134,
+      "totaal": 13.7,
+      "win": 0.441,
+      "se": 0.119
+     },
+     "validatie": {
+      "n": 50,
+      "gem": 0.027,
+      "totaal": 1.37,
+      "win": 0.44,
+      "se": 0.169
+     },
+     "ondergrens": -0.285,
+     "dsr": 0.116,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 212,
+      "gem": -0.001,
+      "totaal": -0.18,
+      "win": 0.5,
+      "se": 0.072
+     },
+     "validatie": {
+      "n": 89,
+      "gem": -0.148,
+      "totaal": -13.18,
+      "win": 0.416,
+      "se": 0.106
+     },
+     "ondergrens": -0.338,
+     "dsr": 0.002,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "breakout",
+     "variant": "{\"n\": 48}",
+     "geslaagd": false,
+     "train": {
+      "n": 227,
+      "gem": 0.119,
+      "totaal": 27.09,
+      "win": 0.471,
+      "se": 0.082
+     },
+     "validatie": {
+      "n": 100,
+      "gem": -0.051,
+      "totaal": -5.08,
+      "win": 0.37,
+      "se": 0.124
+     },
+     "ondergrens": -0.283,
+     "dsr": 0.111,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.1}",
+     "geslaagd": false,
+     "train": {
+      "n": 97,
+      "gem": -0.079,
+      "totaal": -7.64,
+      "win": 0.371,
+      "se": 0.121
+     },
+     "validatie": {
+      "n": 40,
+      "gem": -0.151,
+      "totaal": -6.03,
+      "win": 0.375,
+      "se": 0.189
+     },
+     "ondergrens": -0.396,
+     "dsr": 0.001,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "trend",
+     "variant": null,
+     "geslaagd": false,
+     "train": {
+      "n": 0
+     },
+     "validatie": {
+      "n": 0
+     },
+     "ondergrens": null,
+     "dsr": 0.0,
+     "redenen": [
+      "P1"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.5}",
+     "geslaagd": false,
+     "train": {
+      "n": 107,
+      "gem": -0.149,
+      "totaal": -15.93,
+      "win": 0.411,
+      "se": 0.11
+     },
+     "validatie": {
+      "n": 47,
+      "gem": -0.252,
+      "totaal": -11.82,
+      "win": 0.34,
+      "se": 0.164
+     },
+     "ondergrens": -0.678,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.5}",
+     "geslaagd": false,
+     "train": {
+      "n": 80,
+      "gem": -0.157,
+      "totaal": -12.57,
+      "win": 0.438,
+      "se": 0.118
+     },
+     "validatie": {
+      "n": 33,
+      "gem": -0.19,
+      "totaal": -6.27,
+      "win": 0.394,
+      "se": 0.165
+     },
+     "ondergrens": -0.407,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "breakout",
+     "variant": "{\"n\": 48}",
+     "geslaagd": false,
+     "train": {
+      "n": 214,
+      "gem": -0.122,
+      "totaal": -26.16,
+      "win": 0.416,
+      "se": 0.082
+     },
+     "validatie": {
+      "n": 96,
+      "gem": -0.146,
+      "totaal": -14.05,
+      "win": 0.385,
+      "se": 0.119
+     },
+     "ondergrens": -0.431,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.1}",
+     "geslaagd": false,
+     "train": {
+      "n": 89,
+      "gem": 0.083,
+      "totaal": 7.39,
+      "win": 0.472,
+      "se": 0.143
+     },
+     "validatie": {
+      "n": 43,
+      "gem": -0.067,
+      "totaal": -2.87,
+      "win": 0.372,
+      "se": 0.186
+     },
+     "ondergrens": -0.41,
+     "dsr": 0.029,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    }
+   ],
+   "poort_geslaagd": 0,
+   "poort_afwijzingen": {
+    "P2": 26,
+    "P3": 18,
+    "P4": 27,
+    "P5": 25,
+    "P1": 4
+   },
+   "aanbod_evaluatie": {
+    "n": 4448,
+    "per_week": 172.98,
+    "gem": -0.081,
+    "bruto": -0.0,
+    "gem15": -0.118,
+    "totaal": -361.0,
+    "win": 0.4,
+    "gem_winst": 1.2,
+    "gem_verlies": -0.94,
+    "max_dd_r": 410.6,
+    "verliesreeks": 35,
+    "onder": -0.178,
+    "ci95": [
+     -0.188,
+     -0.067
+    ],
+    "weddenschappen": 702,
+    "gem_rr": 1.93
+   },
+   "per_familie": {
+    "trend": {
+     "n": 428,
+     "per_week": 16.64,
+     "gem": -0.084,
+     "bruto": -0.018,
+     "gem15": -0.113,
+     "totaal": -36.0,
+     "win": 0.414,
+     "gem_winst": 0.93,
+     "gem_verlies": -0.8,
+     "max_dd_r": 65.7,
+     "verliesreeks": 20,
+     "onder": -0.247,
+     "ci95": [
+      -0.263,
+      -0.022
+     ],
+     "weddenschappen": 165,
+     "gem_rr": 2.5
+    },
+    "momentum": {
+     "n": 982,
+     "per_week": 38.19,
+     "gem": -0.024,
+     "bruto": 0.056,
+     "gem15": -0.06,
+     "totaal": -23.7,
+     "win": 0.404,
+     "gem_winst": 1.35,
+     "gem_verlies": -0.95,
+     "max_dd_r": 78.3,
+     "verliesreeks": 23,
+     "onder": -0.177,
+     "ci95": [
+      -0.198,
+      0.037
+     ],
+     "weddenschappen": 348,
+     "gem_rr": 2.0
+    },
+    "meanrev": {
+     "n": 850,
+     "per_week": 33.06,
+     "gem": -0.029,
+     "bruto": 0.056,
+     "gem15": -0.068,
+     "totaal": -24.6,
+     "win": 0.464,
+     "gem_winst": 1.03,
+     "gem_verlies": -0.94,
+     "max_dd_r": 45.6,
+     "verliesreeks": 15,
+     "onder": -0.123,
+     "ci95": [
+      -0.133,
+      0.035
+     ],
+     "weddenschappen": 357,
+     "gem_rr": 1.39
+    },
+    "breakout": {
+     "n": 1456,
+     "per_week": 56.62,
+     "gem": -0.127,
+     "bruto": -0.049,
+     "gem15": -0.162,
+     "totaal": -184.9,
+     "win": 0.374,
+     "gem_winst": 1.24,
+     "gem_verlies": -0.94,
+     "max_dd_r": 209.0,
+     "verliesreeks": 28,
+     "onder": -0.242,
+     "ci95": [
+      -0.258,
+      -0.101
+     ],
+     "weddenschappen": 448,
+     "gem_rr": 2.0
+    },
+    "volatiliteit": {
+     "n": 732,
+     "per_week": 28.47,
+     "gem": -0.125,
+     "bruto": -0.034,
+     "gem15": -0.168,
+     "totaal": -91.9,
+     "win": 0.363,
+     "gem_winst": 1.36,
+     "gem_verlies": -0.97,
+     "max_dd_r": 107.6,
+     "verliesreeks": 36,
+     "onder": -0.264,
+     "ci95": [
+      -0.285,
+      -0.009
+     ],
+     "weddenschappen": 292,
+     "gem_rr": 2.0
+    }
+   },
+   "portefeuille_A": {
+    "afgewezen": {},
+    "eind": 10000.0,
+    "rendement_pct": 0.0,
+    "max_dd_pct": -0.0,
+    "slechtste_dag_pct": -0.0,
+    "grensbreuken": {},
+    "max_open": 0,
+    "max_in_groep": 0,
+    "stats": {
+     "n": 0,
+     "per_week": 0.0
+    }
+   },
+   "portefeuille_B": {
+    "afgewezen": {
+     "al 3 posities/orders open": 2,
+     "al 1 trade(s) in dezelfde richting in de gro": 2,
+     "als alle stops geraakt worden": 151
+    },
+    "eind": 10243.1,
+    "rendement_pct": 2.43,
+    "max_dd_pct": 4.56,
+    "slechtste_dag_pct": 1.67,
+    "grensbreuken": {},
+    "max_open": 3,
+    "max_in_groep": 2,
+    "stats": {
+     "n": 103,
+     "per_week": 4.01,
+     "gem": 0.05,
+     "bruto": 0.128,
+     "gem15": 0.017,
+     "totaal": 5.2,
+     "win": 0.427,
+     "gem_winst": 1.35,
+     "gem_verlies": -0.92,
+     "max_dd_r": 9.3,
+     "verliesreeks": 7,
+     "onder": -0.063,
+     "ci95": [
+      -0.096,
+      0.154
+     ],
+     "weddenschappen": 90,
+     "gem_rr": 1.94
+    },
+    "e1": {
+     "n": 103,
+     "per_week": 8.01,
+     "gem": 0.05,
+     "bruto": 0.128,
+     "gem15": 0.017,
+     "totaal": 5.2,
+     "win": 0.427,
+     "gem_winst": 1.35,
+     "gem_verlies": -0.92,
+     "max_dd_r": 9.3,
+     "verliesreeks": 7,
+     "onder": -0.074,
+     "ci95": [
+      -0.104,
+      0.15
+     ],
+     "weddenschappen": 90,
+     "gem_rr": 1.94
+    },
+    "e2": {
+     "n": 0,
+     "per_week": 0.0
+    },
+    "correlatie": -0.04
+   },
+   "B_zonder_limieten": {
+    "na_afloop": true,
+    "stats": {
+     "n": 258,
+     "per_week": 10.03,
+     "gem": -0.087,
+     "bruto": -0.0,
+     "gem15": -0.126,
+     "totaal": -22.4,
+     "win": 0.368,
+     "gem_winst": 1.36,
+     "gem_verlies": -0.93,
+     "max_dd_r": 45.0,
+     "verliesreeks": 12,
+     "onder": -0.297,
+     "ci95": [
+      -0.328,
+      0.038
+     ],
+     "weddenschappen": 218,
+     "gem_rr": 1.95
+    },
+    "e1": {
+     "n": 134,
+     "per_week": 10.42,
+     "gem": -0.022,
+     "bruto": 0.058,
+     "gem15": -0.057,
+     "totaal": -2.9,
+     "win": 0.388,
+     "gem_winst": 1.38,
+     "gem_verlies": -0.91,
+     "max_dd_r": 23.9,
+     "verliesreeks": 10,
+     "onder": -0.274,
+     "ci95": [
+      -0.319,
+      0.204
+     ],
+     "weddenschappen": 113,
+     "gem_rr": 1.95
+    },
+    "e2": {
+     "n": 124,
+     "per_week": 9.64,
+     "gem": -0.157,
+     "bruto": -0.064,
+     "gem15": -0.2,
+     "totaal": -19.4,
+     "win": 0.347,
+     "gem_winst": 1.33,
+     "gem_verlies": -0.95,
+     "max_dd_r": 24.1,
+     "verliesreeks": 12,
+     "onder": -0.373,
+     "ci95": [
+      -0.4,
+      -0.029
+     ],
+     "weddenschappen": 105,
+     "gem_rr": 1.95
+    }
+   },
+   "stopafstand": {
+    "mediaan_pct": 0.34,
+    "mediaan_x_spread": 26.7
+   },
+   "oordeel": {
+    "meer_kansen": false,
+    "na_kosten": false,
+    "meerdere_perioden": false,
+    "risico": true,
+    "interessant": false,
+    "is_baseline": true
+   }
+  },
+  "V2_4h_1h": {
+   "titel": "4h als richtingsfilter, 1h als signaal",
+   "tellers": {
+    "ruw": 14057,
+    "uitgevoerd": 9223,
+    "markt dicht": 290,
+    "strategie heeft al een positie": 4513,
+    "spread groter dan 0,25R": 31
+   },
+   "per_markt": {
+    "EURUSD": {
+     "status": "onderzoek",
+     "keuze": "momentum|{\"er\": 0.3}",
+     "ontwikkeling": {
+      "n": 152,
+      "per_week": 2.54,
+      "gem": 0.061,
+      "bruto": 0.129,
+      "gem15": 0.031,
+      "totaal": 9.2,
+      "win": 0.454,
+      "gem_winst": 1.26,
+      "gem_verlies": -0.93,
+      "max_dd_r": 8.6,
+      "verliesreeks": 7,
+      "onder": -0.095,
+      "ci95": [
+       -0.115,
+       0.182
+      ],
+      "weddenschappen": 110,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 66,
+      "per_week": 2.57,
+      "gem": 0.049,
+      "bruto": 0.141,
+      "gem15": 0.005,
+      "totaal": 3.2,
+      "win": 0.409,
+      "gem_winst": 1.58,
+      "gem_verlies": -1.01,
+      "max_dd_r": 6.7,
+      "verliesreeks": 6,
+      "onder": -0.147,
+      "ci95": [
+       -0.192,
+       0.26
+      ],
+      "weddenschappen": 47,
+      "gem_rr": 2.0
+     },
+     "uitgevoerd_per_week": 1.6
+    },
+    "GBPUSD": {
+     "status": "pauze",
+     "keuze": null,
+     "ontwikkeling": {
+      "n": 147,
+      "per_week": 2.46,
+      "gem": -0.044,
+      "bruto": 0.046,
+      "gem15": -0.086,
+      "totaal": -6.4,
+      "win": 0.401,
+      "gem_winst": 1.29,
+      "gem_verlies": -0.94,
+      "max_dd_r": 18.9,
+      "verliesreeks": 9,
+      "onder": -0.236,
+      "ci95": [
+       -0.266,
+       0.052
+      ],
+      "weddenschappen": 107,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 0,
+      "per_week": 0.0
+     },
+     "uitgevoerd_per_week": 1.6
+    },
+    "NQ": {
+     "status": "onderzoek",
+     "keuze": "meanrev|{\"k\": 2.0}",
+     "ontwikkeling": {
+      "n": 113,
+      "per_week": 1.89,
+      "gem": 0.142,
+      "bruto": 0.181,
+      "gem15": 0.127,
+      "totaal": 16.0,
+      "win": 0.54,
+      "gem_winst": 1.04,
+      "gem_verlies": -0.91,
+      "max_dd_r": 6.8,
+      "verliesreeks": 7,
+      "onder": 0.009,
+      "ci95": [
+       -0.019,
+       0.296
+      ],
+      "weddenschappen": 97,
+      "gem_rr": 1.41
+     },
+     "evaluatie": {
+      "n": 56,
+      "per_week": 2.18,
+      "gem": 0.102,
+      "bruto": 0.135,
+      "gem15": 0.089,
+      "totaal": 5.7,
+      "win": 0.5,
+      "gem_winst": 1.11,
+      "gem_verlies": -0.91,
+      "max_dd_r": 5.6,
+      "verliesreeks": 3,
+      "onder": -0.078,
+      "ci95": [
+       -0.114,
+       0.325
+      ],
+      "weddenschappen": 45,
+      "gem_rr": 1.42
+     },
+     "uitgevoerd_per_week": 1.71
+    },
+    "ES": {
+     "status": "pauze",
+     "keuze": null,
+     "ontwikkeling": {
+      "n": 93,
+      "per_week": 1.55,
+      "gem": -0.059,
+      "bruto": 0.012,
+      "gem15": -0.087,
+      "totaal": -5.5,
+      "win": 0.398,
+      "gem_winst": 1.26,
+      "gem_verlies": -0.93,
+      "max_dd_r": 11.1,
+      "verliesreeks": 6,
+      "onder": -0.221,
+      "ci95": [
+       -0.244,
+       0.142
+      ],
+      "weddenschappen": 83,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 0,
+      "per_week": 0.0
+     },
+     "uitgevoerd_per_week": 1.69
+    },
+    "GOUD": {
+     "status": "onderzoek",
+     "keuze": "breakout|{\"n\": 48}",
+     "ontwikkeling": {
+      "n": 153,
+      "per_week": 2.56,
+      "gem": 0.243,
+      "bruto": 0.313,
+      "gem15": 0.212,
+      "totaal": 37.2,
+      "win": 0.523,
+      "gem_winst": 1.33,
+      "gem_verlies": -0.95,
+      "max_dd_r": 14.2,
+      "verliesreeks": 13,
+      "onder": -0.005,
+      "ci95": [
+       -0.049,
+       0.454
+      ],
+      "weddenschappen": 114,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 61,
+      "per_week": 2.37,
+      "gem": 0.033,
+      "bruto": 0.085,
+      "gem15": 0.01,
+      "totaal": 2.0,
+      "win": 0.393,
+      "gem_winst": 1.55,
+      "gem_verlies": -0.95,
+      "max_dd_r": 9.5,
+      "verliesreeks": 7,
+      "onder": -0.353,
+      "ci95": [
+       -0.421,
+       0.33
+      ],
+      "weddenschappen": 50,
+      "gem_rr": 2.0
+     },
+     "uitgevoerd_per_week": 1.59
+    },
+    "ZILVER": {
+     "status": "pauze",
+     "keuze": null,
+     "ontwikkeling": {
+      "n": 82,
+      "per_week": 1.37,
+      "gem": -0.037,
+      "bruto": 0.121,
+      "gem15": -0.115,
+      "totaal": -3.1,
+      "win": 0.451,
+      "gem_winst": 1.14,
+      "gem_verlies": -1.01,
+      "max_dd_r": 17.5,
+      "verliesreeks": 7,
+      "onder": -0.367,
+      "ci95": [
+       -0.419,
+       0.156
+      ],
+      "weddenschappen": 61,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 0,
+      "per_week": 0.0
+     },
+     "uitgevoerd_per_week": 1.61
+    }
+   },
+   "poort": [
+    {
+     "markt": "EURUSD",
+     "familie": "trend",
+     "variant": null,
+     "geslaagd": false,
+     "train": {
+      "n": 0
+     },
+     "validatie": {
+      "n": 0
+     },
+     "ondergrens": null,
+     "dsr": 0.0,
+     "redenen": [
+      "P1"
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.3}",
+     "geslaagd": false,
+     "train": {
+      "n": 152,
+      "gem": 0.061,
+      "totaal": 9.24,
+      "win": 0.454,
+      "se": 0.099
+     },
+     "validatie": {
+      "n": 66,
+      "gem": 0.049,
+      "totaal": 3.23,
+      "win": 0.409,
+      "se": 0.166
+     },
+     "ondergrens": -0.135,
+     "dsr": 0.062,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 132,
+      "gem": -0.121,
+      "totaal": -15.95,
+      "win": 0.439,
+      "se": 0.088
+     },
+     "validatie": {
+      "n": 65,
+      "gem": -0.113,
+      "totaal": -7.35,
+      "win": 0.431,
+      "se": 0.121
+     },
+     "ondergrens": -0.272,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "familie": "breakout",
+     "variant": "{\"n\": 48}",
+     "geslaagd": false,
+     "train": {
+      "n": 137,
+      "gem": 0.004,
+      "totaal": 0.58,
+      "win": 0.409,
+      "se": 0.106
+     },
+     "validatie": {
+      "n": 55,
+      "gem": -0.145,
+      "totaal": -7.98,
+      "win": 0.345,
+      "se": 0.171
+     },
+     "ondergrens": -0.395,
+     "dsr": 0.005,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.2}",
+     "geslaagd": false,
+     "train": {
+      "n": 88,
+      "gem": 0.054,
+      "totaal": 4.79,
+      "win": 0.443,
+      "se": 0.132
+     },
+     "validatie": {
+      "n": 38,
+      "gem": -0.269,
+      "totaal": -10.23,
+      "win": 0.289,
+      "se": 0.192
+     },
+     "ondergrens": -0.556,
+     "dsr": 0.005,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "trend",
+     "variant": null,
+     "geslaagd": false,
+     "train": {
+      "n": 0
+     },
+     "validatie": {
+      "n": 0
+     },
+     "ondergrens": null,
+     "dsr": 0.0,
+     "redenen": [
+      "P1"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.3}",
+     "geslaagd": false,
+     "train": {
+      "n": 147,
+      "gem": -0.044,
+      "totaal": -6.44,
+      "win": 0.401,
+      "se": 0.1
+     },
+     "validatie": {
+      "n": 68,
+      "gem": 0.036,
+      "totaal": 2.43,
+      "win": 0.426,
+      "se": 0.161
+     },
+     "ondergrens": -0.241,
+     "dsr": 0.008,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 129,
+      "gem": -0.159,
+      "totaal": -20.47,
+      "win": 0.434,
+      "se": 0.083
+     },
+     "validatie": {
+      "n": 73,
+      "gem": -0.219,
+      "totaal": -15.98,
+      "win": 0.411,
+      "se": 0.118
+     },
+     "ondergrens": -0.463,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "breakout",
+     "variant": "{\"n\": 48}",
+     "geslaagd": false,
+     "train": {
+      "n": 141,
+      "gem": -0.114,
+      "totaal": -16.04,
+      "win": 0.411,
+      "se": 0.096
+     },
+     "validatie": {
+      "n": 57,
+      "gem": -0.2,
+      "totaal": -11.42,
+      "win": 0.333,
+      "se": 0.16
+     },
+     "ondergrens": -0.535,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.2}",
+     "geslaagd": false,
+     "train": {
+      "n": 79,
+      "gem": -0.057,
+      "totaal": -4.47,
+      "win": 0.38,
+      "se": 0.144
+     },
+     "validatie": {
+      "n": 39,
+      "gem": -0.17,
+      "totaal": -6.64,
+      "win": 0.359,
+      "se": 0.212
+     },
+     "ondergrens": -0.473,
+     "dsr": 0.002,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "trend",
+     "variant": null,
+     "geslaagd": false,
+     "train": {
+      "n": 0
+     },
+     "validatie": {
+      "n": 0
+     },
+     "ondergrens": null,
+     "dsr": 0.0,
+     "redenen": [
+      "P1"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.3}",
+     "geslaagd": false,
+     "train": {
+      "n": 179,
+      "gem": -0.051,
+      "totaal": -9.13,
+      "win": 0.413,
+      "se": 0.09
+     },
+     "validatie": {
+      "n": 72,
+      "gem": -0.076,
+      "totaal": -5.47,
+      "win": 0.375,
+      "se": 0.142
+     },
+     "ondergrens": -0.418,
+     "dsr": 0.002,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 113,
+      "gem": 0.142,
+      "totaal": 16.04,
+      "win": 0.54,
+      "se": 0.102
+     },
+     "validatie": {
+      "n": 56,
+      "gem": 0.102,
+      "totaal": 5.71,
+      "win": 0.5,
+      "se": 0.144
+     },
+     "ondergrens": -0.078,
+     "dsr": 0.258,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "breakout",
+     "variant": "{\"n\": 24}",
+     "geslaagd": false,
+     "train": {
+      "n": 193,
+      "gem": -0.09,
+      "totaal": -17.34,
+      "win": 0.389,
+      "se": 0.086
+     },
+     "validatie": {
+      "n": 83,
+      "gem": -0.126,
+      "totaal": -10.42,
+      "win": 0.373,
+      "se": 0.128
+     },
+     "ondergrens": -0.39,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.2}",
+     "geslaagd": false,
+     "train": {
+      "n": 94,
+      "gem": 0.1,
+      "totaal": 9.43,
+      "win": 0.436,
+      "se": 0.135
+     },
+     "validatie": {
+      "n": 37,
+      "gem": -0.369,
+      "totaal": -13.64,
+      "win": 0.27,
+      "se": 0.182
+     },
+     "ondergrens": -0.581,
+     "dsr": 0.007,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "trend",
+     "variant": null,
+     "geslaagd": false,
+     "train": {
+      "n": 0
+     },
+     "validatie": {
+      "n": 0
+     },
+     "ondergrens": null,
+     "dsr": 0.0,
+     "redenen": [
+      "P1"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.5}",
+     "geslaagd": false,
+     "train": {
+      "n": 79,
+      "gem": -0.065,
+      "totaal": -5.1,
+      "win": 0.38,
+      "se": 0.135
+     },
+     "validatie": {
+      "n": 31,
+      "gem": 0.08,
+      "totaal": 2.47,
+      "win": 0.387,
+      "se": 0.241
+     },
+     "ondergrens": -0.377,
+     "dsr": 0.009,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 117,
+      "gem": -0.136,
+      "totaal": -15.86,
+      "win": 0.41,
+      "se": 0.097
+     },
+     "validatie": {
+      "n": 58,
+      "gem": 0.096,
+      "totaal": 5.6,
+      "win": 0.552,
+      "se": 0.138
+     },
+     "ondergrens": -0.109,
+     "dsr": 0.002,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "breakout",
+     "variant": "{\"n\": 48}",
+     "geslaagd": false,
+     "train": {
+      "n": 166,
+      "gem": -0.116,
+      "totaal": -19.19,
+      "win": 0.404,
+      "se": 0.086
+     },
+     "validatie": {
+      "n": 65,
+      "gem": -0.3,
+      "totaal": -19.48,
+      "win": 0.323,
+      "se": 0.126
+     },
+     "ondergrens": -0.574,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.2}",
+     "geslaagd": false,
+     "train": {
+      "n": 93,
+      "gem": -0.059,
+      "totaal": -5.52,
+      "win": 0.398,
+      "se": 0.122
+     },
+     "validatie": {
+      "n": 35,
+      "gem": -0.258,
+      "totaal": -9.02,
+      "win": 0.343,
+      "se": 0.18
+     },
+     "ondergrens": -0.366,
+     "dsr": 0.001,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "trend",
+     "variant": null,
+     "geslaagd": false,
+     "train": {
+      "n": 0
+     },
+     "validatie": {
+      "n": 0
+     },
+     "ondergrens": null,
+     "dsr": 0.0,
+     "redenen": [
+      "P1"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.3}",
+     "geslaagd": false,
+     "train": {
+      "n": 165,
+      "gem": 0.211,
+      "totaal": 34.85,
+      "win": 0.497,
+      "se": 0.097
+     },
+     "validatie": {
+      "n": 71,
+      "gem": -0.026,
+      "totaal": -1.81,
+      "win": 0.394,
+      "se": 0.154
+     },
+     "ondergrens": -0.256,
+     "dsr": 0.308,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 108,
+      "gem": -0.006,
+      "totaal": -0.66,
+      "win": 0.5,
+      "se": 0.1
+     },
+     "validatie": {
+      "n": 49,
+      "gem": -0.059,
+      "totaal": -2.89,
+      "win": 0.449,
+      "se": 0.142
+     },
+     "ondergrens": -0.292,
+     "dsr": 0.007,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "breakout",
+     "variant": "{\"n\": 48}",
+     "geslaagd": false,
+     "train": {
+      "n": 153,
+      "gem": 0.243,
+      "totaal": 37.16,
+      "win": 0.523,
+      "se": 0.102
+     },
+     "validatie": {
+      "n": 61,
+      "gem": 0.033,
+      "totaal": 1.99,
+      "win": 0.393,
+      "se": 0.167
+     },
+     "ondergrens": -0.339,
+     "dsr": 0.462,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.2}",
+     "geslaagd": false,
+     "train": {
+      "n": 84,
+      "gem": -0.035,
+      "totaal": -2.92,
+      "win": 0.381,
+      "se": 0.134
+     },
+     "validatie": {
+      "n": 32,
+      "gem": 0.021,
+      "totaal": 0.69,
+      "win": 0.406,
+      "se": 0.241
+     },
+     "ondergrens": -0.325,
+     "dsr": 0.01,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "trend",
+     "variant": null,
+     "geslaagd": false,
+     "train": {
+      "n": 0
+     },
+     "validatie": {
+      "n": 0
+     },
+     "ondergrens": null,
+     "dsr": 0.0,
+     "redenen": [
+      "P1"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.5}",
+     "geslaagd": false,
+     "train": {
+      "n": 82,
+      "gem": -0.037,
+      "totaal": -3.06,
+      "win": 0.451,
+      "se": 0.134
+     },
+     "validatie": {
+      "n": 31,
+      "gem": -0.267,
+      "totaal": -8.28,
+      "win": 0.323,
+      "se": 0.205
+     },
+     "ondergrens": -0.64,
+     "dsr": 0.001,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 125,
+      "gem": -0.201,
+      "totaal": -25.1,
+      "win": 0.48,
+      "se": 0.089
+     },
+     "validatie": {
+      "n": 51,
+      "gem": 0.002,
+      "totaal": 0.09,
+      "win": 0.471,
+      "se": 0.125
+     },
+     "ondergrens": -0.208,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "breakout",
+     "variant": "{\"n\": 24}",
+     "geslaagd": false,
+     "train": {
+      "n": 187,
+      "gem": -0.124,
+      "totaal": -23.28,
+      "win": 0.422,
+      "se": 0.087
+     },
+     "validatie": {
+      "n": 76,
+      "gem": -0.056,
+      "totaal": -4.26,
+      "win": 0.408,
+      "se": 0.143
+     },
+     "ondergrens": -0.4,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "volatiliteit",
+     "variant": null,
+     "geslaagd": false,
+     "train": {
+      "n": 0
+     },
+     "validatie": {
+      "n": 0
+     },
+     "ondergrens": null,
+     "dsr": 0.0,
+     "redenen": [
+      "P1"
+     ]
+    }
+   ],
+   "poort_geslaagd": 0,
+   "poort_afwijzingen": {
+    "P1": 7,
+    "P2": 23,
+    "P4": 23,
+    "P5": 23,
+    "P3": 16
+   },
+   "aanbod_evaluatie": {
+    "n": 2540,
+    "per_week": 98.78,
+    "gem": -0.083,
+    "bruto": -0.003,
+    "gem15": -0.12,
+    "totaal": -211.5,
+    "win": 0.394,
+    "gem_winst": 1.25,
+    "gem_verlies": -0.95,
+    "max_dd_r": 273.8,
+    "verliesreeks": 36,
+    "onder": -0.201,
+    "ci95": [
+     -0.211,
+     -0.072
+    ],
+    "weddenschappen": 404,
+    "gem_rr": 1.94
+   },
+   "per_familie": {
+    "trend": {
+     "n": 260,
+     "per_week": 10.11,
+     "gem": -0.084,
+     "bruto": -0.015,
+     "gem15": -0.114,
+     "totaal": -21.8,
+     "win": 0.404,
+     "gem_winst": 0.99,
+     "gem_verlies": -0.81,
+     "max_dd_r": 44.4,
+     "verliesreeks": 16,
+     "onder": -0.278,
+     "ci95": [
+      -0.298,
+      -0.011
+     ],
+     "weddenschappen": 103,
+     "gem_rr": 2.5
+    },
+    "momentum": {
+     "n": 602,
+     "per_week": 23.41,
+     "gem": 0.001,
+     "bruto": 0.081,
+     "gem15": -0.036,
+     "totaal": 0.4,
+     "win": 0.405,
+     "gem_winst": 1.42,
+     "gem_verlies": -0.97,
+     "max_dd_r": 41.7,
+     "verliesreeks": 18,
+     "onder": -0.164,
+     "ci95": [
+      -0.187,
+      0.047
+     ],
+     "weddenschappen": 210,
+     "gem_rr": 2.0
+    },
+    "meanrev": {
+     "n": 485,
+     "per_week": 18.86,
+     "gem": -0.055,
+     "bruto": 0.028,
+     "gem15": -0.093,
+     "totaal": -26.8,
+     "win": 0.452,
+     "gem_winst": 0.98,
+     "gem_verlies": -0.9,
+     "max_dd_r": 44.0,
+     "verliesreeks": 15,
+     "onder": -0.16,
+     "ci95": [
+      -0.174,
+      -0.022
+     ],
+     "weddenschappen": 209,
+     "gem_rr": 1.41
+    },
+    "breakout": {
+     "n": 840,
+     "per_week": 32.67,
+     "gem": -0.122,
+     "bruto": -0.044,
+     "gem15": -0.157,
+     "totaal": -102.4,
+     "win": 0.369,
+     "gem_winst": 1.32,
+     "gem_verlies": -0.97,
+     "max_dd_r": 134.7,
+     "verliesreeks": 22,
+     "onder": -0.269,
+     "ci95": [
+      -0.284,
+      -0.091
+     ],
+     "weddenschappen": 249,
+     "gem_rr": 2.0
+    },
+    "volatiliteit": {
+     "n": 353,
+     "per_week": 13.73,
+     "gem": -0.173,
+     "bruto": -0.083,
+     "gem15": -0.215,
+     "totaal": -61.0,
+     "win": 0.348,
+     "gem_winst": 1.41,
+     "gem_verlies": -1.02,
+     "max_dd_r": 73.0,
+     "verliesreeks": 16,
+     "onder": -0.313,
+     "ci95": [
+      -0.33,
+      -0.05
+     ],
+     "weddenschappen": 153,
+     "gem_rr": 2.0
+    }
+   },
+   "portefeuille_A": {
+    "afgewezen": {},
+    "eind": 10000.0,
+    "rendement_pct": 0.0,
+    "max_dd_pct": -0.0,
+    "slechtste_dag_pct": -0.0,
+    "grensbreuken": {},
+    "max_open": 0,
+    "max_in_groep": 0,
+    "stats": {
+     "n": 0,
+     "per_week": 0.0
+    }
+   },
+   "portefeuille_B": {
+    "afgewezen": {
+     "als alle stops geraakt worden": 156
+    },
+    "eind": 9645.42,
+    "rendement_pct": -3.55,
+    "max_dd_pct": 4.86,
+    "slechtste_dag_pct": 1.04,
+    "grensbreuken": {},
+    "max_open": 2,
+    "max_in_groep": 1,
+    "stats": {
+     "n": 27,
+     "per_week": 1.05,
+     "gem": -0.264,
+     "bruto": -0.199,
+     "gem15": -0.292,
+     "totaal": -7.1,
+     "win": 0.296,
+     "gem_winst": 1.43,
+     "gem_verlies": -0.98,
+     "max_dd_r": 10.9,
+     "verliesreeks": 6,
+     "onder": null,
+     "ci95": null,
+     "weddenschappen": 22,
+     "gem_rr": 1.83
+    },
+    "e1": {
+     "n": 27,
+     "per_week": 2.1,
+     "gem": -0.264,
+     "bruto": -0.199,
+     "gem15": -0.292,
+     "totaal": -7.1,
+     "win": 0.296,
+     "gem_winst": 1.43,
+     "gem_verlies": -0.98,
+     "max_dd_r": 10.9,
+     "verliesreeks": 6,
+     "onder": null,
+     "ci95": null,
+     "weddenschappen": 22,
+     "gem_rr": 1.83
+    },
+    "e2": {
+     "n": 0,
+     "per_week": 0.0
+    },
+    "correlatie": null
+   },
+   "B_zonder_limieten": {
+    "na_afloop": true,
+    "stats": {
+     "n": 183,
+     "per_week": 7.12,
+     "gem": 0.06,
+     "bruto": 0.121,
+     "gem15": 0.032,
+     "totaal": 10.9,
+     "win": 0.432,
+     "gem_winst": 1.4,
+     "gem_verlies": -0.96,
+     "max_dd_r": 10.5,
+     "verliesreeks": 6,
+     "onder": -0.074,
+     "ci95": [
+      -0.105,
+      0.155
+     ],
+     "weddenschappen": 142,
+     "gem_rr": 1.82
+    },
+    "e1": {
+     "n": 83,
+     "per_week": 6.46,
+     "gem": -0.007,
+     "bruto": 0.046,
+     "gem15": -0.031,
+     "totaal": -0.6,
+     "win": 0.398,
+     "gem_winst": 1.44,
+     "gem_verlies": -0.96,
+     "max_dd_r": 10.2,
+     "verliesreeks": 6,
+     "onder": -0.18,
+     "ci95": [
+      -0.225,
+      0.23
+     ],
+     "weddenschappen": 67,
+     "gem_rr": 1.78
+    },
+    "e2": {
+     "n": 100,
+     "per_week": 7.78,
+     "gem": 0.115,
+     "bruto": 0.183,
+     "gem15": 0.085,
+     "totaal": 11.5,
+     "win": 0.46,
+     "gem_winst": 1.38,
+     "gem_verlies": -0.96,
+     "max_dd_r": 7.3,
+     "verliesreeks": 6,
+     "onder": -0.045,
+     "ci95": [
+      -0.064,
+      0.197
+     ],
+     "weddenschappen": 75,
+     "gem_rr": 1.86
+    }
+   },
+   "stopafstand": {
+    "mediaan_pct": 0.34,
+    "mediaan_x_spread": 26.2
+   },
+   "oordeel": {
+    "meer_kansen": false,
+    "na_kosten": false,
+    "meerdere_perioden": false,
+    "risico": true,
+    "interessant": false,
+    "is_baseline": false
+   }
+  },
+  "V3_15m": {
+   "titel": "4h/1h als context, 15m als setup en signaal",
+   "tellers": {
+    "ruw": 37220,
+    "uitgevoerd": 21325,
+    "markt dicht": 548,
+    "strategie heeft al een positie": 13300,
+    "spread groter dan 0,25R": 2042,
+    "data op": 2,
+    "loopt nog": 3
+   },
+   "per_markt": {
+    "EURUSD": {
+     "status": "pauze",
+     "keuze": null,
+     "ontwikkeling": {
+      "n": 140,
+      "per_week": 2.34,
+      "gem": -0.014,
+      "bruto": 0.096,
+      "gem15": -0.065,
+      "totaal": -1.9,
+      "win": 0.379,
+      "gem_winst": 1.63,
+      "gem_verlies": -1.01,
+      "max_dd_r": 21.3,
+      "verliesreeks": 8,
+      "onder": -0.253,
+      "ci95": [
+       -0.284,
+       0.114
+      ],
+      "weddenschappen": 116,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 0,
+      "per_week": 0.0
+     },
+     "uitgevoerd_per_week": 3.92
+    },
+    "GBPUSD": {
+     "status": "pauze",
+     "keuze": "momentum|{\"er\": 0.5}",
+     "ontwikkeling": {
+      "n": 144,
+      "per_week": 2.41,
+      "gem": 0.023,
+      "bruto": 0.198,
+      "gem15": -0.06,
+      "totaal": 3.4,
+      "win": 0.417,
+      "gem_winst": 1.64,
+      "gem_verlies": -1.13,
+      "max_dd_r": 13.9,
+      "verliesreeks": 10,
+      "onder": -0.246,
+      "ci95": [
+       -0.284,
+       0.121
+      ],
+      "weddenschappen": 95,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 54,
+      "per_week": 2.1,
+      "gem": -0.256,
+      "bruto": -0.049,
+      "gem15": -0.355,
+      "totaal": -13.8,
+      "win": 0.315,
+      "gem_winst": 1.61,
+      "gem_verlies": -1.11,
+      "max_dd_r": 15.9,
+      "verliesreeks": 11,
+      "onder": -0.66,
+      "ci95": [
+       -0.722,
+       -0.002
+      ],
+      "weddenschappen": 37,
+      "gem_rr": 2.0
+     },
+     "uitgevoerd_per_week": 3.8
+    },
+    "NQ": {
+     "status": "pauze",
+     "keuze": "momentum|{\"er\": 0.3}",
+     "ontwikkeling": {
+      "n": 404,
+      "per_week": 6.75,
+      "gem": 0.008,
+      "bruto": 0.098,
+      "gem15": -0.03,
+      "totaal": 3.1,
+      "win": 0.391,
+      "gem_winst": 1.67,
+      "gem_verlies": -1.06,
+      "max_dd_r": 25.5,
+      "verliesreeks": 9,
+      "onder": -0.148,
+      "ci95": [
+       -0.169,
+       0.061
+      ],
+      "weddenschappen": 192,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 182,
+      "per_week": 7.08,
+      "gem": -0.009,
+      "bruto": 0.061,
+      "gem15": -0.038,
+      "totaal": -1.6,
+      "win": 0.374,
+      "gem_winst": 1.78,
+      "gem_verlies": -1.08,
+      "max_dd_r": 19.6,
+      "verliesreeks": 10,
+      "onder": -0.175,
+      "ci95": [
+       -0.194,
+       0.134
+      ],
+      "weddenschappen": 82,
+      "gem_rr": 2.0
+     },
+     "uitgevoerd_per_week": 4.14
+    },
+    "ES": {
+     "status": "pauze",
+     "keuze": "trend|{\"tp\": 2.0}",
+     "ontwikkeling": {
+      "n": 134,
+      "per_week": 2.24,
+      "gem": 0.095,
+      "bruto": 0.179,
+      "gem15": 0.063,
+      "totaal": 12.7,
+      "win": 0.425,
+      "gem_winst": 1.53,
+      "gem_verlies": -0.97,
+      "max_dd_r": 7.8,
+      "verliesreeks": 6,
+      "onder": -0.114,
+      "ci95": [
+       -0.137,
+       0.223
+      ],
+      "weddenschappen": 115,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 50,
+      "per_week": 1.94,
+      "gem": -0.075,
+      "bruto": 0.013,
+      "gem15": -0.111,
+      "totaal": -3.7,
+      "win": 0.32,
+      "gem_winst": 1.8,
+      "gem_verlies": -0.96,
+      "max_dd_r": 14.4,
+      "verliesreeks": 10,
+      "onder": -0.385,
+      "ci95": [
+       -0.425,
+       0.219
+      ],
+      "weddenschappen": 41,
+      "gem_rr": 2.0
+     },
+     "uitgevoerd_per_week": 3.95
+    },
+    "GOUD": {
+     "status": "onderzoek",
+     "keuze": "volatiliteit|{\"p\": 0.2}",
+     "ontwikkeling": {
+      "n": 197,
+      "per_week": 3.29,
+      "gem": 0.147,
+      "bruto": 0.304,
+      "gem15": 0.072,
+      "totaal": 28.9,
+      "win": 0.431,
+      "gem_winst": 1.83,
+      "gem_verlies": -1.13,
+      "max_dd_r": 9.9,
+      "verliesreeks": 7,
+      "onder": -0.064,
+      "ci95": [
+       -0.093,
+       0.261
+      ],
+      "weddenschappen": 149,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 98,
+      "per_week": 3.81,
+      "gem": -0.132,
+      "bruto": -0.01,
+      "gem15": -0.191,
+      "totaal": -12.9,
+      "win": 0.327,
+      "gem_winst": 1.88,
+      "gem_verlies": -1.11,
+      "max_dd_r": 23.1,
+      "verliesreeks": 9,
+      "onder": -0.387,
+      "ci95": [
+       -0.432,
+       0.086
+      ],
+      "weddenschappen": 66,
+      "gem_rr": 2.0
+     },
+     "uitgevoerd_per_week": 4.19
+    },
+    "ZILVER": {
+     "status": "pauze",
+     "keuze": null,
+     "ontwikkeling": {
+      "n": 98,
+      "per_week": 1.64,
+      "gem": -0.092,
+      "bruto": 0.123,
+      "gem15": -0.197,
+      "totaal": -9.0,
+      "win": 0.347,
+      "gem_winst": 1.85,
+      "gem_verlies": -1.12,
+      "max_dd_r": 16.9,
+      "verliesreeks": 8,
+      "onder": -0.451,
+      "ci95": [
+       -0.494,
+       0.119
+      ],
+      "weddenschappen": 84,
+      "gem_rr": 3.0
+     },
+     "evaluatie": {
+      "n": 0,
+      "per_week": 0.0
+     },
+     "uitgevoerd_per_week": 2.81
+    }
+   },
+   "poort": [
+    {
+     "markt": "EURUSD",
+     "familie": "trend",
+     "variant": "{\"tp\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 140,
+      "gem": -0.014,
+      "totaal": -1.89,
+      "win": 0.379,
+      "se": 0.114
+     },
+     "validatie": {
+      "n": 55,
+      "gem": -0.24,
+      "totaal": -13.19,
+      "win": 0.327,
+      "se": 0.169
+     },
+     "ondergrens": -0.509,
+     "dsr": 0.002,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.3}",
+     "geslaagd": false,
+     "train": {
+      "n": 387,
+      "gem": -0.187,
+      "totaal": -72.28,
+      "win": 0.328,
+      "se": 0.069
+     },
+     "validatie": {
+      "n": 176,
+      "gem": -0.283,
+      "totaal": -49.73,
+      "win": 0.307,
+      "se": 0.101
+     },
+     "ondergrens": -0.485,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.5}",
+     "geslaagd": false,
+     "train": {
+      "n": 102,
+      "gem": -0.215,
+      "totaal": -21.96,
+      "win": 0.382,
+      "se": 0.119
+     },
+     "validatie": {
+      "n": 51,
+      "gem": -0.151,
+      "totaal": -7.71,
+      "win": 0.431,
+      "se": 0.179
+     },
+     "ondergrens": -0.415,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "familie": "breakout",
+     "variant": "{\"n\": 48}",
+     "geslaagd": false,
+     "train": {
+      "n": 337,
+      "gem": -0.093,
+      "totaal": -31.2,
+      "win": 0.359,
+      "se": 0.075
+     },
+     "validatie": {
+      "n": 150,
+      "gem": -0.129,
+      "totaal": -19.41,
+      "win": 0.36,
+      "se": 0.112
+     },
+     "ondergrens": -0.391,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.2}",
+     "geslaagd": false,
+     "train": {
+      "n": 182,
+      "gem": -0.269,
+      "totaal": -49.0,
+      "win": 0.302,
+      "se": 0.102
+     },
+     "validatie": {
+      "n": 84,
+      "gem": -0.433,
+      "totaal": -36.35,
+      "win": 0.274,
+      "se": 0.146
+     },
+     "ondergrens": -0.815,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "trend",
+     "variant": "{\"tp\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 143,
+      "gem": -0.256,
+      "totaal": -36.57,
+      "win": 0.308,
+      "se": 0.107
+     },
+     "validatie": {
+      "n": 54,
+      "gem": -0.142,
+      "totaal": -7.68,
+      "win": 0.333,
+      "se": 0.181
+     },
+     "ondergrens": -0.483,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.5}",
+     "geslaagd": false,
+     "train": {
+      "n": 144,
+      "gem": 0.023,
+      "totaal": 3.37,
+      "win": 0.417,
+      "se": 0.118
+     },
+     "validatie": {
+      "n": 54,
+      "gem": -0.256,
+      "totaal": -13.8,
+      "win": 0.315,
+      "se": 0.181
+     },
+     "ondergrens": -0.66,
+     "dsr": 0.004,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 341,
+      "gem": -0.149,
+      "totaal": -50.94,
+      "win": 0.469,
+      "se": 0.061
+     },
+     "validatie": {
+      "n": 136,
+      "gem": -0.289,
+      "totaal": -39.26,
+      "win": 0.412,
+      "se": 0.095
+     },
+     "ondergrens": -0.49,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "breakout",
+     "variant": "{\"n\": 48}",
+     "geslaagd": false,
+     "train": {
+      "n": 348,
+      "gem": -0.155,
+      "totaal": -54.1,
+      "win": 0.356,
+      "se": 0.074
+     },
+     "validatie": {
+      "n": 148,
+      "gem": -0.227,
+      "totaal": -33.57,
+      "win": 0.338,
+      "se": 0.112
+     },
+     "ondergrens": -0.565,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.2}",
+     "geslaagd": false,
+     "train": {
+      "n": 164,
+      "gem": -0.168,
+      "totaal": -27.56,
+      "win": 0.36,
+      "se": 0.113
+     },
+     "validatie": {
+      "n": 65,
+      "gem": -0.772,
+      "totaal": -50.17,
+      "win": 0.169,
+      "se": 0.139
+     },
+     "ondergrens": -1.072,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "trend",
+     "variant": "{\"tp\": 3.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 131,
+      "gem": -0.022,
+      "totaal": -2.82,
+      "win": 0.328,
+      "se": 0.135
+     },
+     "validatie": {
+      "n": 62,
+      "gem": -0.008,
+      "totaal": -0.48,
+      "win": 0.323,
+      "se": 0.203
+     },
+     "ondergrens": -0.42,
+     "dsr": 0.01,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.3}",
+     "geslaagd": false,
+     "train": {
+      "n": 404,
+      "gem": 0.008,
+      "totaal": 3.14,
+      "win": 0.391,
+      "se": 0.069
+     },
+     "validatie": {
+      "n": 182,
+      "gem": -0.009,
+      "totaal": -1.59,
+      "win": 0.374,
+      "se": 0.106
+     },
+     "ondergrens": -0.169,
+     "dsr": 0.016,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.5}",
+     "geslaagd": false,
+     "train": {
+      "n": 123,
+      "gem": -0.006,
+      "totaal": -0.75,
+      "win": 0.431,
+      "se": 0.111
+     },
+     "validatie": {
+      "n": 62,
+      "gem": 0.005,
+      "totaal": 0.33,
+      "win": 0.435,
+      "se": 0.16
+     },
+     "ondergrens": -0.298,
+     "dsr": 0.013,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "breakout",
+     "variant": "{\"n\": 24}",
+     "geslaagd": false,
+     "train": {
+      "n": 468,
+      "gem": -0.023,
+      "totaal": -10.75,
+      "win": 0.376,
+      "se": 0.063
+     },
+     "validatie": {
+      "n": 213,
+      "gem": -0.013,
+      "totaal": -2.71,
+      "win": 0.357,
+      "se": 0.097
+     },
+     "ondergrens": -0.236,
+     "dsr": 0.005,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.1}",
+     "geslaagd": false,
+     "train": {
+      "n": 116,
+      "gem": -0.048,
+      "totaal": -5.57,
+      "win": 0.353,
+      "se": 0.134
+     },
+     "validatie": {
+      "n": 53,
+      "gem": -0.21,
+      "totaal": -11.13,
+      "win": 0.302,
+      "se": 0.191
+     },
+     "ondergrens": -0.587,
+     "dsr": 0.001,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "trend",
+     "variant": "{\"tp\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 134,
+      "gem": 0.095,
+      "totaal": 12.67,
+      "win": 0.425,
+      "se": 0.114
+     },
+     "validatie": {
+      "n": 50,
+      "gem": -0.075,
+      "totaal": -3.73,
+      "win": 0.32,
+      "se": 0.189
+     },
+     "ondergrens": -0.395,
+     "dsr": 0.044,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.3}",
+     "geslaagd": false,
+     "train": {
+      "n": 403,
+      "gem": -0.103,
+      "totaal": -41.62,
+      "win": 0.35,
+      "se": 0.068
+     },
+     "validatie": {
+      "n": 144,
+      "gem": -0.007,
+      "totaal": -1.06,
+      "win": 0.396,
+      "se": 0.116
+     },
+     "ondergrens": -0.317,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.5}",
+     "geslaagd": false,
+     "train": {
+      "n": 127,
+      "gem": -0.053,
+      "totaal": -6.77,
+      "win": 0.417,
+      "se": 0.109
+     },
+     "validatie": {
+      "n": 62,
+      "gem": -0.036,
+      "totaal": -2.26,
+      "win": 0.452,
+      "se": 0.151
+     },
+     "ondergrens": -0.362,
+     "dsr": 0.003,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "breakout",
+     "variant": "{\"n\": 24}",
+     "geslaagd": false,
+     "train": {
+      "n": 478,
+      "gem": -0.104,
+      "totaal": -49.83,
+      "win": 0.356,
+      "se": 0.062
+     },
+     "validatie": {
+      "n": 179,
+      "gem": -0.051,
+      "totaal": -9.04,
+      "win": 0.385,
+      "se": 0.107
+     },
+     "ondergrens": -0.28,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.2}",
+     "geslaagd": false,
+     "train": {
+      "n": 167,
+      "gem": 0.002,
+      "totaal": 0.29,
+      "win": 0.383,
+      "se": 0.113
+     },
+     "validatie": {
+      "n": 70,
+      "gem": -0.276,
+      "totaal": -19.31,
+      "win": 0.286,
+      "se": 0.161
+     },
+     "ondergrens": -0.585,
+     "dsr": 0.001,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "trend",
+     "variant": "{\"tp\": 3.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 142,
+      "gem": 0.045,
+      "totaal": 6.39,
+      "win": 0.352,
+      "se": 0.139
+     },
+     "validatie": {
+      "n": 53,
+      "gem": 0.158,
+      "totaal": 8.38,
+      "win": 0.34,
+      "se": 0.236
+     },
+     "ondergrens": -0.27,
+     "dsr": 0.056,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.3}",
+     "geslaagd": false,
+     "train": {
+      "n": 427,
+      "gem": -0.032,
+      "totaal": -13.6,
+      "win": 0.375,
+      "se": 0.068
+     },
+     "validatie": {
+      "n": 173,
+      "gem": -0.091,
+      "totaal": -15.69,
+      "win": 0.335,
+      "se": 0.107
+     },
+     "ondergrens": -0.264,
+     "dsr": 0.001,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 321,
+      "gem": -0.15,
+      "totaal": -48.2,
+      "win": 0.433,
+      "se": 0.063
+     },
+     "validatie": {
+      "n": 154,
+      "gem": -0.2,
+      "totaal": -30.78,
+      "win": 0.409,
+      "se": 0.09
+     },
+     "ondergrens": -0.328,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "breakout",
+     "variant": "{\"n\": 48}",
+     "geslaagd": false,
+     "train": {
+      "n": 366,
+      "gem": 0.072,
+      "totaal": 26.39,
+      "win": 0.407,
+      "se": 0.074
+     },
+     "validatie": {
+      "n": 148,
+      "gem": 0.018,
+      "totaal": 2.73,
+      "win": 0.378,
+      "se": 0.117
+     },
+     "ondergrens": -0.179,
+     "dsr": 0.097,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.2}",
+     "geslaagd": false,
+     "train": {
+      "n": 197,
+      "gem": 0.147,
+      "totaal": 28.89,
+      "win": 0.431,
+      "se": 0.105
+     },
+     "validatie": {
+      "n": 98,
+      "gem": -0.132,
+      "totaal": -12.94,
+      "win": 0.327,
+      "se": 0.143
+     },
+     "ondergrens": -0.383,
+     "dsr": 0.059,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "trend",
+     "variant": "{\"tp\": 3.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 98,
+      "gem": -0.092,
+      "totaal": -9.0,
+      "win": 0.347,
+      "se": 0.159
+     },
+     "validatie": {
+      "n": 59,
+      "gem": -0.047,
+      "totaal": -2.77,
+      "win": 0.356,
+      "se": 0.217
+     },
+     "ondergrens": -0.574,
+     "dsr": 0.003,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.3}",
+     "geslaagd": false,
+     "train": {
+      "n": 254,
+      "gem": -0.342,
+      "totaal": -86.98,
+      "win": 0.319,
+      "se": 0.085
+     },
+     "validatie": {
+      "n": 138,
+      "gem": -0.117,
+      "totaal": -16.19,
+      "win": 0.384,
+      "se": 0.121
+     },
+     "ondergrens": -0.434,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 215,
+      "gem": -0.21,
+      "totaal": -45.06,
+      "win": 0.465,
+      "se": 0.077
+     },
+     "validatie": {
+      "n": 119,
+      "gem": -0.299,
+      "totaal": -35.6,
+      "win": 0.437,
+      "se": 0.1
+     },
+     "ondergrens": -0.583,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "breakout",
+     "variant": "{\"n\": 48}",
+     "geslaagd": false,
+     "train": {
+      "n": 227,
+      "gem": -0.239,
+      "totaal": -54.32,
+      "win": 0.348,
+      "se": 0.091
+     },
+     "validatie": {
+      "n": 129,
+      "gem": -0.091,
+      "totaal": -11.7,
+      "win": 0.403,
+      "se": 0.125
+     },
+     "ondergrens": -0.45,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.2}",
+     "geslaagd": false,
+     "train": {
+      "n": 90,
+      "gem": -0.194,
+      "totaal": -17.42,
+      "win": 0.356,
+      "se": 0.155
+     },
+     "validatie": {
+      "n": 71,
+      "gem": -0.468,
+      "totaal": -33.24,
+      "win": 0.268,
+      "se": 0.159
+     },
+     "ondergrens": -0.894,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    }
+   ],
+   "poort_geslaagd": 0,
+   "poort_afwijzingen": {
+    "P2": 30,
+    "P3": 23,
+    "P4": 30,
+    "P5": 30
+   },
+   "aanbod_evaluatie": {
+    "n": 5975,
+    "per_week": 232.36,
+    "gem": -0.141,
+    "bruto": 0.015,
+    "gem15": -0.215,
+    "totaal": -841.9,
+    "win": 0.364,
+    "gem_winst": 1.59,
+    "gem_verlies": -1.13,
+    "max_dd_r": 874.5,
+    "verliesreeks": 34,
+    "onder": -0.278,
+    "ci95": [
+     -0.289,
+     -0.151
+    ],
+    "weddenschappen": 414,
+    "gem_rr": 1.93
+   },
+   "per_familie": {
+    "trend": {
+     "n": 667,
+     "per_week": 25.94,
+     "gem": -0.04,
+     "bruto": 0.093,
+     "gem15": -0.101,
+     "totaal": -26.7,
+     "win": 0.34,
+     "gem_winst": 1.9,
+     "gem_verlies": -1.04,
+     "max_dd_r": 88.9,
+     "verliesreeks": 26,
+     "onder": -0.222,
+     "ci95": [
+      -0.243,
+      0.02
+     ],
+     "weddenschappen": 207,
+     "gem_rr": 2.5
+    },
+    "momentum": {
+     "n": 1345,
+     "per_week": 52.31,
+     "gem": -0.113,
+     "bruto": 0.038,
+     "gem15": -0.184,
+     "totaal": -152.1,
+     "win": 0.356,
+     "gem_winst": 1.71,
+     "gem_verlies": -1.12,
+     "max_dd_r": 173.3,
+     "verliesreeks": 30,
+     "onder": -0.266,
+     "ci95": [
+      -0.28,
+      -0.096
+     ],
+     "weddenschappen": 305,
+     "gem_rr": 2.0
+    },
+    "meanrev": {
+     "n": 1176,
+     "per_week": 45.73,
+     "gem": -0.153,
+     "bruto": 0.008,
+     "gem15": -0.23,
+     "totaal": -179.8,
+     "win": 0.443,
+     "gem_winst": 1.09,
+     "gem_verlies": -1.14,
+     "max_dd_r": 193.9,
+     "verliesreeks": 13,
+     "onder": -0.288,
+     "ci95": [
+      -0.298,
+      -0.159
+     ],
+     "weddenschappen": 321,
+     "gem_rr": 1.37
+    },
+    "breakout": {
+     "n": 2016,
+     "per_week": 78.4,
+     "gem": -0.097,
+     "bruto": 0.055,
+     "gem15": -0.169,
+     "totaal": -195.5,
+     "win": 0.366,
+     "gem_winst": 1.7,
+     "gem_verlies": -1.13,
+     "max_dd_r": 233.6,
+     "verliesreeks": 31,
+     "onder": -0.247,
+     "ci95": [
+      -0.26,
+      -0.089
+     ],
+     "weddenschappen": 343,
+     "gem_rr": 2.0
+    },
+    "volatiliteit": {
+     "n": 771,
+     "per_week": 29.98,
+     "gem": -0.373,
+     "bruto": -0.185,
+     "gem15": -0.462,
+     "totaal": -287.7,
+     "win": 0.271,
+     "gem_winst": 1.81,
+     "gem_verlies": -1.18,
+     "max_dd_r": 298.9,
+     "verliesreeks": 24,
+     "onder": -0.594,
+     "ci95": [
+      -0.615,
+      -0.322
+     ],
+     "weddenschappen": 250,
+     "gem_rr": 2.0
+    }
+   },
+   "portefeuille_A": {
+    "afgewezen": {},
+    "eind": 10000.0,
+    "rendement_pct": 0.0,
+    "max_dd_pct": -0.0,
+    "slechtste_dag_pct": -0.0,
+    "grensbreuken": {},
+    "max_open": 0,
+    "max_in_groep": 0,
+    "stats": {
+     "n": 0,
+     "per_week": 0.0
+    }
+   },
+   "portefeuille_B": {
+    "afgewezen": {
+     "al 1 trade(s) in dezelfde richting in de gro": 2,
+     "als alle stops geraakt worden": 1,
+     "maximaal verlies geraakt": 349
+    },
+    "eind": 9708.56,
+    "rendement_pct": -2.91,
+    "max_dd_pct": 5.02,
+    "slechtste_dag_pct": 2.7,
+    "grensbreuken": {
+     "trailing": 1
+    },
+    "max_open": 3,
+    "max_in_groep": 1,
+    "stats": {
+     "n": 32,
+     "per_week": 1.24,
+     "gem": -0.18,
+     "bruto": -0.072,
+     "gem15": -0.228,
+     "totaal": -5.8,
+     "win": 0.312,
+     "gem_winst": 1.66,
+     "gem_verlies": -1.02,
+     "max_dd_r": 10.3,
+     "verliesreeks": 7,
+     "onder": null,
+     "ci95": null,
+     "weddenschappen": 18,
+     "gem_rr": 2.0
+    },
+    "e1": {
+     "n": 32,
+     "per_week": 2.49,
+     "gem": -0.18,
+     "bruto": -0.072,
+     "gem15": -0.228,
+     "totaal": -5.8,
+     "win": 0.312,
+     "gem_winst": 1.66,
+     "gem_verlies": -1.02,
+     "max_dd_r": 10.3,
+     "verliesreeks": 7,
+     "onder": null,
+     "ci95": null,
+     "weddenschappen": 18,
+     "gem_rr": 2.0
+    },
+    "e2": {
+     "n": 0,
+     "per_week": 0.0
+    },
+    "correlatie": null
+   },
+   "B_zonder_limieten": {
+    "na_afloop": true,
+    "stats": {
+     "n": 384,
+     "per_week": 14.93,
+     "gem": -0.083,
+     "bruto": 0.021,
+     "gem15": -0.131,
+     "totaal": -32.1,
+     "win": 0.346,
+     "gem_winst": 1.79,
+     "gem_verlies": -1.08,
+     "max_dd_r": 51.7,
+     "verliesreeks": 13,
+     "onder": -0.249,
+     "ci95": [
+      -0.267,
+      0.016
+     ],
+     "weddenschappen": 196,
+     "gem_rr": 2.0
+    },
+    "e1": {
+     "n": 199,
+     "per_week": 15.48,
+     "gem": -0.119,
+     "bruto": -0.019,
+     "gem15": -0.164,
+     "totaal": -23.7,
+     "win": 0.337,
+     "gem_winst": 1.71,
+     "gem_verlies": -1.05,
+     "max_dd_r": 27.8,
+     "verliesreeks": 11,
+     "onder": -0.232,
+     "ci95": [
+      -0.243,
+      -0.052
+     ],
+     "weddenschappen": 103,
+     "gem_rr": 2.0
+    },
+    "e2": {
+     "n": 185,
+     "per_week": 14.39,
+     "gem": -0.045,
+     "bruto": 0.064,
+     "gem15": -0.096,
+     "totaal": -8.4,
+     "win": 0.357,
+     "gem_winst": 1.87,
+     "gem_verlies": -1.11,
+     "max_dd_r": 30.4,
+     "verliesreeks": 13,
+     "onder": -0.307,
+     "ci95": [
+      -0.33,
+      0.204
+     ],
+     "weddenschappen": 93,
+     "gem_rr": 2.0
+    }
+   },
+   "stopafstand": {
+    "mediaan_pct": 0.16,
+    "mediaan_x_spread": 13.3
+   },
+   "oordeel": {
+    "meer_kansen": false,
+    "na_kosten": false,
+    "meerdere_perioden": false,
+    "risico": false,
+    "interessant": false,
+    "is_baseline": false
+   }
+  },
+  "V4_5m": {
+   "titel": "4h/1h/15m als context, 5m als instaptrigger",
+   "tellers": {
+    "ruw": 25051,
+    "uitgevoerd": 15072,
+    "markt dicht": 236,
+    "strategie heeft al een positie": 8317,
+    "spread groter dan 0,25R": 1307,
+    "te weinig ruimte tot doel": 115,
+    "loopt nog": 4
+   },
+   "per_markt": {
+    "EURUSD": {
+     "status": "pauze",
+     "keuze": "momentum|{\"er\": 0.5}",
+     "ontwikkeling": {
+      "n": 114,
+      "per_week": 1.9,
+      "gem": 0.172,
+      "bruto": 0.297,
+      "gem15": 0.112,
+      "totaal": 19.6,
+      "win": 0.439,
+      "gem_winst": 1.78,
+      "gem_verlies": -1.08,
+      "max_dd_r": 21.2,
+      "verliesreeks": 9,
+      "onder": -0.264,
+      "ci95": [
+       -0.31,
+       0.326
+      ],
+      "weddenschappen": 76,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 40,
+      "per_week": 1.56,
+      "gem": -0.053,
+      "bruto": 0.114,
+      "gem15": -0.135,
+      "totaal": -2.1,
+      "win": 0.375,
+      "gem_winst": 1.73,
+      "gem_verlies": -1.12,
+      "max_dd_r": 8.5,
+      "verliesreeks": 7,
+      "onder": -0.456,
+      "ci95": [
+       -0.518,
+       0.346
+      ],
+      "weddenschappen": 26,
+      "gem_rr": 2.0
+     },
+     "uitgevoerd_per_week": 2.68
+    },
+    "GBPUSD": {
+     "status": "pauze",
+     "keuze": null,
+     "ontwikkeling": {
+      "n": 114,
+      "per_week": 1.9,
+      "gem": -0.032,
+      "bruto": 0.143,
+      "gem15": -0.116,
+      "totaal": -3.7,
+      "win": 0.386,
+      "gem_winst": 1.69,
+      "gem_verlies": -1.12,
+      "max_dd_r": 13.1,
+      "verliesreeks": 7,
+      "onder": -0.292,
+      "ci95": [
+       -0.327,
+       0.106
+      ],
+      "weddenschappen": 77,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 0,
+      "per_week": 0.0
+     },
+     "uitgevoerd_per_week": 2.62
+    },
+    "NQ": {
+     "status": "onderzoek",
+     "keuze": "volatiliteit|{\"p\": 0.1}",
+     "ontwikkeling": {
+      "n": 77,
+      "per_week": 1.29,
+      "gem": 0.09,
+      "bruto": 0.208,
+      "gem15": 0.033,
+      "totaal": 6.9,
+      "win": 0.403,
+      "gem_winst": 1.86,
+      "gem_verlies": -1.1,
+      "max_dd_r": 14.3,
+      "verliesreeks": 7,
+      "onder": -0.293,
+      "ci95": [
+       -0.36,
+       0.367
+      ],
+      "weddenschappen": 65,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 34,
+      "per_week": 1.32,
+      "gem": 0.152,
+      "bruto": 0.235,
+      "gem15": 0.112,
+      "totaal": 5.2,
+      "win": 0.412,
+      "gem_winst": 1.92,
+      "gem_verlies": -1.08,
+      "max_dd_r": 6.3,
+      "verliesreeks": 5,
+      "onder": -0.311,
+      "ci95": [
+       -0.399,
+       0.704
+      ],
+      "weddenschappen": 26,
+      "gem_rr": 2.0
+     },
+     "uitgevoerd_per_week": 3.0
+    },
+    "ES": {
+     "status": "onderzoek",
+     "keuze": "trend|{\"tp\": 2.0}",
+     "ontwikkeling": {
+      "n": 106,
+      "per_week": 1.77,
+      "gem": 0.044,
+      "bruto": 0.132,
+      "gem15": 0.011,
+      "totaal": 4.7,
+      "win": 0.434,
+      "gem_winst": 1.46,
+      "gem_verlies": -1.04,
+      "max_dd_r": 8.3,
+      "verliesreeks": 6,
+      "onder": -0.202,
+      "ci95": [
+       -0.234,
+       0.19
+      ],
+      "weddenschappen": 93,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 38,
+      "per_week": 1.48,
+      "gem": 0.001,
+      "bruto": 0.095,
+      "gem15": -0.037,
+      "totaal": 0.0,
+      "win": 0.368,
+      "gem_winst": 1.68,
+      "gem_verlies": -0.98,
+      "max_dd_r": 10.7,
+      "verliesreeks": 6,
+      "onder": -0.377,
+      "ci95": [
+       -0.435,
+       0.231
+      ],
+      "weddenschappen": 33,
+      "gem_rr": 2.0
+     },
+     "uitgevoerd_per_week": 2.83
+    },
+    "GOUD": {
+     "status": "onderzoek",
+     "keuze": "volatiliteit|{\"p\": 0.2}",
+     "ontwikkeling": {
+      "n": 135,
+      "per_week": 2.26,
+      "gem": 0.17,
+      "bruto": 0.333,
+      "gem15": 0.092,
+      "totaal": 22.9,
+      "win": 0.444,
+      "gem_winst": 1.83,
+      "gem_verlies": -1.16,
+      "max_dd_r": 16.8,
+      "verliesreeks": 9,
+      "onder": -0.16,
+      "ci95": [
+       -0.221,
+       0.399
+      ],
+      "weddenschappen": 108,
+      "gem_rr": 2.0
+     },
+     "evaluatie": {
+      "n": 62,
+      "per_week": 2.41,
+      "gem": -0.105,
+      "bruto": 0.016,
+      "gem15": -0.164,
+      "totaal": -6.5,
+      "win": 0.339,
+      "gem_winst": 1.88,
+      "gem_verlies": -1.12,
+      "max_dd_r": 16.3,
+      "verliesreeks": 12,
+      "onder": -0.537,
+      "ci95": [
+       -0.611,
+       0.259
+      ],
+      "weddenschappen": 46,
+      "gem_rr": 2.0
+     },
+     "uitgevoerd_per_week": 2.99
+    },
+    "ZILVER": {
+     "status": "pauze",
+     "keuze": null,
+     "ontwikkeling": {
+      "n": 83,
+      "per_week": 1.39,
+      "gem": -0.024,
+      "bruto": 0.191,
+      "gem15": -0.128,
+      "totaal": -2.0,
+      "win": 0.361,
+      "gem_winst": 1.91,
+      "gem_verlies": -1.12,
+      "max_dd_r": 16.0,
+      "verliesreeks": 8,
+      "onder": -0.445,
+      "ci95": [
+       -0.5,
+       0.216
+      ],
+      "weddenschappen": 73,
+      "gem_rr": 3.0
+     },
+     "evaluatie": {
+      "n": 0,
+      "per_week": 0.0
+     },
+     "uitgevoerd_per_week": 2.04
+    }
+   },
+   "poort": [
+    {
+     "markt": "EURUSD",
+     "familie": "trend",
+     "variant": "{\"tp\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 110,
+      "gem": 0.032,
+      "totaal": 3.51,
+      "win": 0.4,
+      "se": 0.13
+     },
+     "validatie": {
+      "n": 43,
+      "gem": -0.177,
+      "totaal": -7.63,
+      "win": 0.349,
+      "se": 0.198
+     },
+     "ondergrens": -0.463,
+     "dsr": 0.008,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.5}",
+     "geslaagd": false,
+     "train": {
+      "n": 114,
+      "gem": 0.172,
+      "totaal": 19.57,
+      "win": 0.439,
+      "se": 0.136
+     },
+     "validatie": {
+      "n": 40,
+      "gem": -0.053,
+      "totaal": -2.11,
+      "win": 0.375,
+      "se": 0.224
+     },
+     "ondergrens": -0.456,
+     "dsr": 0.109,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 165,
+      "gem": -0.204,
+      "totaal": -33.68,
+      "win": 0.442,
+      "se": 0.084
+     },
+     "validatie": {
+      "n": 75,
+      "gem": -0.033,
+      "totaal": -2.5,
+      "win": 0.547,
+      "se": 0.129
+     },
+     "ondergrens": -0.341,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "familie": "breakout",
+     "variant": "{\"n\": 48}",
+     "geslaagd": false,
+     "train": {
+      "n": 273,
+      "gem": 0.014,
+      "totaal": 3.69,
+      "win": 0.392,
+      "se": 0.086
+     },
+     "validatie": {
+      "n": 123,
+      "gem": -0.277,
+      "totaal": -34.02,
+      "win": 0.301,
+      "se": 0.12
+     },
+     "ondergrens": -0.468,
+     "dsr": 0.001,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.2}",
+     "geslaagd": false,
+     "train": {
+      "n": 105,
+      "gem": -0.2,
+      "totaal": -21.02,
+      "win": 0.324,
+      "se": 0.138
+     },
+     "validatie": {
+      "n": 44,
+      "gem": -0.389,
+      "totaal": -17.1,
+      "win": 0.295,
+      "se": 0.207
+     },
+     "ondergrens": -0.81,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "trend",
+     "variant": "{\"tp\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 107,
+      "gem": -0.162,
+      "totaal": -17.3,
+      "win": 0.355,
+      "se": 0.128
+     },
+     "validatie": {
+      "n": 41,
+      "gem": -0.265,
+      "totaal": -10.86,
+      "win": 0.293,
+      "se": 0.198
+     },
+     "ondergrens": -0.776,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.5}",
+     "geslaagd": false,
+     "train": {
+      "n": 114,
+      "gem": -0.032,
+      "totaal": -3.65,
+      "win": 0.386,
+      "se": 0.132
+     },
+     "validatie": {
+      "n": 48,
+      "gem": -0.071,
+      "totaal": -3.42,
+      "win": 0.375,
+      "se": 0.208
+     },
+     "ondergrens": -0.337,
+     "dsr": 0.005,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 149,
+      "gem": -0.342,
+      "totaal": -50.9,
+      "win": 0.409,
+      "se": 0.085
+     },
+     "validatie": {
+      "n": 61,
+      "gem": -0.191,
+      "totaal": -11.63,
+      "win": 0.475,
+      "se": 0.141
+     },
+     "ondergrens": -0.438,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "breakout",
+     "variant": "{\"n\": 48}",
+     "geslaagd": false,
+     "train": {
+      "n": 278,
+      "gem": -0.126,
+      "totaal": -35.11,
+      "win": 0.363,
+      "se": 0.083
+     },
+     "validatie": {
+      "n": 124,
+      "gem": -0.14,
+      "totaal": -17.37,
+      "win": 0.347,
+      "se": 0.128
+     },
+     "ondergrens": -0.403,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GBPUSD",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.2}",
+     "geslaagd": false,
+     "train": {
+      "n": 98,
+      "gem": -0.197,
+      "totaal": -19.29,
+      "win": 0.357,
+      "se": 0.144
+     },
+     "validatie": {
+      "n": 38,
+      "gem": -0.646,
+      "totaal": -24.55,
+      "win": 0.211,
+      "se": 0.2
+     },
+     "ondergrens": -0.951,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "trend",
+     "variant": "{\"tp\": 3.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 110,
+      "gem": -0.053,
+      "totaal": -5.81,
+      "win": 0.327,
+      "se": 0.143
+     },
+     "validatie": {
+      "n": 46,
+      "gem": -0.124,
+      "totaal": -5.69,
+      "win": 0.304,
+      "se": 0.226
+     },
+     "ondergrens": -0.508,
+     "dsr": 0.003,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.5}",
+     "geslaagd": false,
+     "train": {
+      "n": 141,
+      "gem": -0.0,
+      "totaal": -0.05,
+      "win": 0.376,
+      "se": 0.117
+     },
+     "validatie": {
+      "n": 66,
+      "gem": 0.066,
+      "totaal": 4.38,
+      "win": 0.394,
+      "se": 0.172
+     },
+     "ondergrens": -0.385,
+     "dsr": 0.024,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 162,
+      "gem": -0.028,
+      "totaal": -4.54,
+      "win": 0.519,
+      "se": 0.085
+     },
+     "validatie": {
+      "n": 80,
+      "gem": -0.11,
+      "totaal": -8.8,
+      "win": 0.438,
+      "se": 0.122
+     },
+     "ondergrens": -0.27,
+     "dsr": 0.002,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "breakout",
+     "variant": "{\"n\": 24}",
+     "geslaagd": false,
+     "train": {
+      "n": 358,
+      "gem": 0.002,
+      "totaal": 0.56,
+      "win": 0.388,
+      "se": 0.072
+     },
+     "validatie": {
+      "n": 161,
+      "gem": 0.027,
+      "totaal": 4.28,
+      "win": 0.373,
+      "se": 0.114
+     },
+     "ondergrens": -0.243,
+     "dsr": 0.021,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "NQ",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.1}",
+     "geslaagd": false,
+     "train": {
+      "n": 77,
+      "gem": 0.09,
+      "totaal": 6.91,
+      "win": 0.403,
+      "se": 0.167
+     },
+     "validatie": {
+      "n": 34,
+      "gem": 0.152,
+      "totaal": 5.16,
+      "win": 0.412,
+      "se": 0.257
+     },
+     "ondergrens": -0.31,
+     "dsr": 0.076,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "trend",
+     "variant": "{\"tp\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 106,
+      "gem": 0.044,
+      "totaal": 4.68,
+      "win": 0.434,
+      "se": 0.129
+     },
+     "validatie": {
+      "n": 38,
+      "gem": 0.001,
+      "totaal": 0.02,
+      "win": 0.368,
+      "se": 0.218
+     },
+     "ondergrens": -0.386,
+     "dsr": 0.028,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.5}",
+     "geslaagd": false,
+     "train": {
+      "n": 137,
+      "gem": -0.051,
+      "totaal": -6.99,
+      "win": 0.372,
+      "se": 0.117
+     },
+     "validatie": {
+      "n": 56,
+      "gem": -0.085,
+      "totaal": -4.79,
+      "win": 0.357,
+      "se": 0.18
+     },
+     "ondergrens": -0.417,
+     "dsr": 0.003,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 175,
+      "gem": -0.101,
+      "totaal": -17.64,
+      "win": 0.497,
+      "se": 0.081
+     },
+     "validatie": {
+      "n": 71,
+      "gem": -0.109,
+      "totaal": -7.73,
+      "win": 0.535,
+      "se": 0.118
+     },
+     "ondergrens": -0.381,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "breakout",
+     "variant": "{\"n\": 48}",
+     "geslaagd": false,
+     "train": {
+      "n": 308,
+      "gem": -0.136,
+      "totaal": -41.74,
+      "win": 0.344,
+      "se": 0.075
+     },
+     "validatie": {
+      "n": 112,
+      "gem": -0.031,
+      "totaal": -3.5,
+      "win": 0.393,
+      "se": 0.128
+     },
+     "ondergrens": -0.271,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ES",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.1}",
+     "geslaagd": false,
+     "train": {
+      "n": 71,
+      "gem": -0.028,
+      "totaal": -1.96,
+      "win": 0.38,
+      "se": 0.171
+     },
+     "validatie": {
+      "n": 25,
+      "gem": -0.294,
+      "totaal": -7.34,
+      "win": 0.28,
+      "se": 0.276
+     },
+     "ondergrens": -1.146,
+     "dsr": 0.003,
+     "redenen": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "trend",
+     "variant": "{\"tp\": 3.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 109,
+      "gem": 0.147,
+      "totaal": 16.02,
+      "win": 0.358,
+      "se": 0.166
+     },
+     "validatie": {
+      "n": 40,
+      "gem": 0.36,
+      "totaal": 14.39,
+      "win": 0.4,
+      "se": 0.283
+     },
+     "ondergrens": -0.093,
+     "dsr": 0.212,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.3}",
+     "geslaagd": false,
+     "train": {
+      "n": 322,
+      "gem": 0.011,
+      "totaal": 3.69,
+      "win": 0.391,
+      "se": 0.079
+     },
+     "validatie": {
+      "n": 137,
+      "gem": -0.12,
+      "totaal": -16.39,
+      "win": 0.336,
+      "se": 0.12
+     },
+     "ondergrens": -0.291,
+     "dsr": 0.005,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 179,
+      "gem": -0.244,
+      "totaal": -43.71,
+      "win": 0.441,
+      "se": 0.075
+     },
+     "validatie": {
+      "n": 80,
+      "gem": -0.213,
+      "totaal": -17.04,
+      "win": 0.438,
+      "se": 0.12
+     },
+     "ondergrens": -0.427,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "breakout",
+     "variant": "{\"n\": 24}",
+     "geslaagd": false,
+     "train": {
+      "n": 358,
+      "gem": 0.042,
+      "totaal": 14.95,
+      "win": 0.402,
+      "se": 0.075
+     },
+     "validatie": {
+      "n": 141,
+      "gem": 0.12,
+      "totaal": 16.96,
+      "win": 0.411,
+      "se": 0.123
+     },
+     "ondergrens": -0.092,
+     "dsr": 0.114,
+     "redenen": [
+      "P2",
+      "P4"
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "familie": "volatiliteit",
+     "variant": "{\"p\": 0.2}",
+     "geslaagd": false,
+     "train": {
+      "n": 135,
+      "gem": 0.17,
+      "totaal": 22.93,
+      "win": 0.444,
+      "se": 0.129
+     },
+     "validatie": {
+      "n": 62,
+      "gem": -0.105,
+      "totaal": -6.48,
+      "win": 0.339,
+      "se": 0.182
+     },
+     "ondergrens": -0.533,
+     "dsr": 0.079,
+     "redenen": [
+      "P2",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "trend",
+     "variant": "{\"tp\": 3.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 83,
+      "gem": -0.024,
+      "totaal": -1.97,
+      "win": 0.361,
+      "se": 0.176
+     },
+     "validatie": {
+      "n": 52,
+      "gem": -0.105,
+      "totaal": -5.46,
+      "win": 0.327,
+      "se": 0.237
+     },
+     "ondergrens": -0.566,
+     "dsr": 0.006,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "momentum",
+     "variant": "{\"er\": 0.3}",
+     "geslaagd": false,
+     "train": {
+      "n": 204,
+      "gem": -0.325,
+      "totaal": -66.31,
+      "win": 0.328,
+      "se": 0.096
+     },
+     "validatie": {
+      "n": 110,
+      "gem": -0.097,
+      "totaal": -10.65,
+      "win": 0.4,
+      "se": 0.137
+     },
+     "ondergrens": -0.444,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "meanrev",
+     "variant": "{\"k\": 2.0}",
+     "geslaagd": false,
+     "train": {
+      "n": 113,
+      "gem": -0.175,
+      "totaal": -19.75,
+      "win": 0.522,
+      "se": 0.097
+     },
+     "validatie": {
+      "n": 58,
+      "gem": -0.233,
+      "totaal": -13.5,
+      "win": 0.483,
+      "se": 0.144
+     },
+     "ondergrens": -0.472,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "breakout",
+     "variant": "{\"n\": 48}",
+     "geslaagd": false,
+     "train": {
+      "n": 191,
+      "gem": -0.222,
+      "totaal": -42.46,
+      "win": 0.356,
+      "se": 0.099
+     },
+     "validatie": {
+      "n": 108,
+      "gem": -0.0,
+      "totaal": -0.01,
+      "win": 0.426,
+      "se": 0.141
+     },
+     "ondergrens": -0.443,
+     "dsr": 0.0,
+     "redenen": [
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+     ]
+    },
+    {
+     "markt": "ZILVER",
+     "familie": "volatiliteit",
+     "variant": null,
+     "geslaagd": false,
+     "train": {
+      "n": 0
+     },
+     "validatie": {
+      "n": 0
+     },
+     "ondergrens": null,
+     "dsr": 0.0,
+     "redenen": [
+      "P1"
+     ]
+    }
+   ],
+   "poort_geslaagd": 0,
+   "poort_afwijzingen": {
+    "P2": 29,
+    "P4": 29,
+    "P5": 28,
+    "P3": 19,
+    "P1": 2
+   },
+   "aanbod_evaluatie": {
+    "n": 4192,
+    "per_week": 163.02,
+    "gem": -0.109,
+    "bruto": 0.046,
+    "gem15": -0.182,
+    "totaal": -455.4,
+    "win": 0.371,
+    "gem_winst": 1.62,
+    "gem_verlies": -1.13,
+    "max_dd_r": 493.2,
+    "verliesreeks": 31,
+    "onder": -0.255,
+    "ci95": [
+     -0.273,
+     -0.118
+    ],
+    "weddenschappen": 370,
+    "gem_rr": 1.95
+   },
+   "per_familie": {
+    "trend": {
+     "n": 520,
+     "per_week": 20.22,
+     "gem": -0.037,
+     "bruto": 0.1,
+     "gem15": -0.099,
+     "totaal": -19.1,
+     "win": 0.35,
+     "gem_winst": 1.86,
+     "gem_verlies": -1.06,
+     "max_dd_r": 65.5,
+     "verliesreeks": 26,
+     "onder": -0.249,
+     "ci95": [
+      -0.284,
+      0.04
+     ],
+     "weddenschappen": 172,
+     "gem_rr": 2.5
+    },
+    "momentum": {
+     "n": 1076,
+     "per_week": 41.84,
+     "gem": -0.105,
+     "bruto": 0.044,
+     "gem15": -0.176,
+     "totaal": -113.4,
+     "win": 0.357,
+     "gem_winst": 1.73,
+     "gem_verlies": -1.12,
+     "max_dd_r": 143.1,
+     "verliesreeks": 24,
+     "onder": -0.269,
+     "ci95": [
+      -0.289,
+      -0.086
+     ],
+     "weddenschappen": 265,
+     "gem_rr": 2.0
+    },
+    "meanrev": {
+     "n": 583,
+     "per_week": 22.67,
+     "gem": -0.171,
+     "bruto": -0.008,
+     "gem15": -0.248,
+     "totaal": -99.5,
+     "win": 0.47,
+     "gem_winst": 0.92,
+     "gem_verlies": -1.14,
+     "max_dd_r": 110.6,
+     "verliesreeks": 12,
+     "onder": -0.315,
+     "ci95": [
+      -0.327,
+      -0.153
+     ],
+     "weddenschappen": 234,
+     "gem_rr": 1.22
+    },
+    "breakout": {
+     "n": 1567,
+     "per_week": 60.94,
+     "gem": -0.078,
+     "bruto": 0.073,
+     "gem15": -0.15,
+     "totaal": -122.7,
+     "win": 0.365,
+     "gem_winst": 1.75,
+     "gem_verlies": -1.13,
+     "max_dd_r": 157.9,
+     "verliesreeks": 36,
+     "onder": -0.237,
+     "ci95": [
+      -0.255,
+      -0.069
+     ],
+     "weddenschappen": 288,
+     "gem_rr": 2.0
+    },
+    "volatiliteit": {
+     "n": 446,
+     "per_week": 17.34,
+     "gem": -0.226,
+     "bruto": -0.037,
+     "gem15": -0.316,
+     "totaal": -100.8,
+     "win": 0.321,
+     "gem_winst": 1.82,
+     "gem_verlies": -1.19,
+     "max_dd_r": 125.4,
+     "verliesreeks": 29,
+     "onder": -0.553,
+     "ci95": [
+      -0.587,
+      -0.157
+     ],
+     "weddenschappen": 168,
+     "gem_rr": 2.0
+    }
+   },
+   "portefeuille_A": {
+    "afgewezen": {},
+    "eind": 10000.0,
+    "rendement_pct": 0.0,
+    "max_dd_pct": -0.0,
+    "slechtste_dag_pct": -0.0,
+    "grensbreuken": {},
+    "max_open": 0,
+    "max_in_groep": 0,
+    "stats": {
+     "n": 0,
+     "per_week": 0.0
+    }
+   },
+   "portefeuille_B": {
+    "afgewezen": {
+     "als alle stops geraakt worden": 103
+    },
+    "eind": 10026.42,
+    "rendement_pct": 0.26,
+    "max_dd_pct": 4.67,
+    "slechtste_dag_pct": 1.6,
+    "grensbreuken": {},
+    "max_open": 2,
+    "max_in_groep": 2,
+    "stats": {
+     "n": 71,
+     "per_week": 2.76,
+     "gem": 0.012,
+     "bruto": 0.12,
+     "gem15": -0.038,
+     "totaal": 0.9,
+     "win": 0.394,
+     "gem_winst": 1.73,
+     "gem_verlies": -1.11,
+     "max_dd_r": 9.5,
+     "verliesreeks": 8,
+     "onder": -0.142,
+     "ci95": [
+      -0.149,
+      0.14
+     ],
+     "weddenschappen": 53,
+     "gem_rr": 2.0
+    },
+    "e1": {
+     "n": 71,
+     "per_week": 5.52,
+     "gem": 0.012,
+     "bruto": 0.12,
+     "gem15": -0.038,
+     "totaal": 0.9,
+     "win": 0.394,
+     "gem_winst": 1.73,
+     "gem_verlies": -1.11,
+     "max_dd_r": 9.5,
+     "verliesreeks": 8,
+     "onder": -0.142,
+     "ci95": [
+      -0.149,
+      0.133
+     ],
+     "weddenschappen": 53,
+     "gem_rr": 2.0
+    },
+    "e2": {
+     "n": 0,
+     "per_week": 0.0
+    },
+    "correlatie": -0.042
+   },
+   "B_zonder_limieten": {
+    "na_afloop": true,
+    "stats": {
+     "n": 174,
+     "per_week": 6.77,
+     "gem": -0.02,
+     "bruto": 0.099,
+     "gem15": -0.076,
+     "totaal": -3.4,
+     "win": 0.368,
+     "gem_winst": 1.81,
+     "gem_verlies": -1.08,
+     "max_dd_r": 25.8,
+     "verliesreeks": 14,
+     "onder": -0.261,
+     "ci95": [
+      -0.29,
+      0.077
+     ],
+     "weddenschappen": 125,
+     "gem_rr": 2.0
+    },
+    "e1": {
+     "n": 79,
+     "per_week": 6.14,
+     "gem": -0.037,
+     "bruto": 0.07,
+     "gem15": -0.085,
+     "totaal": -2.9,
+     "win": 0.367,
+     "gem_winst": 1.74,
+     "gem_verlies": -1.07,
+     "max_dd_r": 14.2,
+     "verliesreeks": 14,
+     "onder": -0.219,
+     "ci95": [
+      -0.248,
+      0.133
+     ],
+     "weddenschappen": 59,
+     "gem_rr": 2.0
+    },
+    "e2": {
+     "n": 95,
+     "per_week": 7.39,
+     "gem": -0.005,
+     "bruto": 0.123,
+     "gem15": -0.068,
+     "totaal": -0.5,
+     "win": 0.368,
+     "gem_winst": 1.87,
+     "gem_verlies": -1.1,
+     "max_dd_r": 12.5,
+     "verliesreeks": 8,
+     "onder": -0.16,
+     "ci95": [
+      -0.189,
+      0.169
+     ],
+     "weddenschappen": 66,
+     "gem_rr": 2.0
+    }
+   },
+   "stopafstand": {
+    "mediaan_pct": 0.164,
+    "mediaan_x_spread": 13.5
+   },
+   "oordeel": {
+    "meer_kansen": false,
+    "na_kosten": false,
+    "meerdere_perioden": false,
+    "risico": true,
+    "interessant": false,
+    "is_baseline": false
+   }
+  }
+ },
+ "gevoeligheid_1m": {
+  "V1_1h": [
+   {
+    "markt": "EURUSD",
+    "n": 259,
+    "gem_5m": -0.021,
+    "gem_1m": -0.021,
+    "uitkomst_anders_pct": 0.0
+   },
+   {
+    "markt": "NQ",
+    "n": 132,
+    "gem_5m": 0.147,
+    "gem_1m": 0.147,
+    "uitkomst_anders_pct": 0.0
+   },
+   {
+    "markt": "ES",
+    "n": 159,
+    "gem_5m": -0.011,
+    "gem_1m": -0.011,
+    "uitkomst_anders_pct": 0.0
+   },
+   {
+    "markt": "GOUD",
+    "n": 152,
+    "gem_5m": 0.099,
+    "gem_1m": 0.099,
+    "uitkomst_anders_pct": 0.0
+   },
+   {
+    "markt": "ZILVER",
+    "n": 132,
+    "gem_5m": 0.034,
+    "gem_1m": 0.034,
+    "uitkomst_anders_pct": 0.0
+   }
+  ],
+  "V3_15m": [
+   {
+    "markt": "GBPUSD",
+    "n": 198,
+    "gem_5m": -0.053,
+    "gem_1m": -0.054,
+    "uitkomst_anders_pct": 0.0
+   },
+   {
+    "markt": "NQ",
+    "n": 586,
+    "gem_5m": 0.003,
+    "gem_1m": 0.001,
+    "uitkomst_anders_pct": 0.0
+   },
+   {
+    "markt": "ES",
+    "n": 184,
+    "gem_5m": 0.049,
+    "gem_1m": 0.049,
+    "uitkomst_anders_pct": 0.0
+   },
+   {
+    "markt": "GOUD",
+    "n": 295,
+    "gem_5m": 0.054,
+    "gem_1m": 0.054,
+    "uitkomst_anders_pct": 0.0
+   }
+  ]
+ }
+}
