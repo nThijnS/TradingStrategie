@@ -36,7 +36,7 @@ from risk.rules import Limits
 
 SOORT = {m["naam"]: m["soort"] for m in LAB_MARKETS}
 SYMBOL = {m["naam"]: m["symbool"] for m in LAB_MARKETS}
-PROBE_DAYS = (30, 90, 180, 365, 730)
+PROBE_DAYS = (30, 90, 180, 365, 730, 1095)
 RESOLUTIONS = ("MINUTE_15", "MINUTE_5", "MINUTE")
 WS_URLS = ("wss://api-streaming-capital.backend-capital.com/connect", "wss://demo-api-streaming-capital.backend-capital.com/connect")
 MAX_AGE_S = Limits().max_koers_leeftijd_s
@@ -81,10 +81,12 @@ def feed_health(row, open_):
         why.append("geen REST-koersen ontvangen")
     if (row.get("vertraging_max") or 0) > 0:
         why.append("broker meldt vertraagde koers")
-    if row.get("max_leeftijd_s") is None:
+    ws_age = (row.get("ws") or {}).get("leeftijd_max_s")
+    age = max([a for a in (row.get("max_leeftijd_s"), ws_age) if a is not None], default=None)
+    if age is None:
         why.append("koersleeftijd onbekend")
-    elif row["max_leeftijd_s"] > MAX_AGE_S:
-        why.append(f"koers tot {row['max_leeftijd_s']:.0f} s oud (max {MAX_AGE_S})")
+    elif age > MAX_AGE_S:
+        why.append(f"koers tot {age:.0f} s oud (max {MAX_AGE_S})")
     if row.get("niet_verhandelbaar"):
         why.append(f"{row['niet_verhandelbaar']} metingen niet TRADEABLE")
     ws = row.get("ws")
@@ -125,7 +127,7 @@ def spread_by_hour(df):
     return {int(k): round(float(v), 5) for k, v in pct.groupby(pct.index.hour).median().items()}
 
 
-def compare(a, b, lags=(-120, -60, 0, 60, 120)):
+def compare(a, b, lags=(-120, -60, -30, 0, 30, 60, 120)):
     """Twee candlereeksen vergelijken: welke tijdverschuiving past het best en hoe groot is het prijsverschil?
     Beste verschuiving = de laagste mediane afwijking van het rendement. Bij 0 sluiten de candletijden aan."""
     if not len(a) or not len(b):
@@ -154,19 +156,28 @@ def boundaries_ok(df, minutes):
     return bool((seconds % (minutes * 60) == 0).all())
 
 
+def probe_window(now, days):
+    """Een venster van 12 uur op een woensdag rond `days` dagen geleden: geen weekend en onder de limiet van 1000 candles
+    per verzoek (de API weigert een periode met meer candles, ook bij een lage max)."""
+    start = (now - timedelta(days=days)).replace(hour=12, minute=0, second=0, microsecond=0)
+    start -= timedelta(days=(start.weekday() - 2) % 7)
+    return start, start + timedelta(hours=12)
+
+
 def history(ro, epic, now):
-    """Hoe ver gaat elke resolutie terug? Vraagt een klein venster op vaste afstanden in het verleden."""
+    """Hoe ver gaat elke resolutie terug? Telt alleen candles die echt in het gevraagde venster liggen."""
     out = {}
     for res in RESOLUTIONS:
         depth = 0
         for d in PROBE_DAYS:
-            start = now - timedelta(days=d)
-            q = f"/prices/{epic}?resolution={res}&max=20&from={start:%Y-%m-%dT%H:%M:%S}&to={start + timedelta(days=3):%Y-%m-%dT%H:%M:%S}"
+            a, b = probe_window(now, d)
+            q = f"/prices/{epic}?resolution={res}&max=1000&from={a:%Y-%m-%dT%H:%M:%S}&to={b:%Y-%m-%dT%H:%M:%S}"
             try:
-                if ro.get(q).get("prices"):
-                    depth = d
+                df = candles(ro.get(q))
             except Exception:       # geen data op die afstand of geweigerd: telt als niet beschikbaar
-                pass
+                continue
+            if len(df) and df.index[0] >= pd.Timestamp(a) and df.index[-1] <= pd.Timestamp(b):
+                depth = d
         out[res] = depth
     return out
 
@@ -176,13 +187,14 @@ class Stream:
     """Verwerkt streamingberichten per epic. Bewaart alleen tellers en tijden, nooit ruwe berichten."""
 
     def __init__(self, epics):
-        self.q = {e: dict(n=0, dubbel=0, terug=0, last=None, last_ts=None, gap=0.0, onbekend=0) for e in epics}
+        self.q = {e: dict(n=0, dubbel=0, terug=0, last=None, last_ts=None, gap=0.0, ages=[]) for e in epics}
+        self.close_lag = defaultdict(list)
         self.bars = defaultdict(set)
-        self.bar_seen = {}
         self.shapes = Counter()
         self.verbroken = 0
 
-    def handle(self, msg, now_s):
+    def handle(self, msg, now_s, wall=None):
+        """now_s: monotone klok voor gaten. wall: klok in epochseconden, voor de leeftijd van de koers en de candle."""
         dest = msg.get("destination")
         self.shapes[dest] += 1
         p = msg.get("payload") or {}
@@ -200,10 +212,13 @@ class Stream:
             if s.get("seen") is not None:
                 s["gap"] = max(s["gap"], now_s - s["seen"])
             s.update(n=s["n"] + 1, last=key, last_ts=ts, seen=now_s)
+            if wall is not None and ts is not None and len(s["ages"]) < 20000:
+                s["ages"].append(wall - ts / 1000)
         elif dest == "ohlc.event" and p.get("resolution") == "MINUTE" and p.get("t") is not None:
             t = int(p["t"] // 1000)
+            if t not in self.bars[e] and self.bars[e] and wall is not None:     # nieuwe candle: de vorige is gesloten
+                self.close_lag[e].append(wall - t)
             self.bars[e].add(t)
-            self.bar_seen.setdefault((e, t), now_s)
 
     def summary(self, epic, minutes):
         s = self.q[epic]
@@ -212,8 +227,11 @@ class Stream:
         if len(bars) >= 2:
             want = (bars[-1] - bars[0]) // 60 + 1
             missing = round((1 - len(bars) / want) * 100, 2)
+        ages, lag = s["ages"], self.close_lag[epic]
         return dict(updates=s["n"], per_minuut=round(s["n"] / max(minutes, 1), 1), dubbel=s["dubbel"], terug_in_tijd=s["terug"],
-                    grootste_gat_s=round(s["gap"], 1), candles_1m=len(bars), ontbrekende_candles_pct=missing, verbroken=self.verbroken)
+                    grootste_gat_s=round(s["gap"], 1), candles_1m=len(bars), ontbrekende_candles_pct=missing, verbroken=self.verbroken,
+                    leeftijd_mediaan_s=round(float(np.median(ages)), 3) if ages else None, leeftijd_max_s=round(float(max(ages)), 3) if ages else None,
+                    candle_slot_na_s=round(float(np.median(lag)), 2) if lag else None)
 
 
 async def stream_once(url, tokens, epics, st, seconds):
@@ -237,7 +255,7 @@ async def stream_once(url, tokens, epics, st, seconds):
                 raw = await asyncio.wait_for(ws.recv(), timeout=5)
             except asyncio.TimeoutError:
                 continue
-            st.handle(json.loads(raw), time.monotonic())
+            st.handle(json.loads(raw), time.monotonic(), time.time())
 
 
 async def stream(tokens, epics, st, seconds):
@@ -270,13 +288,13 @@ def poll(ro, epics, seconds, every=30):
             try:
                 s = ro.get(f"/markets/{epic}").get("snapshot", {})
                 now = datetime.now(timezone.utc)
-                up = s.get("updateTimeUTC") or s.get("updateTime")
-                age = (now - pd.Timestamp(up, tz="UTC").to_pydatetime()).total_seconds() if up and len(str(up)) > 8 else None
+                up = s.get("updateTimeUTC")
+                age = (now - pd.Timestamp(up, tz="UTC").to_pydatetime()).total_seconds() if up else None
                 bid, ask = s.get("bid"), s.get("offer")
-                rows[name].append(dict(age=age, status=s.get("marketStatus"), delay=s.get("delayTime") or 0,
+                rows[name].append(dict(age=age, velden=sorted(k for k in s if "time" in k.lower()), status=s.get("marketStatus"), delay=s.get("delayTime") or 0,
                                        spread_pct=(ask - bid) / ((ask + bid) / 2) * 100 if bid and ask else None))
             except Exception:
-                rows[name].append(dict(age=None, status="FOUT", delay=0, spread_pct=None))
+                rows[name].append(dict(age=None, velden=[], status="FOUT", delay=0, spread_pct=None))
         await_s = every - (time.monotonic() - t0)
         if await_s > 0:
             time.sleep(await_s)
@@ -286,7 +304,9 @@ def poll(ro, epics, seconds, every=30):
 def poll_summary(rows):
     ages = [r["age"] for r in rows if r["age"] is not None]
     sp = [r["spread_pct"] for r in rows if r["spread_pct"] is not None]
-    return dict(rest_metingen=len(rows), max_leeftijd_s=round(max(ages), 1) if ages else None, mediaan_leeftijd_s=round(float(np.median(ages)), 1) if ages else None,
+    fields = Counter(f for r in rows for f in r.get("velden", []))
+    ages = [a for a in ages if a >= -5]         # een tijd ver in de toekomst is geen betrouwbare koersleeftijd
+    return dict(rest_metingen=len(rows), tijdvelden=dict(fields), max_leeftijd_s=round(max(ages), 1) if ages else None, mediaan_leeftijd_s=round(float(np.median(ages)), 1) if ages else None,
                 niet_verhandelbaar=sum(r["status"] != "TRADEABLE" for r in rows), vertraging_max=max((r["delay"] for r in rows), default=0),
                 spread_mediaan_pct=round(float(np.median(sp)), 5) if sp else None, spread_max_pct=round(max(sp), 5) if sp else None)
 
@@ -316,7 +336,7 @@ def measure(minutes, path):
                 y.columns = y.columns.get_level_values(0)
                 y.index = y.index.tz_convert("UTC")
                 row["tegen_yahoo_1h"] = compare(h, y)
-            w = ro.get(f"/prices/{epic}?resolution=MINUTE_15&max=1000&from=2026-10-12T00:00:00&to=2026-10-23T20:00:00")
+            w = ro.get(f"/prices/{epic}?resolution=MINUTE_15&max=1000&from=2026-10-13T00:00:00&to=2026-10-23T00:00:00")
             overlap[name] = [[p["snapshotTimeUTC"], p["closePrice"]["bid"], p["closePrice"]["ask"]] for p in w.get("prices", [])]
         except Exception as ex:
             row["fout"] = scrub(f"{type(ex).__name__}: {ex}", ro.tokens)
