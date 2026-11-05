@@ -1,5 +1,5 @@
 {
- "bijgewerkt": "2026-11-03T20:36-05:00",
+ "bijgewerkt": "2026-11-04T20:43-05:00",
  "markten": {
   "EURUSD": {
    "actief": false,
@@ -53,7 +53,7 @@
    "selectie": {
     "status": "onderzoek",
     "strategie": null,
-    "reden": "geen strategie haalt de poort; breakout is in train en validatie positief en wordt gevolgd zonder orders"
+    "reden": "geen strategie haalt de poort; trend is in train en validatie positief en wordt gevolgd zonder orders"
    }
   },
   "GOUD": {

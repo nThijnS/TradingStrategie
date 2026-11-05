@@ -112,10 +112,10 @@
 <rect x="374.4" y="39.9" width="4.0" height="8.3" fill="#3fb68b"/>
 <line x1="383.2" y1="39.9" x2="383.2" y2="48.2" stroke="#e2595b"/>
 <rect x="381.2" y="39.9" width="4.0" height="8.3" fill="#e2595b"/>
-<line x1="390.0" y1="39.9" x2="390.0" y2="45.4" stroke="#3fb68b"/>
+<line x1="390.0" y1="37.1" x2="390.0" y2="45.4" stroke="#3fb68b"/>
 <rect x="388.0" y="39.9" width="4.0" height="5.5" fill="#3fb68b"/>
 <line x1="396.8" y1="37.1" x2="396.8" y2="45.4" stroke="#3fb68b"/>
-<rect x="394.8" y="39.9" width="4.0" height="2.8" fill="#3fb68b"/>
+<rect x="394.8" y="37.1" width="4.0" height="5.5" fill="#3fb68b"/>
 <line x1="403.6" y1="39.9" x2="403.6" y2="45.4" stroke="#e2595b"/>
 <rect x="401.6" y="39.9" width="4.0" height="2.8" fill="#e2595b"/>
 <line x1="410.4" y1="42.6" x2="410.4" y2="42.6" stroke="#3fb68b"/>
