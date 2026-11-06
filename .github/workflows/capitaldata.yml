@@ -1,0 +1,50 @@
+# Haalt marktenlijst en uurcandles op bij Capital.com (demo), ALLEEN LEZEN: geen orders en geen schrijfrechten op de repo.
+# De uitkomst staat als artifact "capitaldata" bij de run. Zie research/capital_data.py.
+name: Capitaldata
+
+on:
+  workflow_dispatch:
+    inputs:
+      dagen:
+        description: "Aantal dagen historie"
+        type: number
+        default: 730
+  push:
+    branches: ["feat/meer-kansen"]
+    paths: ["research/capital_data.py", ".github/workflows/capitaldata.yml"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: capitaldata
+  cancel-in-progress: false
+
+jobs:
+  ophalen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Onderdelen installeren
+        run: pip install -r requirements.txt
+
+      - name: Data ophalen
+        env:
+          CAPITAL_API_KEY: ${{ secrets.CAPITAL_API_KEY }}
+          CAPITAL_IDENTIFIER: ${{ secrets.CAPITAL_IDENTIFIER }}
+          CAPITAL_PASSWORD: ${{ secrets.CAPITAL_PASSWORD }}
+        run: python -W ignore -m research.capital_data --dagen "${{ inputs.dagen || 730 }}" --uit capitaldata
+
+      - uses: actions/upload-artifact@v4
+        if: always() && hashFiles('capitaldata/markten.json') != ''
+        with:
+          name: capitaldata
+          path: capitaldata
+          retention-days: 30

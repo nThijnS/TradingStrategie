@@ -1,0 +1,30 @@
+{
+  "naam": "kansen-v2",
+  "vastgelegd": "2026-11-04, vóór de eerste uitslag van deze strategieën",
+  "doel": "Andere bronnen van voordeel toetsen dan de prijspatronen uit kansen-v1: tijdstip-effecten en dagverloop met een gepubliceerde onderbouwing.",
+  "data": "Dezelfde Capital.com-uurcandles als kansen-v1 (2 jaar, bied en laat), tijden in New Yorkse tijd.",
+  "periodes": "Zoals kansen-v1: evaluatie is de laatste 180 dagen, E1 en E2 zijn de twee helften.",
+  "kosten": "Zoals kansen-v1: spread van de instapcandle plus 0,5 slippage, betaalde dagrente, weigeren boven 0,25R spread.",
+  "stop": "0,5 keer de gemiddelde dagrange van de vorige 20 dagen, behalve band_momentum. Geen doel; uitstap op de vaste tijd of de stop.",
+  "strategieen": {
+    "europa_open": {"bron": "Boyarchenko e.a., The Overnight Drift (NY Fed SR917); Bondarenko en Muravyev, Market Return Around the Clock (JFQA)", "regel": "Long op de open van de 02:00-candle, uit op de open van de 06:00-candle, maandag tot en met vrijdag", "markten": ["US500", "US100", "US30", "RTY"]},
+    "nacht": {"bron": "Boyarchenko e.a., The Overnight Drift", "regel": "Long op de open van de 16:00-candle, uit op de open van de 09:00-candle de volgende handelsdag. Geen instap op vrijdag, omdat de bot niet door het weekend vasthoudt", "markten": ["US500", "US100", "US30", "RTY"]},
+    "late_momentum": {"bron": "Gao, Han, Li en Zhou, Market Intraday Momentum (JFE 2018)", "regel": "Op de open van de 15:00-candle in de richting van die open ten opzichte van de vorige slotkoers (close van de 15:00-candle van de vorige dag), uit op de open van de 16:00-candle", "markten": ["US500", "US100", "US30", "RTY"]},
+    "band_momentum": {"bron": "Zarattini, Aziz en Barbon, Beat the Market (SFI 24-97), aangepast naar uurcandles", "regel": "Referentie is de open van de 10:00-candle. Band per uur is het gemiddelde absolute verschil met de referentie op dat uur over de vorige 14 dagen. Sluit een candle van 10:00 tot en met 14:00 buiten de band, dan instap op de volgende open in die richting met de stop op de referentie, uit op de open van de 16:00-candle. Eén trade per dag", "markten": ["US500", "US100", "US30", "RTY"]},
+    "crypto_avond": {"bron": "Padysak en Vojtko, Seasonality, Trend-following, and Mean reversion in Bitcoin (alleen via secundaire bronnen gezien)", "regel": "Long op de open van de 21:00 UTC-candle, uit op de open van de 23:00 UTC-candle, elke dag", "markten": ["BTCUSD", "ETHUSD"]}
+  },
+  "varianten": "Elke strategie heeft precies één variant. Er worden geen parameters afgesteld.",
+  "poort": {"regels": "learning/selector.gate, ongewijzigd", "proeven_per_markt": "proeven uit lab.json (40 als onbekend) + 6 uit kansen-v1 + de strategieën op die markt", "proeven_scan": "803 uit kansen-v1 + 18 nieuwe combinaties"},
+  "besluitregel": {
+    "toelaatbaar": "Zoals kansen-v1: haalt P1-P5, ook P4 met proeven_scan, en E1 en E2 zijn beide positief na 1,5x kosten.",
+    "inbouwen": "Alleen toelaatbare strategieën gaan naar het lab. Niets wordt handmatig op actief gezet.",
+    "geen_kandidaat": "De bot blijft zoals hij is en dat wordt gerapporteerd."
+  },
+  "informatief_trend": {
+    "doel": "Alleen informatie, geen toelating: dagelijkse trendvolging handelt per markt te weinig voor P1. Zo is te zien of een besluit over P1 iets zou opleveren.",
+    "data": "Dagcandles van Yahoo vanaf 2005, doorlopende futures, 16 markten plus BTC en ETH",
+    "regel": "Instap op de volgende open bij een slotkoers buiten het 55-dagenkanaal, stop 3 keer de dagrange van 20 dagen, uit bij een slotkoers buiten het 20-dagenkanaal aan de andere kant. Beide richtingen, één positie per markt",
+    "kosten": "Spread van nu keer 1,5 plus financiering van nu van de bijpassende Capital-markt, ook in het verleden"
+  },
+  "grenzen": "Geen wijziging aan P1-P5, risicolimieten, live-instellingen of geheimen. Geen orders in dit onderzoek."
+}

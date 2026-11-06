@@ -1,0 +1,39 @@
+{
+  "naam": "kansen-v1",
+  "vastgelegd": "2026-11-04, voordat er Capital.com-candles waren geanalyseerd",
+  "doel": "Vinden of bredere dekking of langer vasthouden een voordeel na kosten geeft dat de ongewijzigde poort P1-P5 haalt.",
+  "data": "Capital.com demo, uurcandles met bid en ask, 730 dagen, mid-prijs. 4h is hieruit opgebouwd (UTC).",
+  "periodes": {"evaluatie_dagen": 180, "ontwikkeling": "alles daarvoor"},
+  "kosten": {
+    "spread": "spread van de instapcandle, 1 keer per rondgang",
+    "slippage_x": 0.5,
+    "financiering": "gemeten dagrente van de broker per kant; alleen betaalde rente telt, ontvangen rente niet",
+    "weigeren": "spread groter dan 0,25R (risk.rules.Limits.max_spread_r)"
+  },
+  "hypotheses": {
+    "H0_baseline": "De 10 bestaande 1h-varianten op de 15 bestaande markten, op brokerprijzen.",
+    "H1_dure_uren": "H0, maar geen instap als de spread van die candle boven 1,5x de mediaan van de markt ligt.",
+    "H2_vasthouden": "Drie 4h-families, trades tot 120 uur, op markten die niet dagelijks sluiten.",
+    "H3_dekking": "H0 en H2 op de extra markten uit research/capital_data.py."
+  },
+  "families_4h": {
+    "swing_trend": [{"sm": 2.5, "tp": 3.0}, {"sm": 2.5, "tp": 5.0}],
+    "swing_breakout": [{"n": 20, "sm": 2.5, "tp": 3.0}, {"n": 20, "sm": 2.5, "tp": 5.0}],
+    "swing_pullback": [{"sm": 2.0, "tp": 2.0}, {"sm": 2.0, "tp": 3.0}]
+  },
+  "uitstap_4h": {"max_uren": 120, "gat_uren": 6, "stop_en_doel": "vast, geen trailing stop, zodat de bestaande orderuitvoering het kan"},
+  "soorten_4h": ["CRYPTOCURRENCIES", "CURRENCIES", "COMMODITIES"],
+  "indices_4h": ["US100", "US500", "US30"],
+  "poort": {
+    "regels": "learning/selector.gate, ongewijzigd",
+    "proeven_per_markt": "proeven uit lab.json (40 als onbekend) + 6 nieuwe varianten",
+    "proeven_scan": "hoogste labwaarde + alle nieuwe varianten over alle markten samen"
+  },
+  "besluitregel": {
+    "toelaatbaar": "Variant gekozen op ontwikkeling, haalt P1-P5 en ook P4 met proeven_scan, en E1 en E2 van de evaluatie zijn beide positief na 1,5x kosten.",
+    "inbouwen": "Alleen toelaatbare strategieën gaan naar het lab. Het lab beslist daarna elke dag zelf met de poort; niets wordt handmatig op actief gezet.",
+    "geen_kandidaat": "Dan blijft de bot zoals hij is en wordt dat gerapporteerd."
+  },
+  "portefeuille": "Toelaatbare strategieën op 10.000 met ongewijzigde limieten. Nieuwe markten vallen in dezelfde risicogroep als hun soort.",
+  "grenzen": "Geen wijziging aan P1-P5, risicolimieten, live-instellingen of geheimen. Geen orders in dit onderzoek."
+}
