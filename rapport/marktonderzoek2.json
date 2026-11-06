@@ -1,0 +1,853 @@
+{
+ "fvg": {
+  "NQ": {
+   "echt": {
+    "candles": 11183,
+    "gaps": 2612,
+    "per_100": 23.4,
+    "gevuld_pct": 66.1,
+    "na_vulling_atr": -0.036,
+    "se": 0.059,
+    "richting_ok_pct": 50.7
+   },
+   "door_elkaar": {
+    "candles": 11183,
+    "gaps": 2782,
+    "per_100": 24.9,
+    "gevuld_pct": 75.1,
+    "na_vulling_atr": -0.063,
+    "se": 0.061,
+    "richting_ok_pct": 50.1
+   }
+  },
+  "ES": {
+   "echt": {
+    "candles": 11181,
+    "gaps": 2611,
+    "per_100": 23.4,
+    "gevuld_pct": 67.3,
+    "na_vulling_atr": 0.061,
+    "se": 0.062,
+    "richting_ok_pct": 51.6
+   },
+   "door_elkaar": {
+    "candles": 11181,
+    "gaps": 2919,
+    "per_100": 26.1,
+    "gevuld_pct": 74.8,
+    "na_vulling_atr": 0.047,
+    "se": 0.061,
+    "richting_ok_pct": 50.0
+   }
+  },
+  "GOUD": {
+   "echt": {
+    "candles": 11202,
+    "gaps": 2368,
+    "per_100": 21.1,
+    "gevuld_pct": 69.8,
+    "na_vulling_atr": -0.034,
+    "se": 0.053,
+    "richting_ok_pct": 50.4
+   },
+   "door_elkaar": {
+    "candles": 11202,
+    "gaps": 2692,
+    "per_100": 24.0,
+    "gevuld_pct": 75.5,
+    "na_vulling_atr": -0.004,
+    "se": 0.058,
+    "richting_ok_pct": 50.4
+   }
+  },
+  "EURUSD": {
+   "echt": {
+    "candles": 11250,
+    "gaps": 2530,
+    "per_100": 22.5,
+    "gevuld_pct": 72.0,
+    "na_vulling_atr": 0.007,
+    "se": 0.053,
+    "richting_ok_pct": 49.6
+   },
+   "door_elkaar": {
+    "candles": 11250,
+    "gaps": 2971,
+    "per_100": 26.4,
+    "gevuld_pct": 75.5,
+    "na_vulling_atr": -0.093,
+    "se": 0.063,
+    "richting_ok_pct": 49.1
+   }
+  },
+  "GBPUSD": {
+   "echt": {
+    "candles": 11256,
+    "gaps": 2555,
+    "per_100": 22.7,
+    "gevuld_pct": 70.5,
+    "na_vulling_atr": -0.075,
+    "se": 0.055,
+    "richting_ok_pct": 48.9
+   },
+   "door_elkaar": {
+    "candles": 11256,
+    "gaps": 3016,
+    "per_100": 26.8,
+    "gevuld_pct": 75.4,
+    "na_vulling_atr": 0.001,
+    "se": 0.059,
+    "richting_ok_pct": 50.6
+   }
+  },
+  "BTC": {
+   "echt": {
+    "candles": 17520,
+    "gaps": 4529,
+    "per_100": 25.9,
+    "gevuld_pct": 70.2,
+    "na_vulling_atr": -0.102,
+    "se": 0.052,
+    "richting_ok_pct": 47.5
+   },
+   "door_elkaar": {
+    "candles": 17520,
+    "gaps": 5320,
+    "per_100": 30.4,
+    "gevuld_pct": 74.8,
+    "na_vulling_atr": 0.026,
+    "se": 0.047,
+    "richting_ok_pct": 49.6
+   }
+  }
+ },
+ "ronde_getallen": {
+  "EURUSD": {
+   "rond": {
+    "n": 208,
+    "terug_pct": 49.5,
+    "se": 3.5
+   },
+   "willekeurig": {
+    "n": 422,
+    "terug_pct": 53.6,
+    "se": 2.4
+   }
+  },
+  "GBPUSD": {
+   "rond": {
+    "n": 247,
+    "terug_pct": 44.1,
+    "se": 3.2
+   },
+   "willekeurig": {
+    "n": 503,
+    "terug_pct": 47.7,
+    "se": 2.2
+   }
+  },
+  "NQ": {
+   "rond": {
+    "n": 1617,
+    "terug_pct": 50.6,
+    "se": 1.2
+   },
+   "willekeurig": {
+    "n": 3176,
+    "terug_pct": 49.8,
+    "se": 0.9
+   }
+  },
+  "ES": {
+   "rond": {
+    "n": 621,
+    "terug_pct": 49.8,
+    "se": 2.0
+   },
+   "willekeurig": {
+    "n": 1254,
+    "terug_pct": 50.0,
+    "se": 1.4
+   }
+  },
+  "GOUD": {
+   "rond": {
+    "n": 2378,
+    "terug_pct": 53.0,
+    "se": 1.0
+   },
+   "willekeurig": {
+    "n": 4773,
+    "terug_pct": 53.6,
+    "se": 0.7
+   }
+  },
+  "ZILVER": {
+   "rond": {
+    "n": 713,
+    "terug_pct": 49.9,
+    "se": 1.9
+   },
+   "willekeurig": {
+    "n": 1439,
+    "terug_pct": 48.7,
+    "se": 1.3
+   }
+  },
+  "BTC": {
+   "rond": {
+    "n": 1412,
+    "terug_pct": 51.1,
+    "se": 1.3
+   },
+   "willekeurig": {
+    "n": 2862,
+    "terug_pct": 52.6,
+    "se": 0.9
+   }
+  }
+ },
+ "staarten": {
+  "BTC": {
+   "kurtosis_dag": 3.3,
+   "slechtste_dag_pct": -12.6,
+   "beste_dag_pct": 11.1,
+   "dag_gt_3sd": 10,
+   "uur_gt_3atr_pct": 1.98,
+   "max_uur_atr": 13.8,
+   "gaten": 91,
+   "gat_p50_atr": 0.33,
+   "gat_p95_atr": 1.08,
+   "gat_max_atr": 4.1
+  },
+  "ETH": {
+   "kurtosis_dag": 3.6,
+   "slechtste_dag_pct": -15.9,
+   "beste_dag_pct": 19.0,
+   "dag_gt_3sd": 11,
+   "uur_gt_3atr_pct": 1.99,
+   "max_uur_atr": 13.0,
+   "gaten": 77,
+   "gat_p50_atr": 0.37,
+   "gat_p95_atr": 1.36,
+   "gat_max_atr": 2.9
+  },
+  "SOL": {
+   "kurtosis_dag": 3.4,
+   "slechtste_dag_pct": -21.5,
+   "beste_dag_pct": 21.7,
+   "dag_gt_3sd": 8,
+   "uur_gt_3atr_pct": 1.4,
+   "max_uur_atr": 12.9,
+   "gaten": 91,
+   "gat_p50_atr": 0.4,
+   "gat_p95_atr": 1.67,
+   "gat_max_atr": 3.4
+  },
+  "EURUSD": {
+   "kurtosis_dag": 3.0,
+   "slechtste_dag_pct": -1.8,
+   "beste_dag_pct": 2.2,
+   "dag_gt_3sd": 10,
+   "uur_gt_3atr_pct": 1.48,
+   "max_uur_atr": 10.6,
+   "gaten": 108,
+   "gat_p50_atr": 0.55,
+   "gat_p95_atr": 3.46,
+   "gat_max_atr": 5.0
+  },
+  "GBPUSD": {
+   "kurtosis_dag": 0.6,
+   "slechtste_dag_pct": -1.6,
+   "beste_dag_pct": 1.3,
+   "dag_gt_3sd": 2,
+   "uur_gt_3atr_pct": 1.38,
+   "max_uur_atr": 14.1,
+   "gaten": 108,
+   "gat_p50_atr": 0.41,
+   "gat_p95_atr": 2.86,
+   "gat_max_atr": 4.3
+  },
+  "USDJPY": {
+   "kurtosis_dag": 2.3,
+   "slechtste_dag_pct": -2.4,
+   "beste_dag_pct": 2.0,
+   "dag_gt_3sd": 11,
+   "uur_gt_3atr_pct": 1.61,
+   "max_uur_atr": 16.8,
+   "gaten": 108,
+   "gat_p50_atr": 0.4,
+   "gat_p95_atr": 3.19,
+   "gat_max_atr": 11.6
+  },
+  "NQ": {
+   "kurtosis_dag": 10.8,
+   "slechtste_dag_pct": -6.3,
+   "beste_dag_pct": 11.6,
+   "dag_gt_3sd": 6,
+   "uur_gt_3atr_pct": 2.66,
+   "max_uur_atr": 8.7,
+   "gaten": 117,
+   "gat_p50_atr": 0.55,
+   "gat_p95_atr": 3.82,
+   "gat_max_atr": 6.1
+  },
+  "ES": {
+   "kurtosis_dag": 18.4,
+   "slechtste_dag_pct": -6.1,
+   "beste_dag_pct": 9.6,
+   "dag_gt_3sd": 6,
+   "uur_gt_3atr_pct": 2.25,
+   "max_uur_atr": 10.7,
+   "gaten": 119,
+   "gat_p50_atr": 0.56,
+   "gat_p95_atr": 3.93,
+   "gat_max_atr": 5.9
+  },
+  "DAX": {
+   "kurtosis_dag": 10.7,
+   "slechtste_dag_pct": -6.2,
+   "beste_dag_pct": 9.1,
+   "dag_gt_3sd": 4,
+   "uur_gt_3atr_pct": 1.73,
+   "max_uur_atr": 10.1,
+   "gaten": 116,
+   "gat_p50_atr": 0.52,
+   "gat_p95_atr": 3.06,
+   "gat_max_atr": 8.0
+  },
+  "GOUD": {
+   "kurtosis_dag": 3.9,
+   "slechtste_dag_pct": -9.3,
+   "beste_dag_pct": 6.1,
+   "dag_gt_3sd": 5,
+   "uur_gt_3atr_pct": 1.35,
+   "max_uur_atr": 8.2,
+   "gaten": 120,
+   "gat_p50_atr": 0.26,
+   "gat_p95_atr": 2.04,
+   "gat_max_atr": 4.6
+  },
+  "ZILVER": {
+   "kurtosis_dag": 21.4,
+   "slechtste_dag_pct": -30.4,
+   "beste_dag_pct": 9.9,
+   "dag_gt_3sd": 4,
+   "uur_gt_3atr_pct": 1.51,
+   "max_uur_atr": 8.5,
+   "gaten": 119,
+   "gat_p50_atr": 0.34,
+   "gat_p95_atr": 1.91,
+   "gat_max_atr": 4.0
+  },
+  "OLIE": {
+   "kurtosis_dag": 3.3,
+   "slechtste_dag_pct": -10.6,
+   "beste_dag_pct": 13.8,
+   "dag_gt_3sd": 9,
+   "uur_gt_3atr_pct": 1.58,
+   "max_uur_atr": 15.1,
+   "gaten": 120,
+   "gat_p50_atr": 0.48,
+   "gat_p95_atr": 3.77,
+   "gat_max_atr": 15.1
+  },
+  "AAPL": {
+   "kurtosis_dag": 7.7,
+   "slechtste_dag_pct": -8.7,
+   "beste_dag_pct": 12.9,
+   "dag_gt_3sd": 9,
+   "uur_gt_3atr_pct": 3.98,
+   "max_uur_atr": 16.0,
+   "gaten": 477,
+   "gat_p50_atr": 0.53,
+   "gat_p95_atr": 2.06,
+   "gat_max_atr": 7.6
+  },
+  "NVDA": {
+   "kurtosis_dag": 4.0,
+   "slechtste_dag_pct": -14.9,
+   "beste_dag_pct": 15.4,
+   "dag_gt_3sd": 6,
+   "uur_gt_3atr_pct": 3.1,
+   "max_uur_atr": 12.2,
+   "gaten": 477,
+   "gat_p50_atr": 0.59,
+   "gat_p95_atr": 2.71,
+   "gat_max_atr": 7.7
+  },
+  "MSFT": {
+   "kurtosis_dag": 7.1,
+   "slechtste_dag_pct": -6.6,
+   "beste_dag_pct": 11.8,
+   "dag_gt_3sd": 7,
+   "uur_gt_3atr_pct": 3.68,
+   "max_uur_atr": 23.5,
+   "gaten": 477,
+   "gat_p50_atr": 0.6,
+   "gat_p95_atr": 2.24,
+   "gat_max_atr": 7.9
+  }
+ },
+ "spread_stress": {
+  "BTC": {
+   "mediaan": 0.0573,
+   "top10dagen": 0.0618,
+   "p99": 0.1223,
+   "max": 0.158
+  },
+  "ETH": {
+   "mediaan": 0.0708,
+   "top10dagen": 0.0846,
+   "p99": 0.1115,
+   "max": 0.155
+  },
+  "SOL": {
+   "mediaan": 0.5,
+   "top10dagen": 0.5,
+   "p99": 0.5001,
+   "max": 0.559
+  },
+  "EURUSD": {
+   "mediaan": 0.0057,
+   "top10dagen": 0.0054,
+   "p99": 0.0535,
+   "max": 0.125
+  },
+  "GBPUSD": {
+   "mediaan": 0.0098,
+   "top10dagen": 0.0102,
+   "p99": 0.0963,
+   "max": 0.165
+  },
+  "USDJPY": {
+   "mediaan": 0.0069,
+   "top10dagen": 0.0069,
+   "p99": 0.0571,
+   "max": 0.064
+  },
+  "NQ": {
+   "mediaan": 0.0073,
+   "top10dagen": 0.0098,
+   "p99": 0.0322,
+   "max": 0.041
+  },
+  "ES": {
+   "mediaan": 0.006,
+   "top10dagen": 0.0076,
+   "p99": 0.0247,
+   "max": 0.038
+  },
+  "DAX": {
+   "mediaan": 0.0063,
+   "top10dagen": 0.0093,
+   "p99": 0.0357,
+   "max": 0.042
+  },
+  "GOUD": {
+   "mediaan": 0.0097,
+   "top10dagen": 0.0151,
+   "p99": 0.0227,
+   "max": 0.051
+  },
+  "ZILVER": {
+   "mediaan": 0.069,
+   "top10dagen": 0.1063,
+   "p99": 0.1645,
+   "max": 0.58
+  },
+  "OLIE": {
+   "mediaan": 0.0469,
+   "top10dagen": 0.0826,
+   "p99": 0.0899,
+   "max": 0.141
+  },
+  "AAPL": {
+   "mediaan": 0.0501,
+   "top10dagen": 0.0726,
+   "p99": 0.2411,
+   "max": 0.626
+  },
+  "NVDA": {
+   "mediaan": 0.0639,
+   "top10dagen": 0.1049,
+   "p99": 0.2089,
+   "max": 0.387
+  },
+  "MSFT": {
+   "mediaan": 0.0377,
+   "top10dagen": 0.0528,
+   "p99": 0.277,
+   "max": 0.871
+  }
+ },
+ "dagtop": {
+  "BTC": {
+   "top": {
+    "Avond": 28.0,
+    "Azië": 19.0,
+    "NY-ochtend": 18.0,
+    "NY-middag": 17.0,
+    "Londen": 17.0
+   },
+   "bodem": {
+    "Avond": 30.0,
+    "NY-middag": 20.0,
+    "Azië": 19.0,
+    "NY-ochtend": 17.0,
+    "Londen": 14.0
+   },
+   "uren": {
+    "Londen": 29.0,
+    "Azië": 25.0,
+    "Avond": 17.0,
+    "NY-middag": 17.0,
+    "NY-ochtend": 13.0
+   }
+  },
+  "ETH": {
+   "top": {
+    "Avond": 29.0,
+    "Londen": 21.0,
+    "Azië": 19.0,
+    "NY-middag": 17.0,
+    "NY-ochtend": 14.0
+   },
+   "bodem": {
+    "Avond": 30.0,
+    "Azië": 21.0,
+    "NY-middag": 20.0,
+    "NY-ochtend": 16.0,
+    "Londen": 13.0
+   },
+   "uren": {
+    "Londen": 29.0,
+    "Azië": 25.0,
+    "Avond": 17.0,
+    "NY-middag": 17.0,
+    "NY-ochtend": 13.0
+   }
+  },
+  "SOL": {
+   "top": {
+    "Avond": 30.0,
+    "Azië": 22.0,
+    "Londen": 16.0,
+    "NY-middag": 16.0,
+    "NY-ochtend": 16.0
+   },
+   "bodem": {
+    "Avond": 32.0,
+    "NY-middag": 20.0,
+    "Azië": 19.0,
+    "NY-ochtend": 15.0,
+    "Londen": 14.0
+   },
+   "uren": {
+    "Londen": 29.0,
+    "Azië": 25.0,
+    "Avond": 17.0,
+    "NY-middag": 17.0,
+    "NY-ochtend": 13.0
+   }
+  },
+  "EURUSD": {
+   "top": {
+    "Avond": 32.0,
+    "Londen": 24.0,
+    "NY-ochtend": 16.0,
+    "Azië": 16.0,
+    "NY-middag": 13.0
+   },
+   "bodem": {
+    "Avond": 35.0,
+    "Londen": 22.0,
+    "NY-ochtend": 17.0,
+    "NY-middag": 14.0,
+    "Azië": 12.0
+   },
+   "uren": {
+    "Londen": 29.0,
+    "Azië": 25.0,
+    "NY-middag": 17.0,
+    "Avond": 17.0,
+    "NY-ochtend": 13.0
+   }
+  },
+  "GBPUSD": {
+   "top": {
+    "Avond": 33.0,
+    "Londen": 25.0,
+    "NY-ochtend": 16.0,
+    "Azië": 13.0,
+    "NY-middag": 13.0
+   },
+   "bodem": {
+    "Avond": 35.0,
+    "Londen": 26.0,
+    "NY-ochtend": 16.0,
+    "NY-middag": 12.0,
+    "Azië": 11.0
+   },
+   "uren": {
+    "Londen": 29.0,
+    "Azië": 25.0,
+    "NY-middag": 17.0,
+    "Avond": 17.0,
+    "NY-ochtend": 13.0
+   }
+  },
+  "USDJPY": {
+   "top": {
+    "Avond": 41.0,
+    "Londen": 18.0,
+    "Azië": 15.0,
+    "NY-middag": 13.0,
+    "NY-ochtend": 13.0
+   },
+   "bodem": {
+    "Avond": 34.0,
+    "Londen": 21.0,
+    "Azië": 20.0,
+    "NY-ochtend": 15.0,
+    "NY-middag": 11.0
+   },
+   "uren": {
+    "Londen": 29.0,
+    "Azië": 25.0,
+    "NY-middag": 17.0,
+    "Avond": 17.0,
+    "NY-ochtend": 13.0
+   }
+  },
+  "NQ": {
+   "top": {
+    "NY-middag": 28.0,
+    "NY-ochtend": 24.0,
+    "Avond": 22.0,
+    "Londen": 16.0,
+    "Azië": 10.0
+   },
+   "bodem": {
+    "Avond": 27.0,
+    "NY-ochtend": 26.0,
+    "NY-middag": 21.0,
+    "Londen": 15.0,
+    "Azië": 12.0
+   },
+   "uren": {
+    "Londen": 30.0,
+    "Azië": 25.0,
+    "NY-middag": 17.0,
+    "Avond": 15.0,
+    "NY-ochtend": 13.0
+   }
+  },
+  "ES": {
+   "top": {
+    "NY-middag": 34.0,
+    "NY-ochtend": 22.0,
+    "Avond": 19.0,
+    "Londen": 18.0,
+    "Azië": 8.0
+   },
+   "bodem": {
+    "Avond": 25.0,
+    "NY-middag": 25.0,
+    "NY-ochtend": 21.0,
+    "Londen": 16.0,
+    "Azië": 13.0
+   },
+   "uren": {
+    "Londen": 30.0,
+    "Azië": 25.0,
+    "NY-middag": 17.0,
+    "Avond": 15.0,
+    "NY-ochtend": 13.0
+   }
+  },
+  "DAX": {
+   "top": {
+    "Londen": 35.0,
+    "Avond": 21.0,
+    "NY-ochtend": 19.0,
+    "Azië": 13.0,
+    "NY-middag": 12.0
+   },
+   "bodem": {
+    "Londen": 34.0,
+    "Azië": 18.0,
+    "Avond": 18.0,
+    "NY-ochtend": 17.0,
+    "NY-middag": 14.0
+   },
+   "uren": {
+    "Londen": 30.0,
+    "Azië": 25.0,
+    "NY-middag": 17.0,
+    "Avond": 15.0,
+    "NY-ochtend": 13.0
+   }
+  },
+  "GOUD": {
+   "top": {
+    "Avond": 24.0,
+    "NY-ochtend": 22.0,
+    "Azië": 21.0,
+    "Londen": 17.0,
+    "NY-middag": 16.0
+   },
+   "bodem": {
+    "Avond": 26.0,
+    "Azië": 24.0,
+    "NY-ochtend": 21.0,
+    "Londen": 16.0,
+    "NY-middag": 14.0
+   },
+   "uren": {
+    "Londen": 31.0,
+    "Azië": 26.0,
+    "NY-middag": 17.0,
+    "NY-ochtend": 13.0,
+    "Avond": 13.0
+   }
+  },
+  "ZILVER": {
+   "top": {
+    "Azië": 21.0,
+    "Avond": 21.0,
+    "Londen": 21.0,
+    "NY-ochtend": 19.0,
+    "NY-middag": 18.0
+   },
+   "bodem": {
+    "Avond": 25.0,
+    "Azië": 23.0,
+    "NY-ochtend": 20.0,
+    "Londen": 18.0,
+    "NY-middag": 15.0
+   },
+   "uren": {
+    "Londen": 31.0,
+    "Azië": 26.0,
+    "NY-middag": 17.0,
+    "NY-ochtend": 13.0,
+    "Avond": 13.0
+   }
+  },
+  "OLIE": {
+   "top": {
+    "Londen": 26.0,
+    "NY-middag": 22.0,
+    "Avond": 21.0,
+    "NY-ochtend": 19.0,
+    "Azië": 12.0
+   },
+   "bodem": {
+    "Londen": 26.0,
+    "NY-ochtend": 23.0,
+    "NY-middag": 21.0,
+    "Avond": 16.0,
+    "Azië": 15.0
+   },
+   "uren": {
+    "Londen": 31.0,
+    "Azië": 26.0,
+    "NY-middag": 17.0,
+    "NY-ochtend": 13.0,
+    "Avond": 13.0
+   }
+  },
+  "AAPL": {
+   "top": {
+    "NY-ochtend": 44.0,
+    "NY-middag": 25.0,
+    "Londen": 17.0,
+    "Avond": 13.0,
+    "Azië": 1.0
+   },
+   "bodem": {
+    "NY-ochtend": 35.0,
+    "Londen": 26.0,
+    "NY-middag": 24.0,
+    "Avond": 14.0,
+    "Azië": 1.0
+   },
+   "uren": {
+    "Londen": 32.0,
+    "NY-middag": 25.0,
+    "Avond": 21.0,
+    "NY-ochtend": 19.0,
+    "Azië": 2.0
+   }
+  },
+  "NVDA": {
+   "top": {
+    "NY-ochtend": 35.0,
+    "Avond": 22.0,
+    "Londen": 22.0,
+    "NY-middag": 20.0,
+    "Azië": 1.0
+   },
+   "bodem": {
+    "NY-ochtend": 34.0,
+    "Avond": 24.0,
+    "NY-middag": 21.0,
+    "Londen": 20.0
+   },
+   "uren": {
+    "Londen": 32.0,
+    "NY-middag": 25.0,
+    "Avond": 21.0,
+    "NY-ochtend": 19.0,
+    "Azië": 2.0
+   }
+  },
+  "MSFT": {
+   "top": {
+    "NY-ochtend": 36.0,
+    "NY-middag": 25.0,
+    "Londen": 24.0,
+    "Avond": 15.0,
+    "Azië": 0.0
+   },
+   "bodem": {
+    "NY-ochtend": 38.0,
+    "NY-middag": 22.0,
+    "Londen": 22.0,
+    "Avond": 17.0,
+    "Azië": 1.0
+   },
+   "uren": {
+    "Londen": 32.0,
+    "NY-middag": 25.0,
+    "Avond": 21.0,
+    "NY-ochtend": 19.0,
+    "Azië": 2.0
+   }
+  }
+ },
+ "breedte": {
+  "eigen": [
+   5.25,
+   2.85,
+   1.64,
+   1.24,
+   0.9,
+   0.84,
+   0.59,
+   0.46,
+   0.38,
+   0.21,
+   0.19,
+   0.15,
+   0.15,
+   0.13,
+   0.04
+  ],
+  "effectief_n": 5.3,
+  "factoren_80pct": 6,
+  "eerste_factor_pct": 35.0,
+  "dagen": 448
+ }
+}
