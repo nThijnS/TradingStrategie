@@ -1,0 +1,3078 @@
+{
+ "markten": {
+  "BTC": {
+   "soort": "crypto",
+   "epic": "BTCUSD",
+   "bron_1h": "Capital.com 2024-11-04 t/m 2026-11-04, 17310 candles",
+   "bron_5m": "Binance 2024-11-03 t/m 2026-11-03",
+   "jaar_vol_pct": 43.6,
+   "vol30_min": 19.9,
+   "vol30_max": 82.5,
+   "vol30_max_dag": "2026-03-04",
+   "dagrange_pct": 2.91,
+   "uurrange_pct": 0.475,
+   "rendement_pct": 17.4,
+   "sessies": {
+    "Azië 20-02": {
+     "range_pct": 0.44,
+     "spread_pct": 0.0573,
+     "uren": 4291
+    },
+    "Londen 02-09": {
+     "range_pct": 0.414,
+     "spread_pct": 0.0572,
+     "uren": 4996
+    },
+    "NY-ochtend 09-12": {
+     "range_pct": 0.783,
+     "spread_pct": 0.0573,
+     "uren": 2188
+    },
+    "NY-middag 12-16": {
+     "range_pct": 0.558,
+     "spread_pct": 0.0573,
+     "uren": 2916
+    },
+    "Avond 16-20": {
+     "range_pct": 0.443,
+     "spread_pct": 0.0573,
+     "uren": 2919
+    }
+   },
+   "uurprofiel": {
+    "piekuur": 10,
+    "piek_pct": 0.884,
+    "dal_pct": 0.369,
+    "spread_uur": {
+     "0": 0.0574,
+     "1": 0.0573,
+     "2": 0.0572,
+     "3": 0.0572,
+     "4": 0.0572,
+     "5": 0.0572,
+     "6": 0.0572,
+     "7": 0.0572,
+     "8": 0.0573,
+     "9": 0.0573,
+     "10": 0.0572,
+     "11": 0.0573,
+     "12": 0.0574,
+     "13": 0.0574,
+     "14": 0.0573,
+     "15": 0.0572,
+     "16": 0.0572,
+     "17": 0.0572,
+     "18": 0.0574,
+     "19": 0.0574,
+     "20": 0.0572,
+     "21": 0.0573,
+     "22": 0.0574,
+     "23": 0.0574
+    }
+   },
+   "vr": {
+    "m5": {
+     "vr": 0.944,
+     "se": 0.025,
+     "ac1": -0.009,
+     "n": 210239
+    },
+    "h1": {
+     "vr": 0.949,
+     "se": 0.06,
+     "ac1": -0.004,
+     "n": 17306
+    },
+    "d1": {
+     "vr": 0.931,
+     "se": 0.114,
+     "ac1": -0.039,
+     "n": 730
+    }
+   },
+   "vr_1e_helft": {
+    "vr": 0.912,
+    "se": 0.139,
+    "ac1": -0.032,
+    "n": 364
+   },
+   "vr_2e_helft": {
+    "vr": 0.937,
+    "se": 0.178,
+    "ac1": -0.058,
+    "n": 366
+   },
+   "spread_pct": 0.0573,
+   "spread_p90": 0.0782,
+   "spread_op_uuratr": 0.103,
+   "spread_op_dagrange": 0.02,
+   "fin_pct_jaar_aanname": 20.0,
+   "sweeps": {
+    "Azië": {
+     "kans_per_dag_kant": 34.6,
+     "sluit_terug_pct": 48.9,
+     "alle": {
+      "n": 505,
+      "gem_atr": -0.029,
+      "se": 0.088,
+      "terugloop_pct": 51.1
+     },
+     "sluit_terug": {
+      "n": 247,
+      "gem_atr": 0.056,
+      "se": 0.114,
+      "terugloop_pct": 51.4
+     },
+     "sluit_voorbij": {
+      "n": 258,
+      "gem_atr": -0.11,
+      "se": 0.132,
+      "terugloop_pct": 50.8
+     }
+    },
+    "Londen": {
+     "kans_per_dag_kant": 40.8,
+     "sluit_terug_pct": 47.1,
+     "alle": {
+      "n": 595,
+      "gem_atr": -0.017,
+      "se": 0.079,
+      "terugloop_pct": 50.6
+     },
+     "sluit_terug": {
+      "n": 280,
+      "gem_atr": 0.05,
+      "se": 0.111,
+      "terugloop_pct": 52.9
+     },
+     "sluit_voorbij": {
+      "n": 315,
+      "gem_atr": -0.077,
+      "se": 0.112,
+      "terugloop_pct": 48.6
+     }
+    },
+    "vorige dag": {
+     "kans_per_dag_kant": 20.2,
+     "sluit_terug_pct": 41.2,
+     "alle": {
+      "n": 294,
+      "gem_atr": -0.037,
+      "se": 0.118,
+      "terugloop_pct": 52.0
+     },
+     "sluit_terug": {
+      "n": 121,
+      "gem_atr": -0.081,
+      "se": 0.217,
+      "terugloop_pct": 49.6
+     },
+     "sluit_voorbij": {
+      "n": 173,
+      "gem_atr": -0.007,
+      "se": 0.132,
+      "terugloop_pct": 53.8
+     }
+    }
+   }
+  },
+  "ETH": {
+   "soort": "crypto",
+   "epic": "ETHUSD",
+   "bron_1h": "Capital.com 2025-01-23 t/m 2026-11-04, 15415 candles",
+   "bron_5m": "Binance 2024-11-03 t/m 2026-11-03",
+   "jaar_vol_pct": 69.1,
+   "vol30_min": 27.8,
+   "vol30_max": 106.0,
+   "vol30_max_dag": "2025-03-20",
+   "dagrange_pct": 4.4,
+   "uurrange_pct": 0.722,
+   "rendement_pct": -25.3,
+   "sessies": {
+    "Azië 20-02": {
+     "range_pct": 0.669,
+     "spread_pct": 0.0706,
+     "uren": 3825
+    },
+    "Londen 02-09": {
+     "range_pct": 0.625,
+     "spread_pct": 0.0708,
+     "uren": 4447
+    },
+    "NY-ochtend 09-12": {
+     "range_pct": 1.102,
+     "spread_pct": 0.0709,
+     "uren": 1948
+    },
+    "NY-middag 12-16": {
+     "range_pct": 0.82,
+     "spread_pct": 0.0707,
+     "uren": 2596
+    },
+    "Avond 16-20": {
+     "range_pct": 0.673,
+     "spread_pct": 0.0706,
+     "uren": 2599
+    }
+   },
+   "uurprofiel": {
+    "piekuur": 10,
+    "piek_pct": 1.177,
+    "dal_pct": 0.579,
+    "spread_uur": {
+     "0": 0.0706,
+     "1": 0.0708,
+     "2": 0.0706,
+     "3": 0.0708,
+     "4": 0.0707,
+     "5": 0.0708,
+     "6": 0.0709,
+     "7": 0.0707,
+     "8": 0.0708,
+     "9": 0.0711,
+     "10": 0.0708,
+     "11": 0.0708,
+     "12": 0.0707,
+     "13": 0.0708,
+     "14": 0.0707,
+     "15": 0.0707,
+     "16": 0.0706,
+     "17": 0.0705,
+     "18": 0.0707,
+     "19": 0.0707,
+     "20": 0.0707,
+     "21": 0.0709,
+     "22": 0.0705,
+     "23": 0.0705
+    }
+   },
+   "vr": {
+    "m5": {
+     "vr": 0.977,
+     "se": 0.023,
+     "ac1": -0.006,
+     "n": 210239
+    },
+    "h1": {
+     "vr": 1.06,
+     "se": 0.062,
+     "ac1": 0.02,
+     "n": 15411
+    },
+    "d1": {
+     "vr": 0.946,
+     "se": 0.108,
+     "ac1": -0.019,
+     "n": 650
+    }
+   },
+   "vr_1e_helft": {
+    "vr": 0.925,
+    "se": 0.145,
+    "ac1": -0.046,
+    "n": 324
+   },
+   "vr_2e_helft": {
+    "vr": 0.988,
+    "se": 0.153,
+    "ac1": 0.027,
+    "n": 326
+   },
+   "spread_pct": 0.0707,
+   "spread_p90": 0.0969,
+   "spread_op_uuratr": 0.082,
+   "spread_op_dagrange": 0.016,
+   "fin_pct_jaar_aanname": 20.0,
+   "sweeps": {
+    "Azië": {
+     "kans_per_dag_kant": 30.8,
+     "sluit_terug_pct": 49.5,
+     "alle": {
+      "n": 400,
+      "gem_atr": -0.191,
+      "se": 0.098,
+      "terugloop_pct": 50.2
+     },
+     "sluit_terug": {
+      "n": 198,
+      "gem_atr": -0.276,
+      "se": 0.131,
+      "terugloop_pct": 49.0
+     },
+     "sluit_voorbij": {
+      "n": 202,
+      "gem_atr": -0.107,
+      "se": 0.146,
+      "terugloop_pct": 51.5
+     }
+    },
+    "Londen": {
+     "kans_per_dag_kant": 40.4,
+     "sluit_terug_pct": 53.8,
+     "alle": {
+      "n": 524,
+      "gem_atr": -0.127,
+      "se": 0.09,
+      "terugloop_pct": 49.0
+     },
+     "sluit_terug": {
+      "n": 282,
+      "gem_atr": -0.152,
+      "se": 0.119,
+      "terugloop_pct": 49.6
+     },
+     "sluit_voorbij": {
+      "n": 242,
+      "gem_atr": -0.099,
+      "se": 0.137,
+      "terugloop_pct": 48.3
+     }
+    },
+    "vorige dag": {
+     "kans_per_dag_kant": 19.3,
+     "sluit_terug_pct": 51.8,
+     "alle": {
+      "n": 251,
+      "gem_atr": -0.101,
+      "se": 0.125,
+      "terugloop_pct": 52.2
+     },
+     "sluit_terug": {
+      "n": 130,
+      "gem_atr": -0.294,
+      "se": 0.162,
+      "terugloop_pct": 52.3
+     },
+     "sluit_voorbij": {
+      "n": 121,
+      "gem_atr": 0.106,
+      "se": 0.191,
+      "terugloop_pct": 52.1
+     }
+    }
+   }
+  },
+  "SOL": {
+   "soort": "crypto",
+   "epic": "SOLUSD",
+   "bron_1h": "Capital.com 2024-12-14 t/m 2026-11-04, 16353 candles",
+   "bron_5m": "Binance 2024-11-03 t/m 2026-11-03",
+   "jaar_vol_pct": 75.7,
+   "vol30_min": 31.5,
+   "vol30_max": 150.9,
+   "vol30_max_dag": "2025-03-24",
+   "dagrange_pct": 5.15,
+   "uurrange_pct": 0.876,
+   "rendement_pct": -56.6,
+   "sessies": {
+    "Azië 20-02": {
+     "range_pct": 0.834,
+     "spread_pct": 0.5,
+     "uren": 4051
+    },
+    "Londen 02-09": {
+     "range_pct": 0.768,
+     "spread_pct": 0.5,
+     "uren": 4719
+    },
+    "NY-ochtend 09-12": {
+     "range_pct": 1.27,
+     "spread_pct": 0.5,
+     "uren": 2068
+    },
+    "NY-middag 12-16": {
+     "range_pct": 0.974,
+     "spread_pct": 0.5,
+     "uren": 2756
+    },
+    "Avond 16-20": {
+     "range_pct": 0.807,
+     "spread_pct": 0.5,
+     "uren": 2759
+    }
+   },
+   "uurprofiel": {
+    "piekuur": 10,
+    "piek_pct": 1.369,
+    "dal_pct": 0.719,
+    "spread_uur": {
+     "0": 0.5,
+     "1": 0.5,
+     "2": 0.5,
+     "3": 0.5,
+     "4": 0.5,
+     "5": 0.5,
+     "6": 0.5,
+     "7": 0.5,
+     "8": 0.5,
+     "9": 0.5,
+     "10": 0.5,
+     "11": 0.5,
+     "12": 0.5,
+     "13": 0.5,
+     "14": 0.5,
+     "15": 0.5,
+     "16": 0.5,
+     "17": 0.5,
+     "18": 0.5,
+     "19": 0.5,
+     "20": 0.5,
+     "21": 0.5,
+     "22": 0.5,
+     "23": 0.5
+    }
+   },
+   "vr": {
+    "m5": {
+     "vr": 0.94,
+     "se": 0.024,
+     "ac1": -0.009,
+     "n": 210239
+    },
+    "h1": {
+     "vr": 0.976,
+     "se": 0.067,
+     "ac1": -0.018,
+     "n": 16348
+    },
+    "d1": {
+     "vr": 0.89,
+     "se": 0.115,
+     "ac1": -0.047,
+     "n": 690
+    }
+   },
+   "vr_1e_helft": {
+    "vr": 0.875,
+    "se": 0.158,
+    "ac1": -0.069,
+    "n": 344
+   },
+   "vr_2e_helft": {
+    "vr": 0.929,
+    "se": 0.148,
+    "ac1": -0.013,
+    "n": 346
+   },
+   "spread_pct": 0.5,
+   "spread_p90": 0.5,
+   "spread_op_uuratr": 0.5,
+   "spread_op_dagrange": 0.097,
+   "fin_pct_jaar_aanname": 20.0,
+   "sweeps": {
+    "Azië": {
+     "kans_per_dag_kant": 31.7,
+     "sluit_terug_pct": 46.0,
+     "alle": {
+      "n": 437,
+      "gem_atr": 0.069,
+      "se": 0.088,
+      "terugloop_pct": 54.0
+     },
+     "sluit_terug": {
+      "n": 201,
+      "gem_atr": 0.101,
+      "se": 0.131,
+      "terugloop_pct": 51.7
+     },
+     "sluit_voorbij": {
+      "n": 236,
+      "gem_atr": 0.043,
+      "se": 0.118,
+      "terugloop_pct": 55.9
+     }
+    },
+    "Londen": {
+     "kans_per_dag_kant": 39.9,
+     "sluit_terug_pct": 46.6,
+     "alle": {
+      "n": 549,
+      "gem_atr": 0.037,
+      "se": 0.077,
+      "terugloop_pct": 51.4
+     },
+     "sluit_terug": {
+      "n": 256,
+      "gem_atr": 0.051,
+      "se": 0.121,
+      "terugloop_pct": 49.6
+     },
+     "sluit_voorbij": {
+      "n": 293,
+      "gem_atr": 0.025,
+      "se": 0.098,
+      "terugloop_pct": 52.9
+     }
+    },
+    "vorige dag": {
+     "kans_per_dag_kant": 18.9,
+     "sluit_terug_pct": 46.5,
+     "alle": {
+      "n": 260,
+      "gem_atr": -0.069,
+      "se": 0.107,
+      "terugloop_pct": 51.2
+     },
+     "sluit_terug": {
+      "n": 121,
+      "gem_atr": -0.001,
+      "se": 0.142,
+      "terugloop_pct": 53.7
+     },
+     "sluit_voorbij": {
+      "n": 139,
+      "gem_atr": -0.128,
+      "se": 0.158,
+      "terugloop_pct": 48.9
+     }
+    }
+   }
+  },
+  "EURUSD": {
+   "soort": "forex",
+   "epic": "EURUSD",
+   "bron_1h": "Capital.com 2024-11-04 t/m 2026-11-04, 12433 candles",
+   "bron_5m": "HistData 2025-01-01 t/m 2026-10-23",
+   "jaar_vol_pct": 7.1,
+   "vol30_min": 3.3,
+   "vol30_max": 13.6,
+   "vol30_max_dag": "2025-05-14",
+   "dagrange_pct": 0.59,
+   "uurrange_pct": 0.097,
+   "rendement_pct": 2.9,
+   "sessies": {
+    "Azië 20-02": {
+     "range_pct": 0.074,
+     "spread_pct": 0.0057,
+     "uren": 3108
+    },
+    "Londen 02-09": {
+     "range_pct": 0.125,
+     "spread_pct": 0.0057,
+     "uren": 3626
+    },
+    "NY-ochtend 09-12": {
+     "range_pct": 0.16,
+     "spread_pct": 0.0058,
+     "uren": 1555
+    },
+    "NY-middag 12-16": {
+     "range_pct": 0.093,
+     "spread_pct": 0.0057,
+     "uren": 2072
+    },
+    "Avond 16-20": {
+     "range_pct": 0.061,
+     "spread_pct": 0.0062,
+     "uren": 2072
+    }
+   },
+   "uurprofiel": {
+    "piekuur": 10,
+    "piek_pct": 0.177,
+    "dal_pct": 0.054,
+    "spread_uur": {
+     "0": 0.0057,
+     "1": 0.0057,
+     "2": 0.0057,
+     "3": 0.0057,
+     "4": 0.0057,
+     "5": 0.0057,
+     "6": 0.0057,
+     "7": 0.0057,
+     "8": 0.0057,
+     "9": 0.0059,
+     "10": 0.0057,
+     "11": 0.0057,
+     "12": 0.0057,
+     "13": 0.0057,
+     "14": 0.0057,
+     "15": 0.0057,
+     "16": 0.0157,
+     "17": 0.0344,
+     "18": 0.0057,
+     "19": 0.0057,
+     "20": 0.0057,
+     "21": 0.0057,
+     "22": 0.0057,
+     "23": 0.0057
+    }
+   },
+   "vr": {
+    "m5": {
+     "vr": 0.921,
+     "se": 0.022,
+     "ac1": -0.018,
+     "n": 134942
+    },
+    "h1": {
+     "vr": 0.952,
+     "se": 0.068,
+     "ac1": -0.012,
+     "n": 12324
+    },
+    "d1": {
+     "vr": 0.959,
+     "se": 0.122,
+     "ac1": -0.003,
+     "n": 518
+    }
+   },
+   "vr_1e_helft": {
+    "vr": 0.903,
+    "se": 0.157,
+    "ac1": -0.006,
+    "n": 258
+   },
+   "vr_2e_helft": {
+    "vr": 1.103,
+    "se": 0.163,
+    "ac1": -0.001,
+    "n": 260
+   },
+   "spread_pct": 0.0058,
+   "spread_p90": 0.0063,
+   "spread_op_uuratr": 0.052,
+   "spread_op_dagrange": 0.01,
+   "fin_pct_jaar_aanname": 2.0,
+   "sweeps": {
+    "Azië": {
+     "kans_per_dag_kant": 26.6,
+     "sluit_terug_pct": 51.4,
+     "alle": {
+      "n": 276,
+      "gem_atr": 0.055,
+      "se": 0.099,
+      "terugloop_pct": 51.1
+     },
+     "sluit_terug": {
+      "n": 142,
+      "gem_atr": 0.105,
+      "se": 0.144,
+      "terugloop_pct": 49.3
+     },
+     "sluit_voorbij": {
+      "n": 134,
+      "gem_atr": 0.001,
+      "se": 0.136,
+      "terugloop_pct": 53.0
+     }
+    },
+    "Londen": {
+     "kans_per_dag_kant": 32.0,
+     "sluit_terug_pct": 50.6,
+     "alle": {
+      "n": 332,
+      "gem_atr": 0.022,
+      "se": 0.082,
+      "terugloop_pct": 48.2
+     },
+     "sluit_terug": {
+      "n": 168,
+      "gem_atr": 0.009,
+      "se": 0.12,
+      "terugloop_pct": 44.6
+     },
+     "sluit_voorbij": {
+      "n": 164,
+      "gem_atr": 0.036,
+      "se": 0.112,
+      "terugloop_pct": 51.8
+     }
+    },
+    "vorige dag": {
+     "kans_per_dag_kant": 18.0,
+     "sluit_terug_pct": 49.5,
+     "alle": {
+      "n": 186,
+      "gem_atr": -0.086,
+      "se": 0.136,
+      "terugloop_pct": 46.8
+     },
+     "sluit_terug": {
+      "n": 92,
+      "gem_atr": -0.18,
+      "se": 0.162,
+      "terugloop_pct": 46.7
+     },
+     "sluit_voorbij": {
+      "n": 94,
+      "gem_atr": 0.007,
+      "se": 0.219,
+      "terugloop_pct": 46.8
+     }
+    }
+   }
+  },
+  "GBPUSD": {
+   "soort": "forex",
+   "epic": "GBPUSD",
+   "bron_1h": "Capital.com 2024-11-04 t/m 2026-11-04, 12433 candles",
+   "bron_5m": "HistData 2025-01-01 t/m 2026-10-23",
+   "jaar_vol_pct": 6.8,
+   "vol30_min": 3.4,
+   "vol30_max": 11.1,
+   "vol30_max_dag": "2025-05-13",
+   "dagrange_pct": 0.61,
+   "uurrange_pct": 0.104,
+   "rendement_pct": 3.7,
+   "sessies": {
+    "Azië 20-02": {
+     "range_pct": 0.075,
+     "spread_pct": 0.0098,
+     "uren": 3108
+    },
+    "Londen 02-09": {
+     "range_pct": 0.134,
+     "spread_pct": 0.0098,
+     "uren": 3626
+    },
+    "NY-ochtend 09-12": {
+     "range_pct": 0.168,
+     "spread_pct": 0.0098,
+     "uren": 1555
+    },
+    "NY-middag 12-16": {
+     "range_pct": 0.095,
+     "spread_pct": 0.0098,
+     "uren": 2072
+    },
+    "Avond 16-20": {
+     "range_pct": 0.078,
+     "spread_pct": 0.0106,
+     "uren": 2072
+    }
+   },
+   "uurprofiel": {
+    "piekuur": 10,
+    "piek_pct": 0.187,
+    "dal_pct": 0.063,
+    "spread_uur": {
+     "0": 0.0098,
+     "1": 0.0098,
+     "2": 0.0098,
+     "3": 0.0098,
+     "4": 0.0098,
+     "5": 0.0098,
+     "6": 0.0098,
+     "7": 0.0098,
+     "8": 0.0098,
+     "9": 0.0098,
+     "10": 0.0098,
+     "11": 0.0098,
+     "12": 0.0098,
+     "13": 0.0098,
+     "14": 0.0098,
+     "15": 0.0098,
+     "16": 0.0373,
+     "17": 0.0565,
+     "18": 0.0098,
+     "19": 0.0098,
+     "20": 0.0098,
+     "21": 0.0098,
+     "22": 0.0098,
+     "23": 0.0098
+    }
+   },
+   "vr": {
+    "m5": {
+     "vr": 0.922,
+     "se": 0.019,
+     "ac1": -0.026,
+     "n": 134907
+    },
+    "h1": {
+     "vr": 0.979,
+     "se": 0.059,
+     "ac1": -0.014,
+     "n": 12324
+    },
+    "d1": {
+     "vr": 0.963,
+     "se": 0.109,
+     "ac1": 0.002,
+     "n": 518
+    }
+   },
+   "vr_1e_helft": {
+    "vr": 1.001,
+    "se": 0.152,
+    "ac1": 0.029,
+    "n": 258
+   },
+   "vr_2e_helft": {
+    "vr": 0.916,
+    "se": 0.149,
+    "ac1": -0.042,
+    "n": 260
+   },
+   "spread_pct": 0.0098,
+   "spread_p90": 0.0145,
+   "spread_op_uuratr": 0.087,
+   "spread_op_dagrange": 0.016,
+   "fin_pct_jaar_aanname": 2.0,
+   "sweeps": {
+    "Azië": {
+     "kans_per_dag_kant": 25.0,
+     "sluit_terug_pct": 50.6,
+     "alle": {
+      "n": 259,
+      "gem_atr": -0.069,
+      "se": 0.092,
+      "terugloop_pct": 48.3
+     },
+     "sluit_terug": {
+      "n": 131,
+      "gem_atr": 0.026,
+      "se": 0.128,
+      "terugloop_pct": 50.4
+     },
+     "sluit_voorbij": {
+      "n": 128,
+      "gem_atr": -0.166,
+      "se": 0.133,
+      "terugloop_pct": 46.1
+     }
+    },
+    "Londen": {
+     "kans_per_dag_kant": 31.7,
+     "sluit_terug_pct": 47.6,
+     "alle": {
+      "n": 328,
+      "gem_atr": -0.052,
+      "se": 0.082,
+      "terugloop_pct": 53.0
+     },
+     "sluit_terug": {
+      "n": 156,
+      "gem_atr": -0.053,
+      "se": 0.103,
+      "terugloop_pct": 51.3
+     },
+     "sluit_voorbij": {
+      "n": 172,
+      "gem_atr": -0.052,
+      "se": 0.126,
+      "terugloop_pct": 54.7
+     }
+    },
+    "vorige dag": {
+     "kans_per_dag_kant": 19.1,
+     "sluit_terug_pct": 49.5,
+     "alle": {
+      "n": 198,
+      "gem_atr": -0.332,
+      "se": 0.11,
+      "terugloop_pct": 42.9
+     },
+     "sluit_terug": {
+      "n": 98,
+      "gem_atr": -0.556,
+      "se": 0.155,
+      "terugloop_pct": 40.8
+     },
+     "sluit_voorbij": {
+      "n": 100,
+      "gem_atr": -0.113,
+      "se": 0.152,
+      "terugloop_pct": 45.0
+     }
+    }
+   }
+  },
+  "USDJPY": {
+   "soort": "forex",
+   "epic": "USDJPY",
+   "bron_1h": "Capital.com 2024-11-04 t/m 2026-11-04, 12433 candles",
+   "bron_5m": "Yahoo 60d 2026-08-12 t/m 2026-11-04",
+   "jaar_vol_pct": 9.1,
+   "vol30_min": 2.5,
+   "vol30_max": 15.8,
+   "vol30_max_dag": "2025-05-13",
+   "dagrange_pct": 0.71,
+   "uurrange_pct": 0.121,
+   "rendement_pct": 4.2,
+   "sessies": {
+    "Azië 20-02": {
+     "range_pct": 0.124,
+     "spread_pct": 0.0069,
+     "uren": 3108
+    },
+    "Londen 02-09": {
+     "range_pct": 0.136,
+     "spread_pct": 0.0069,
+     "uren": 3626
+    },
+    "NY-ochtend 09-12": {
+     "range_pct": 0.168,
+     "spread_pct": 0.007,
+     "uren": 1555
+    },
+    "NY-middag 12-16": {
+     "range_pct": 0.097,
+     "spread_pct": 0.0069,
+     "uren": 2072
+    },
+    "Avond 16-20": {
+     "range_pct": 0.085,
+     "spread_pct": 0.009,
+     "uren": 2072
+    }
+   },
+   "uurprofiel": {
+    "piekuur": 10,
+    "piek_pct": 0.184,
+    "dal_pct": 0.065,
+    "spread_uur": {
+     "0": 0.0069,
+     "1": 0.007,
+     "2": 0.0069,
+     "3": 0.0069,
+     "4": 0.0069,
+     "5": 0.0069,
+     "6": 0.0069,
+     "7": 0.0069,
+     "8": 0.0069,
+     "9": 0.0075,
+     "10": 0.0069,
+     "11": 0.0069,
+     "12": 0.0069,
+     "13": 0.0069,
+     "14": 0.0069,
+     "15": 0.0069,
+     "16": 0.0253,
+     "17": 0.0385,
+     "18": 0.0071,
+     "19": 0.0069,
+     "20": 0.0069,
+     "21": 0.0069,
+     "22": 0.0069,
+     "23": 0.0069
+    }
+   },
+   "vr": {
+    "m5": {
+     "vr": 0.957,
+     "se": 0.057,
+     "ac1": -0.013,
+     "n": 16963
+    },
+    "h1": {
+     "vr": 1.067,
+     "se": 0.069,
+     "ac1": 0.012,
+     "n": 12324
+    },
+    "d1": {
+     "vr": 0.946,
+     "se": 0.109,
+     "ac1": -0.048,
+     "n": 518
+    }
+   },
+   "vr_1e_helft": {
+    "vr": 0.859,
+    "se": 0.141,
+    "ac1": -0.082,
+    "n": 258
+   },
+   "vr_2e_helft": {
+    "vr": 1.13,
+    "se": 0.17,
+    "ac1": 0.012,
+    "n": 260
+   },
+   "spread_pct": 0.007,
+   "spread_p90": 0.0091,
+   "spread_op_uuratr": 0.052,
+   "spread_op_dagrange": 0.01,
+   "fin_pct_jaar_aanname": 2.0,
+   "sweeps": {
+    "Azië": {
+     "kans_per_dag_kant": 22.7,
+     "sluit_terug_pct": 55.3,
+     "alle": {
+      "n": 235,
+      "gem_atr": 0.139,
+      "se": 0.082,
+      "terugloop_pct": 54.9
+     },
+     "sluit_terug": {
+      "n": 130,
+      "gem_atr": 0.209,
+      "se": 0.102,
+      "terugloop_pct": 57.7
+     },
+     "sluit_voorbij": {
+      "n": 105,
+      "gem_atr": 0.051,
+      "se": 0.132,
+      "terugloop_pct": 51.4
+     }
+    },
+    "Londen": {
+     "kans_per_dag_kant": 31.0,
+     "sluit_terug_pct": 48.3,
+     "alle": {
+      "n": 321,
+      "gem_atr": 0.012,
+      "se": 0.08,
+      "terugloop_pct": 53.0
+     },
+     "sluit_terug": {
+      "n": 155,
+      "gem_atr": -0.012,
+      "se": 0.123,
+      "terugloop_pct": 52.3
+     },
+     "sluit_voorbij": {
+      "n": 166,
+      "gem_atr": 0.035,
+      "se": 0.103,
+      "terugloop_pct": 53.6
+     }
+    },
+    "vorige dag": {
+     "kans_per_dag_kant": 15.2,
+     "sluit_terug_pct": 56.7,
+     "alle": {
+      "n": 157,
+      "gem_atr": -0.097,
+      "se": 0.101,
+      "terugloop_pct": 46.5
+     },
+     "sluit_terug": {
+      "n": 89,
+      "gem_atr": -0.064,
+      "se": 0.114,
+      "terugloop_pct": 44.9
+     },
+     "sluit_voorbij": {
+      "n": 68,
+      "gem_atr": -0.14,
+      "se": 0.181,
+      "terugloop_pct": 48.5
+     }
+    }
+   }
+  },
+  "NQ": {
+   "soort": "index",
+   "epic": "US100",
+   "bron_1h": "Capital.com 2024-11-04 t/m 2026-11-04, 12177 candles",
+   "bron_5m": "HistData 2025-01-01 t/m 2026-10-23",
+   "jaar_vol_pct": 21.8,
+   "vol30_min": 8.8,
+   "vol30_max": 49.9,
+   "vol30_max_dag": "2025-04-24",
+   "dagrange_pct": 1.64,
+   "uurrange_pct": 0.242,
+   "rendement_pct": 42.6,
+   "sessies": {
+    "Azië 20-02": {
+     "range_pct": 0.171,
+     "spread_pct": 0.0073,
+     "uren": 3099
+    },
+    "Londen 02-09": {
+     "range_pct": 0.227,
+     "spread_pct": 0.0073,
+     "uren": 3616
+    },
+    "NY-ochtend 09-12": {
+     "range_pct": 0.54,
+     "spread_pct": 0.0073,
+     "uren": 1550
+    },
+    "NY-middag 12-16": {
+     "range_pct": 0.326,
+     "spread_pct": 0.0073,
+     "uren": 2060
+    },
+    "Avond 16-20": {
+     "range_pct": 0.182,
+     "spread_pct": 0.0079,
+     "uren": 1852
+    }
+   },
+   "uurprofiel": {
+    "piekuur": 9,
+    "piek_pct": 0.627,
+    "dal_pct": 0.062,
+    "spread_uur": {
+     "0": 0.0073,
+     "1": 0.0073,
+     "2": 0.0073,
+     "3": 0.0073,
+     "4": 0.0073,
+     "5": 0.0073,
+     "6": 0.0073,
+     "7": 0.0073,
+     "8": 0.0073,
+     "9": 0.0073,
+     "10": 0.0073,
+     "11": 0.0073,
+     "12": 0.0073,
+     "13": 0.0073,
+     "14": 0.0073,
+     "15": 0.0073,
+     "16": 0.0084,
+     "17": 0.0157,
+     "18": 0.0073,
+     "19": 0.0073,
+     "20": 0.0073,
+     "21": 0.0073,
+     "22": 0.0073,
+     "23": 0.0073
+    }
+   },
+   "vr": {
+    "m5": {
+     "vr": 0.993,
+     "se": 0.047,
+     "ac1": 0.001,
+     "n": 123214
+    },
+    "h1": {
+     "vr": 0.991,
+     "se": 0.102,
+     "ac1": 0.003,
+     "n": 12067
+    },
+    "d1": {
+     "vr": 0.838,
+     "se": 0.154,
+     "ac1": -0.108,
+     "n": 517
+    }
+   },
+   "vr_1e_helft": {
+    "vr": 0.797,
+    "se": 0.247,
+    "ac1": -0.165,
+    "n": 258
+   },
+   "vr_2e_helft": {
+    "vr": 0.906,
+    "se": 0.155,
+    "ac1": -0.032,
+    "n": 259
+   },
+   "spread_pct": 0.0073,
+   "spread_p90": 0.0092,
+   "spread_op_uuratr": 0.025,
+   "spread_op_dagrange": 0.004,
+   "fin_pct_jaar_aanname": 6.5,
+   "sweeps": {
+    "Azië": {
+     "kans_per_dag_kant": 39.5,
+     "sluit_terug_pct": 50.5,
+     "alle": {
+      "n": 408,
+      "gem_atr": -0.122,
+      "se": 0.109,
+      "terugloop_pct": 48.3
+     },
+     "sluit_terug": {
+      "n": 206,
+      "gem_atr": -0.16,
+      "se": 0.15,
+      "terugloop_pct": 48.5
+     },
+     "sluit_voorbij": {
+      "n": 202,
+      "gem_atr": -0.083,
+      "se": 0.159,
+      "terugloop_pct": 48.0
+     }
+    },
+    "Londen": {
+     "kans_per_dag_kant": 47.6,
+     "sluit_terug_pct": 50.3,
+     "alle": {
+      "n": 491,
+      "gem_atr": -0.121,
+      "se": 0.096,
+      "terugloop_pct": 48.3
+     },
+     "sluit_terug": {
+      "n": 247,
+      "gem_atr": -0.18,
+      "se": 0.134,
+      "terugloop_pct": 47.8
+     },
+     "sluit_voorbij": {
+      "n": 244,
+      "gem_atr": -0.062,
+      "se": 0.138,
+      "terugloop_pct": 48.8
+     }
+    },
+    "vorige dag": {
+     "kans_per_dag_kant": 25.5,
+     "sluit_terug_pct": 56.8,
+     "alle": {
+      "n": 264,
+      "gem_atr": -0.074,
+      "se": 0.131,
+      "terugloop_pct": 45.5
+     },
+     "sluit_terug": {
+      "n": 150,
+      "gem_atr": -0.284,
+      "se": 0.188,
+      "terugloop_pct": 41.3
+     },
+     "sluit_voorbij": {
+      "n": 114,
+      "gem_atr": 0.202,
+      "se": 0.173,
+      "terugloop_pct": 50.9
+     }
+    }
+   }
+  },
+  "ES": {
+   "soort": "index",
+   "epic": "US500",
+   "bron_1h": "Capital.com 2024-11-04 t/m 2026-11-04, 12161 candles",
+   "bron_5m": "HistData 2025-01-01 t/m 2026-10-23",
+   "jaar_vol_pct": 16.0,
+   "vol30_min": 6.5,
+   "vol30_max": 42.6,
+   "vol30_max_dag": "2025-04-24",
+   "dagrange_pct": 1.1,
+   "uurrange_pct": 0.168,
+   "rendement_pct": 34.5,
+   "sessies": {
+    "Azië 20-02": {
+     "range_pct": 0.111,
+     "spread_pct": 0.0081,
+     "uren": 3099
+    },
+    "Londen 02-09": {
+     "range_pct": 0.159,
+     "spread_pct": 0.0081,
+     "uren": 3616
+    },
+    "NY-ochtend 09-12": {
+     "range_pct": 0.352,
+     "spread_pct": 0.006,
+     "uren": 1550
+    },
+    "NY-middag 12-16": {
+     "range_pct": 0.249,
+     "spread_pct": 0.006,
+     "uren": 2059
+    },
+    "Avond 16-20": {
+     "range_pct": 0.127,
+     "spread_pct": 0.0082,
+     "uren": 1837
+    }
+   },
+   "uurprofiel": {
+    "piekuur": 10,
+    "piek_pct": 0.399,
+    "dal_pct": 0.047,
+    "spread_uur": {
+     "0": 0.0081,
+     "1": 0.0081,
+     "2": 0.0081,
+     "3": 0.0081,
+     "4": 0.0081,
+     "5": 0.0081,
+     "6": 0.0081,
+     "7": 0.0081,
+     "8": 0.0081,
+     "9": 0.006,
+     "10": 0.006,
+     "11": 0.006,
+     "12": 0.006,
+     "13": 0.006,
+     "14": 0.006,
+     "15": 0.006,
+     "16": 0.0081,
+     "17": 0.0199,
+     "18": 0.0081,
+     "19": 0.0081,
+     "20": 0.0081,
+     "21": 0.0081,
+     "22": 0.0081,
+     "23": 0.0081
+    }
+   },
+   "vr": {
+    "m5": {
+     "vr": 0.948,
+     "se": 0.066,
+     "ac1": 0.004,
+     "n": 123308
+    },
+    "h1": {
+     "vr": 0.966,
+     "se": 0.132,
+     "ac1": 0.003,
+     "n": 12051
+    },
+    "d1": {
+     "vr": 0.806,
+     "se": 0.2,
+     "ac1": -0.114,
+     "n": 517
+    }
+   },
+   "vr_1e_helft": {
+    "vr": 0.793,
+    "se": 0.287,
+    "ac1": -0.158,
+    "n": 258
+   },
+   "vr_2e_helft": {
+    "vr": 0.858,
+    "se": 0.152,
+    "ac1": -0.02,
+    "n": 259
+   },
+   "spread_pct": 0.0078,
+   "spread_p90": 0.0089,
+   "spread_op_uuratr": 0.037,
+   "spread_op_dagrange": 0.007,
+   "fin_pct_jaar_aanname": 6.5,
+   "sweeps": {
+    "Azië": {
+     "kans_per_dag_kant": 42.2,
+     "sluit_terug_pct": 50.2,
+     "alle": {
+      "n": 436,
+      "gem_atr": -0.17,
+      "se": 0.107,
+      "terugloop_pct": 46.6
+     },
+     "sluit_terug": {
+      "n": 219,
+      "gem_atr": -0.174,
+      "se": 0.141,
+      "terugloop_pct": 47.5
+     },
+     "sluit_voorbij": {
+      "n": 217,
+      "gem_atr": -0.167,
+      "se": 0.161,
+      "terugloop_pct": 45.6
+     }
+    },
+    "Londen": {
+     "kans_per_dag_kant": 46.3,
+     "sluit_terug_pct": 48.1,
+     "alle": {
+      "n": 478,
+      "gem_atr": -0.147,
+      "se": 0.105,
+      "terugloop_pct": 49.4
+     },
+     "sluit_terug": {
+      "n": 230,
+      "gem_atr": 0.082,
+      "se": 0.138,
+      "terugloop_pct": 54.8
+     },
+     "sluit_voorbij": {
+      "n": 248,
+      "gem_atr": -0.36,
+      "se": 0.156,
+      "terugloop_pct": 44.4
+     }
+    },
+    "vorige dag": {
+     "kans_per_dag_kant": 27.6,
+     "sluit_terug_pct": 46.0,
+     "alle": {
+      "n": 285,
+      "gem_atr": -0.018,
+      "se": 0.113,
+      "terugloop_pct": 47.0
+     },
+     "sluit_terug": {
+      "n": 131,
+      "gem_atr": -0.079,
+      "se": 0.158,
+      "terugloop_pct": 45.0
+     },
+     "sluit_voorbij": {
+      "n": 154,
+      "gem_atr": 0.034,
+      "se": 0.161,
+      "terugloop_pct": 48.7
+     }
+    }
+   }
+  },
+  "DAX": {
+   "soort": "index",
+   "epic": "DE40",
+   "bron_1h": "Capital.com 2024-11-04 t/m 2026-11-04, 12167 candles",
+   "bron_5m": "Yahoo 60d 2026-08-13 t/m 2026-11-04",
+   "jaar_vol_pct": 17.3,
+   "vol30_min": 7.5,
+   "vol30_max": 40.6,
+   "vol30_max_dag": "2025-04-25",
+   "dagrange_pct": 1.29,
+   "uurrange_pct": 0.219,
+   "rendement_pct": 38.2,
+   "sessies": {
+    "Azië 20-02": {
+     "range_pct": 0.154,
+     "spread_pct": 0.0084,
+     "uren": 3102
+    },
+    "Londen 02-09": {
+     "range_pct": 0.306,
+     "spread_pct": 0.0063,
+     "uren": 3619
+    },
+    "NY-ochtend 09-12": {
+     "range_pct": 0.336,
+     "spread_pct": 0.0063,
+     "uren": 1550
+    },
+    "NY-middag 12-16": {
+     "range_pct": 0.178,
+     "spread_pct": 0.0063,
+     "uren": 2058
+    },
+    "Avond 16-20": {
+     "range_pct": 0.126,
+     "spread_pct": 0.0323,
+     "uren": 1838
+    }
+   },
+   "uurprofiel": {
+    "piekuur": 3,
+    "piek_pct": 0.459,
+    "dal_pct": 0.045,
+    "spread_uur": {
+     "0": 0.0084,
+     "1": 0.0084,
+     "2": 0.0063,
+     "3": 0.0063,
+     "4": 0.0063,
+     "5": 0.0063,
+     "6": 0.0063,
+     "7": 0.0063,
+     "8": 0.0063,
+     "9": 0.0063,
+     "10": 0.0063,
+     "11": 0.0063,
+     "12": 0.0063,
+     "13": 0.0063,
+     "14": 0.0063,
+     "15": 0.0063,
+     "16": 0.0323,
+     "17": 0.0328,
+     "18": 0.0328,
+     "19": 0.0314,
+     "20": 0.0084,
+     "21": 0.0084,
+     "22": 0.0084,
+     "23": 0.0084
+    }
+   },
+   "vr": {
+    "m5": {
+     "vr": 1.077,
+     "se": 0.056,
+     "ac1": 0.003,
+     "n": 6058
+    },
+    "h1": {
+     "vr": 0.94,
+     "se": 0.102,
+     "ac1": 0.007,
+     "n": 12058
+    },
+    "d1": {
+     "vr": 0.792,
+     "se": 0.166,
+     "ac1": -0.096,
+     "n": 517
+    }
+   },
+   "vr_1e_helft": {
+    "vr": 0.84,
+    "se": 0.265,
+    "ac1": -0.109,
+    "n": 258
+   },
+   "vr_2e_helft": {
+    "vr": 0.744,
+    "se": 0.158,
+    "ac1": -0.078,
+    "n": 259
+   },
+   "spread_pct": 0.0075,
+   "spread_p90": 0.0319,
+   "spread_op_uuratr": 0.03,
+   "spread_op_dagrange": 0.006,
+   "fin_pct_jaar_aanname": 6.5,
+   "sweeps": {
+    "Azië": {
+     "kans_per_dag_kant": 23.9,
+     "sluit_terug_pct": 50.2,
+     "alle": {
+      "n": 247,
+      "gem_atr": -0.019,
+      "se": 0.089,
+      "terugloop_pct": 49.8
+     },
+     "sluit_terug": {
+      "n": 124,
+      "gem_atr": 0.001,
+      "se": 0.11,
+      "terugloop_pct": 50.0
+     },
+     "sluit_voorbij": {
+      "n": 123,
+      "gem_atr": -0.04,
+      "se": 0.14,
+      "terugloop_pct": 49.6
+     }
+    },
+    "Londen": {
+     "kans_per_dag_kant": 28.3,
+     "sluit_terug_pct": 48.8,
+     "alle": {
+      "n": 293,
+      "gem_atr": -0.036,
+      "se": 0.077,
+      "terugloop_pct": 50.9
+     },
+     "sluit_terug": {
+      "n": 143,
+      "gem_atr": 0.007,
+      "se": 0.111,
+      "terugloop_pct": 51.7
+     },
+     "sluit_voorbij": {
+      "n": 150,
+      "gem_atr": -0.076,
+      "se": 0.108,
+      "terugloop_pct": 50.0
+     }
+    },
+    "vorige dag": {
+     "kans_per_dag_kant": 17.5,
+     "sluit_terug_pct": 51.9,
+     "alle": {
+      "n": 181,
+      "gem_atr": -0.286,
+      "se": 0.104,
+      "terugloop_pct": 42.0
+     },
+     "sluit_terug": {
+      "n": 94,
+      "gem_atr": -0.371,
+      "se": 0.13,
+      "terugloop_pct": 38.3
+     },
+     "sluit_voorbij": {
+      "n": 87,
+      "gem_atr": -0.194,
+      "se": 0.166,
+      "terugloop_pct": 46.0
+     }
+    }
+   }
+  },
+  "GOUD": {
+   "soort": "grondstof",
+   "epic": "GOLD",
+   "bron_1h": "Capital.com 2024-11-04 t/m 2026-11-04, 11824 candles",
+   "bron_5m": "HistData 2025-01-01 t/m 2026-10-23",
+   "jaar_vol_pct": 24.0,
+   "vol30_min": 10.3,
+   "vol30_max": 49.8,
+   "vol30_max_dag": "2026-03-03",
+   "dagrange_pct": 1.78,
+   "uurrange_pct": 0.311,
+   "rendement_pct": 48.5,
+   "sessies": {
+    "Azië 20-02": {
+     "range_pct": 0.311,
+     "spread_pct": 0.0096,
+     "uren": 3096
+    },
+    "Londen 02-09": {
+     "range_pct": 0.311,
+     "spread_pct": 0.0096,
+     "uren": 3612
+    },
+    "NY-ochtend 09-12": {
+     "range_pct": 0.475,
+     "spread_pct": 0.0097,
+     "uren": 1549
+    },
+    "NY-middag 12-16": {
+     "range_pct": 0.266,
+     "spread_pct": 0.0097,
+     "uren": 2038
+    },
+    "Avond 16-20": {
+     "range_pct": 0.221,
+     "spread_pct": 0.0097,
+     "uren": 1529
+    }
+   },
+   "uurprofiel": {
+    "piekuur": 9,
+    "piek_pct": 0.537,
+    "dal_pct": 0.178,
+    "spread_uur": {
+     "0": 0.0096,
+     "1": 0.0096,
+     "2": 0.0096,
+     "3": 0.0096,
+     "4": 0.0096,
+     "5": 0.0096,
+     "6": 0.0096,
+     "7": 0.0096,
+     "8": 0.0097,
+     "9": 0.0099,
+     "10": 0.0096,
+     "11": 0.0097,
+     "12": 0.0097,
+     "13": 0.0097,
+     "14": 0.0096,
+     "15": 0.0096,
+     "16": 0.0096,
+     "18": 0.0097,
+     "19": 0.0097,
+     "20": 0.0097,
+     "21": 0.0096,
+     "22": 0.0097,
+     "23": 0.0096
+    }
+   },
+   "vr": {
+    "m5": {
+     "vr": 0.989,
+     "se": 0.031,
+     "ac1": 0.002,
+     "n": 127806
+    },
+    "h1": {
+     "vr": 1.023,
+     "se": 0.098,
+     "ac1": -0.019,
+     "n": 11704
+    },
+    "d1": {
+     "vr": 0.894,
+     "se": 0.148,
+     "ac1": -0.011,
+     "n": 516
+    }
+   },
+   "vr_1e_helft": {
+    "vr": 0.936,
+    "se": 0.167,
+    "ac1": -0.024,
+    "n": 257
+   },
+   "vr_2e_helft": {
+    "vr": 0.878,
+    "se": 0.202,
+    "ac1": -0.008,
+    "n": 259
+   },
+   "spread_pct": 0.0097,
+   "spread_p90": 0.0121,
+   "spread_op_uuratr": 0.027,
+   "spread_op_dagrange": 0.005,
+   "fin_pct_jaar_aanname": 6.5,
+   "sweeps": {
+    "Azië": {
+     "kans_per_dag_kant": 28.6,
+     "sluit_terug_pct": 48.5,
+     "alle": {
+      "n": 295,
+      "gem_atr": -0.038,
+      "se": 0.087,
+      "terugloop_pct": 51.9
+     },
+     "sluit_terug": {
+      "n": 143,
+      "gem_atr": -0.004,
+      "se": 0.125,
+      "terugloop_pct": 55.9
+     },
+     "sluit_voorbij": {
+      "n": 152,
+      "gem_atr": -0.07,
+      "se": 0.122,
+      "terugloop_pct": 48.0
+     }
+    },
+    "Londen": {
+     "kans_per_dag_kant": 36.9,
+     "sluit_terug_pct": 53.0,
+     "alle": {
+      "n": 381,
+      "gem_atr": -0.154,
+      "se": 0.077,
+      "terugloop_pct": 48.6
+     },
+     "sluit_terug": {
+      "n": 202,
+      "gem_atr": -0.17,
+      "se": 0.116,
+      "terugloop_pct": 48.5
+     },
+     "sluit_voorbij": {
+      "n": 179,
+      "gem_atr": -0.136,
+      "se": 0.101,
+      "terugloop_pct": 48.6
+     }
+    },
+    "vorige dag": {
+     "kans_per_dag_kant": 18.2,
+     "sluit_terug_pct": 52.7,
+     "alle": {
+      "n": 188,
+      "gem_atr": -0.062,
+      "se": 0.101,
+      "terugloop_pct": 52.1
+     },
+     "sluit_terug": {
+      "n": 99,
+      "gem_atr": -0.108,
+      "se": 0.152,
+      "terugloop_pct": 53.5
+     },
+     "sluit_voorbij": {
+      "n": 89,
+      "gem_atr": -0.01,
+      "se": 0.13,
+      "terugloop_pct": 50.6
+     }
+    }
+   }
+  },
+  "ZILVER": {
+   "soort": "grondstof",
+   "epic": "SILVER",
+   "bron_1h": "Capital.com 2024-11-04 t/m 2026-11-04, 11824 candles",
+   "bron_5m": "HistData 2025-01-01 t/m 2026-10-23",
+   "jaar_vol_pct": 50.0,
+   "vol30_min": 17.2,
+   "vol30_max": 138.6,
+   "vol30_max_dag": "2026-02-06",
+   "dagrange_pct": 3.18,
+   "uurrange_pct": 0.563,
+   "rendement_pct": 60.6,
+   "sessies": {
+    "Azië 20-02": {
+     "range_pct": 0.566,
+     "spread_pct": 0.083,
+     "uren": 3096
+    },
+    "Londen 02-09": {
+     "range_pct": 0.565,
+     "spread_pct": 0.0751,
+     "uren": 3612
+    },
+    "NY-ochtend 09-12": {
+     "range_pct": 0.91,
+     "spread_pct": 0.0754,
+     "uren": 1549
+    },
+    "NY-middag 12-16": {
+     "range_pct": 0.494,
+     "spread_pct": 0.0671,
+     "uren": 2038
+    },
+    "Avond 16-20": {
+     "range_pct": 0.368,
+     "spread_pct": 0.0916,
+     "uren": 1529
+    }
+   },
+   "uurprofiel": {
+    "piekuur": 9,
+    "piek_pct": 1.04,
+    "dal_pct": 0.307,
+    "spread_uur": {
+     "0": 0.0826,
+     "1": 0.0828,
+     "2": 0.0761,
+     "3": 0.0758,
+     "4": 0.0758,
+     "5": 0.075,
+     "6": 0.0757,
+     "7": 0.0691,
+     "8": 0.075,
+     "9": 0.0931,
+     "10": 0.0679,
+     "11": 0.0665,
+     "12": 0.0666,
+     "13": 0.0694,
+     "14": 0.0671,
+     "15": 0.0663,
+     "16": 0.0948,
+     "18": 0.0941,
+     "19": 0.0859,
+     "20": 0.0862,
+     "21": 0.0845,
+     "22": 0.0826,
+     "23": 0.0804
+    }
+   },
+   "vr": {
+    "m5": {
+     "vr": 0.987,
+     "se": 0.041,
+     "ac1": 0.0,
+     "n": 127664
+    },
+    "h1": {
+     "vr": 0.967,
+     "se": 0.121,
+     "ac1": -0.009,
+     "n": 11704
+    },
+    "d1": {
+     "vr": 0.905,
+     "se": 0.17,
+     "ac1": -0.03,
+     "n": 516
+    }
+   },
+   "vr_1e_helft": {
+    "vr": 1.011,
+    "se": 0.172,
+    "ac1": -0.015,
+    "n": 257
+   },
+   "vr_2e_helft": {
+    "vr": 0.901,
+    "se": 0.196,
+    "ac1": -0.033,
+    "n": 259
+   },
+   "spread_pct": 0.0772,
+   "spread_p90": 0.1173,
+   "spread_op_uuratr": 0.122,
+   "spread_op_dagrange": 0.024,
+   "fin_pct_jaar_aanname": 6.5,
+   "sweeps": {
+    "Azië": {
+     "kans_per_dag_kant": 27.0,
+     "sluit_terug_pct": 48.4,
+     "alle": {
+      "n": 279,
+      "gem_atr": -0.045,
+      "se": 0.079,
+      "terugloop_pct": 50.9
+     },
+     "sluit_terug": {
+      "n": 135,
+      "gem_atr": -0.057,
+      "se": 0.124,
+      "terugloop_pct": 50.4
+     },
+     "sluit_voorbij": {
+      "n": 144,
+      "gem_atr": -0.035,
+      "se": 0.101,
+      "terugloop_pct": 51.4
+     }
+    },
+    "Londen": {
+     "kans_per_dag_kant": 37.9,
+     "sluit_terug_pct": 51.7,
+     "alle": {
+      "n": 391,
+      "gem_atr": -0.085,
+      "se": 0.076,
+      "terugloop_pct": 51.7
+     },
+     "sluit_terug": {
+      "n": 202,
+      "gem_atr": -0.089,
+      "se": 0.11,
+      "terugloop_pct": 50.5
+     },
+     "sluit_voorbij": {
+      "n": 189,
+      "gem_atr": -0.08,
+      "se": 0.106,
+      "terugloop_pct": 52.9
+     }
+    },
+    "vorige dag": {
+     "kans_per_dag_kant": 16.4,
+     "sluit_terug_pct": 43.8,
+     "alle": {
+      "n": 169,
+      "gem_atr": 0.039,
+      "se": 0.108,
+      "terugloop_pct": 50.9
+     },
+     "sluit_terug": {
+      "n": 74,
+      "gem_atr": -0.027,
+      "se": 0.143,
+      "terugloop_pct": 51.4
+     },
+     "sluit_voorbij": {
+      "n": 95,
+      "gem_atr": 0.091,
+      "se": 0.157,
+      "terugloop_pct": 50.5
+     }
+    }
+   }
+  },
+  "OLIE": {
+   "soort": "grondstof",
+   "epic": "OIL_CRUDE",
+   "bron_1h": "Capital.com 2024-11-04 t/m 2026-11-04, 11819 candles",
+   "bron_5m": "Yahoo 60d 2026-08-26 t/m 2026-11-04",
+   "jaar_vol_pct": 42.7,
+   "vol30_min": 18.3,
+   "vol30_max": 88.9,
+   "vol30_max_dag": "2026-04-17",
+   "dagrange_pct": 3.06,
+   "uurrange_pct": 0.544,
+   "rendement_pct": 24.3,
+   "sessies": {
+    "Azië 20-02": {
+     "range_pct": 0.35,
+     "spread_pct": 0.0472,
+     "uren": 3093
+    },
+    "Londen 02-09": {
+     "range_pct": 0.638,
+     "spread_pct": 0.0465,
+     "uren": 3606
+    },
+    "NY-ochtend 09-12": {
+     "range_pct": 0.903,
+     "spread_pct": 0.0469,
+     "uren": 1549
+    },
+    "NY-middag 12-16": {
+     "range_pct": 0.569,
+     "spread_pct": 0.0469,
+     "uren": 2038
+    },
+    "Avond 16-20": {
+     "range_pct": 0.3,
+     "spread_pct": 0.0494,
+     "uren": 1533
+    }
+   },
+   "uurprofiel": {
+    "piekuur": 9,
+    "piek_pct": 0.962,
+    "dal_pct": 0.0,
+    "spread_uur": {
+     "0": 0.0469,
+     "1": 0.0481,
+     "2": 0.0468,
+     "3": 0.0465,
+     "4": 0.0469,
+     "5": 0.0466,
+     "6": 0.0463,
+     "7": 0.046,
+     "8": 0.0466,
+     "9": 0.0474,
+     "10": 0.0465,
+     "11": 0.0465,
+     "12": 0.0467,
+     "13": 0.0466,
+     "14": 0.0468,
+     "15": 0.0474,
+     "16": 0.0507,
+     "17": 0.0205,
+     "18": 0.0498,
+     "19": 0.0485,
+     "20": 0.0471,
+     "21": 0.0472,
+     "22": 0.0473,
+     "23": 0.0467
+    }
+   },
+   "vr": {
+    "m5": {
+     "vr": 1.027,
+     "se": 0.048,
+     "ac1": 0.008,
+     "n": 13593
+    },
+    "h1": {
+     "vr": 0.916,
+     "se": 0.102,
+     "ac1": -0.018,
+     "n": 11698
+    },
+    "d1": {
+     "vr": 0.949,
+     "se": 0.121,
+     "ac1": -0.022,
+     "n": 516
+    }
+   },
+   "vr_1e_helft": {
+    "vr": 1.099,
+    "se": 0.181,
+    "ac1": -0.026,
+    "n": 257
+   },
+   "vr_2e_helft": {
+    "vr": 0.903,
+    "se": 0.151,
+    "ac1": -0.023,
+    "n": 259
+   },
+   "spread_pct": 0.0472,
+   "spread_p90": 0.0649,
+   "spread_op_uuratr": 0.086,
+   "spread_op_dagrange": 0.015,
+   "fin_pct_jaar_aanname": 6.5,
+   "sweeps": {
+    "Azië": {
+     "kans_per_dag_kant": 27.0,
+     "sluit_terug_pct": 44.1,
+     "alle": {
+      "n": 279,
+      "gem_atr": -0.025,
+      "se": 0.096,
+      "terugloop_pct": 48.7
+     },
+     "sluit_terug": {
+      "n": 123,
+      "gem_atr": -0.169,
+      "se": 0.149,
+      "terugloop_pct": 45.5
+     },
+     "sluit_voorbij": {
+      "n": 156,
+      "gem_atr": 0.089,
+      "se": 0.126,
+      "terugloop_pct": 51.3
+     }
+    },
+    "Londen": {
+     "kans_per_dag_kant": 35.2,
+     "sluit_terug_pct": 45.2,
+     "alle": {
+      "n": 363,
+      "gem_atr": 0.076,
+      "se": 0.085,
+      "terugloop_pct": 53.2
+     },
+     "sluit_terug": {
+      "n": 164,
+      "gem_atr": 0.117,
+      "se": 0.116,
+      "terugloop_pct": 54.9
+     },
+     "sluit_voorbij": {
+      "n": 199,
+      "gem_atr": 0.042,
+      "se": 0.123,
+      "terugloop_pct": 51.8
+     }
+    },
+    "vorige dag": {
+     "kans_per_dag_kant": 21.5,
+     "sluit_terug_pct": 46.8,
+     "alle": {
+      "n": 222,
+      "gem_atr": -0.032,
+      "se": 0.112,
+      "terugloop_pct": 48.6
+     },
+     "sluit_terug": {
+      "n": 104,
+      "gem_atr": -0.049,
+      "se": 0.168,
+      "terugloop_pct": 46.2
+     },
+     "sluit_voorbij": {
+      "n": 118,
+      "gem_atr": -0.017,
+      "se": 0.15,
+      "terugloop_pct": 50.8
+     }
+    }
+   }
+  },
+  "AAPL": {
+   "soort": "aandeel",
+   "epic": "AAPL",
+   "bron_1h": "Capital.com 2024-11-04 t/m 2026-11-04, 7945 candles",
+   "bron_5m": "Yahoo 60d 2026-08-12 t/m 2026-11-04",
+   "jaar_vol_pct": 29.3,
+   "vol30_min": 9.6,
+   "vol30_max": 63.5,
+   "vol30_max_dag": "2025-05-12",
+   "dagrange_pct": 2.14,
+   "uurrange_pct": 0.402,
+   "rendement_pct": 58.5,
+   "sessies": {
+    "Azië 20-02": {
+     "range_pct": 0.158,
+     "spread_pct": 0.1204,
+     "uren": 190
+    },
+    "Londen 02-09": {
+     "range_pct": 0.317,
+     "spread_pct": 0.0947,
+     "uren": 2569
+    },
+    "NY-ochtend 09-12": {
+     "range_pct": 0.872,
+     "spread_pct": 0.0515,
+     "uren": 1502
+    },
+    "NY-middag 12-16": {
+     "range_pct": 0.497,
+     "spread_pct": 0.0484,
+     "uren": 1992
+    },
+    "Avond 16-20": {
+     "range_pct": 0.195,
+     "spread_pct": 0.0856,
+     "uren": 1692
+    }
+   },
+   "uurprofiel": {
+    "piekuur": 9,
+    "piek_pct": 1.25,
+    "dal_pct": 0.12,
+    "spread_uur": {
+     "0": 0.115,
+     "1": 0.1185,
+     "2": 0.1295,
+     "3": 0.1714,
+     "4": 0.1038,
+     "5": 0.1003,
+     "6": 0.1087,
+     "7": 0.0862,
+     "8": 0.079,
+     "9": 0.056,
+     "10": 0.0503,
+     "11": 0.0489,
+     "12": 0.0483,
+     "13": 0.0482,
+     "14": 0.0479,
+     "15": 0.0513,
+     "16": 0.0827,
+     "17": 0.0776,
+     "18": 0.089,
+     "19": 0.0969,
+     "20": 0.1271,
+     "21": 0.1221,
+     "22": 0.119,
+     "23": 0.1193
+    }
+   },
+   "vr": {
+    "m5": {
+     "vr": 1.072,
+     "se": 0.085,
+     "ac1": 0.009,
+     "n": 4620
+    },
+    "h1": {
+     "vr": 0.971,
+     "se": 0.133,
+     "ac1": -0.046,
+     "n": 7468
+    },
+    "d1": {
+     "vr": 1.008,
+     "se": 0.15,
+     "ac1": -0.022,
+     "n": 501
+    }
+   },
+   "vr_1e_helft": {
+    "vr": 1.085,
+    "se": 0.224,
+    "ac1": -0.062,
+    "n": 250
+   },
+   "vr_2e_helft": {
+    "vr": 0.919,
+    "se": 0.146,
+    "ac1": 0.044,
+    "n": 251
+   },
+   "spread_pct": 0.0661,
+   "spread_p90": 0.137,
+   "spread_op_uuratr": 0.133,
+   "spread_op_dagrange": 0.031,
+   "fin_pct_jaar_aanname": 6.5,
+   "sweeps": {
+    "Azië": {
+     "kans_per_dag_kant": 42.2,
+     "sluit_terug_pct": 59.3,
+     "alle": {
+      "n": 27,
+      "gem_atr": 0.2,
+      "se": 0.362,
+      "terugloop_pct": 51.9
+     },
+     "sluit_terug": {
+      "n": 16,
+      "gem_atr": 0.316,
+      "se": 0.52,
+      "terugloop_pct": 50.0
+     },
+     "sluit_voorbij": {
+      "n": 11,
+      "gem_atr": 0.032,
+      "se": 0.49,
+      "terugloop_pct": 54.5
+     }
+    },
+    "Londen": {
+     "kans_per_dag_kant": 56.3,
+     "sluit_terug_pct": 54.1,
+     "alle": {
+      "n": 564,
+      "gem_atr": 0.044,
+      "se": 0.075,
+      "terugloop_pct": 52.3
+     },
+     "sluit_terug": {
+      "n": 305,
+      "gem_atr": 0.076,
+      "se": 0.104,
+      "terugloop_pct": 54.1
+     },
+     "sluit_voorbij": {
+      "n": 259,
+      "gem_atr": 0.007,
+      "se": 0.108,
+      "terugloop_pct": 50.2
+     }
+    },
+    "vorige dag": {
+     "kans_per_dag_kant": 35.8,
+     "sluit_terug_pct": 50.1,
+     "alle": {
+      "n": 359,
+      "gem_atr": -0.043,
+      "se": 0.088,
+      "terugloop_pct": 48.2
+     },
+     "sluit_terug": {
+      "n": 180,
+      "gem_atr": -0.162,
+      "se": 0.118,
+      "terugloop_pct": 44.4
+     },
+     "sluit_voorbij": {
+      "n": 179,
+      "gem_atr": 0.077,
+      "se": 0.131,
+      "terugloop_pct": 52.0
+     }
+    }
+   }
+  },
+  "NVDA": {
+   "soort": "aandeel",
+   "epic": "NVDA",
+   "bron_1h": "Capital.com 2024-11-04 t/m 2026-11-04, 7945 candles",
+   "bron_5m": "Yahoo 60d 2026-08-12 t/m 2026-11-04",
+   "jaar_vol_pct": 42.5,
+   "vol30_min": 25.0,
+   "vol30_max": 80.1,
+   "vol30_max_dag": "2025-04-09",
+   "dagrange_pct": 3.44,
+   "uurrange_pct": 0.605,
+   "rendement_pct": 48.2,
+   "sessies": {
+    "Azië 20-02": {
+     "range_pct": 0.305,
+     "spread_pct": 0.156,
+     "uren": 190
+    },
+    "Londen 02-09": {
+     "range_pct": 0.509,
+     "spread_pct": 0.0941,
+     "uren": 2569
+    },
+    "NY-ochtend 09-12": {
+     "range_pct": 1.294,
+     "spread_pct": 0.0642,
+     "uren": 1502
+    },
+    "NY-middag 12-16": {
+     "range_pct": 0.706,
+     "spread_pct": 0.0637,
+     "uren": 1992
+    },
+    "Avond 16-20": {
+     "range_pct": 0.295,
+     "spread_pct": 0.0959,
+     "uren": 1692
+    }
+   },
+   "uurprofiel": {
+    "piekuur": 9,
+    "piek_pct": 1.693,
+    "dal_pct": 0.219,
+    "spread_uur": {
+     "0": 0.156,
+     "1": 0.1556,
+     "2": 0.1562,
+     "3": 0.1799,
+     "4": 0.0974,
+     "5": 0.0928,
+     "6": 0.1,
+     "7": 0.0911,
+     "8": 0.086,
+     "9": 0.0676,
+     "10": 0.0633,
+     "11": 0.0628,
+     "12": 0.0628,
+     "13": 0.0635,
+     "14": 0.0625,
+     "15": 0.0666,
+     "16": 0.0961,
+     "17": 0.0918,
+     "18": 0.0909,
+     "19": 0.1036,
+     "20": 0.1609,
+     "21": 0.1577,
+     "22": 0.1522,
+     "23": 0.1523
+    }
+   },
+   "vr": {
+    "m5": {
+     "vr": 0.948,
+     "se": 0.079,
+     "ac1": -0.001,
+     "n": 4620
+    },
+    "h1": {
+     "vr": 0.945,
+     "se": 0.09,
+     "ac1": -0.006,
+     "n": 7468
+    },
+    "d1": {
+     "vr": 0.863,
+     "se": 0.118,
+     "ac1": -0.084,
+     "n": 501
+    }
+   },
+   "vr_1e_helft": {
+    "vr": 0.892,
+    "se": 0.165,
+    "ac1": -0.094,
+    "n": 250
+   },
+   "vr_2e_helft": {
+    "vr": 0.824,
+    "se": 0.155,
+    "ac1": -0.072,
+    "n": 251
+   },
+   "spread_pct": 0.0824,
+   "spread_p90": 0.1459,
+   "spread_op_uuratr": 0.106,
+   "spread_op_dagrange": 0.024,
+   "fin_pct_jaar_aanname": 6.5,
+   "sweeps": {
+    "Azië": {
+     "kans_per_dag_kant": 39.1,
+     "sluit_terug_pct": 72.0,
+     "alle": {
+      "n": 25,
+      "gem_atr": -0.189,
+      "se": 0.286,
+      "terugloop_pct": 44.0
+     },
+     "sluit_terug": {
+      "n": 18,
+      "gem_atr": -0.364,
+      "se": 0.34,
+      "terugloop_pct": 38.9
+     },
+     "sluit_voorbij": {
+      "n": 7,
+      "gem_atr": 0.262,
+      "se": 0.527,
+      "terugloop_pct": 57.1
+     }
+    },
+    "Londen": {
+     "kans_per_dag_kant": 48.0,
+     "sluit_terug_pct": 48.6,
+     "alle": {
+      "n": 481,
+      "gem_atr": -0.057,
+      "se": 0.078,
+      "terugloop_pct": 50.3
+     },
+     "sluit_terug": {
+      "n": 234,
+      "gem_atr": -0.118,
+      "se": 0.113,
+      "terugloop_pct": 49.1
+     },
+     "sluit_voorbij": {
+      "n": 247,
+      "gem_atr": 0.002,
+      "se": 0.107,
+      "terugloop_pct": 51.4
+     }
+    },
+    "vorige dag": {
+     "kans_per_dag_kant": 28.7,
+     "sluit_terug_pct": 52.4,
+     "alle": {
+      "n": 288,
+      "gem_atr": 0.156,
+      "se": 0.096,
+      "terugloop_pct": 53.8
+     },
+     "sluit_terug": {
+      "n": 151,
+      "gem_atr": 0.079,
+      "se": 0.141,
+      "terugloop_pct": 53.0
+     },
+     "sluit_voorbij": {
+      "n": 137,
+      "gem_atr": 0.241,
+      "se": 0.129,
+      "terugloop_pct": 54.7
+     }
+    }
+   }
+  },
+  "MSFT": {
+   "soort": "aandeel",
+   "epic": "MSFT",
+   "bron_1h": "Capital.com 2024-11-04 t/m 2026-11-04, 7946 candles",
+   "bron_5m": "Yahoo 60d 2026-08-12 t/m 2026-11-04",
+   "jaar_vol_pct": 28.2,
+   "vol30_min": 10.5,
+   "vol30_max": 46.4,
+   "vol30_max_dag": "2026-08-03",
+   "dagrange_pct": 2.16,
+   "uurrange_pct": 0.398,
+   "rendement_pct": 36.1,
+   "sessies": {
+    "Azië 20-02": {
+     "range_pct": 0.203,
+     "spread_pct": 0.1001,
+     "uren": 190
+    },
+    "Londen 02-09": {
+     "range_pct": 0.331,
+     "spread_pct": 0.0967,
+     "uren": 2569
+    },
+    "NY-ochtend 09-12": {
+     "range_pct": 0.806,
+     "spread_pct": 0.0404,
+     "uren": 1502
+    },
+    "NY-middag 12-16": {
+     "range_pct": 0.465,
+     "spread_pct": 0.0359,
+     "uren": 1992
+    },
+    "Avond 16-20": {
+     "range_pct": 0.216,
+     "spread_pct": 0.0917,
+     "uren": 1693
+    }
+   },
+   "uurprofiel": {
+    "piekuur": 9,
+    "piek_pct": 1.204,
+    "dal_pct": 0.142,
+    "spread_uur": {
+     "0": 0.0969,
+     "1": 0.1048,
+     "2": 0.1023,
+     "3": 0.1575,
+     "4": 0.1031,
+     "5": 0.1013,
+     "6": 0.1049,
+     "7": 0.0908,
+     "8": 0.0763,
+     "9": 0.0473,
+     "10": 0.0385,
+     "11": 0.0377,
+     "12": 0.0366,
+     "13": 0.0354,
+     "14": 0.0352,
+     "15": 0.0366,
+     "16": 0.0846,
+     "17": 0.0833,
+     "18": 0.0904,
+     "19": 0.1129,
+     "20": 0.1093,
+     "21": 0.0982,
+     "22": 0.0966,
+     "23": 0.1009
+    }
+   },
+   "vr": {
+    "m5": {
+     "vr": 0.845,
+     "se": 0.097,
+     "ac1": -0.011,
+     "n": 4620
+    },
+    "h1": {
+     "vr": 1.062,
+     "se": 0.105,
+     "ac1": 0.003,
+     "n": 7469
+    },
+    "d1": {
+     "vr": 1.106,
+     "se": 0.124,
+     "ac1": 0.037,
+     "n": 501
+    }
+   },
+   "vr_1e_helft": {
+    "vr": 0.824,
+    "se": 0.179,
+    "ac1": -0.158,
+    "n": 250
+   },
+   "vr_2e_helft": {
+    "vr": 1.312,
+    "se": 0.169,
+    "ac1": 0.173,
+    "n": 251
+   },
+   "spread_pct": 0.0596,
+   "spread_p90": 0.15,
+   "spread_op_uuratr": 0.114,
+   "spread_op_dagrange": 0.028,
+   "fin_pct_jaar_aanname": 6.5,
+   "sweeps": {
+    "Azië": {
+     "kans_per_dag_kant": 45.3,
+     "sluit_terug_pct": 48.3,
+     "alle": {
+      "n": 29,
+      "gem_atr": 0.038,
+      "se": 0.399,
+      "terugloop_pct": 51.7
+     },
+     "sluit_terug": {
+      "n": 14,
+      "gem_atr": -0.064,
+      "se": 0.567,
+      "terugloop_pct": 50.0
+     },
+     "sluit_voorbij": {
+      "n": 15,
+      "gem_atr": 0.133,
+      "se": 0.58,
+      "terugloop_pct": 53.3
+     }
+    },
+    "Londen": {
+     "kans_per_dag_kant": 53.4,
+     "sluit_terug_pct": 52.3,
+     "alle": {
+      "n": 535,
+      "gem_atr": -0.08,
+      "se": 0.075,
+      "terugloop_pct": 49.0
+     },
+     "sluit_terug": {
+      "n": 280,
+      "gem_atr": -0.178,
+      "se": 0.104,
+      "terugloop_pct": 47.1
+     },
+     "sluit_voorbij": {
+      "n": 255,
+      "gem_atr": 0.028,
+      "se": 0.107,
+      "terugloop_pct": 51.0
+     }
+    },
+    "vorige dag": {
+     "kans_per_dag_kant": 32.0,
+     "sluit_terug_pct": 49.8,
+     "alle": {
+      "n": 321,
+      "gem_atr": -0.116,
+      "se": 0.098,
+      "terugloop_pct": 47.0
+     },
+     "sluit_terug": {
+      "n": 160,
+      "gem_atr": -0.12,
+      "se": 0.145,
+      "terugloop_pct": 48.1
+     },
+     "sluit_voorbij": {
+      "n": 161,
+      "gem_atr": -0.112,
+      "se": 0.132,
+      "terugloop_pct": 46.0
+     }
+    }
+   }
+  }
+ },
+ "correlatie": {
+  "BTC": {
+   "BTC": 1.0,
+   "ETH": 0.86,
+   "SOL": 0.84,
+   "EURUSD": 0.07,
+   "GBPUSD": 0.18,
+   "USDJPY": 0.07,
+   "NQ": 0.47,
+   "ES": 0.46,
+   "DAX": 0.32,
+   "GOUD": 0.22,
+   "ZILVER": 0.29,
+   "OLIE": -0.1,
+   "AAPL": 0.19,
+   "NVDA": 0.36,
+   "MSFT": 0.31
+  },
+  "ETH": {
+   "BTC": 0.86,
+   "ETH": 1.0,
+   "SOL": 0.86,
+   "EURUSD": 0.07,
+   "GBPUSD": 0.19,
+   "USDJPY": 0.07,
+   "NQ": 0.5,
+   "ES": 0.49,
+   "DAX": 0.36,
+   "GOUD": 0.17,
+   "ZILVER": 0.25,
+   "OLIE": -0.09,
+   "AAPL": 0.25,
+   "NVDA": 0.38,
+   "MSFT": 0.31
+  },
+  "SOL": {
+   "BTC": 0.84,
+   "ETH": 0.86,
+   "SOL": 1.0,
+   "EURUSD": 0.07,
+   "GBPUSD": 0.16,
+   "USDJPY": 0.06,
+   "NQ": 0.45,
+   "ES": 0.43,
+   "DAX": 0.26,
+   "GOUD": 0.14,
+   "ZILVER": 0.21,
+   "OLIE": -0.1,
+   "AAPL": 0.2,
+   "NVDA": 0.33,
+   "MSFT": 0.27
+  },
+  "EURUSD": {
+   "BTC": 0.07,
+   "ETH": 0.07,
+   "SOL": 0.07,
+   "EURUSD": 1.0,
+   "GBPUSD": 0.81,
+   "USDJPY": -0.65,
+   "NQ": 0.01,
+   "ES": 0.0,
+   "DAX": 0.05,
+   "GOUD": 0.41,
+   "ZILVER": 0.31,
+   "OLIE": -0.22,
+   "AAPL": -0.01,
+   "NVDA": -0.04,
+   "MSFT": 0.0
+  },
+  "GBPUSD": {
+   "BTC": 0.18,
+   "ETH": 0.19,
+   "SOL": 0.16,
+   "EURUSD": 0.81,
+   "GBPUSD": 1.0,
+   "USDJPY": -0.58,
+   "NQ": 0.15,
+   "ES": 0.18,
+   "DAX": 0.23,
+   "GOUD": 0.4,
+   "ZILVER": 0.35,
+   "OLIE": -0.17,
+   "AAPL": 0.07,
+   "NVDA": 0.03,
+   "MSFT": 0.08
+  },
+  "USDJPY": {
+   "BTC": 0.07,
+   "ETH": 0.07,
+   "SOL": 0.06,
+   "EURUSD": -0.65,
+   "GBPUSD": -0.58,
+   "USDJPY": 1.0,
+   "NQ": 0.11,
+   "ES": 0.1,
+   "DAX": 0.01,
+   "GOUD": -0.28,
+   "ZILVER": -0.17,
+   "OLIE": 0.26,
+   "AAPL": 0.13,
+   "NVDA": 0.13,
+   "MSFT": 0.02
+  },
+  "NQ": {
+   "BTC": 0.47,
+   "ETH": 0.5,
+   "SOL": 0.45,
+   "EURUSD": 0.01,
+   "GBPUSD": 0.15,
+   "USDJPY": 0.11,
+   "NQ": 1.0,
+   "ES": 0.95,
+   "DAX": 0.69,
+   "GOUD": 0.2,
+   "ZILVER": 0.33,
+   "OLIE": -0.09,
+   "AAPL": 0.45,
+   "NVDA": 0.75,
+   "MSFT": 0.54
+  },
+  "ES": {
+   "BTC": 0.46,
+   "ETH": 0.49,
+   "SOL": 0.43,
+   "EURUSD": 0.0,
+   "GBPUSD": 0.18,
+   "USDJPY": 0.1,
+   "NQ": 0.95,
+   "ES": 1.0,
+   "DAX": 0.76,
+   "GOUD": 0.19,
+   "ZILVER": 0.32,
+   "OLIE": -0.08,
+   "AAPL": 0.56,
+   "NVDA": 0.7,
+   "MSFT": 0.56
+  },
+  "DAX": {
+   "BTC": 0.32,
+   "ETH": 0.36,
+   "SOL": 0.26,
+   "EURUSD": 0.05,
+   "GBPUSD": 0.23,
+   "USDJPY": 0.01,
+   "NQ": 0.69,
+   "ES": 0.76,
+   "DAX": 1.0,
+   "GOUD": 0.2,
+   "ZILVER": 0.28,
+   "OLIE": -0.22,
+   "AAPL": 0.44,
+   "NVDA": 0.43,
+   "MSFT": 0.4
+  },
+  "GOUD": {
+   "BTC": 0.22,
+   "ETH": 0.17,
+   "SOL": 0.14,
+   "EURUSD": 0.41,
+   "GBPUSD": 0.4,
+   "USDJPY": -0.28,
+   "NQ": 0.2,
+   "ES": 0.19,
+   "DAX": 0.2,
+   "GOUD": 1.0,
+   "ZILVER": 0.79,
+   "OLIE": -0.07,
+   "AAPL": 0.04,
+   "NVDA": 0.12,
+   "MSFT": 0.07
+  },
+  "ZILVER": {
+   "BTC": 0.29,
+   "ETH": 0.25,
+   "SOL": 0.21,
+   "EURUSD": 0.31,
+   "GBPUSD": 0.35,
+   "USDJPY": -0.17,
+   "NQ": 0.33,
+   "ES": 0.32,
+   "DAX": 0.28,
+   "GOUD": 0.79,
+   "ZILVER": 1.0,
+   "OLIE": -0.07,
+   "AAPL": 0.1,
+   "NVDA": 0.23,
+   "MSFT": 0.16
+  },
+  "OLIE": {
+   "BTC": -0.1,
+   "ETH": -0.09,
+   "SOL": -0.1,
+   "EURUSD": -0.22,
+   "GBPUSD": -0.17,
+   "USDJPY": 0.26,
+   "NQ": -0.09,
+   "ES": -0.08,
+   "DAX": -0.22,
+   "GOUD": -0.07,
+   "ZILVER": -0.07,
+   "OLIE": 1.0,
+   "AAPL": -0.01,
+   "NVDA": 0.0,
+   "MSFT": -0.04
+  },
+  "AAPL": {
+   "BTC": 0.19,
+   "ETH": 0.25,
+   "SOL": 0.2,
+   "EURUSD": -0.01,
+   "GBPUSD": 0.07,
+   "USDJPY": 0.13,
+   "NQ": 0.45,
+   "ES": 0.56,
+   "DAX": 0.44,
+   "GOUD": 0.04,
+   "ZILVER": 0.1,
+   "OLIE": -0.01,
+   "AAPL": 1.0,
+   "NVDA": 0.26,
+   "MSFT": 0.23
+  },
+  "NVDA": {
+   "BTC": 0.36,
+   "ETH": 0.38,
+   "SOL": 0.33,
+   "EURUSD": -0.04,
+   "GBPUSD": 0.03,
+   "USDJPY": 0.13,
+   "NQ": 0.75,
+   "ES": 0.7,
+   "DAX": 0.43,
+   "GOUD": 0.12,
+   "ZILVER": 0.23,
+   "OLIE": 0.0,
+   "AAPL": 0.26,
+   "NVDA": 1.0,
+   "MSFT": 0.43
+  },
+  "MSFT": {
+   "BTC": 0.31,
+   "ETH": 0.31,
+   "SOL": 0.27,
+   "EURUSD": 0.0,
+   "GBPUSD": 0.08,
+   "USDJPY": 0.02,
+   "NQ": 0.54,
+   "ES": 0.56,
+   "DAX": 0.4,
+   "GOUD": 0.07,
+   "ZILVER": 0.16,
+   "OLIE": -0.04,
+   "AAPL": 0.23,
+   "NVDA": 0.43,
+   "MSFT": 1.0
+  }
+ },
+ "gem_corr_rust": 0.196,
+ "gem_corr_stress": 0.179,
+ "stress_dagen": 23,
+ "stress_es_met": {
+  "BTC": -0.1,
+  "ETH": -0.0,
+  "SOL": -0.15,
+  "EURUSD": -0.06,
+  "GBPUSD": 0.25,
+  "USDJPY": 0.07,
+  "NQ": 0.87,
+  "ES": 1.0,
+  "DAX": 0.8,
+  "GOUD": -0.06,
+  "ZILVER": 0.13,
+  "OLIE": 0.57,
+  "AAPL": 0.55,
+  "NVDA": 0.56,
+  "MSFT": 0.31
+ },
+ "rust_es_met": {
+  "BTC": 0.46,
+  "ETH": 0.45,
+  "SOL": 0.43,
+  "EURUSD": 0.12,
+  "GBPUSD": 0.2,
+  "USDJPY": -0.0,
+  "NQ": 0.94,
+  "ES": 1.0,
+  "DAX": 0.7,
+  "GOUD": 0.22,
+  "ZILVER": 0.28,
+  "OLIE": -0.21,
+  "AAPL": 0.48,
+  "NVDA": 0.65,
+  "MSFT": 0.51
+ },
+ "grootste_dagen": {
+  "ES": [
+   [
+    "2025-04-09",
+    9.57
+   ],
+   [
+    "2025-04-04",
+    -6.09
+   ],
+   [
+    "2025-04-10",
+    -3.92
+   ],
+   [
+    "2025-10-10",
+    -3.41
+   ],
+   [
+    "2025-05-12",
+    3.19
+   ],
+   [
+    "2026-06-05",
+    -2.97
+   ]
+  ],
+  "BTC": [
+   [
+    "2026-02-05",
+    -12.63
+   ],
+   [
+    "2026-02-06",
+    11.14
+   ],
+   [
+    "2025-03-03",
+    -8.5
+   ],
+   [
+    "2025-04-09",
+    7.77
+   ],
+   [
+    "2026-08-19",
+    7.66
+   ],
+   [
+    "2026-08-21",
+    7.64
+   ]
+  ],
+  "GOUD": [
+   [
+    "2026-01-30",
+    -9.35
+   ],
+   [
+    "2026-02-03",
+    6.08
+   ],
+   [
+    "2025-10-21",
+    -5.46
+   ],
+   [
+    "2026-02-02",
+    -4.86
+   ],
+   [
+    "2025-12-29",
+    -4.56
+   ],
+   [
+    "2026-06-10",
+    -4.52
+   ]
+  ],
+  "OLIE": [
+   [
+    "2026-03-06",
+    13.81
+   ],
+   [
+    "2026-04-08",
+    -10.65
+   ],
+   [
+    "2026-04-02",
+    10.42
+   ],
+   [
+    "2026-03-23",
+    -10.03
+   ],
+   [
+    "2025-06-23",
+    -9.77
+   ],
+   [
+    "2026-07-27",
+    -9.53
+   ]
+  ],
+  "EURUSD": [
+   [
+    "2025-04-10",
+    2.16
+   ],
+   [
+    "2025-04-03",
+    2.04
+   ],
+   [
+    "2025-03-05",
+    1.6
+   ],
+   [
+    "2025-04-11",
+    1.49
+   ],
+   [
+    "2025-08-01",
+    1.48
+   ],
+   [
+    "2025-05-12",
+    -1.42
+   ]
+  ]
+ },
+ "es_vol_per_kwartaal": {
+  "2025Q1": 15.3,
+  "2025Q2": 28.5,
+  "2025Q3": 9.8,
+  "2025Q4": 13.4,
+  "2026Q1": 11.7,
+  "2026Q2": 14.5,
+  "2026Q3": 12.8,
+  "2026Q4": 9.9
+ }
+}

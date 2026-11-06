@@ -1,0 +1,441 @@
+{
+ "protocol": "vijf-v1",
+ "protocol_sha256": "0e3972ed3555504a850caa28606dc432a3c8ed3e8a4bb1d2c68344bae31513c3",
+ "kosten": {
+  "BTC": {
+   "trades": 3800,
+   "aanname_r": 0.116,
+   "gemeten_r": 0.129,
+   "verschil_r": 0.013
+  },
+  "ETH": {
+   "trades": 3283,
+   "aanname_r": 0.073,
+   "gemeten_r": 0.098,
+   "verschil_r": 0.025
+  },
+  "SOL": {
+   "trades": 3558,
+   "aanname_r": 0.089,
+   "gemeten_r": 0.554,
+   "verschil_r": 0.465
+  },
+  "EURUSD": {
+   "trades": 2781,
+   "aanname_r": 0.045,
+   "gemeten_r": 0.068,
+   "verschil_r": 0.023
+  },
+  "GBPUSD": {
+   "trades": 2902,
+   "aanname_r": 0.054,
+   "gemeten_r": 0.103,
+   "verschil_r": 0.049
+  },
+  "USDJPY": {
+   "trades": 2846,
+   "aanname_r": 0.045,
+   "gemeten_r": 0.071,
+   "verschil_r": 0.026
+  },
+  "NQ": {
+   "trades": 3047,
+   "aanname_r": 0.021,
+   "gemeten_r": 0.031,
+   "verschil_r": 0.01
+  },
+  "ES": {
+   "trades": 3012,
+   "aanname_r": 0.03,
+   "gemeten_r": 0.04,
+   "verschil_r": 0.01
+  },
+  "DAX": {
+   "trades": 2991,
+   "aanname_r": 0.031,
+   "gemeten_r": 0.039,
+   "verschil_r": 0.008
+  },
+  "GOUD": {
+   "trades": 2668,
+   "aanname_r": 0.021,
+   "gemeten_r": 0.031,
+   "verschil_r": 0.011
+  },
+  "ZILVER": {
+   "trades": 2603,
+   "aanname_r": 0.069,
+   "gemeten_r": 0.135,
+   "verschil_r": 0.066
+  },
+  "OLIE": {
+   "trades": 2932,
+   "aanname_r": 0.062,
+   "gemeten_r": 0.092,
+   "verschil_r": 0.03
+  },
+  "AAPL": {
+   "trades": 1857,
+   "aanname_r": 0.072,
+   "gemeten_r": 0.155,
+   "verschil_r": 0.083
+  },
+  "NVDA": {
+   "trades": 1932,
+   "aanname_r": 0.048,
+   "gemeten_r": 0.129,
+   "verschil_r": 0.081
+  },
+  "MSFT": {
+   "trades": 1811,
+   "aanname_r": 0.07,
+   "gemeten_r": 0.134,
+   "verschil_r": 0.063
+  }
+ },
+ "h1": {
+  "stromen": 60,
+  "plus": 9
+ },
+ "uitslag": [
+  {
+   "markt": "portefeuille",
+   "hypothese": "H1_combineren",
+   "variant": "{\"weging\": \"train_plus\"}",
+   "geslaagd": false,
+   "redenen": [
+    "P2: validatie +0.008R bij 1.5x kosten, ondergrens -0.072R",
+    "P4: Deflated Sharpe 0.30 (< 0.95, 64 varianten geprobeerd)",
+    "P5: zonder de 5 beste validatietrades niet positief"
+   ],
+   "train": {
+    "n": 372,
+    "gem": 0.046,
+    "totaal": 17.11,
+    "win": 0.449,
+    "se": 0.024
+   },
+   "evaluatie": {
+    "n": 122,
+    "gem": 0.015,
+    "totaal": 1.88,
+    "win": 0.41,
+    "se": 0.041
+   },
+   "evaluatie_15x": 0.008,
+   "ondergrens": -0.072,
+   "dsr": 0.295,
+   "proeven": 64,
+   "varianten": {
+    "{\"weging\": \"alle\"}": 528,
+    "{\"weging\": \"train_plus\"}": 494
+   },
+   "e1": 0.042,
+   "e2": -0.026,
+   "bruto_train": 0.071,
+   "bruto_eval": 0.033,
+   "dsr_scan": 0.079,
+   "toelaatbaar": false
+  },
+  {
+   "markt": "ES",
+   "hypothese": "H2_herbalancering",
+   "variant": "{}",
+   "geslaagd": false,
+   "redenen": [
+    "P2: validatie +0.129R bij 1.5x kosten, ondergrens -0.047R",
+    "P4: Deflated Sharpe 0.04 (< 0.95, 53 varianten geprobeerd)",
+    "P5: zonder de 5 beste validatietrades niet positief"
+   ],
+   "train": {
+    "n": 114,
+    "gem": 0.007,
+    "totaal": 0.84,
+    "win": 0.465,
+    "se": 0.12
+   },
+   "evaluatie": {
+    "n": 67,
+    "gem": 0.14,
+    "totaal": 9.38,
+    "win": 0.433,
+    "se": 0.163
+   },
+   "evaluatie_15x": 0.129,
+   "ondergrens": -0.047,
+   "dsr": 0.037,
+   "proeven": 53,
+   "varianten": {
+    "{}": 181
+   },
+   "e1": 0.142,
+   "e2": 0.1,
+   "bruto_train": 0.032,
+   "bruto_eval": 0.162,
+   "dsr_scan": 0.003,
+   "toelaatbaar": false
+  },
+  {
+   "markt": "NQ",
+   "hypothese": "H2_herbalancering",
+   "variant": "{}",
+   "geslaagd": false,
+   "redenen": [
+    "P4: Deflated Sharpe 0.08 (< 0.95, 101 varianten geprobeerd)"
+   ],
+   "train": {
+    "n": 114,
+    "gem": 0.004,
+    "totaal": 0.42,
+    "win": 0.421,
+    "se": 0.113
+   },
+   "evaluatie": {
+    "n": 67,
+    "gem": 0.303,
+    "totaal": 20.27,
+    "win": 0.507,
+    "se": 0.171
+   },
+   "evaluatie_15x": 0.298,
+   "ondergrens": 0.022,
+   "dsr": 0.076,
+   "proeven": 101,
+   "varianten": {
+    "{}": 181
+   },
+   "e1": 0.295,
+   "e2": 0.304,
+   "bruto_train": 0.022,
+   "bruto_eval": 0.313,
+   "dsr_scan": 0.015,
+   "toelaatbaar": false
+  },
+  {
+   "markt": "ES",
+   "hypothese": "H3_slotmomentum",
+   "variant": "{}",
+   "geslaagd": false,
+   "redenen": [
+    "P2: validatie -0.044R bij 1.5x kosten, ondergrens -0.138R",
+    "P3: train -0.039R",
+    "P4: Deflated Sharpe 0.00 (< 0.95, 53 varianten geprobeerd)",
+    "P5: zonder de 5 beste validatietrades niet positief"
+   ],
+   "train": {
+    "n": 72,
+    "gem": -0.039,
+    "totaal": -2.84,
+    "win": 0.417,
+    "se": 0.036
+   },
+   "evaluatie": {
+    "n": 37,
+    "gem": -0.036,
+    "totaal": -1.33,
+    "win": 0.459,
+    "se": 0.059
+   },
+   "evaluatie_15x": -0.044,
+   "ondergrens": -0.138,
+   "dsr": 0.001,
+   "proeven": 53,
+   "varianten": {
+    "{}": 109
+   },
+   "e1": -0.012,
+   "e2": -0.086,
+   "bruto_train": -0.023,
+   "bruto_eval": -0.02,
+   "dsr_scan": 0.0,
+   "toelaatbaar": false
+  },
+  {
+   "markt": "NQ",
+   "hypothese": "H3_slotmomentum",
+   "variant": "{}",
+   "geslaagd": false,
+   "redenen": [
+    "P2: validatie -0.018R bij 1.5x kosten, ondergrens -0.078R",
+    "P3: train -0.069R",
+    "P4: Deflated Sharpe 0.00 (< 0.95, 101 varianten geprobeerd)",
+    "P5: zonder de 5 beste validatietrades niet positief"
+   ],
+   "train": {
+    "n": 77,
+    "gem": -0.069,
+    "totaal": -5.33,
+    "win": 0.377,
+    "se": 0.035
+   },
+   "evaluatie": {
+    "n": 36,
+    "gem": -0.012,
+    "totaal": -0.44,
+    "win": 0.5,
+    "se": 0.042
+   },
+   "evaluatie_15x": -0.018,
+   "ondergrens": -0.078,
+   "dsr": 0.0,
+   "proeven": 101,
+   "varianten": {
+    "{}": 113
+   },
+   "e1": 0.011,
+   "e2": -0.076,
+   "bruto_train": -0.054,
+   "bruto_eval": -0.001,
+   "dsr_scan": 0.0,
+   "toelaatbaar": false
+  },
+  {
+   "markt": "portefeuille",
+   "hypothese": "H4_cot",
+   "variant": "{}",
+   "geslaagd": false,
+   "redenen": [
+    "P2: validatie -0.085R bij 1.5x kosten, ondergrens -0.178R",
+    "P3: train -0.085R",
+    "P4: Deflated Sharpe 0.00 (< 0.95, 64 varianten geprobeerd)",
+    "P5: zonder de 5 beste validatietrades niet positief"
+   ],
+   "train": {
+    "n": 103,
+    "gem": -0.085,
+    "totaal": -8.73,
+    "win": 0.447,
+    "se": 0.102
+   },
+   "evaluatie": {
+    "n": 30,
+    "gem": -0.073,
+    "totaal": -2.2,
+    "win": 0.4,
+    "se": 0.186
+   },
+   "evaluatie_15x": -0.085,
+   "ondergrens": -0.178,
+   "dsr": 0.001,
+   "proeven": 64,
+   "varianten": {
+    "{}": 133
+   },
+   "e1": -0.064,
+   "e2": -0.118,
+   "bruto_train": 0.028,
+   "bruto_eval": 0.09,
+   "dsr_scan": 0.0,
+   "toelaatbaar": false
+  },
+  {
+   "markt": "BTC",
+   "hypothese": "H5_funding",
+   "variant": null,
+   "geslaagd": false,
+   "redenen": [
+    "P1: geen variant handelt vaak genoeg (30 trades in train en naar verwachting 30 per 180 dagen)"
+   ],
+   "train": {
+    "n": 0
+   },
+   "evaluatie": {
+    "n": 0
+   },
+   "evaluatie_15x": null,
+   "ondergrens": null,
+   "dsr": 0.0,
+   "proeven": 53,
+   "varianten": {
+    "{}": 88
+   },
+   "toelaatbaar": false,
+   "dsr_scan": 0.0
+  },
+  {
+   "markt": "ETH",
+   "hypothese": "H5_funding",
+   "variant": null,
+   "geslaagd": false,
+   "redenen": [
+    "P1: geen variant handelt vaak genoeg (30 trades in train en naar verwachting 30 per 180 dagen)"
+   ],
+   "train": {
+    "n": 0
+   },
+   "evaluatie": {
+    "n": 0
+   },
+   "evaluatie_15x": null,
+   "ondergrens": null,
+   "dsr": 0.0,
+   "proeven": 53,
+   "varianten": {
+    "{}": 45
+   },
+   "toelaatbaar": false,
+   "dsr_scan": 0.0
+  }
+ ],
+ "informatief": {
+  "H2": {
+   "alles": {
+    "n": 2302,
+    "bp": 9.79,
+    "t": 3.76
+   },
+   "2001-2012": {
+    "n": 1068,
+    "bp": 13.23,
+    "t": 3.0
+   },
+   "2013-2019": {
+    "n": 551,
+    "bp": 0.15,
+    "t": 0.05
+   },
+   "2020-2026": {
+    "n": 664,
+    "bp": 12.31,
+    "t": 2.56
+   }
+  },
+  "H4": {
+   "maanden": 153,
+   "gem_pct": 0.401,
+   "t": 0.87,
+   "jaar_sharpe": 0.24,
+   "sinds_2021": {
+    "gem_pct": 0.332,
+    "t": 0.48
+   }
+  },
+  "H5": {
+   "BTC": {
+    "aan": {
+     "dagen": 385,
+     "gem_pct": 1.43,
+     "slechtste_5pct": -11.3
+    },
+    "uit": {
+     "dagen": 1743,
+     "gem_pct": 0.39,
+     "slechtste_5pct": -11.4
+    }
+   },
+   "ETH": {
+    "aan": {
+     "dagen": 359,
+     "gem_pct": 2.98,
+     "slechtste_5pct": -10.4
+    },
+    "uit": {
+     "dagen": 1769,
+     "gem_pct": 0.38,
+     "slechtste_5pct": -15.6
+    }
+   }
+  }
+ },
+ "toelaatbaar": []
+}
