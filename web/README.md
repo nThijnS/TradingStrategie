@@ -22,6 +22,8 @@ Er zijn geen npm-pakketten nodig.
 3. Zet de omgevingsvariabelen hieronder bij de site.
 4. Deploy. De build draait eerst de tests; als die falen, gaat de deploy niet door.
 
+De site draait op <https://marketpilot-agents.netlify.app>. Die is met de CLI gedeployd en nog niet aan GitHub gekoppeld, dus een nieuwe commit verschijnt pas na een nieuwe deploy of na het koppelen van de repo op Netlify.
+
 De URL is openbaar voor wie hem kent. De pagina staat op `noindex` en toont alleen gegevens die nu al openbaar zijn op GitHub. Wil je een wachtwoord, gebruik dan Netlify Password Protection; dat hangt af van je abonnement.
 
 ## Omgevingsvariabelen

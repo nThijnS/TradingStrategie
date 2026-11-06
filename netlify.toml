@@ -1,10 +1,9 @@
 # Netlify-webapp van MarketPilot. Alles staat in web/; zie web/README.md.
 # Publiceert alleen web/public, dus geen data of code uit de rest van de repository.
 [build]
-  base = "web"
-  publish = "public"
-  functions = "netlify/functions"
-  command = "npm test"
+  publish = "web/public"
+  functions = "web/netlify/functions"
+  command = "cd web && npm test"
 
 [build.environment]
   NODE_VERSION = "22"
