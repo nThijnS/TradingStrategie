@@ -53,5 +53,5 @@ Gemiddelde over BTC, ETH en SOL bij 1,5× kosten in de evaluatie. Geen enkele ha
 ## Grenzen
 
 - Geen wijziging aan P1–P5, risicolimieten, live-instellingen of orderuitvoering. Geen orders.
-- Crypto: uitkomst op 5m met stop eerst, dus voorzichtig. Kosten uit `core/markets.LAB_MARKETS`, niet gemeten bij Capital.com.
+- Crypto: uitkomst op 5m met stop eerst, dus voorzichtig. Kosten uit de aannames van `core/markets.LAB_MARKETS` van vóór [PR #8](https://github.com/nThijnS/TradingStrategie/pull/8), niet gemeten bij Capital.com. Daardoor zijn vooral de SOL-cijfers te gunstig: daar rekende dit onderzoek 0,12%, gemeten is 0,75%. De conclusie verandert daardoor niet.
 - De filterdrempels (dr ≥ 0,10 en relvol ≥ 1,5) zijn één keer vastgelegd en niet afgesteld. Andere drempels zijn niet getoetst.

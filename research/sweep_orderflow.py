@@ -21,10 +21,11 @@ from backtesting import engine
 from backtesting.metrics import deflated_sharpe
 from core.config import CFG
 from core.data import load_histdata, to5
-from core.markets import HISTDATA_RESEARCH, LAB_MARKETS
+from core.markets import HISTDATA_RESEARCH
 from core.sessions import NY, in_sess
 from learning import selector
 from research import registry
+from research.tijdframes import MODEL_KOSTEN
 from storage import paths
 from strategies.ict_tjr import analyse
 
@@ -324,7 +325,7 @@ def run_crypto():
     for name, sym in SYMBOLS.items():
         df = load_binance(name)
         B = engine.Bars(df, bar=pd.Timedelta(minutes=5))
-        kost = next(x for x in LAB_MARKETS if x["naam"] == name)["kosten"]
+        kost = MODEL_KOSTEN[name]          # de aanname van vóór PR #8, zoals in rapport 7
         costs = engine.Costs(frac=kost)
         tick = TICK[name]
         cut = df.index[-1].tz_convert("UTC") - pd.Timedelta(days=selector.VAL_DAYS)

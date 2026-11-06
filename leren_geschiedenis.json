@@ -378,5 +378,81 @@
     }
    }
   }
+ },
+ {
+  "t": "2026-11-04T20:43-05:00",
+  "keuze": {
+   "EURUSD": {
+    "variant": "basis · TP 1.5 · NY AM + London · bias geen",
+    "actief": false,
+    "score": {
+     "n": 52,
+     "gem": -0.053,
+     "score": -0.204,
+     "win": 0.442,
+     "totaal": -2.74
+    }
+   },
+   "NQ": {
+    "variant": "strenger · TP DOL · NY AM + London · bias geen",
+    "actief": false,
+    "score": {
+     "n": 41,
+     "gem": -0.135,
+     "score": -0.469,
+     "win": 0.366,
+     "totaal": -5.54
+    }
+   },
+   "GOUD": {
+    "variant": "strenger · TP 2.0 · alle sessies · bias geen",
+    "actief": false,
+    "score": {
+     "n": 28,
+     "gem": 0.091,
+     "score": -0.193,
+     "win": 0.429,
+     "totaal": 2.53
+    }
+   }
+  }
+ },
+ {
+  "t": "2026-11-05T20:44-05:00",
+  "keuze": {
+   "EURUSD": {
+    "variant": "basis · TP 1.5 · NY AM + London · bias geen",
+    "actief": false,
+    "score": {
+     "n": 53,
+     "gem": -0.073,
+     "score": -0.217,
+     "win": 0.434,
+     "totaal": -3.89
+    }
+   },
+   "NQ": {
+    "variant": "strenger · TP DOL · NY AM + London · bias geen",
+    "actief": false,
+    "score": {
+     "n": 41,
+     "gem": -0.135,
+     "score": -0.469,
+     "win": 0.366,
+     "totaal": -5.54
+    }
+   },
+   "GOUD": {
+    "variant": "strenger · TP 2.0 · alle sessies · bias geen",
+    "actief": false,
+    "score": {
+     "n": 29,
+     "gem": 0.156,
+     "score": -0.165,
+     "win": 0.448,
+     "totaal": 4.51
+    }
+   }
+  }
  }
 ]
