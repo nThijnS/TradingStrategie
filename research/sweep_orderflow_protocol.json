@@ -1,0 +1,43 @@
+{
+  "naam": "sweep-orderflow-v1",
+  "vastgelegd": "2026-11-04, vóór de eerste uitslag van deze strategieën",
+  "aanleiding": "NQ 4 november 2026: London High werd om 09:30 NY geveegd, de candle sloot terug, en daarna brak de prijs juist omhoog door. Dat is één dag en bewijst niets; die dag zit niet in de data van deze toets.",
+  "data": {
+    "prijs": "HistData 1m (NQ, GOUD, EURUSD, GBPUSD), januari 2025 tot 23 oktober 2026, detectie op 5m, uitkomst op 1m. Geen volume.",
+    "orderflow": "Binance spot 5m (BTCUSDT, ETHUSDT, SOLUSDT), openbare klines met taker-buy-volume, 2024-11-04 tot en met 2026-11-03 UTC. Detectie en uitkomst op 5m: stop eerst. Dit zijn koersen en flow van Binance, niet van Capital.com."
+  },
+  "periodes": "Evaluatie is de laatste 180 dagen van elke reeks, E1 en E2 zijn de twee helften. Variant kiezen op alles daarvoor (learning/selector.pick_variant).",
+  "kosten": "NQ, GOUD, EURUSD, GBPUSD: de vaste punten uit core/markets.HISTDATA_RESEARCH. Crypto: het deel van de prijs uit core/markets.LAB_MARKETS. Poort rekent met 1,5x kosten.",
+  "uitstap": "Stop, doel, of na hoogstens 5 uur (engine.Exits(max_hours=5), zoals het ICT-leren). Eén trade tegelijk per markt en variant.",
+  "instellingen": "Sessies, levels, displacement 0,7 / 1,5 ATR, mss_window 20, fvg_window 3, entry_win 12 en buf_ticks 4 uit core/config.CFG. Niet afgesteld.",
+  "definities": {
+    "delta": "dr = (2 x takerBuy - volume) / volume van één candle, tussen -1 en +1",
+    "relvol": "volume van de candle gedeeld door het gemiddelde van de vorige 20 candles",
+    "cvd20": "som van (2 x takerBuy - volume) over de laatste 20 candles"
+  },
+  "strategieen": {
+    "sweep_uitbraak": {
+      "regel": "Een candle in de sessie veegt PDH, Asia H of London H en sluit terug op of onder dat niveau. Sluit binnen 20 candles een bullish displacement-candle boven het hoogste punt sinds de sweep, dan long. Gespiegeld voor lage niveaus. Stop onder het laagste punt sinds de sweep min 4 ticks. Per sessie hoogstens één signaal per richting.",
+      "varianten": "markt: instap op de open van de volgende candle; fvg: limiet op 50% van de FVG binnen 3 candles, 12 candles geldig. Doel 1R of 2R.",
+      "markten": ["NQ", "GOUD", "EURUSD", "GBPUSD"]
+    },
+    "c_uitbraak": {"regel": "sweep_uitbraak met marktinstap, zonder flowfilter: de nulmeting voor c_uitbraak_flow.", "varianten": "Doel 1R of 2R", "markten": ["BTC", "ETH", "SOL"]},
+    "c_uitbraak_flow": {"regel": "c_uitbraak, alleen als op de uitbraakcandle dr >= +0,10 in de richting van de trade en relvol >= 1,5.", "varianten": "Doel 1R of 2R", "markten": ["BTC", "ETH", "SOL"]},
+    "c_ict": {"regel": "De huidige ICT-detectie (strenger) zonder flowfilter: de nulmeting voor c_ict_absorptie.", "varianten": "Doel 1R of 2R", "markten": ["BTC", "ETH", "SOL"]},
+    "c_ict_absorptie": {"regel": "c_ict, alleen als op de sweepcandle dr >= +0,10 in de richting van de sweep: agressieve kopers in een geveegd hoog die de prijs niet hielden (gespiegeld voor lagen).", "varianten": "Doel 1R of 2R", "markten": ["BTC", "ETH", "SOL"]},
+    "c_cvd_divergentie": {"regel": "Een candle in de sessie veegt een niveau en sluit terug, terwijl cvd20 tegen de sweep in staat (hoog geveegd met cvd20 < 0, laag geveegd met cvd20 > 0). Instap tegen de sweep op de volgende open, stop 4 ticks voorbij de sweepcandle. Per sessie hoogstens één signaal per richting.", "varianten": "Doel 1R of 2R", "markten": ["BTC", "ETH", "SOL"]}
+  },
+  "niet_getoetst": "Echte orderflow op indices en goud (delta, footprint, orderboek) kan niet: daarvoor is CME-tickdata nodig die we niet hebben. Yahoo-volume op 5m gaat 60 dagen terug en heeft geen koop/verkoopsplitsing, dus dat kan P1 niet halen.",
+  "poort": {
+    "regels": "learning/selector.gate, ongewijzigd",
+    "proeven_per_markt": "proeven uit lab.json + 6 uit kansen-v1 + 5 uit kansen-v2 + de varianten hier op die markt",
+    "proeven_scan": "821 uit kansen-v1 en v2 + 46 nieuwe combinaties = 867"
+  },
+  "besluitregel": {
+    "toelaatbaar": "Haalt P1-P5, ook P4 met proeven_scan, en E1 en E2 zijn beide positief na 1,5x kosten.",
+    "orderflow_helpt": "Alleen als informatie: het flowfilter moet op de ontwikkelperiode én de evaluatie een hoger gemiddelde geven dan zijn nulmeting. Dat alleen maakt het niet toelaatbaar.",
+    "inbouwen": "Niets wordt ingebouwd in dit onderzoek. Een toelaatbare strategie is een voorstel aan de gebruiker.",
+    "geen_kandidaat": "De bot blijft zoals hij is en dat wordt gerapporteerd."
+  },
+  "grenzen": "Geen wijziging aan P1-P5, risicolimieten, live-instellingen, geheimen of orderuitvoering. Geen orders in dit onderzoek. Binance is alleen een databron."
+}
