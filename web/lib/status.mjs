@@ -4,7 +4,7 @@ import { STANDAARD_DATA_BRANCH, STANDAARD_REPO, WORKFLOWS } from "./config.mjs";
 import { foutTekst, maakClient } from "./github.mjs";
 import { botsUitRonde, herkomstGegevens, isVerouderd, markten, verificatie } from "./marktradar.mjs";
 import { schoon } from "./schoon.mjs";
-import { workflowAgent } from "./workflows.mjs";
+import { hoofdRun, workflowAgent } from "./workflows.mjs";
 
 const RUNS_MARKTRADAR = 30;
 const RUNS_ANDERS = 5;
@@ -17,7 +17,7 @@ export function leesInstellingen(env) {
 
 async function haalWorkflow(gh, wf, metToken, nu, repo) {
   const antwoord = await gh.runs(wf.bestand, wf.id === "marktradar" ? RUNS_MARKTRADAR : RUNS_ANDERS);
-  const run = antwoord.ok ? antwoord.data.workflow_runs?.[0] : null;
+  const run = antwoord.ok ? hoofdRun(antwoord.data.workflow_runs || []) : null;
   // Zonder token gaat zuinig om met de limiet: stappen alleen voor runs die aandacht vragen.
   const stappen = run && (metToken || run.status !== "completed" || run.conclusion !== "success");
   const jobs = stappen ? await gh.jobs(run.id) : null;

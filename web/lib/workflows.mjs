@@ -12,6 +12,9 @@ const CONCLUSIE = {
   cancelled: ["aandacht", "Geannuleerd"], stale: ["aandacht", "Verlopen op GitHub"], action_required: ["aandacht", "Wacht op goedkeuring"],
 };
 
+// Een run in de wachtrij mag een lopende run niet verbergen: de reserve-planning van de keten staat vaak achter de lopende run.
+export const hoofdRun = (runs) => runs.find((r) => r.status === "in_progress") ?? runs[0];
+
 export function statusVanRun(run) {
   if (run.status === "in_progress") return ["bezig", "Bezig"];
   if (run.status !== "completed") return ["wachtend", run.status === "waiting" ? "Wacht op goedkeuring" : "In de wachtrij"];
@@ -33,7 +36,7 @@ function activiteit(runs, jobs) {
     return { t: r.run_started_at || r.created_at, tekst: `${tekst} (${EVENT[r.event] || r.event})`, status };
   });
   // Stappen alleen bij een lopende of mislukte run; bij een geslaagde run is het rijtje runs nuttiger.
-  const stappen = runs[0]?.conclusion === "success" ? [] : (jobs || []).flatMap((j) => j.steps || []);
+  const stappen = hoofdRun(runs)?.conclusion === "success" ? [] : (jobs || []).flatMap((j) => j.steps || []);
   for (const s of stappen) {
     if (s.started_at) regels.push({ t: s.started_at, tekst: `Stap: ${s.name}`, status: s.conclusion === "failure" ? "mislukt" : "stap" });
   }
@@ -58,7 +61,7 @@ export function workflowAgent(wf, antwoord, jobsAntwoord, nu, repo) {
   }
 
   const runs = antwoord.data.workflow_runs || [];
-  const run = runs[0];
+  const run = hoofdRun(runs);
   if (!run) {
     return { ...a, status: wf.vereist ? "aandacht" : "wachtend", herkomst: "live", stap: "Nog nooit gedraaid.", geregistreerd: true, link: pagina,
       melding: wf.vereist ? { soort: "blokkade", tekst: "De workflow staat op GitHub, maar heeft nog geen run." } : null };

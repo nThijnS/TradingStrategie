@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync, readdirSync } from "node:fs";
 import { test } from "node:test";
 import { MARKTEN, WORKFLOWS } from "../lib/config.mjs";
-import { markten, verificatie } from "../lib/marktradar.mjs";
+import { botsUitRonde, markten, verificatie } from "../lib/marktradar.mjs";
 import { schoon } from "../lib/schoon.mjs";
 import { bouwStatus } from "../lib/status.mjs";
 import { workflowAgent } from "../lib/workflows.mjs";
@@ -32,6 +32,13 @@ function nep(routes = {}) {
   };
   return { f, log };
 }
+
+test("een bot zonder sleutel krijgt een begrijpelijke melding", () => {
+  const r = rondeEcht({ ontbreekt: ["skeptic: uitgevallen (GeenLlm)"], ruw: {} });
+  const b = botsUitRonde(r, nu).find((x) => x.id === "skeptic");
+  assert.equal(b.status, "mislukt");
+  assert.match(b.melding.tekst, /ANTHROPIC_API_KEY/);
+});
 
 test("markten komen overeen met core/markets.py", () => {
   const py = readFileSync(hier("../core/markets.py"), "utf8");
@@ -67,6 +74,12 @@ test("runstatus wordt goed vertaald", () => {
   assert.equal(met({ status: "waiting", conclusion: null }).melding.soort, "goedkeuring");
   assert.equal(met({ conclusion: "cancelled" }).status, "aandacht");
   assert.equal(met({ conclusion: "cancelled" }).geverifieerd, false);
+});
+
+test("een run in de wachtrij verbergt de lopende run niet", () => {
+  const runs = [run({ id: 2, status: "pending", conclusion: null }), run({ id: 1, status: "in_progress", conclusion: null })];
+  const a = workflowAgent(wf, { ok: true, data: { workflow_runs: runs } }, null, nu, "x/y");
+  assert.equal(a.status, "bezig");
 });
 
 test("een run die te lang uitblijft vraagt aandacht", () => {

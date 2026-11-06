@@ -24,9 +24,14 @@ function herkomstVan(ronde, nu) {
   return isVerouderd(ronde.peilmoment, nu) ? "verouderd" : "live";
 }
 
+const UITLEG = {
+  "uitgevallen (GeenLlm)": "Geen modelsleutel beschikbaar. Zet ANTHROPIC_API_KEY als GitHub-secret.",
+  "uitgevallen (GeenKlantsentiment)": "Geen klantsentiment van Capital.com ontvangen. Controleer de CAPITAL_*-secrets.",
+};
+
 function regelsBot(id, ronde) {
   const prefix = `${id}: `;
-  return tekstLijst(ronde.ontbreekt).filter((x) => x.startsWith(prefix)).map((x) => x.slice(prefix.length));
+  return tekstLijst(ronde.ontbreekt).filter((x) => x.startsWith(prefix)).map((x) => x.slice(prefix.length)).map((x) => UITLEG[x] || x);
 }
 
 function botAgent(cfg, ronde, nu) {
