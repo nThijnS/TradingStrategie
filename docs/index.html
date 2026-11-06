@@ -182,6 +182,7 @@ td input { padding: 5px 7px; font-size: .84rem; min-width: 80px }
       <a href="#datafarm" data-p="datafarm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>Data Farm</a>
       <a href="#performance" data-p="performance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20h18M5 16l5-6 4 3 6-8"/></svg>Performance</a>
       <a href="#risk" data-p="risk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>Risk</a>
+      <a href="#radar" data-p="radar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 12l6-6"/></svg>MarktRadar</a>
     </nav>
     <div class="barinfo"><span id="fresh" class="pill p-idle">laden</span><button id="reload" type="button">Ververs</button></div>
   </div>
@@ -197,6 +198,7 @@ td input { padding: 5px 7px; font-size: .84rem; min-width: 80px }
   <div class="page" id="p-datafarm" hidden></div>
   <div class="page" id="p-performance" hidden></div>
   <div class="page" id="p-risk" hidden></div>
+  <div class="page" id="p-radar" hidden></div>
 
   <p class="note" style="margin-top:34px">Deze site toont analyse, backtests en signalen. De bot plaatst automatisch orders op een Capital.com-<b>demo</b>-account (nepgeld); live (echt geld) staat uit en kan alleen na een bewuste opt-in van de eigenaar. Geen financieel advies.
   Strategieën worden getest op data die ze nog niet kenden; een paar winnende trades zeggen niets.</p>
@@ -213,6 +215,7 @@ const URLS = {
   hist: LIVE ? `${RAW}/main/lab_geschiedenis.json` : "lab_geschiedenis.json",
   markt: n => LIVE ? `${RAW}/live/markt/${n}.json` : `markt/${n}.json`,
   demo: LIVE ? `${RAW}/live/demo.json` : "demo.json",
+  radar: LIVE ? `${RAW}/marktradar-data/dashboard.json` : "marktradar.json",
 };
 const SOORT = { crypto: "Crypto", forex: "Forex", index: "Indices", grondstof: "Grondstoffen", aandeel: "Aandelen" };
 const GLOSS = {
@@ -878,7 +881,43 @@ function header() {
   $("mode").innerHTML = LIVE ? "Live: data elke 3 minuten vanuit de cloud. Alleen analyse en papertrades."
     : `Momentopname van ${esc(nlDT(S.gemaakt))}. <a href="https://nthijns.github.io/TradingStrategie/" target="_blank" rel="noopener">Open de live versie</a>`;
 }
-const RENDER = { dashboard: rDashboard, markets: rMarkets, learning: rLearning, datafarm: rDatafarm, performance: rPerformance, risk: rRisk };
+// MarktRadar: eigen bestand, los opgehaald. Als het ontbreekt, blijft de rest van de site gewoon werken.
+const OORDEEL = { VOLGEN: "p-ok", ONDERZOEKEN: "p-warn", GEEN_ACTIE: "p-idle" };
+const OORDEEL_TXT = { VOLGEN: "Volgen", ONDERZOEKEN: "Onderzoeken", GEEN_ACTIE: "Geen actie" };
+const BOT_TXT = { chief: "Chief", charts: "Charts", news: "News", sentiment: "Sentiment" };
+const npct = v => v == null ? "–" : sgn(v * 100, 2) + "%";
+function radarBoek(data) {
+  const r = data.laatste, kaart = Object.entries(data.scorekaart || {});
+  const tekst = r.toelichting || {}, maand = Object.entries(data.kosten_per_maand || {}).sort().pop();
+  const per = r.oordelen.map(o => `<div class="card"><div class="head"><h3>${esc(titel(o.markt))}</h3><span class="pill ${OORDEEL[o.oordeel] || "p-idle"}">${esc(OORDEEL_TXT[o.oordeel] || o.oordeel)}</span></div>
+    ${o.richting !== "geen" ? `<p class="small">Richting ${esc(o.richting)}, zekerheid ${nf(o.zekerheid)}. Steun: ${esc(o.steun.join(", "))}.</p>` : ""}
+    <p class="small muted">${esc(o.reden)}</p>${tekst.markten?.[o.markt] ? `<p class="small">${esc(tekst.markten[o.markt])}</p>` : ""}</div>`).join("");
+  const rij = ([b, s]) => `<tr><td>${esc(BOT_TXT[b] || b)}</td><td>${s.n}</td><td>${s.dagen}</td><td>${pct(s.trefkans)} <span class="muted">(${pct(s.interval?.[0])}-${pct(s.interval?.[1])})</span></td>
+    <td>${nf(s.brier, 3)}</td><td>${npct(s.netto)}</td><td>${npct(s.basislijn.willekeurig)}</td><td>${npct(s.basislijn.gisteren)}</td><td class="small">${esc(s.conclusie)}</td></tr>`;
+  return `<section><div class="head"><div><h2>Vandaag</h2><p>Ronde van ${esc(nlDT(r.peilmoment))}. Alleen advies: MarktRadar plaatst geen orders.</p></div>
+      <span class="pill ${r.status === "volledig" ? "p-ok" : "p-warn"}">${esc(r.status)}</span></div>
+      ${tekst.samenvatting ? `<div class="card">${esc(tekst.samenvatting)}</div>` : ""}
+      ${per ? `<div class="grid sm">${per}</div>` : `<div class="empty">Vandaag zijn er geen markten bekeken.</div>`}
+      ${r.ontbreekt?.length ? `<p class="note">Ontbreekt: ${esc(r.ontbreekt.join("; "))}</p>` : ""}
+    </section>
+    <section><div class="head"><div><h2>Scorekaart</h2><p>Na de horizon afgerekend. Netto is gemiddeld per voorspelling, na kosten. Niets doen is altijd 0%. Conclusies pas vanaf ${data.min_voorspellingen} voorspellingen op ${data.min_dagen} dagen.</p></div></div>
+      ${kaart.length ? `<div class="card" style="overflow-x:auto"><table><thead><tr><th>Bot</th><th>Aantal</th><th>Dagen</th><th>Trefkans (95%)</th><th>Brier</th><th>Netto</th><th>Willekeurig</th><th>Richting gisteren</th><th>Stand</th></tr></thead><tbody>${kaart.map(rij).join("")}</tbody></table></div>`
+        : `<div class="empty">Nog geen afgerekende voorspellingen.</div>`}
+      <p class="note">Kosten LLM${maand ? ` in ${esc(maand[0])}: $${nf(maand[1])}` : ": nog geen"}. Geen financieel advies.</p>
+    </section>`;
+}
+async function rRadar() {
+  const el = $("p-radar");
+  try {
+    const r = await fetch(URLS.radar, { cache: "no-store" });
+    if (!r.ok) throw new Error(r.status);
+    const data = await r.json();
+    if (CUR === "radar") el.innerHTML = radarBoek(data);
+  } catch (e) {
+    if (CUR === "radar") el.innerHTML = `<div class="empty"><strong>Nog geen MarktRadar-ronde</strong><span class="muted">Zodra de eerste ronde klaar is, staat de briefing hier.</span></div>`;
+  }
+}
+const RENDER = { dashboard: rDashboard, markets: rMarkets, learning: rLearning, datafarm: rDatafarm, performance: rPerformance, risk: rRisk, radar: rRadar };
 let CUR = null;
 function route(force) {
   const h = location.hash.slice(1) || "dashboard";

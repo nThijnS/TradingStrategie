@@ -1,0 +1,11 @@
+[
+ {"id": "O1", "idee": "Elke bestaande strategie volgen op 1h", "uitkomst": "Bij 9.409 trades -0,017R voor kosten en -0,163R bij 1,5x kosten; geen variant haalt P1-P5.", "rapport": "rapport/5_kansen.md"},
+ {"id": "O2", "idee": "Lagere tijdframes of meer signalen", "uitkomst": "Strategieen hebben voor kosten ongeveer 0R per trade; op 15m kosten trades bijna twee keer zoveel in R.", "rapport": "rapport/4_tijdframes.md"},
+ {"id": "O3", "idee": "Langer vasthouden op 4h of trendvolging", "uitkomst": "4h: +0,030R voor kosten en -0,052R bij 1,5x kosten. Trendvolging verliest het voordeel aan financiering.", "rapport": "rapport/6_kansen2.md"},
+ {"id": "O4", "idee": "Tijdstip-effecten (Europese opening, nacht, laatste uur, crypto-avond)", "uitkomst": "Geen van de getoetste effecten haalt P1-P5.", "rapport": "rapport/6_kansen2.md"},
+ {"id": "O5", "idee": "Mislukte sweep als uitbraak", "uitkomst": "0 van 19 paren toelaatbaar; NQ -0,254R over 49 trades in de evaluatie.", "rapport": "rapport/7_sweep_orderflow.md"},
+ {"id": "O6", "idee": "Orderflow-bevestiging op crypto", "uitkomst": "Klein en niet aangetoond voordeel, na kosten niets positiefs. Voor NQ, ES en goud ontbreekt echte orderflowdata.", "rapport": "rapport/7_sweep_orderflow.md"},
+ {"id": "O7", "idee": "COT-positionering als signaal", "uitkomst": "Niet toelaatbaar: -0,073R over 30 trades in de evaluatie, na financiering negatief.", "rapport": "rapport/10_vijf_toetsen.md"},
+ {"id": "O8", "idee": "Herbalancering, slotmomentum, funding, combineren", "uitkomst": "0 van 9 toelaatbaar; herbalancering NQ faalt op P4 en train zit rond nul.", "rapport": "rapport/10_vijf_toetsen.md"},
+ {"id": "O9", "idee": "Algemeen", "uitkomst": "Na 876 proeven heeft niets de selectiepoort gehaald. De beste keuze uit een lab-scan was vaker wel dan niet slecht (PBO 63%).", "rapport": "rapport/2_onderzoek.md"}
+]

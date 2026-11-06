@@ -31,6 +31,7 @@ storage/: paden, JSON laden/opslaan, migraties (alle lagen)
 | `risk/` | pure risicoregels (positiegrootte, limieten, correlatiegroepen) | `rules.py` |
 | `execution/` | orderuitvoering Capital.com, instrumentcontrole | `runner.py` |
 | `storage/` | bestandspaden, atomair opslaan, migraties met backup | `paths.py`, `MANIFEST.md` |
+| `marktradar/` | deelbots die een dagbriefing maken. Alleen advies: importeert `execution/`, `risk/` en `learning/` niet. Zie [MARKTRADAR_PROMPT.md](MARKTRADAR_PROMPT.md) | `chief.py`, `schema.py` |
 | `dashboard/` | data voor de website (`status.json`, `markt/*.json`) | `status.py` |
 | `docs/` | website (GitHub Pages) en documentatie | `index.html` |
 | `tests/` | unit-, regressie- (golden) en integratietests | |
