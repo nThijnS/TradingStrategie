@@ -1,7 +1,7 @@
 """Alle marktdefinities en kostenaannames op één plek.
 
-Kosten zijn aannames (spread + commissie + slippage, heen en terug) en zijn nog niet bij de broker
-geverifieerd; zie execution/instruments.py en rapport/instrumenten.json.
+Kosten zijn spread + commissie + slippage, heen en terug. LAB_MARKETS is gemeten bij de broker; de ICT-kosten en
+CANDIDATES zijn nog aannames. Zie execution/instruments.py en rapport/instrumenten.json.
 """
 
 # ICT/TJR-markten van de meldingen-app. "cfg" overschrijft per markt de standaard (core.config.CFG).
@@ -27,23 +27,24 @@ HISTDATA_RESEARCH = {
     "GBPUSD": dict(sym="GBPUSD", smt="EURUSD", tick=0.00002, cost=0.00012),
 }
 
-# Strategielab-markten (1h Yahoo). kosten = spread + commissie heen en terug, als deel van de prijs.
+# Strategielab-markten (1h Yahoo). kosten = spread + slippage heen en terug, als deel van de prijs: 1,5 keer de mediane
+# spread bij Capital.com over november 2024 t/m november 2026 (workflow Capitaldata). Financiering staat apart.
 LAB_MARKETS = [
-    dict(naam="BTC", symbool="BTC-USD", soort="crypto", titel="Bitcoin", kosten=0.0008),
-    dict(naam="ETH", symbool="ETH-USD", soort="crypto", titel="Ethereum", kosten=0.0008),
-    dict(naam="SOL", symbool="SOL-USD", soort="crypto", titel="Solana", kosten=0.0012),
-    dict(naam="EURUSD", symbool="EURUSD=X", soort="forex", titel="EUR/USD", kosten=0.00007),
-    dict(naam="GBPUSD", symbool="GBPUSD=X", soort="forex", titel="GBP/USD", kosten=0.00009),
-    dict(naam="USDJPY", symbool="JPY=X", soort="forex", titel="USD/JPY", kosten=0.00008),
-    dict(naam="NQ", symbool="NQ=F", soort="index", titel="Nasdaq 100", kosten=0.00008),
-    dict(naam="ES", symbool="ES=F", soort="index", titel="S&P 500", kosten=0.00008),
-    dict(naam="DAX", symbool="^GDAXI", soort="index", titel="DAX 40", kosten=0.0001),
-    dict(naam="GOUD", symbool="GC=F", soort="grondstof", titel="Goud", kosten=0.0001),
-    dict(naam="ZILVER", symbool="SI=F", soort="grondstof", titel="Zilver", kosten=0.0006),
-    dict(naam="OLIE", symbool="CL=F", soort="grondstof", titel="Olie (WTI)", kosten=0.0005),
-    dict(naam="AAPL", symbool="AAPL", soort="aandeel", titel="Apple", kosten=0.0005),
-    dict(naam="NVDA", symbool="NVDA", soort="aandeel", titel="Nvidia", kosten=0.0005),
-    dict(naam="MSFT", symbool="MSFT", soort="aandeel", titel="Microsoft", kosten=0.0005),
+    dict(naam="BTC", symbool="BTC-USD", soort="crypto", titel="Bitcoin", kosten=0.00086),
+    dict(naam="ETH", symbool="ETH-USD", soort="crypto", titel="Ethereum", kosten=0.0011),
+    dict(naam="SOL", symbool="SOL-USD", soort="crypto", titel="Solana", kosten=0.0075),
+    dict(naam="EURUSD", symbool="EURUSD=X", soort="forex", titel="EUR/USD", kosten=0.000087),
+    dict(naam="GBPUSD", symbool="GBPUSD=X", soort="forex", titel="GBP/USD", kosten=0.00015),
+    dict(naam="USDJPY", symbool="JPY=X", soort="forex", titel="USD/JPY", kosten=0.00011),
+    dict(naam="NQ", symbool="NQ=F", soort="index", titel="Nasdaq 100", kosten=0.00011),
+    dict(naam="ES", symbool="ES=F", soort="index", titel="S&P 500", kosten=0.00012),
+    dict(naam="DAX", symbool="^GDAXI", soort="index", titel="DAX 40", kosten=0.00011),
+    dict(naam="GOUD", symbool="GC=F", soort="grondstof", titel="Goud", kosten=0.00015),
+    dict(naam="ZILVER", symbool="SI=F", soort="grondstof", titel="Zilver", kosten=0.0012),
+    dict(naam="OLIE", symbool="CL=F", soort="grondstof", titel="Olie (WTI)", kosten=0.00071),
+    dict(naam="AAPL", symbool="AAPL", soort="aandeel", titel="Apple", kosten=0.00099),
+    dict(naam="NVDA", symbool="NVDA", soort="aandeel", titel="Nvidia", kosten=0.0012),
+    dict(naam="MSFT", symbool="MSFT", soort="aandeel", titel="Microsoft", kosten=0.00089),
 ]
 
 # Kandidaat-markten uit het onderzoek (fase 3). Kosten zijn voorzichtige schattingen, NIET geverifieerd.

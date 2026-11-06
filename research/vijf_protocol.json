@@ -1,0 +1,57 @@
+{
+  "naam": "vijf-v1",
+  "vastgelegd": "2026-11-05, vóór de eerste uitslag van deze vijf ideeën. Maandeinde, COT, funding, slotmomentum en combinaties zijn in rapport 8 en 9 bewust niet in de data bekeken.",
+  "data": "Capital.com-uurcandles met spread uit artifact capitaldata (4 november 2024 tot 4 november 2026); HistData 5m voor ES en NQ tot 23 oktober 2026; Yahoo dag voor ES, ZN en de COT-markten; CFTC legacy COT; Binance funding.",
+  "periodes": "Evaluatie is de laatste 180 dagen van de gebruikte reeks, E1 en E2 zijn de twee helften. Variantkeuze op de periode daarvoor via learning/selector.",
+  "kosten": "Gemeten kostenmodel: per trade 1,5 keer de spread van de instapcandle (spread plus halve spread slippage). Betaalde financiering: stand van 4 november 2026 uit markten.json, ook voor het verleden; ontvangen rente telt niet mee. Trades boven 0,25R spread vervallen. Poort rekent de spreadkosten nog eens 1,5 keer.",
+  "kostenmodel": "core/markets.py wordt in dit onderzoek niet gewijzigd. Per markt wordt het verschil tussen aanname en meting gerapporteerd.",
+  "hypotheses": {
+    "H1_combineren": {
+      "bron": "Grinold, fundamentele wet; rapport 9",
+      "regel": "Alle 10 basisvarianten uit strategies/lab.py op US100, US500, DE40, GOLD, EURUSD, USDJPY, dus 60 stromen, uitstap als in het lab. Portefeuille per dag: som van de R van trades die die dag sluiten, gedeeld door het aantal stromen. Die dagen zijn de eenheid voor de poort.",
+      "varianten": ["alle stromen gelijk", "alleen stromen met positieve R bij 1,5x kosten op de ontwikkelperiode, gelijk gewogen"],
+      "markten": ["portefeuille"]
+    },
+    "H2_herbalancering": {
+      "bron": "Harvey, Mazzoleni, Melone, NBER 33554",
+      "regel": "Dagelijkse 60/40-weging uit ES en ZN (Yahoo), start 2001. Signaal s = gewicht aandelen min 60%, vóór herbalancering. Boven 2 procentpunt afwijking wordt het gewicht de volgende dag op 60% gezet. Is |s| minstens 1 procentpunt, dan positie tegen het teken van s vanaf de eerste candle na 18:00 NY tot hoogstens 22 uur later. Stop 0,5 keer de gemiddelde dagrange van 20 dagen.",
+      "varianten": ["één variant"],
+      "markten": ["ES", "NQ"]
+    },
+    "H3_slotmomentum": {
+      "bron": "Baltussen, Da, Lammers, Martens, JFE 2021",
+      "regel": "r = log-rendement van de vorige slot (laatste 5m-candle vóór 16:00) tot de slot van 15:25. Grote dag: |r| boven het 2/3-kwantiel van de vorige 60 dagen. Instap in de richting van r op de open van 15:30, uit op de slot van 15:55. Stop 0,5 keer de gemiddelde dagrange van 20 dagen.",
+      "varianten": ["één variant"],
+      "markten": ["ES", "NQ"]
+    },
+    "H4_cot": {
+      "bron": "Fan, Fernandez-Perez, Fuertes, Miffre, JFM 2020",
+      "regel": "SP = 52-weeks gemiddelde van (lang - kort) / (lang + kort) van niet-commerciële handelaren, beschikbaar 3 dagen na de meetdatum. JPY keert om, omdat de future op de yen is. Op de eerste candle van elke maand vanaf 09:00 NY: long de 3 hoogste en short de 3 laagste van GOUD, ZILVER, OLIE, ES, NQ, EURUSD, GBPUSD, USDJPY, tot de volgende maand. Stop 3 keer de gemiddelde dagrange van 20 dagen.",
+      "varianten": ["één variant"],
+      "markten": ["portefeuille"]
+    },
+    "H5_funding": {
+      "bron": "Schmeling, Schrimpf, Todorov, BIS 1087, alleen samenvatting; geen studie gevonden die dit direct aantoont",
+      "regel": "Gemiddelde funding over 7 dagen om 00:00 UTC. Aan als dat boven het 80e percentiel van de vorige 365 dagen ligt. Elke dag dat het aan is: short vanaf 00:00 UTC voor 24 uur, stop 1 keer de gemiddelde dagrange van 20 dagen. Spreadkosten alleen op de eerste dag van een reeks of na een stop. Elke dag is een eenheid voor de poort.",
+      "varianten": ["één variant"],
+      "markten": ["BTC", "ETH"]
+    }
+  },
+  "informatief": {
+    "doel": "Alleen informatie, geen toelating, omdat 2 jaar CFD-data weinig kan aantonen.",
+    "H2": "ES-rendement de volgende dag volgens het signaal, bruto, 2001 tot nu en per periode.",
+    "H4": "Zelfde portefeuille op Yahoo-futures, bruto, vanaf 2014.",
+    "H5": "BTC- en ETH-rendement over 7 dagen met en zonder signaal, bruto, vanaf 2021."
+  },
+  "poort": {
+    "regels": "learning/selector, ongewijzigd",
+    "proeven_per_markt": "proeven uit lab.json (40 als onbekend) + 11 uit kansen + 4 uit sweep-orderflow + 9 hier",
+    "proeven_scan": "867 + 9 = 876"
+  },
+  "besluitregel": {
+    "toelaatbaar": "Haalt P1-P5, ook P4 met proeven_scan, en E1 en E2 zijn beide positief na 1,5x kosten.",
+    "inbouwen": "Niets wordt ingebouwd in dit onderzoek. Een toelaatbare hypothese is een voorstel aan de gebruiker.",
+    "geen_kandidaat": "De bot blijft zoals hij is en dat wordt gerapporteerd."
+  },
+  "grenzen": "Geen wijziging aan P1-P5, risicolimieten, live-instellingen, orderuitvoering, geheimen of core/markets.py. Geen orders. Niets gekocht."
+}
