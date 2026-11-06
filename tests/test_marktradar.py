@@ -445,6 +445,73 @@ class Bronnen(unittest.TestCase):
         self.assertEqual([m for m, _ in verzoeken], ["POST", "GET"])
         self.assertTrue(all(u.startswith("https://demo-api-capital.backend-capital.com/api/v1/") for _, u in verzoeken))
 
+    ENV = dict(CAPITAL_API_KEY="k", CAPITAL_IDENTIFIER="i", CAPITAL_PASSWORD="p")
+
+    @staticmethod
+    def _http_fout(code):
+        import urllib.error
+        return urllib.error.HTTPError("https://x", code, "geheim in de foutreden", None, None)
+
+    def test_capital_stuurt_sleutel_en_wachtwoordvorm_mee(self):
+        gezien = {}
+
+        def stuur(methode, url, kop, inhoud):
+            gezien[methode] = (kop, inhoud)
+            if methode == "POST":
+                return {}, {"CST": "a", "X-SECURITY-TOKEN": "b"}
+            return dict(clientSentiments=[dict(marketId="US100", longPositionPercentage=62.0)]), {}
+        capital.haal(self.ENV, stuur, wacht=lambda s: None)
+        self.assertIs(gezien["POST"][1]["encryptedPassword"], False)
+        self.assertEqual(gezien["GET"][0]["X-CAP-API-KEY"], "k")
+
+    def test_capital_valt_terug_op_per_markt(self):
+        fout = self._http_fout(400)
+        verzoeken = []
+
+        def stuur(methode, url, kop, inhoud):
+            verzoeken.append(url)
+            if methode == "POST":
+                return {}, {"CST": "a", "X-SECURITY-TOKEN": "b"}
+            if "marketIds" in url or url.endswith("/GOLD"):
+                raise fout
+            return dict(marketId=url.rsplit("/", 1)[1], longPositionPercentage=55.0), {}
+        rijen = capital.haal(self.ENV, stuur, wacht=lambda s: None)
+        self.assertEqual(len(rijen), 14)
+        self.assertNotIn("GOUD", {r["markt"] for r in rijen})
+
+    def test_capital_fout_noemt_alleen_stap_en_status(self):
+        fout = self._http_fout(401)
+
+        def stuur(*a):
+            raise fout
+        with self.assertRaises(capital.CapitalFout) as c:
+            capital.haal(self.ENV, stuur, wacht=lambda s: None)
+        self.assertEqual(str(c.exception), "inloggen: HTTP 401")
+
+    def test_capital_probeert_inloggen_nog_een_keer_na_429(self):
+        fout, pogingen, wacht = self._http_fout(429), [], []
+
+        def stuur(methode, url, kop, inhoud):
+            if methode == "POST":
+                pogingen.append(1)
+                if len(pogingen) == 1:
+                    raise fout
+                return {}, {"CST": "a", "X-SECURITY-TOKEN": "b"}
+            return dict(clientSentiments=[dict(marketId="US100", longPositionPercentage=62.0)]), {}
+        self.assertEqual(len(capital.haal(self.ENV, stuur, wacht=wacht.append)), 1)
+        self.assertEqual((len(pogingen), wacht), (2, [1.1]))
+
+    def test_capital_geeft_op_als_alle_markten_falen(self):
+        fout = self._http_fout(404)
+
+        def stuur(methode, url, kop, inhoud):
+            if methode == "POST":
+                return {}, {"CST": "a", "X-SECURITY-TOKEN": "b"}
+            raise fout
+        with self.assertRaises(capital.CapitalFout) as c:
+            capital.haal(self.ENV, stuur, wacht=lambda s: None)
+        self.assertEqual(str(c.exception), "sentiment per markt: HTTP 404")
+
     def test_capital_zonder_sleutels(self):
         with self.assertRaises(capital.GeenSleutels):
             capital.haal({})

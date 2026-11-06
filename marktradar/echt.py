@@ -22,6 +22,8 @@ def _probeer(functie, wat):
         return functie(), None
     except capital.GeenSleutels:
         return None, f"{wat}: geen sleutels"
+    except capital.CapitalFout as e:    # bevat alleen de stap en de HTTP-status
+        return None, f"{wat} niet opgehaald ({e})"
     except Exception as e:      # alleen het type: foutteksten kunnen geheimen bevatten
         return None, f"{wat} niet opgehaald ({type(e).__name__})"
 
