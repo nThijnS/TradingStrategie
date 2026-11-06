@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MarketPilot agents</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="style.css">
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Naar de inhoud</a>
+<header class="bar">
+  <div class="wrap gut bar-in">
+    <div class="brand"><span class="dot" aria-hidden="true"></span><h1>MarketPilot agents</h1></div>
+    <nav class="tabs" aria-label="Onderdelen">
+      <a href="#agents" data-p="agents">Agents</a>
+      <a href="#marktradar" data-p="marktradar">MarktRadar</a>
+      <a href="#koppelingen" data-p="koppelingen">Koppelingen</a>
+    </nav>
+    <div class="ververs">
+      <span id="ververst" class="muted small">Laden…</span>
+      <button id="reload" type="button" class="knop">Vernieuwen</button>
+    </div>
+  </div>
+</header>
+<div class="wrap gut">
+  <div id="banner"></div>
+  <dl id="stand" class="stand" aria-label="Belangrijkste status"></dl>
+</div>
+<main id="main" class="wrap gut" tabindex="-1">
+  <div id="p-agents" class="page"></div>
+  <div id="p-marktradar" class="page" hidden></div>
+  <div id="p-koppelingen" class="page" hidden></div>
+</main>
+<footer class="wrap gut voet">
+  <p>Dit dashboard kijkt alleen mee. Het start of stopt geen agents en plaatst geen orders. Geen financieel advies.</p>
+</footer>
+<dialog id="detail" aria-labelledby="detail-kop"></dialog>
+<div id="meld" class="sr" role="status" aria-live="polite"></div>
+<noscript><p class="wrap gut">Dit dashboard heeft JavaScript nodig.</p></noscript>
+</body>
+</html>
