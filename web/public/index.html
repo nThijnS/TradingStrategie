@@ -3,44 +3,44 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>MarketPilot agents</title>
+<title>MarketPilot Crew</title>
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#151031">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Crew">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
 <link rel="stylesheet" href="style.css">
 <script type="module" src="app.js"></script>
 </head>
 <body>
 <a class="skip" href="#main">Naar de inhoud</a>
-<header class="bar">
-  <div class="wrap gut bar-in">
-    <div class="brand"><span class="dot" aria-hidden="true"></span><h1>MarketPilot agents</h1></div>
+<header class="top">
+  <div class="wrap top-in">
+    <div class="brand"><img src="favicon.svg" alt="" width="30" height="30"><h1>MarketPilot <span>Crew</span></h1></div>
     <nav class="tabs" aria-label="Onderdelen">
-      <a href="#agents" data-p="agents">Agents</a>
-      <a href="#marktradar" data-p="marktradar">MarktRadar</a>
-      <a href="#koppelingen" data-p="koppelingen">Koppelingen</a>
+      <a href="#crew" data-p="crew"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="8" width="14" height="12" rx="4"/><path d="M12 8V4M9 13h.01M15 13h.01"/></svg><span>Crew</span></a>
+      <a href="#radar" data-p="radar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m12 12 6-6"/></svg><span>Radar</span></a>
+      <a href="#bronnen" data-p="bronnen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 15l6-6M10 6l1-1a5 5 0 0 1 7 7l-1 1M14 18l-1 1a5 5 0 0 1-7-7l1-1"/></svg><span>Bronnen</span></a>
     </nav>
-    <div class="ververs">
-      <span id="ververst" class="muted small">Laden…</span>
-      <button id="reload" type="button" class="knop">Vernieuwen</button>
-    </div>
+    <button id="reload" type="button" class="rond" aria-label="Vernieuwen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14-4L4 9m0-5v5h5M4 13a8 8 0 0 0 14 4l2-2m0 5v-5h-5"/></svg></button>
   </div>
 </header>
-<div class="wrap gut">
-  <div id="banner"></div>
-  <dl id="stand" class="stand" aria-label="Belangrijkste status"></dl>
-</div>
-<main id="main" class="wrap gut" tabindex="-1">
-  <div id="p-agents" class="page"></div>
-  <div id="p-marktradar" class="page" hidden></div>
-  <div id="p-koppelingen" class="page" hidden></div>
+<main id="main" class="wrap" tabindex="-1">
+  <div id="p-crew" class="page"></div>
+  <div id="p-radar" class="page" hidden></div>
+  <div id="p-bronnen" class="page" hidden></div>
 </main>
-<footer class="wrap gut voet">
+<footer class="wrap voet">
   <p>Dit dashboard kijkt alleen mee. Het start of stopt geen agents en plaatst geen orders. Geen financieel advies.</p>
 </footer>
 <dialog id="detail" aria-labelledby="detail-kop"></dialog>
 <div id="meld" class="sr" role="status" aria-live="polite"></div>
-<noscript><p class="wrap gut">Dit dashboard heeft JavaScript nodig.</p></noscript>
+<noscript><p class="wrap">Dit dashboard heeft JavaScript nodig.</p></noscript>
 </body>
 </html>

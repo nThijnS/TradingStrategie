@@ -38,6 +38,10 @@ Maak voor `GITHUB_TOKEN` een fine-grained token met alleen toegang tot deze repo
 
 Sleutels zoals `ANTHROPIC_API_KEY` en de `CAPITAL_*`-gegevens horen bij de GitHub-workflows. Zet die niet op Netlify.
 
+## Op je telefoon
+
+De site is een webapp die je op je beginscherm kunt zetten. iPhone: tik in Safari op Delen en kies Zet op beginscherm. Android: open het menu in Chrome en kies App installeren. Er is geen offline modus: de app heeft internet nodig, maar toont de laatst opgehaalde gegevens als verouderd wanneer de server wegvalt.
+
 ## Lokaal draaien
 
 ```bash

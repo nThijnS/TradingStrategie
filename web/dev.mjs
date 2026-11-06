@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 import functie from "./netlify/functions/status.mjs";
 
 const PUBLIC = fileURLToPath(new URL("public", import.meta.url));
-const SOORT = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".svg": "image/svg+xml" };
+const SOORT = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".svg": "image/svg+xml", ".png": "image/png", ".webmanifest": "application/manifest+json" };
 const toml = await readFile(new URL("../netlify.toml", import.meta.url), "utf8");
 const CSP = toml.match(/Content-Security-Policy = "([^"]+)"/)[1];     // dezelfde regels als op Netlify
 const POORT = Number(process.env.PORT || 8788);
