@@ -40,6 +40,10 @@ PROTOCOL = Path(__file__).with_name("tijdframes_protocol.json")
 BARS = {"1min": pd.Timedelta(minutes=1), "5min": pd.Timedelta(minutes=5), "15min": pd.Timedelta(minutes=15),
         "1h": pd.Timedelta(hours=1), "4h": pd.Timedelta(hours=4)}
 MARKET = {m["naam"]: m for m in LAB_MARKETS}
+# De kostenaannames waarmee dit protocol is gedraaid (4 november 2026). Vast, zodat de uitkomst reproduceerbaar blijft nu
+# core/markets.py gemeten kosten gebruikt.
+MODEL_KOSTEN = dict(BTC=0.0008, ETH=0.0008, SOL=0.0012, EURUSD=0.00007, GBPUSD=0.00009, USDJPY=0.00008, NQ=0.00008, ES=0.00008, DAX=0.0001,
+                    GOUD=0.0001, ZILVER=0.0006, OLIE=0.0005, AAPL=0.0005, NVDA=0.0005, MSFT=0.0005)
 EVAL_DAYS = selector.VAL_DAYS
 FAMILIES = [k for k in strat.STRATS if k != "ict"]
 
@@ -57,7 +61,7 @@ def spread_frac(name, report):
 
 def cost_frac(name, report):
     """Kosten per rondgang als deel van de prijs: max(model, gemeten spread) plus de helft daarvan aan slippage."""
-    return 1.5 * max(MARKET[name]["kosten"], spread_frac(name, report) or 0.0)
+    return 1.5 * max(MODEL_KOSTEN[name], spread_frac(name, report) or 0.0)
 
 
 # ------------- Tijdframes zonder vooruitkijken -------------
@@ -453,7 +457,7 @@ def nulmeting():
         k = res.get("keuze") or {}
         follow = (k.get("onderzoek") or {}).get("strategie")
         row = dict(markt=name, status=k.get("status"), gevolgd=follow, spread_pct=None if sp is None else round(sp * 100, 4),
-                   model_pct=round(m["kosten"] * 100, 4), families={})
+                   model_pct=round(MODEL_KOSTEN[name] * 100, 4), families={})
         for s in res.get("strategieen", []):
             p = s.get("poort") or {}
             tags = sorted(set(re.findall(r"P\d", " ".join(p.get("redenen", [])))))
