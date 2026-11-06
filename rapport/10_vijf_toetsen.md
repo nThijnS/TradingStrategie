@@ -8,7 +8,7 @@ Datum: 5 november 2026. Protocol `vijf-v1` (`research/vijf_protocol.json`) is va
 
 - **Herbalancering op NQ** komt het dichtst bij: alleen P4 faalt. Toch is het geen kandidaat, omdat train rond nul zit en het effect na de steekproef van de paper verdwijnt (zie hieronder).
 - **De andere vier** vallen duidelijk af.
-- **Kosten:** in `core/markets.py` zijn de kosten op alle 15 markten te laag. Op SOL scheelt het 0,47R per trade.
+- **Kosten:** de kosten in `core/markets.py` waren op alle 15 markten te laag. Op SOL scheelde het 0,47R per trade. Dit is hersteld in PR #8.
 
 ## Uitslag per idee
 
@@ -96,7 +96,7 @@ Gemeten is 1,5 keer de spread per trade, op de basisvarianten; de aanname is `ko
 | ES | 0,030R | 0,040R | +0,010R |
 | DAX | 0,031R | 0,039R | +0,008R |
 
-`core/markets.py` is in dit onderzoek niet gewijzigd.
+`core/markets.py` is in dit onderzoek niet gewijzigd. Dat is daarna gebeurd in [PR #8](https://github.com/nThijnS/TradingStrategie/pull/8); de aanname in deze tabel is de stand van daarvoor.
 
 ## Grenzen
 

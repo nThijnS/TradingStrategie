@@ -11,7 +11,7 @@ Bewijslabels: **[P]** peer-reviewed, **[W]** working paper of instelling, **[B]*
 1. **Op 2 jaar data zien we geen eenvoudige voorspelbaarheid.** Op 1 uur en dag zijn de markten niet te onderscheiden van toeval; alleen op 5m is er een heel kleine terugkeer in forex en crypto.
 2. **Het drukke moment is voorspelbaar, de richting niet.** De ochtend in New York is 2 tot 4 keer zo beweeglijk als rustige uren, maar dat zegt niets over omhoog of omlaag.
 3. **Een geveegd niveau is ongeveer een muntworp.** Ongeveer de helft van de vegingen sluit terug en na 4 uur staat de prijs net zo vaak terug als verder. Gemiddeld neigt het eerder naar doorlopen dan naar terugkeren.
-4. **Onze kostenaannames kloppen op een paar markten niet.** SOL kost bij Capital.com 0,50% spread tegen 0,12% in `core/markets.py`. Ook NVDA, ZILVER, AAPL en MSFT zijn te laag ingeschat. Eerdere uitslagen op die markten zijn dus te gunstig.
+4. **Onze kostenaannames kloppen op een paar markten niet.** SOL kost bij Capital.com 0,50% spread tegen 0,12% in `core/markets.py`. Ook NVDA, ZILVER, AAPL en MSFT zijn te laag ingeschat. Eerdere uitslagen op die markten zijn dus te gunstig. Hersteld in [PR #8](https://github.com/nThijnS/TradingStrategie/pull/8).
 5. **Kosten laten ruimte op NQ, ES, DAX en goud,** en vooral in de ochtend van New York. Dat is ruimte, geen bewezen voordeel. SOL valt af, en BTC en ZILVER zitten ongunstig.
 6. **De 15 markten zijn ongeveer 6 groepen.** Dat beperkt hoeveel onafhankelijke bets we echt hebben.
 7. **Quants winnen vooral met breedte, kosten en risico.** Veel kleine onafhankelijke voordelen, geen enkel magisch patroon. Gepubliceerde voordelen slijten, en de grote ongelukken kwamen door drukte in dezelfde trade en door hefboom.

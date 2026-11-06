@@ -20,6 +20,7 @@ from core.sessions import NY
 from execution.markets import EPICS
 from learning import selector
 from research import registry
+from research.tijdframes import MODEL_KOSTEN
 from storage import paths
 from strategies import lab as strat
 
@@ -366,7 +367,7 @@ def main():
     kost = {}
     for m in LAB_MARKETS:
         n = m["naam"]
-        _, aan, gem, tr = stromen(data[n], fees[n], n, m["kosten"])
+        _, aan, gem, tr = stromen(data[n], fees[n], n, MODEL_KOSTEN[n])   # de aanname van vóór PR #8, zoals in rapport 10
         kost[n] = dict(trades=tr, aanname_r=round(aan, 3), gemeten_r=round(gem, 3), verschil_r=round(gem - aan, 3))
         print("kosten", n, kost[n], flush=True)
 
