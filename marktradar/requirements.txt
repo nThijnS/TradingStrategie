@@ -1,0 +1,2 @@
+# Alleen voor MarktRadar. Staat los van requirements.txt, zodat de minuutketen er geen last van heeft.
+anthropic>=0.125

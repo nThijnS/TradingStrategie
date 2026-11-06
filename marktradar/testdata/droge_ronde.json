@@ -1,0 +1,222 @@
+{
+ "_toelichting": "Verzonnen uitvoer om de ronde te testen. Geen echte marktinformatie.",
+ "ronde_id": "2026-11-06",
+ "peilmoment": "2026-11-06T12:30:00Z",
+ "bots": {
+  "scout": {
+   "bot": "scout",
+   "ronde_id": "2026-11-06",
+   "gemaakt_op": "2026-11-06T12:30:00Z",
+   "data_tot": "2026-11-06T12:25:00Z",
+   "bevindingen": [
+    {
+     "markt": "NQ",
+     "richting": "geen",
+     "horizon": "1d",
+     "zekerheid": 0.5,
+     "bewering": "Testdata: ongewoon volume.",
+     "bronnen": [
+      {
+       "naam": "testbron",
+       "url": "",
+       "tijdstip": "2026-11-06T12:00:00Z"
+      }
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "richting": "geen",
+     "horizon": "1d",
+     "zekerheid": 0.5,
+     "bewering": "Testdata: grote beweging.",
+     "bronnen": [
+      {
+       "naam": "testbron",
+       "url": "",
+       "tijdstip": "2026-11-06T12:00:00Z"
+      }
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "richting": "geen",
+     "horizon": "1d",
+     "zekerheid": 0.5,
+     "bewering": "Testdata: agenda vol.",
+     "bronnen": [
+      {
+       "naam": "testbron",
+       "url": "",
+       "tijdstip": "2026-11-06T12:00:00Z"
+      }
+     ]
+    },
+    {
+     "markt": "BTC",
+     "richting": "geen",
+     "horizon": "1d",
+     "zekerheid": 0.5,
+     "bewering": "Testdata: hoge volatiliteit.",
+     "bronnen": [
+      {
+       "naam": "testbron",
+       "url": "",
+       "tijdstip": "2026-11-06T12:00:00Z"
+      }
+     ]
+    }
+   ],
+   "ontbreekt": []
+  },
+  "charts": {
+   "bot": "charts",
+   "ronde_id": "2026-11-06",
+   "gemaakt_op": "2026-11-06T12:30:00Z",
+   "data_tot": "2026-11-06T12:25:00Z",
+   "bevindingen": [
+    {
+     "markt": "NQ",
+     "richting": "omhoog",
+     "horizon": "1d",
+     "zekerheid": 0.62,
+     "bewering": "Testdata: trend omhoog.",
+     "bronnen": [
+      {
+       "naam": "testbron",
+       "url": "",
+       "tijdstip": "2026-11-06T12:00:00Z"
+      }
+     ]
+    },
+    {
+     "markt": "GOUD",
+     "richting": "omhoog",
+     "horizon": "1d",
+     "zekerheid": 0.6,
+     "bewering": "Testdata: boven weerstand.",
+     "bronnen": [
+      {
+       "naam": "testbron",
+       "url": "",
+       "tijdstip": "2026-11-06T12:00:00Z"
+      }
+     ]
+    },
+    {
+     "markt": "EURUSD",
+     "richting": "omhoog",
+     "horizon": "1d",
+     "zekerheid": 0.6,
+     "bewering": "Testdata: trend omhoog.",
+     "bronnen": [
+      {
+       "naam": "testbron",
+       "url": "",
+       "tijdstip": "2026-11-06T12:00:00Z"
+      }
+     ]
+    }
+   ],
+   "ontbreekt": []
+  },
+  "news": {
+   "bot": "news",
+   "ronde_id": "2026-11-06",
+   "gemaakt_op": "2026-11-06T12:30:00Z",
+   "data_tot": "2026-11-06T12:25:00Z",
+   "bevindingen": [
+    {
+     "markt": "NQ",
+     "richting": "omhoog",
+     "horizon": "1d",
+     "zekerheid": 0.64,
+     "bewering": "Testdata: positief bericht.",
+     "bronnen": [
+      {
+       "naam": "testbron",
+       "url": "",
+       "tijdstip": "2026-11-06T12:00:00Z"
+      }
+     ]
+    },
+    {
+     "markt": "NQ",
+     "richting": "omlaag",
+     "horizon": "1d",
+     "zekerheid": 0.9,
+     "bewering": "Testdata: bericht zonder bron telt niet mee.",
+     "bronnen": []
+    },
+    {
+     "markt": "EURUSD",
+     "richting": "omlaag",
+     "horizon": "1d",
+     "zekerheid": 0.58,
+     "bewering": "Testdata: negatief bericht.",
+     "bronnen": [
+      {
+       "naam": "testbron",
+       "url": "",
+       "tijdstip": "2026-11-06T12:00:00Z"
+      }
+     ]
+    }
+   ],
+   "ontbreekt": []
+  },
+  "sentiment": {
+   "bot": "sentiment",
+   "ronde_id": "2026-11-06",
+   "gemaakt_op": "2026-11-06T12:30:00Z",
+   "data_tot": "2026-11-06T12:25:00Z",
+   "bevindingen": [
+    {
+     "markt": "BTC",
+     "richting": "omlaag",
+     "horizon": "1d",
+     "zekerheid": 0.7,
+     "bewering": "Testdata: stemming extreem.",
+     "bronnen": [
+      {
+       "naam": "testbron",
+       "url": "",
+       "tijdstip": "2026-11-06T12:00:00Z"
+      }
+     ]
+    }
+   ],
+   "ontbreekt": [
+    "klantsentiment van GOUD ontbreekt in de testdata"
+   ]
+  },
+  "skeptic": {
+   "bot": "skeptic",
+   "ronde_id": "2026-11-06",
+   "gemaakt_op": "2026-11-06T12:30:00Z",
+   "data_tot": "2026-11-06T12:25:00Z",
+   "bevindingen": [
+    {
+     "markt": "BTC",
+     "richting": "geen",
+     "horizon": "1d",
+     "zekerheid": 0.5,
+     "bewering": "Testdata: kosten te hoog voor dit idee.",
+     "bronnen": [
+      {
+       "naam": "testbron",
+       "url": "",
+       "tijdstip": "2026-11-06T12:00:00Z"
+      }
+     ]
+    }
+   ],
+   "ontbreekt": [],
+   "veto": [
+    {
+     "markt": "BTC",
+     "reden": "Testdata: idee eerder afgewezen."
+    }
+   ]
+  }
+ }
+}

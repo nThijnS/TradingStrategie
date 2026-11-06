@@ -1,0 +1,11 @@
+{
+ "max_markten": 5,
+ "horizon": "1d",
+ "scout_drempel": 0.90,
+ "drempel_volgen": 0.60,
+ "drempel_onderzoeken": 0.55,
+ "straf_per_ontbrekende_bot": 0.10,
+ "llm_model": "claude-opus-5-5",
+ "llm_max_tokens": 6000,
+ "max_dagbudget_usd": 0.25
+}

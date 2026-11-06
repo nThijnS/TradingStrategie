@@ -1,0 +1,690 @@
+{
+ "_let_op": "Fictieve demo-informatie uit een droge ronde. Geen echte data en geen resultaten.",
+ "bots": [
+  {
+   "id": "scout",
+   "naam": "Scout",
+   "groep": "marktradar",
+   "taak": "Kiest maximaal 5 opvallende markten met vaste regels.",
+   "herkomst": "demo",
+   "duur_s": null,
+   "link": null,
+   "status": "klaar",
+   "laatste_activiteit": "2026-11-06T12:30:00Z",
+   "geverifieerd": false,
+   "stap": "DEMO: 4 bevinding(en).",
+   "melding": null,
+   "activiteit": [
+    {
+     "t": "2026-11-06T12:25:00Z",
+     "tekst": "Gegevens gelezen tot dit tijdstip",
+     "status": "stap"
+    },
+    {
+     "t": "2026-11-06T12:30:00Z",
+     "tekst": "4 bevinding(en) vastgelegd",
+     "status": "klaar"
+    }
+   ]
+  },
+  {
+   "id": "charts",
+   "naam": "Charts",
+   "groep": "marktradar",
+   "taak": "Bepaalt de technische stand per markt, zonder LLM.",
+   "herkomst": "demo",
+   "duur_s": null,
+   "link": null,
+   "status": "klaar",
+   "laatste_activiteit": "2026-11-06T12:30:00Z",
+   "geverifieerd": false,
+   "stap": "DEMO: 3 bevinding(en).",
+   "melding": null,
+   "activiteit": [
+    {
+     "t": "2026-11-06T12:25:00Z",
+     "tekst": "Gegevens gelezen tot dit tijdstip",
+     "status": "stap"
+    },
+    {
+     "t": "2026-11-06T12:30:00Z",
+     "tekst": "3 bevinding(en) vastgelegd",
+     "status": "klaar"
+    }
+   ]
+  },
+  {
+   "id": "news",
+   "naam": "News",
+   "groep": "marktradar",
+   "taak": "Volgt de agenda en labelt Fed-berichten met de LLM.",
+   "herkomst": "demo",
+   "duur_s": null,
+   "link": null,
+   "status": "klaar",
+   "laatste_activiteit": "2026-11-06T12:30:00Z",
+   "geverifieerd": false,
+   "stap": "DEMO: 3 bevinding(en).",
+   "melding": null,
+   "activiteit": [
+    {
+     "t": "2026-11-06T12:25:00Z",
+     "tekst": "Gegevens gelezen tot dit tijdstip",
+     "status": "stap"
+    },
+    {
+     "t": "2026-11-06T12:30:00Z",
+     "tekst": "3 bevinding(en) vastgelegd",
+     "status": "klaar"
+    },
+    {
+     "t": "2026-11-06T12:30:00Z",
+     "tekst": "NQ niet meegeteld: geen bron",
+     "status": "aandacht"
+    }
+   ]
+  },
+  {
+   "id": "sentiment",
+   "naam": "Sentiment",
+   "groep": "marktradar",
+   "taak": "Vergelijkt klantposities met de eigen historie. Geeft nooit een richting.",
+   "herkomst": "demo",
+   "duur_s": null,
+   "link": null,
+   "status": "aandacht",
+   "laatste_activiteit": "2026-11-06T12:30:00Z",
+   "geverifieerd": false,
+   "stap": "DEMO: 1 bevinding(en).",
+   "melding": {
+    "soort": "blokkade",
+    "tekst": "klantsentiment van GOUD ontbreekt in de testdata"
+   },
+   "activiteit": [
+    {
+     "t": "2026-11-06T12:25:00Z",
+     "tekst": "Gegevens gelezen tot dit tijdstip",
+     "status": "stap"
+    },
+    {
+     "t": "2026-11-06T12:30:00Z",
+     "tekst": "1 bevinding(en) vastgelegd",
+     "status": "klaar"
+    },
+    {
+     "t": "2026-11-06T12:30:00Z",
+     "tekst": "klantsentiment van GOUD ontbreekt in de testdata",
+     "status": "aandacht"
+    }
+   ]
+  },
+  {
+   "id": "skeptic",
+   "naam": "Skeptic",
+   "groep": "marktradar",
+   "taak": "Zoekt tegenbewijs en kan een veto geven.",
+   "herkomst": "demo",
+   "duur_s": null,
+   "link": null,
+   "status": "klaar",
+   "laatste_activiteit": "2026-11-06T12:30:00Z",
+   "geverifieerd": false,
+   "stap": "DEMO: 1 bevinding(en), 1 veto.",
+   "melding": null,
+   "activiteit": [
+    {
+     "t": "2026-11-06T12:25:00Z",
+     "tekst": "Gegevens gelezen tot dit tijdstip",
+     "status": "stap"
+    },
+    {
+     "t": "2026-11-06T12:30:00Z",
+     "tekst": "1 bevinding(en) vastgelegd",
+     "status": "klaar"
+    },
+    {
+     "t": "2026-11-06T12:30:00Z",
+     "tekst": "Veto op BTC: Testdata: idee eerder afgewezen.",
+     "status": "aandacht"
+    }
+   ]
+  },
+  {
+   "id": "chief",
+   "naam": "Chief",
+   "groep": "marktradar",
+   "taak": "Regelt de ronde en geeft oordelen met vaste regels. De LLM schrijft alleen de toelichting.",
+   "herkomst": "demo",
+   "duur_s": null,
+   "link": null,
+   "status": "aandacht",
+   "geverifieerd": false,
+   "laatste_activiteit": "2026-11-06T12:30:00Z",
+   "stap": "DEMO: Oordelen vastgelegd: 1 volgen, 1 onderzoeken, 2 geen actie.",
+   "melding": {
+    "soort": "blokkade",
+    "tekst": "Onvolledige ronde: 1 onderdeel of onderdelen ontbreken."
+   },
+   "activiteit": [
+    {
+     "t": "2026-11-06T12:30:00Z",
+     "tekst": "Ronde vastgelegd",
+     "status": "stap"
+    },
+    {
+     "t": "2026-11-06T12:30:00Z",
+     "tekst": "sentiment: klantsentiment van GOUD ontbreekt in de testdata",
+     "status": "aandacht"
+    }
+   ]
+  }
+ ],
+ "workflows": [
+  {
+   "id": "keten",
+   "naam": "MarketPilot-keten",
+   "groep": "workflow",
+   "taak": "Controleert elke minuut de markten, stuurt meldingen en werkt de live status bij.",
+   "status": "bezig",
+   "herkomst": "demo",
+   "geverifieerd": false,
+   "laatste_activiteit": "2026-11-06T12:58:00Z",
+   "duur_s": 8280,
+   "stap": "DEMO: Bezig met: Setups checken",
+   "melding": null,
+   "activiteit": [
+    {
+     "t": "2026-11-06T10:40:00Z",
+     "tekst": "Bezig (handmatig of keten)",
+     "status": "bezig"
+    },
+    {
+     "t": "2026-11-06T10:41:00Z",
+     "tekst": "Stap: Setups checken",
+     "status": "stap"
+    }
+   ],
+   "link": null
+  },
+  {
+   "id": "leren",
+   "naam": "Leren",
+   "groep": "workflow",
+   "taak": "Leert dagelijks uit nieuwe data en zet elke markt op actief, onderzoek of pauze.",
+   "status": "klaar",
+   "herkomst": "demo",
+   "geverifieerd": false,
+   "laatste_activiteit": "2026-11-05T21:52:00Z",
+   "duur_s": 1320,
+   "stap": "DEMO: Geslaagd: Leren",
+   "melding": null,
+   "activiteit": [
+    {
+     "t": "2026-11-05T21:30:00Z",
+     "tekst": "Geslaagd (planning)",
+     "status": "klaar"
+    }
+   ],
+   "link": null
+  },
+  {
+   "id": "marktradar",
+   "naam": "MarktRadar-workflow",
+   "groep": "workflow",
+   "taak": "Draait op handelsdagen één adviesronde vóór de opening van New York.",
+   "status": "wachtend",
+   "herkomst": "demo",
+   "geverifieerd": false,
+   "laatste_activiteit": "2026-11-06T12:45:00Z",
+   "duur_s": null,
+   "stap": "DEMO: In de wachtrij",
+   "melding": {
+    "soort": "goedkeuring",
+    "tekst": "DEMO: voorbeeld van een run die op goedkeuring wacht."
+   },
+   "activiteit": [
+    {
+     "t": "2026-11-06T12:45:00Z",
+     "tekst": "In de wachtrij (planning)",
+     "status": "stap"
+    }
+   ],
+   "link": null
+  },
+  {
+   "id": "tests",
+   "naam": "Tests",
+   "groep": "workflow",
+   "taak": "Draait de tests bij elke wijziging in de code.",
+   "status": "mislukt",
+   "herkomst": "demo",
+   "geverifieerd": false,
+   "laatste_activiteit": "2026-11-06T09:12:00Z",
+   "duur_s": 94,
+   "stap": "DEMO: Mislukt bij: Tests draaien",
+   "melding": {
+    "soort": "fout",
+    "tekst": "DEMO: voorbeeld van een mislukte stap."
+   },
+   "activiteit": [
+    {
+     "t": "2026-11-06T09:10:00Z",
+     "tekst": "Mislukt (codewijziging)",
+     "status": "mislukt"
+    }
+   ],
+   "link": null
+  },
+  {
+   "id": "capitaldata",
+   "naam": "Capitaldata",
+   "groep": "workflow",
+   "taak": "Haalt markten en uurcandles op bij Capital.com, alleen lezen.",
+   "status": "klaar",
+   "herkomst": "demo",
+   "geverifieerd": false,
+   "laatste_activiteit": "2026-11-04T15:03:00Z",
+   "duur_s": 420,
+   "stap": "DEMO: Geslaagd: Capitaldata",
+   "melding": null,
+   "activiteit": [
+    {
+     "t": "2026-11-04T14:56:00Z",
+     "tekst": "Geslaagd (handmatig of keten)",
+     "status": "klaar"
+    }
+   ],
+   "link": null
+  },
+  {
+   "id": "feedmeting",
+   "naam": "Feedmeting",
+   "groep": "workflow",
+   "taak": "Meet de kwaliteit van de Capital.com-feed, alleen lezen.",
+   "status": "aandacht",
+   "herkomst": "demo",
+   "geverifieerd": false,
+   "laatste_activiteit": "2026-11-03T18:20:00Z",
+   "duur_s": 60,
+   "stap": "DEMO: Geannuleerd",
+   "melding": {
+    "soort": "blokkade",
+    "tekst": "DEMO: laatste run geannuleerd."
+   },
+   "activiteit": [
+    {
+     "t": "2026-11-03T18:19:00Z",
+     "tekst": "Geannuleerd (handmatig of keten)",
+     "status": "aandacht"
+    }
+   ],
+   "link": null
+  },
+  {
+   "id": "instrumenten",
+   "naam": "Instrumenten controleren",
+   "groep": "workflow",
+   "taak": "Controleert instrumentgegevens bij Capital.com, alleen lezen.",
+   "status": "klaar",
+   "herkomst": "demo",
+   "geverifieerd": false,
+   "laatste_activiteit": "2026-11-03T14:02:00Z",
+   "duur_s": 75,
+   "stap": "DEMO: Geslaagd: Instrumenten",
+   "melding": null,
+   "activiteit": [
+    {
+     "t": "2026-11-03T14:01:00Z",
+     "tekst": "Geslaagd (handmatig of keten)",
+     "status": "klaar"
+    }
+   ],
+   "link": null
+  }
+ ],
+ "marktradar": {
+  "ronde": {
+   "ronde_id": "2026-11-06",
+   "peilmoment": "2026-11-06T12:30:00Z",
+   "status": "onvolledig",
+   "briefing": "MarktRadar 2026-11-06\nDROGE RONDE: testdata, geen echte marktinformatie.\nNQ: VOLGEN (omhoog, zekerheid 0.63). 2 bots wijzen dezelfde kant op.\nGOUD: ONDERZOEKEN (omhoog, zekerheid 0.60). Eén aanwijzing of beperkte zekerheid; nog geen bevestiging.\nEURUSD: GEEN_ACTIE. De bots spreken elkaar tegen.\nBTC: GEEN_ACTIE. Veto van de Skeptic: Testdata: idee eerder afgewezen.\nOntbreekt: sentiment: klantsentiment van GOUD ontbreekt in de testdata\nGeen financieel advies.",
+   "samenvatting": null,
+   "ontbreekt": [
+    "sentiment: klantsentiment van GOUD ontbreekt in de testdata"
+   ],
+   "kosten_usd": 0,
+   "modellen": {},
+   "voorspellingen": 8,
+   "gegevens": {
+    "bots": [
+     {
+      "bot": "charts",
+      "data_tot": "2026-11-06T12:25:00Z",
+      "gemaakt_op": "2026-11-06T12:30:00Z"
+     },
+     {
+      "bot": "news",
+      "data_tot": "2026-11-06T12:25:00Z",
+      "gemaakt_op": "2026-11-06T12:30:00Z"
+     },
+     {
+      "bot": "scout",
+      "data_tot": "2026-11-06T12:25:00Z",
+      "gemaakt_op": "2026-11-06T12:30:00Z"
+     },
+     {
+      "bot": "sentiment",
+      "data_tot": "2026-11-06T12:25:00Z",
+      "gemaakt_op": "2026-11-06T12:30:00Z"
+     },
+     {
+      "bot": "skeptic",
+      "data_tot": "2026-11-06T12:25:00Z",
+      "gemaakt_op": "2026-11-06T12:30:00Z"
+     }
+    ],
+    "bronnen": [
+     {
+      "naam": "testbron",
+      "url": null,
+      "tijdstip": "2026-11-06T12:00:00Z"
+     }
+    ]
+   }
+  },
+  "markten": [
+   {
+    "markt": "BTC",
+    "titel": "Bitcoin",
+    "soort": "crypto",
+    "oordeel": "GEEN_ACTIE",
+    "bekeken": true,
+    "reden": "Veto van de Skeptic: Testdata: idee eerder afgewezen.",
+    "richting": "geen",
+    "zekerheid": null,
+    "steun": [],
+    "toelichting": null
+   },
+   {
+    "markt": "ETH",
+    "titel": "Ethereum",
+    "soort": "crypto",
+    "oordeel": "GEEN_ACTIE",
+    "bekeken": false,
+    "reden": "Niet gekozen door de Scout.",
+    "richting": "geen",
+    "zekerheid": null,
+    "steun": [],
+    "toelichting": null
+   },
+   {
+    "markt": "SOL",
+    "titel": "Solana",
+    "soort": "crypto",
+    "oordeel": "GEEN_ACTIE",
+    "bekeken": false,
+    "reden": "Niet gekozen door de Scout.",
+    "richting": "geen",
+    "zekerheid": null,
+    "steun": [],
+    "toelichting": null
+   },
+   {
+    "markt": "EURUSD",
+    "titel": "EUR/USD",
+    "soort": "forex",
+    "oordeel": "GEEN_ACTIE",
+    "bekeken": true,
+    "reden": "De bots spreken elkaar tegen.",
+    "richting": "geen",
+    "zekerheid": null,
+    "steun": [],
+    "toelichting": null
+   },
+   {
+    "markt": "GBPUSD",
+    "titel": "GBP/USD",
+    "soort": "forex",
+    "oordeel": "GEEN_ACTIE",
+    "bekeken": false,
+    "reden": "Niet gekozen door de Scout.",
+    "richting": "geen",
+    "zekerheid": null,
+    "steun": [],
+    "toelichting": null
+   },
+   {
+    "markt": "USDJPY",
+    "titel": "USD/JPY",
+    "soort": "forex",
+    "oordeel": "GEEN_ACTIE",
+    "bekeken": false,
+    "reden": "Niet gekozen door de Scout.",
+    "richting": "geen",
+    "zekerheid": null,
+    "steun": [],
+    "toelichting": null
+   },
+   {
+    "markt": "NQ",
+    "titel": "Nasdaq 100",
+    "soort": "index",
+    "oordeel": "VOLGEN",
+    "bekeken": true,
+    "reden": "2 bots wijzen dezelfde kant op.",
+    "richting": "omhoog",
+    "zekerheid": 0.63,
+    "steun": [
+     "charts",
+     "news"
+    ],
+    "toelichting": null
+   },
+   {
+    "markt": "ES",
+    "titel": "S&P 500",
+    "soort": "index",
+    "oordeel": "GEEN_ACTIE",
+    "bekeken": false,
+    "reden": "Niet gekozen door de Scout.",
+    "richting": "geen",
+    "zekerheid": null,
+    "steun": [],
+    "toelichting": null
+   },
+   {
+    "markt": "DAX",
+    "titel": "DAX 40",
+    "soort": "index",
+    "oordeel": "GEEN_ACTIE",
+    "bekeken": false,
+    "reden": "Niet gekozen door de Scout.",
+    "richting": "geen",
+    "zekerheid": null,
+    "steun": [],
+    "toelichting": null
+   },
+   {
+    "markt": "GOUD",
+    "titel": "Goud",
+    "soort": "grondstof",
+    "oordeel": "ONDERZOEKEN",
+    "bekeken": true,
+    "reden": "Eén aanwijzing of beperkte zekerheid; nog geen bevestiging.",
+    "richting": "omhoog",
+    "zekerheid": 0.6,
+    "steun": [
+     "charts"
+    ],
+    "toelichting": null
+   },
+   {
+    "markt": "ZILVER",
+    "titel": "Zilver",
+    "soort": "grondstof",
+    "oordeel": "GEEN_ACTIE",
+    "bekeken": false,
+    "reden": "Niet gekozen door de Scout.",
+    "richting": "geen",
+    "zekerheid": null,
+    "steun": [],
+    "toelichting": null
+   },
+   {
+    "markt": "OLIE",
+    "titel": "Olie (WTI)",
+    "soort": "grondstof",
+    "oordeel": "GEEN_ACTIE",
+    "bekeken": false,
+    "reden": "Niet gekozen door de Scout.",
+    "richting": "geen",
+    "zekerheid": null,
+    "steun": [],
+    "toelichting": null
+   },
+   {
+    "markt": "AAPL",
+    "titel": "Apple",
+    "soort": "aandeel",
+    "oordeel": "GEEN_ACTIE",
+    "bekeken": false,
+    "reden": "Niet gekozen door de Scout.",
+    "richting": "geen",
+    "zekerheid": null,
+    "steun": [],
+    "toelichting": null
+   },
+   {
+    "markt": "NVDA",
+    "titel": "Nvidia",
+    "soort": "aandeel",
+    "oordeel": "GEEN_ACTIE",
+    "bekeken": false,
+    "reden": "Niet gekozen door de Scout.",
+    "richting": "geen",
+    "zekerheid": null,
+    "steun": [],
+    "toelichting": null
+   },
+   {
+    "markt": "MSFT",
+    "titel": "Microsoft",
+    "soort": "aandeel",
+    "oordeel": "GEEN_ACTIE",
+    "bekeken": false,
+    "reden": "Niet gekozen door de Scout.",
+    "richting": "geen",
+    "zekerheid": null,
+    "steun": [],
+    "toelichting": null
+   }
+  ],
+  "scorekaart": {
+   "charts": {
+    "n": 6,
+    "dagen": 2,
+    "trefkans": 0.5,
+    "interval": null,
+    "brier": 0.26,
+    "netto": 0.0002,
+    "basislijn": {
+     "geen_actie": 0,
+     "willekeurig": -0.0004,
+     "gisteren": -0.0002
+    },
+    "conclusie": "te weinig data"
+   },
+   "chief": {
+    "n": 3,
+    "dagen": 2,
+    "trefkans": 0.667,
+    "interval": null,
+    "brier": 0.24,
+    "netto": 0.0003,
+    "basislijn": {
+     "geen_actie": 0,
+     "willekeurig": -0.0004,
+     "gisteren": -0.0002
+    },
+    "conclusie": "te weinig data"
+   },
+   "news": {
+    "n": 2,
+    "dagen": 1,
+    "trefkans": 0.5,
+    "interval": null,
+    "brier": 0.25,
+    "netto": -0.0001,
+    "basislijn": {
+     "geen_actie": 0,
+     "willekeurig": -0.0004,
+     "gisteren": -0.0002
+    },
+    "conclusie": "te weinig data"
+   }
+  },
+  "min_voorspellingen": 100,
+  "min_dagen": 30,
+  "kosten_per_maand": {}
+ },
+ "verificatie": [
+  {
+   "id": "workflow",
+   "naam": "Workflow staat op GitHub",
+   "geverifieerd": false,
+   "bewijs": "Niet te controleren zonder dashboardserver.",
+   "link": null
+  },
+  {
+   "id": "run",
+   "naam": "Workflow heeft echt gedraaid",
+   "geverifieerd": false,
+   "bewijs": "Niet te controleren zonder dashboardserver.",
+   "link": null
+  },
+  {
+   "id": "data",
+   "naam": "Rondedata staat op de databranch",
+   "geverifieerd": false,
+   "bewijs": "Niet te controleren zonder dashboardserver.",
+   "link": null
+  },
+  {
+   "id": "model",
+   "naam": "Echt model is aangeroepen",
+   "geverifieerd": false,
+   "bewijs": "Niet te controleren zonder dashboardserver.",
+   "link": null
+  },
+  {
+   "id": "sentiment",
+   "naam": "Capital-sentiment is opgehaald",
+   "geverifieerd": false,
+   "bewijs": "Niet te controleren zonder dashboardserver.",
+   "link": null
+  },
+  {
+   "id": "stabiel",
+   "naam": "Stabiel op minstens 5 dagen",
+   "geverifieerd": false,
+   "bewijs": "Niet te controleren zonder dashboardserver.",
+   "link": null
+  }
+ ],
+ "bronnen": [
+  {
+   "id": "github",
+   "naam": "GitHub Actions",
+   "staat": "ontbreekt",
+   "detail": "De dashboardserver is niet bereikbaar.",
+   "actie": "Controleer de Netlify-functie status."
+  },
+  {
+   "id": "marktradar",
+   "naam": "MarktRadar-data",
+   "staat": "ontbreekt",
+   "detail": "De dashboardserver is niet bereikbaar.",
+   "actie": null
+  }
+ ]
+}

@@ -1,0 +1,66 @@
+# MarktRadar: één ronde per handelsdag vóór de opening van New York. Alleen advies: dit plaatst nooit orders.
+# Staat los van de minuutketen (eigen groep). Als dit faalt, merkt de keten daar niets van.
+# Tweede tijdstip is een reserve, omdat GitHub een schedule soms overslaat; een bestaande ronde draait niet opnieuw.
+# Data staat op de branch "marktradar-data". Die branch is publiek, net als de repo.
+# Geheimen: ANTHROPIC_API_KEY (zonder sleutel: elke markt GEEN_ACTIE) en de bestaande CAPITAL_*-demogeheimen.
+name: MarktRadar
+
+on:
+  schedule:
+    - cron: "45 12 * * 1-5"
+    - cron: "20 13 * * 1-5"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write  # alleen voor de branch "marktradar-data"
+
+concurrency:
+  group: marktradar
+  cancel-in-progress: false
+
+jobs:
+  ronde:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Onderdelen installeren
+        run: pip install -r requirements.txt -r marktradar/requirements.txt
+
+      - name: Data ophalen
+        run: |
+          url="https://github.com/${{ github.repository }}.git"
+          if git ls-remote --exit-code --heads "$url" marktradar-data >/dev/null; then
+            git clone -q --depth 1 --branch marktradar-data "$url" ../radar-data
+          else
+            git init -q -b marktradar-data ../radar-data
+          fi
+
+      - name: Ronde draaien
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CAPITAL_API_KEY: ${{ secrets.CAPITAL_API_KEY }}
+          CAPITAL_IDENTIFIER: ${{ secrets.CAPITAL_IDENTIFIER }}
+          CAPITAL_PASSWORD: ${{ secrets.CAPITAL_PASSWORD }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || vars.NTFY_TOPIC }}
+        run: python -W ignore -m marktradar --uit ../radar-data --melden
+
+      # Ook na een fout: geboekte kosten en metingen mogen niet verloren gaan.
+      - name: Data bewaren
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd ../radar-data
+          git add -A
+          if git diff --cached --quiet; then exit 0; fi
+          git -c user.name="MarketPilot-bot" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -q -m "MarktRadar $(date -u +%F)"
+          git push -q "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" marktradar-data
