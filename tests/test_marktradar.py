@@ -464,6 +464,22 @@ class Bronnen(unittest.TestCase):
         self.assertIs(gezien["POST"][1]["encryptedPassword"], False)
         self.assertEqual(gezien["GET"][0]["X-CAP-API-KEY"], "k")
 
+    def test_capital_haalt_regeleindes_uit_geheimen(self):
+        gezien = []
+
+        def stuur(methode, url, kop, inhoud):
+            gezien.append((kop, inhoud))
+            return (dict(clientSentiments=[]) if methode == "GET" and "marketIds" in url else dict(marketId="GOLD", longPositionPercentage=50)), \
+                dict(CST="c", **{"X-SECURITY-TOKEN": "x"})
+        capital.haal({k: f" {v}\n" for k, v in self.ENV.items()}, stuur, wacht=lambda s: None)
+        kop, inhoud = gezien[0]
+        self.assertEqual(kop["X-CAP-API-KEY"], self.ENV["CAPITAL_API_KEY"])
+        self.assertEqual((inhoud["identifier"], inhoud["password"]), (self.ENV["CAPITAL_IDENTIFIER"], self.ENV["CAPITAL_PASSWORD"]))
+
+    def test_capital_alleen_witruimte_telt_als_geen_sleutel(self):
+        with self.assertRaises(capital.GeenSleutels):
+            capital.haal({k: "\n" for k in self.ENV})
+
     def test_capital_valt_terug_op_per_markt(self):
         fout = self._http_fout(400)
         verzoeken = []

@@ -78,7 +78,8 @@ def _per_markt(stuur, toegang, t, wacht):
 
 
 def haal(env=os.environ, stuur=_urllib, wacht=time.sleep):
-    sleutel, wie, wachtwoord = (env.get(k) for k in ("CAPITAL_API_KEY", "CAPITAL_IDENTIFIER", "CAPITAL_PASSWORD"))
+    # GitHub-geheimen kunnen eindigen op een regeleinde; execution/runner.py haalt dat ook weg
+    sleutel, wie, wachtwoord = (env.get(k, "").strip() for k in ("CAPITAL_API_KEY", "CAPITAL_IDENTIFIER", "CAPITAL_PASSWORD"))
     if not (sleutel and wie and wachtwoord):
         raise GeenSleutels("geen Capital-sleutels")
     _, kop = _login(stuur, sleutel, wie, wachtwoord, wacht)
