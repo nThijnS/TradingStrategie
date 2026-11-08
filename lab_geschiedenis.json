@@ -8103,5 +8103,1111 @@
     ]
    }
   }
+ },
+ {
+  "t": "2026-11-07T19:52-05:00",
+  "markten": {
+   "BTC": {
+    "regime": "Downtrend, normale volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+    "afgewezen": [
+     {
+      "strategie": "Trend volgen",
+      "reden": "P2: validatie -0.013R bij 1.5x kosten, ondergrens -0.256R; P3: train -0.131R; P4: Deflated Sharpe 0.00 (< 0.95, 42 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Momentum",
+      "reden": "P2: validatie -0.074R bij 1.5x kosten, ondergrens -0.352R; P4: Deflated Sharpe 0.03 (< 0.95, 42 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Mean reversion",
+      "reden": "P2: validatie -0.305R bij 1.5x kosten, ondergrens -0.413R; P3: train -0.097R; P4: Deflated Sharpe 0.00 (< 0.95, 42 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Breakout",
+      "reden": "P2: validatie -0.130R bij 1.5x kosten, ondergrens -0.242R; P3: train -0.155R; P4: Deflated Sharpe 0.00 (< 0.95, 42 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "P2: validatie -0.299R bij 1.5x kosten, ondergrens -0.537R; P3: train -0.231R; P4: Deflated Sharpe 0.00 (< 0.95, 42 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 47,
+      "nieuw": 0.035,
+      "ondergrens": -0.138,
+      "historisch": -0.093
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 181,
+      "nieuw": -0.062,
+      "ondergrens": -0.155,
+      "historisch": -0.134
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 6,
+      "n": 46,
+      "nieuw": -0.031,
+      "ondergrens": -0.205,
+      "historisch": 0.055
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 92,
+      "nieuw": -0.199,
+      "ondergrens": -0.332,
+      "historisch": -0.222
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 70,
+      "nieuw": -0.221,
+      "ondergrens": -0.354,
+      "historisch": -0.133
+     }
+    ]
+   },
+   "ETH": {
+    "regime": "Zijwaarts, normale volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+    "afgewezen": [
+     {
+      "strategie": "Trend volgen",
+      "reden": "P2: validatie -0.007R bij 1.5x kosten, ondergrens -0.267R; P3: train -0.007R; P4: Deflated Sharpe 0.02 (< 0.95, 37 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Momentum",
+      "reden": "P1: te weinig data (92 train, 27 validatie; minimaal 30/30); P2: validatie -0.522R bij 1.5x kosten, ondergrens -0.620R; P4: Deflated Sharpe 0.01 (< 0.95, 37 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Mean reversion",
+      "reden": "P2: validatie -0.273R bij 1.5x kosten, ondergrens -0.421R; P3: train -0.147R; P4: Deflated Sharpe 0.00 (< 0.95, 37 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Breakout",
+      "reden": "P2: validatie -0.224R bij 1.5x kosten, ondergrens -0.321R; P3: train -0.081R; P4: Deflated Sharpe 0.00 (< 0.95, 37 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "P2: validatie -0.099R bij 1.5x kosten, ondergrens -0.356R; P3: train -0.146R; P4: Deflated Sharpe 0.00 (< 0.95, 37 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 61,
+      "nieuw": 0.044,
+      "ondergrens": -0.125,
+      "historisch": 0.006
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 82,
+      "nieuw": -0.014,
+      "ondergrens": -0.155,
+      "historisch": -0.115
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 163,
+      "nieuw": -0.161,
+      "ondergrens": -0.259,
+      "historisch": -0.098
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 45,
+      "nieuw": -0.204,
+      "ondergrens": -0.364,
+      "historisch": -0.157
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 6,
+      "n": 27,
+      "nieuw": -0.465,
+      "ondergrens": -0.671,
+      "historisch": -0.018
+     }
+    ]
+   },
+   "SOL": {
+    "regime": "Downtrend, normale volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+    "afgewezen": [
+     {
+      "strategie": "Trend volgen",
+      "reden": "P2: validatie -0.951R bij 1.5x kosten, ondergrens -1.101R; P3: train -0.473R; P4: Deflated Sharpe 0.00 (< 0.95, 41 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Momentum",
+      "reden": "P2: validatie -0.963R bij 1.5x kosten, ondergrens -1.164R; P3: train -0.522R; P4: Deflated Sharpe 0.00 (< 0.95, 41 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Mean reversion",
+      "reden": "P2: validatie -1.128R bij 1.5x kosten, ondergrens -1.252R; P3: train -0.693R; P4: Deflated Sharpe 0.00 (< 0.95, 41 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Breakout",
+      "reden": "P2: validatie -0.881R bij 1.5x kosten, ondergrens -1.039R; P3: train -0.578R; P4: Deflated Sharpe 0.00 (< 0.95, 41 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "P2: validatie -0.934R bij 1.5x kosten, ondergrens -1.147R; P3: train -0.400R; P4: Deflated Sharpe 0.00 (< 0.95, 41 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 176,
+      "nieuw": -0.548,
+      "ondergrens": -0.643,
+      "historisch": -0.572
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 6,
+      "n": 47,
+      "nieuw": -0.607,
+      "ondergrens": -0.774,
+      "historisch": -0.443
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 50,
+      "nieuw": -0.647,
+      "ondergrens": -0.822,
+      "historisch": -0.549
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 43,
+      "nieuw": -0.674,
+      "ondergrens": -0.828,
+      "historisch": -0.514
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 128,
+      "nieuw": -0.781,
+      "ondergrens": -0.873,
+      "historisch": -0.714
+     }
+    ]
+   },
+   "EURUSD": {
+    "regime": "Zijwaarts, normale volatiliteit",
+    "keuze": "Onderzoek: Volatiliteit (squeeze) (geen orders)",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen strategie haalt de poort; volatiliteit is in train en validatie positief en wordt gevolgd zonder orders",
+    "afgewezen": [
+     {
+      "strategie": "ICT / Smart Money",
+      "reden": "P2: validatie -0.131R bij 1.5x kosten, ondergrens -0.217R; P3: train -0.019R; P4: Deflated Sharpe 0.00 (< 0.95, 87 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Trend volgen",
+      "reden": "P2: validatie -0.393R bij 1.5x kosten, ondergrens -0.590R; P3: train -0.043R; P4: Deflated Sharpe 0.00 (< 0.95, 87 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Momentum",
+      "reden": "P2: validatie -0.146R bij 1.5x kosten, ondergrens -0.355R; P3: train -0.051R; P4: Deflated Sharpe 0.00 (< 0.95, 87 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Mean reversion",
+      "reden": "P2: validatie -0.024R bij 1.5x kosten, ondergrens -0.366R; P3: train -0.042R; P4: Deflated Sharpe 0.00 (< 0.95, 87 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Breakout",
+      "reden": "P2: validatie -0.287R bij 1.5x kosten, ondergrens -0.442R; P3: train -0.047R; P4: Deflated Sharpe 0.00 (< 0.95, 87 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "P4: Deflated Sharpe 0.15 (< 0.95, 87 varianten geprobeerd)"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 6,
+      "n": 32,
+      "nieuw": 0.399,
+      "ondergrens": 0.185,
+      "historisch": 0.125
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 36,
+      "nieuw": 0.017,
+      "ondergrens": -0.183,
+      "historisch": -0.033
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 105,
+      "nieuw": -0.106,
+      "ondergrens": -0.227,
+      "historisch": -0.06
+     },
+     {
+      "strategie": "ICT / Smart Money",
+      "varianten": 48,
+      "n": 53,
+      "nieuw": -0.073,
+      "ondergrens": -0.239,
+      "historisch": 0.334
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 131,
+      "nieuw": -0.248,
+      "ondergrens": -0.351,
+      "historisch": -0.077
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 32,
+      "nieuw": -0.364,
+      "ondergrens": -0.53,
+      "historisch": -0.099
+     }
+    ]
+   },
+   "GBPUSD": {
+    "regime": "Zijwaarts, normale volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+    "afgewezen": [
+     {
+      "strategie": "Trend volgen",
+      "reden": "P2: validatie -0.011R bij 1.5x kosten, ondergrens -0.385R; P3: train -0.055R; P4: Deflated Sharpe 0.01 (< 0.95, 35 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Momentum",
+      "reden": "P2: validatie -0.249R bij 1.5x kosten, ondergrens -0.622R; P3: train -0.054R; P4: Deflated Sharpe 0.00 (< 0.95, 35 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Mean reversion",
+      "reden": "P2: validatie -0.123R bij 1.5x kosten, ondergrens -0.392R; P4: Deflated Sharpe 0.04 (< 0.95, 35 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Breakout",
+      "reden": "P2: validatie -0.346R bij 1.5x kosten, ondergrens -0.638R; P3: train -0.028R; P4: Deflated Sharpe 0.00 (< 0.95, 35 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "P2: validatie -0.049R bij 1.5x kosten, ondergrens -0.334R; P3: train -0.168R; P4: Deflated Sharpe 0.00 (< 0.95, 35 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 50,
+      "nieuw": 0.022,
+      "ondergrens": -0.17,
+      "historisch": -0.131
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 32,
+      "nieuw": 0.036,
+      "ondergrens": -0.195,
+      "historisch": -0.04
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 43,
+      "nieuw": -0.059,
+      "ondergrens": -0.24,
+      "historisch": 0.028
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 40,
+      "nieuw": -0.19,
+      "ondergrens": -0.379,
+      "historisch": -0.075
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 88,
+      "nieuw": -0.286,
+      "ondergrens": -0.412,
+      "historisch": -0.069
+     }
+    ]
+   },
+   "USDJPY": {
+    "regime": "Zijwaarts, normale volatiliteit",
+    "keuze": "Onderzoek: Momentum (geen orders)",
+    "variant": "",
+    "gewisseld": true,
+    "reden": "geen strategie haalt de poort; momentum is in train en validatie positief en wordt gevolgd zonder orders",
+    "afgewezen": [
+     {
+      "strategie": "Trend volgen",
+      "reden": "P2: validatie -0.230R bij 1.5x kosten, ondergrens -0.430R; P4: Deflated Sharpe 0.00 (< 0.95, 49 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Momentum",
+      "reden": "P2: validatie -0.016R bij 1.5x kosten, ondergrens -0.177R; P4: Deflated Sharpe 0.06 (< 0.95, 49 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Mean reversion",
+      "reden": "P2: validatie -0.275R bij 1.5x kosten, ondergrens -0.435R; P3: train -0.115R; P4: Deflated Sharpe 0.00 (< 0.95, 49 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Breakout",
+      "reden": "P2: validatie -0.191R bij 1.5x kosten, ondergrens -0.383R; P3: train -0.010R; P4: Deflated Sharpe 0.00 (< 0.95, 49 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "P2: validatie -0.054R bij 1.5x kosten, ondergrens -0.293R; P4: Deflated Sharpe 0.10 (< 0.95, 49 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Momentum",
+      "varianten": 6,
+      "n": 93,
+      "nieuw": 0.015,
+      "ondergrens": -0.119,
+      "historisch": 0.037
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 6,
+      "n": 65,
+      "nieuw": -0.016,
+      "ondergrens": -0.177,
+      "historisch": 0.067
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 89,
+      "nieuw": -0.148,
+      "ondergrens": -0.273,
+      "historisch": -0.033
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 98,
+      "nieuw": -0.231,
+      "ondergrens": -0.329,
+      "historisch": -0.136
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 4,
+      "n": 38,
+      "nieuw": -0.202,
+      "ondergrens": -0.338,
+      "historisch": -0.023
+     }
+    ]
+   },
+   "NQ": {
+    "regime": "Downtrend, hoge volatiliteit",
+    "keuze": "Onderzoek: Trend volgen (geen orders)",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen strategie haalt de poort; trend is in train en validatie positief en wordt gevolgd zonder orders",
+    "afgewezen": [
+     {
+      "strategie": "ICT / Smart Money",
+      "reden": "P2: validatie -0.149R bij 1.5x kosten, ondergrens -0.469R; P4: Deflated Sharpe 0.04 (< 0.95, 95 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Trend volgen",
+      "reden": "P1: te weinig data (129 train, 23 validatie; minimaal 30/30); P2: validatie +0.293R bij 1.5x kosten, ondergrens -0.232R; P4: Deflated Sharpe 0.19 (< 0.95, 95 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Momentum",
+      "reden": "P2: validatie +0.016R bij 1.5x kosten, ondergrens -0.139R; P4: Deflated Sharpe 0.08 (< 0.95, 95 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Mean reversion",
+      "reden": "P2: validatie +0.030R bij 1.5x kosten, ondergrens -0.297R; P3: train -0.013R; P4: Deflated Sharpe 0.01 (< 0.95, 95 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Breakout",
+      "reden": "P2: validatie +0.083R bij 1.5x kosten, ondergrens -0.093R; P4: Deflated Sharpe 0.19 (< 0.95, 95 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "P2: validatie -0.047R bij 1.5x kosten, ondergrens -0.258R; P4: Deflated Sharpe 0.04 (< 0.95, 95 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Trend volgen",
+      "varianten": 6,
+      "n": 23,
+      "nieuw": 0.301,
+      "ondergrens": 0.056,
+      "historisch": 0.161
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 6,
+      "n": 76,
+      "nieuw": 0.1,
+      "ondergrens": -0.061,
+      "historisch": 0.133
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 6,
+      "n": 96,
+      "nieuw": 0.028,
+      "ondergrens": -0.107,
+      "historisch": 0.072
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 30,
+      "nieuw": 0.04,
+      "ondergrens": -0.173,
+      "historisch": -0.005
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 6,
+      "n": 38,
+      "nieuw": -0.036,
+      "ondergrens": -0.228,
+      "historisch": 0.119
+     },
+     {
+      "strategie": "ICT / Smart Money",
+      "varianten": 48,
+      "n": 41,
+      "nieuw": -0.135,
+      "ondergrens": -0.32,
+      "historisch": 0.265
+     }
+    ]
+   },
+   "ES": {
+    "regime": "Zijwaarts, hoge volatiliteit",
+    "keuze": "Onderzoek: Momentum (geen orders)",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen strategie haalt de poort; momentum is in train en validatie positief en wordt gevolgd zonder orders",
+    "afgewezen": [
+     {
+      "strategie": "Trend volgen",
+      "reden": "P1: te weinig data (123 train, 29 validatie; minimaal 30/30); P2: validatie -0.010R bij 1.5x kosten, ondergrens -0.353R; P3: train -0.052R; P4: Deflated Sharpe 0.00 (< 0.95, 51 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Momentum",
+      "reden": "P2: validatie +0.128R bij 1.5x kosten, ondergrens -0.061R; P4: Deflated Sharpe 0.03 (< 0.95, 51 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Mean reversion",
+      "reden": "P2: validatie +0.154R bij 1.5x kosten, ondergrens -0.237R; P3: train -0.085R; P4: Deflated Sharpe 0.00 (< 0.95, 51 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Breakout",
+      "reden": "P2: validatie -0.340R bij 1.5x kosten, ondergrens -0.457R; P4: Deflated Sharpe 0.00 (< 0.95, 51 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "P2: validatie -0.067R bij 1.5x kosten, ondergrens -0.303R; P4: Deflated Sharpe 0.03 (< 0.95, 51 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Momentum",
+      "varianten": 5,
+      "n": 45,
+      "nieuw": 0.15,
+      "ondergrens": -0.018,
+      "historisch": 0.053
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 41,
+      "nieuw": 0.176,
+      "ondergrens": -0.018,
+      "historisch": -0.028
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 29,
+      "nieuw": 0.004,
+      "ondergrens": -0.199,
+      "historisch": -0.041
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 6,
+      "n": 41,
+      "nieuw": -0.046,
+      "ondergrens": -0.248,
+      "historisch": 0.041
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 5,
+      "n": 77,
+      "nieuw": -0.319,
+      "ondergrens": -0.469,
+      "historisch": -0.025
+     }
+    ]
+   },
+   "DAX": {
+    "regime": "Zijwaarts, normale volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+    "afgewezen": [
+     {
+      "strategie": "Trend volgen",
+      "reden": "P1: geen variant handelt vaak genoeg (30 trades in train en naar verwachting 30 per 180 dagen)"
+     },
+     {
+      "strategie": "Momentum",
+      "reden": "P2: validatie -0.145R bij 1.5x kosten, ondergrens -0.465R; P4: Deflated Sharpe 0.27 (< 0.95, 39 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Mean reversion",
+      "reden": "P2: validatie +0.092R bij 1.5x kosten, ondergrens -0.191R; P3: train -0.050R; P4: Deflated Sharpe 0.01 (< 0.95, 39 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Breakout",
+      "reden": "P1: te weinig data (154 train, 29 validatie; minimaal 30/30); P2: validatie -0.095R bij 1.5x kosten, ondergrens -0.535R; P4: Deflated Sharpe 0.15 (< 0.95, 39 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "P1: geen variant handelt vaak genoeg (30 trades in train en naar verwachting 30 per 180 dagen)"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 34,
+      "nieuw": 0.102,
+      "ondergrens": -0.041,
+      "historisch": 0.056
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 19,
+      "nieuw": 0.048,
+      "ondergrens": -0.089,
+      "historisch": -0.054
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 12,
+      "nieuw": 0.171,
+      "ondergrens": -0.12,
+      "historisch": 0.169
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 6,
+      "n": 29,
+      "nieuw": -0.085,
+      "ondergrens": -0.315,
+      "historisch": 0.092
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 6,
+      "n": 31,
+      "nieuw": -0.134,
+      "ondergrens": -0.318,
+      "historisch": 0.105
+     }
+    ]
+   },
+   "GOUD": {
+    "regime": "Zijwaarts, normale volatiliteit",
+    "keuze": "Onderzoek: Breakout (geen orders)",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen strategie haalt de poort; breakout is in train en validatie positief en wordt gevolgd zonder orders",
+    "afgewezen": [
+     {
+      "strategie": "ICT / Smart Money",
+      "reden": "P1: te weinig data (91 train, 29 validatie; minimaal 30/30); P2: validatie +0.135R bij 1.5x kosten, ondergrens -0.165R; P3: train -0.133R; P4: Deflated Sharpe 0.00 (< 0.95, 89 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Trend volgen",
+      "reden": "P1: geen variant handelt vaak genoeg (30 trades in train en naar verwachting 30 per 180 dagen)"
+     },
+     {
+      "strategie": "Momentum",
+      "reden": "P2: validatie +0.024R bij 1.5x kosten, ondergrens -0.301R; P4: Deflated Sharpe 0.16 (< 0.95, 89 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Mean reversion",
+      "reden": "P2: validatie +0.061R bij 1.5x kosten, ondergrens -0.030R; P4: Deflated Sharpe 0.02 (< 0.95, 89 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Breakout",
+      "reden": "P2: validatie +0.081R bij 1.5x kosten, ondergrens -0.178R; P4: Deflated Sharpe 0.13 (< 0.95, 89 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "P2: validatie +0.021R bij 1.5x kosten, ondergrens -0.170R; P4: Deflated Sharpe 0.06 (< 0.95, 89 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Breakout",
+      "varianten": 6,
+      "n": 86,
+      "nieuw": 0.093,
+      "ondergrens": -0.056,
+      "historisch": 0.091
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 4,
+      "n": 33,
+      "nieuw": 0.07,
+      "ondergrens": -0.083,
+      "historisch": 0.029
+     },
+     {
+      "strategie": "ICT / Smart Money",
+      "varianten": 48,
+      "n": 29,
+      "nieuw": 0.156,
+      "ondergrens": -0.106,
+      "historisch": 0.256
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 6,
+      "n": 56,
+      "nieuw": 0.03,
+      "ondergrens": -0.127,
+      "historisch": 0.07
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 6,
+      "n": 47,
+      "nieuw": 0.042,
+      "ondergrens": -0.161,
+      "historisch": 0.146
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 35,
+      "nieuw": -0.032,
+      "ondergrens": -0.199,
+      "historisch": -0.024
+     }
+    ]
+   },
+   "ZILVER": {
+    "regime": "Zijwaarts, normale volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+    "afgewezen": [
+     {
+      "strategie": "Trend volgen",
+      "reden": "P1: geen variant handelt vaak genoeg (30 trades in train en naar verwachting 30 per 180 dagen)"
+     },
+     {
+      "strategie": "Momentum",
+      "reden": "P2: validatie -0.167R bij 1.5x kosten, ondergrens -0.334R; P3: train -0.190R; P4: Deflated Sharpe 0.00 (< 0.95, 37 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Mean reversion",
+      "reden": "P1: te weinig data (132 train, 29 validatie; minimaal 30/30); P2: validatie -0.173R bij 1.5x kosten, ondergrens -0.380R; P3: train -0.245R; P4: Deflated Sharpe 0.00 (< 0.95, 37 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Breakout",
+      "reden": "P2: validatie -0.127R bij 1.5x kosten, ondergrens -0.337R; P3: train -0.155R; P4: Deflated Sharpe 0.00 (< 0.95, 37 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "P2: validatie -0.355R bij 1.5x kosten, ondergrens -0.580R; P4: Deflated Sharpe 0.01 (< 0.95, 37 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 122,
+      "nieuw": -0.076,
+      "ondergrens": -0.181,
+      "historisch": -0.138
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 98,
+      "nieuw": -0.115,
+      "ondergrens": -0.231,
+      "historisch": -0.175
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 41,
+      "nieuw": -0.119,
+      "ondergrens": -0.271,
+      "historisch": 0.021
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 29,
+      "nieuw": -0.122,
+      "ondergrens": -0.313,
+      "historisch": -0.214
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 3,
+      "n": 35,
+      "nieuw": -0.315,
+      "ondergrens": -0.47,
+      "historisch": -0.028
+     }
+    ]
+   },
+   "OLIE": {
+    "regime": "Zijwaarts, normale volatiliteit",
+    "keuze": "Onderzoek: Volatiliteit (squeeze) (geen orders)",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen strategie haalt de poort; volatiliteit is in train en validatie positief en wordt gevolgd zonder orders",
+    "afgewezen": [
+     {
+      "strategie": "Trend volgen",
+      "reden": "P1: te weinig data (123 train, 27 validatie; minimaal 30/30); P2: validatie -0.205R bij 1.5x kosten, ondergrens -0.526R; P3: train -0.052R; P4: Deflated Sharpe 0.00 (< 0.95, 46 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Momentum",
+      "reden": "P2: validatie -0.058R bij 1.5x kosten, ondergrens -0.297R; P4: Deflated Sharpe 0.10 (< 0.95, 46 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Mean reversion",
+      "reden": "P1: te weinig data (146 train, 28 validatie; minimaal 30/30); P2: validatie -0.393R bij 1.5x kosten, ondergrens -0.728R; P3: train -0.147R; P4: Deflated Sharpe 0.00 (< 0.95, 46 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Breakout",
+      "reden": "P2: validatie -0.220R bij 1.5x kosten, ondergrens -0.347R; P3: train -0.063R; P4: Deflated Sharpe 0.00 (< 0.95, 46 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "P2: validatie +0.086R bij 1.5x kosten, ondergrens -0.191R; P4: Deflated Sharpe 0.52 (< 0.95, 46 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 6,
+      "n": 51,
+      "nieuw": 0.109,
+      "ondergrens": -0.067,
+      "historisch": 0.219
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 6,
+      "n": 62,
+      "nieuw": -0.031,
+      "ondergrens": -0.201,
+      "historisch": 0.076
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 135,
+      "nieuw": -0.193,
+      "ondergrens": -0.29,
+      "historisch": -0.072
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 27,
+      "nieuw": -0.185,
+      "ondergrens": -0.371,
+      "historisch": -0.076
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 28,
+      "nieuw": -0.364,
+      "ondergrens": -0.549,
+      "historisch": -0.155
+     }
+    ]
+   },
+   "AAPL": {
+    "regime": "Zijwaarts, normale volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+    "afgewezen": [
+     {
+      "strategie": "Trend volgen",
+      "reden": "P1: geen variant handelt vaak genoeg (30 trades in train en naar verwachting 30 per 180 dagen)"
+     },
+     {
+      "strategie": "Momentum",
+      "reden": "P2: validatie -0.122R bij 1.5x kosten, ondergrens -0.268R; P3: train -0.144R; P4: Deflated Sharpe 0.00 (< 0.95, 32 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Mean reversion",
+      "reden": "P2: validatie -0.174R bij 1.5x kosten, ondergrens -0.318R; P3: train -0.021R; P4: Deflated Sharpe 0.00 (< 0.95, 32 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Breakout",
+      "reden": "P2: validatie -0.204R bij 1.5x kosten, ondergrens -0.331R; P3: train -0.166R; P4: Deflated Sharpe 0.00 (< 0.95, 32 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "P1: geen variant handelt vaak genoeg (30 trades in train en naar verwachting 30 per 180 dagen)"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 32,
+      "nieuw": -0.076,
+      "ondergrens": -0.18,
+      "historisch": -0.134
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 3,
+      "n": 46,
+      "nieuw": -0.128,
+      "ondergrens": -0.215,
+      "historisch": -0.02
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 47,
+      "nieuw": -0.158,
+      "ondergrens": -0.243,
+      "historisch": -0.165
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 7,
+      "nieuw": -0.261,
+      "ondergrens": -0.431,
+      "historisch": -0.127
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 20,
+      "nieuw": -0.305,
+      "ondergrens": -0.441,
+      "historisch": -0.12
+     }
+    ]
+   },
+   "NVDA": {
+    "regime": "Downtrend, hoge volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+    "afgewezen": [
+     {
+      "strategie": "Trend volgen",
+      "reden": "P1: geen variant handelt vaak genoeg (30 trades in train en naar verwachting 30 per 180 dagen)"
+     },
+     {
+      "strategie": "Momentum",
+      "reden": "P2: validatie -0.095R bij 1.5x kosten, ondergrens -0.238R; P3: train -0.073R; P4: Deflated Sharpe 0.00 (< 0.95, 34 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Mean reversion",
+      "reden": "P1: geen variant handelt vaak genoeg (30 trades in train en naar verwachting 30 per 180 dagen)"
+     },
+     {
+      "strategie": "Breakout",
+      "reden": "P2: validatie -0.099R bij 1.5x kosten, ondergrens -0.269R; P3: train -0.005R; P4: Deflated Sharpe 0.01 (< 0.95, 34 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "P1: geen variant handelt vaak genoeg (30 trades in train en naar verwachting 30 per 180 dagen)"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 10,
+      "nieuw": 0.109,
+      "ondergrens": -0.092,
+      "historisch": -0.035
+     },
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 48,
+      "nieuw": -0.056,
+      "ondergrens": -0.155,
+      "historisch": -0.07
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 4,
+      "n": 36,
+      "nieuw": -0.07,
+      "ondergrens": -0.167,
+      "historisch": -0.016
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 22,
+      "nieuw": -0.074,
+      "ondergrens": -0.217,
+      "historisch": -0.177
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 4,
+      "nieuw": -0.127,
+      "ondergrens": -0.487,
+      "historisch": 0.043
+     }
+    ]
+   },
+   "MSFT": {
+    "regime": "Zijwaarts, normale volatiliteit",
+    "keuze": "Geen trade",
+    "variant": "",
+    "gewisseld": false,
+    "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+    "afgewezen": [
+     {
+      "strategie": "Trend volgen",
+      "reden": "P1: geen variant handelt vaak genoeg (30 trades in train en naar verwachting 30 per 180 dagen)"
+     },
+     {
+      "strategie": "Momentum",
+      "reden": "P2: validatie +0.060R bij 1.5x kosten, ondergrens -0.181R; P3: train -0.123R; P4: Deflated Sharpe 0.00 (< 0.95, 29 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Mean reversion",
+      "reden": "P1: geen variant handelt vaak genoeg (30 trades in train en naar verwachting 30 per 180 dagen)"
+     },
+     {
+      "strategie": "Breakout",
+      "reden": "P2: validatie +0.038R bij 1.5x kosten, ondergrens -0.242R; P3: train -0.136R; P4: Deflated Sharpe 0.00 (< 0.95, 29 varianten geprobeerd); P5: zonder de 5 beste validatietrades niet positief"
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "reden": "P1: geen variant handelt vaak genoeg (30 trades in train en naar verwachting 30 per 180 dagen)"
+     }
+    ],
+    "getest": [
+     {
+      "strategie": "Momentum",
+      "varianten": 2,
+      "n": 34,
+      "nieuw": 0.094,
+      "ondergrens": -0.031,
+      "historisch": -0.089
+     },
+     {
+      "strategie": "Breakout",
+      "varianten": 2,
+      "n": 45,
+      "nieuw": 0.075,
+      "ondergrens": -0.049,
+      "historisch": -0.102
+     },
+     {
+      "strategie": "Volatiliteit (squeeze)",
+      "varianten": 2,
+      "n": 22,
+      "nieuw": 0.034,
+      "ondergrens": -0.12,
+      "historisch": -0.185
+     },
+     {
+      "strategie": "Trend volgen",
+      "varianten": 2,
+      "n": 9,
+      "nieuw": -0.176,
+      "ondergrens": -0.315,
+      "historisch": -0.153
+     },
+     {
+      "strategie": "Mean reversion",
+      "varianten": 2,
+      "n": 10,
+      "nieuw": -0.182,
+      "ondergrens": -0.379,
+      "historisch": 0.051
+     }
+    ]
+   }
+  }
  }
 ]

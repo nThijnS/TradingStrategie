@@ -337,6 +337,30 @@
    "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
    "geblokkeerd": {},
    "onderzoek": null
+  },
+  {
+   "sinds": "2026-11-07",
+   "status": "onderzoek",
+   "strategie": null,
+   "titel": "Onderzoek: Momentum (geen orders)",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort; momentum is in train en validatie positief en wordt gevolgd zonder orders",
+   "geblokkeerd": {},
+   "onderzoek": {
+    "strategie": "momentum",
+    "titel": "Momentum",
+    "variant_key": "{\"er\": 0.3, \"lb\": 6, \"sm\": 2.0, \"tp\": 3.0}",
+    "variant_txt": "efficiëntie > 0.3, stop 2xATR, lookback 6, doel 3R",
+    "redenen": [
+     "P2: validatie -0.016R bij 1.5x kosten, ondergrens -0.177R",
+     "P4: Deflated Sharpe 0.06 (< 0.95, 49 varianten geprobeerd)",
+     "P5: zonder de 5 beste validatietrades niet positief"
+    ]
+   }
   }
  ],
  "NQ": [
