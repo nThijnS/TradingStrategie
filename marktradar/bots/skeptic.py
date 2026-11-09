@@ -1,7 +1,8 @@
 """Skeptic: zoekt tegenbewijs voor markten waar een bot een richting geeft. Mag blokkeren, mag geen ideeën aandragen.
 
-Alles faalt naar voorzichtig: zonder LLM, zonder budget of met ongeldige uitvoer stopt deze bot met een fout. De Chief
-geeft dan GEEN_ACTIE op elke markt. Zijn er geen richtingen, dan is er niets te toetsen en is de LLM niet nodig.
+Zonder LLM toetst deze bot met vaste regels (zie regels()). Met LLM faalt alles naar voorzichtig: zonder budget of met
+ongeldige uitvoer stopt deze bot met een fout en geeft de Chief GEEN_ACTIE op elke markt. Zijn er geen richtingen, dan
+is er niets te toetsen.
 
 Elke beoordeling moet verwijzen naar feiten die wij zelf aanleveren (bevindingen B, kosten K, onderzoek O). De bronnen
 komen uit die feiten en niet uit de LLM. Een veto zonder geldig bewijs maakt de uitvoer ongeldig. Vetotekst met een
@@ -36,6 +37,9 @@ Beoordeel elke markt in "te_toetsen" op:
 Geef per markt een veto als het tegenbewijs zwaarder weegt dan de aanwijzing. Twijfel je, geef dan een veto. Draag geen nieuwe ideeën of handelsvoorstellen aan.
 "bewijs" bevat alleen id's uit de aangeleverde feiten. "reden" is één zakelijke zin in het Nederlands, zonder links.
 Antwoord alleen met JSON volgens het schema."""
+
+
+MAX_KOSTEN = 0.005          # heen en terug; daarboven eet de spread een normale dagbeweging grotendeels op (SOL: 0,75%)
 
 
 class OngeldigOordeel(ValueError):
@@ -106,14 +110,43 @@ def verwerk(antwoord, markten, bronnen):
     return uit
 
 
+def regels(vraag, markten):
+    """Toets zonder LLM, met dezelfde feiten en hetzelfde uitvoerformaat. Veto bij, in deze volgorde:
+    1. tegenspraak: bots geven op deze markt verschillende richtingen;
+    2. zwaar agendapunt in de 24 uur na het peilmoment: dat kan de richting omdraaien;
+    3. kosten heen en terug boven MAX_KOSTEN.
+    Zonder veto wordt toch vastgelegd dat de zekerheden niet gemeten zijn (onderzoek O9), zodat de Chief zijn drempels houdt."""
+    feit = json.loads(vraag)
+    algemeen = [o["id"] for o in feit["onderzoek"] if o["id"] == "O9"]
+    uit = []
+    for m in markten:
+        hier = [b for b in feit["bevindingen"] if b["markt"] == m]
+        richting = [b for b in hier if b["richting"] != "geen"]
+        agenda = [b for b in hier if b["bot"] == "news" and b["bewering"].startswith("Agenda:")]
+        kosten = next(k for k in feit["kosten"] if k["markt"] == m)
+        if len({b["richting"] for b in richting}) > 1:
+            x = dict(veto=True, bewijs=[b["id"] for b in richting], reden="De bots geven op deze markt tegengestelde richtingen.")
+        elif agenda:
+            x = dict(veto=True, bewijs=[agenda[0]["id"]],
+                     reden=f"Zwaar agendapunt binnen 24 uur ({agenda[0]['bewering'][len('Agenda: '):].rstrip('.')}); dat kan de richting omdraaien.")
+        elif kosten["kosten_heen_en_terug_pct"] > MAX_KOSTEN * 100:
+            x = dict(veto=True, bewijs=[kosten["id"]], reden=f"Kosten van {kosten['kosten_heen_en_terug_pct']}% heen en terug zijn te hoog voor een dagbeweging.")
+        else:
+            x = dict(veto=False, bewijs=[kosten["id"]] + algemeen,
+                     reden="Geen tegenbewijs volgens de vaste regels; de zekerheden van de bots zijn niet gemeten.")
+        uit.append(dict(x, markt=m, reden=x["reden"] if veilige_tekst(x["reden"], MAX_REDEN) else VERVANGTEKST))
+    return uit
+
+
 def draai(context, llm, onderzoek=None):
     markten = te_toetsen(context)
     beoordelingen = []
     if markten:
-        if llm is None:
-            raise GeenLlm("geen LLM")
         vraag, bronnen = feiten(context, markten, laad_onderzoek() if onderzoek is None else onderzoek)
-        beoordelingen = verwerk(llm.vraag(SYSTEEM, vraag, schema(markten), wie="skeptic", effort="medium"), markten, bronnen)
+        if llm is None:
+            beoordelingen = regels(vraag, markten)
+        else:
+            beoordelingen = verwerk(llm.vraag(SYSTEEM, vraag, schema(markten), wie="skeptic", effort="medium"), markten, bronnen)
     bevindingen, veto = [], []
     for x in beoordelingen:
         if x["bewijs"]:

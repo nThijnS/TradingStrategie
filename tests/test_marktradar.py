@@ -645,7 +645,7 @@ class News(unittest.TestCase):
         u = news.draai(NEWS_CONTEXT, BERICHTEN, dict(NQ=["USD CPI om 13:30 UTC"]), None)
         controleer(u, "news", ID, tijd(PEIL), 5)
         self.assertEqual([b["richting"] for b in u["bevindingen"]], ["geen"])
-        self.assertIn("3 berichten niet gelabeld", u["ontbreekt"][0])
+        self.assertEqual(u["ontbreekt"], [])      # zonder sleutel is er bewust geen LLM; dat is geen fout
 
     def test_llm_fouten_stoppen_de_agenda_niet(self):
         for fout, tekst in ((llm.BudgetOp("x"), "dagbudget"), (llm.GeenAntwoord("x"), "geen bruikbaar"), (ConnectionError("geheim"), "LLM uitgevallen")):
@@ -813,10 +813,45 @@ class Skeptic(unittest.TestCase):
         u = skeptic.draai(skeptic_context(bevinding(richting="geen")), l)
         self.assertEqual((l.vragen, u["veto"]), ([], []))
 
-    def test_zonder_llm_valt_de_bot_uit(self):
-        with self.assertRaises(skeptic.GeenLlm):
-            skeptic.draai(skeptic_context(bevinding()), None)
+    def regels(self, context):
+        u = skeptic.draai(context, None)
+        controleer(u, "skeptic", ID, tijd(PEIL), 5)
+        return u
+
+    def test_zonder_llm_toetst_de_bot_met_vaste_regels(self):
+        u = self.regels(skeptic_context(bevinding()))
+        self.assertEqual(u["veto"], [])
+        self.assertEqual(len(u["bevindingen"]), 1)
+        self.assertIn("vaste regels", u["bevindingen"][0]["bewering"])
+        self.assertEqual({b["naam"] for b in u["bevindingen"][0]["bronnen"]}, {"Gemeten kosten", "Onderzoek O9"})
         self.assertEqual(skeptic.draai(skeptic_context(bevinding(richting="geen")), None)["veto"], [])
+
+    def test_regels_veto_bij_tegenspraak(self):
+        c = skeptic_context(bevinding())
+        c["uitvoer"]["sentiment"] = uitvoer("sentiment", bevinding(richting="omlaag", zekerheid=0.6))
+        u = self.regels(c)
+        self.assertEqual([v["markt"] for v in u["veto"]], ["NQ"])
+        self.assertIn("tegengestelde", u["veto"][0]["reden"])
+
+    def test_regels_veto_bij_zwaar_agendapunt(self):
+        c = skeptic_context(bevinding())
+        agenda = dict(bevinding(richting="geen", zekerheid=0.5), bewering="Agenda: USD CPI om 13:30 UTC.")
+        c["uitvoer"]["news"] = uitvoer("news", agenda)
+        u = self.regels(c)
+        self.assertEqual([v["markt"] for v in u["veto"]], ["NQ"])
+        self.assertIn("USD CPI om 13:30 UTC", u["veto"][0]["reden"])
+
+    def test_regels_veto_bij_hoge_kosten(self):
+        c = skeptic_context(bevinding(markt="SOL"))
+        c["markten"] = ["SOL"]
+        u = self.regels(c)
+        self.assertEqual([v["markt"] for v in u["veto"]], ["SOL"])
+        self.assertIn("Kosten", u["veto"][0]["reden"])
+
+    def test_regels_maken_de_ronde_volledig_en_de_chief_houdt_zijn_drempels(self):
+        r = ronde(skeptic=lambda c: skeptic.draai(c, None))
+        self.assertFalse([x for x in r["ontbreekt"] if x.startswith("skeptic")], r["ontbreekt"])
+        self.assertTrue(all("Skeptic ontbreekt" not in o["reden"] for o in r["oordelen"]))
 
     def test_ongeldig_antwoord_is_ongeldige_uitvoer(self):
         slecht = ([], dict(iets=1), dict(beoordelingen=[]),
@@ -946,8 +981,10 @@ class EchteRonde(unittest.TestCase):
         self.assertIn("klantsentiment: geen sleutels", r["ontbreekt"])
         self.assertIn("klantsentiment: geen sleutels", r["briefing"])
         self.assertIn("sentiment: uitgevallen (GeenKlantsentiment)", r["ontbreekt"])
-        self.assertTrue(any("niet gelabeld" in x for x in r["ontbreekt"]))
+        self.assertFalse([x for x in r["ontbreekt"] if "niet gelabeld" in x or x.startswith("skeptic")], r["ontbreekt"])
+        self.assertIn("skeptic", r["ruw"])
         self.assertEqual(r["kosten_usd"], 0.0)
+        self.assertEqual(r["modellen"], {})       # vaste regels zijn geen modelaanroep
 
     def test_koersen_niet_opgehaald(self):
         def kapot():
