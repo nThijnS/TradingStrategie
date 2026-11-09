@@ -72,8 +72,18 @@ test("runstatus wordt goed vertaald", () => {
   assert.equal(met({ status: "in_progress", conclusion: null }).status, "bezig");
   assert.equal(met({ status: "queued", conclusion: null }).status, "wachtend");
   assert.equal(met({ status: "waiting", conclusion: null }).melding.soort, "goedkeuring");
-  assert.equal(met({ conclusion: "cancelled" }).status, "aandacht");
-  assert.equal(met({ conclusion: "cancelled" }).geverifieerd, false);
+  assert.equal(met({ event: "workflow_dispatch", conclusion: "cancelled" }).status, "aandacht");
+  assert.equal(met({ event: "workflow_dispatch", conclusion: "cancelled" }).geverifieerd, false);
+});
+
+test("een vervallen reserve-planning is geen melding en verbergt de echte run niet", () => {
+  const runs = [run({ id: 3, conclusion: "cancelled" }), run({ id: 2, event: "workflow_dispatch" })];
+  const a = workflowAgent(wf, { ok: true, status: 200, data: { workflow_runs: runs } }, null, nu, "x/y");
+  assert.equal(a.status, "klaar");
+  assert.equal(a.melding, null);
+  assert.ok(a.activiteit.some((r) => r.tekst.startsWith("Reserve niet nodig") && r.status === "klaar"));
+  const alleen = workflowAgent(wf, { ok: true, status: 200, data: { workflow_runs: [run({ conclusion: "cancelled" })] } }, null, nu, "x/y");
+  assert.equal(alleen.melding, null);
 });
 
 test("een run in de wachtrij verbergt de lopende run niet", () => {

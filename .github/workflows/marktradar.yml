@@ -1,14 +1,15 @@
 # MarktRadar: één ronde per handelsdag vóór de opening van New York. Alleen advies: dit plaatst nooit orders.
 # Staat los van de minuutketen (eigen groep). Als dit faalt, merkt de keten daar niets van.
-# Tweede tijdstip is een reserve, omdat GitHub een schedule soms overslaat; een bestaande ronde draait niet opnieuw.
+# GitHub slaat geplande runs in deze repo vaak over (9 nov: 12:45 en 13:20 allebei weg), daarom elk kwartier tussen
+# 11:00 en 14:15 UTC, vóór de opening van New York. Een bestaande ronde draait niet opnieuw: geen melding, geen commit.
 # Data staat op de branch "marktradar-data". Die branch is publiek, net als de repo.
 # Geheimen: ANTHROPIC_API_KEY (zonder sleutel: elke markt GEEN_ACTIE) en de bestaande CAPITAL_*-demogeheimen.
 name: MarktRadar
 
 on:
   schedule:
-    - cron: "45 12 * * 1-5"
-    - cron: "20 13 * * 1-5"
+    - cron: "*/15 11-13 * * 1-5"
+    - cron: "0,15 14 * * 1-5"
   workflow_dispatch: {}
 
 permissions:

@@ -283,6 +283,34 @@ CONTEXT = dict(ronde_id=ID, peilmoment=PEIL, horizon="1d")
 
 
 class Koersen(unittest.TestCase):
+    def test_lege_ticker_wordt_los_opnieuw_gevraagd(self):
+        import pandas as pd
+        from marktradar import koersen
+        markten = [dict(naam="GOUD", symbool="GC=F"), dict(naam="ZILVER", symbool="SI=F")]
+        tijd = pd.date_range("2026-11-06", periods=2, freq="h", tz="UTC")
+        vol = pd.DataFrame({k: [1.0, 2.0] for k in koersen.KOLOMMEN}, index=tijd)
+        leeg = vol * float("nan")
+        vragen = []
+
+        def haal(symbolen):
+            vragen.append(symbolen)
+            delen = {s: (leeg if s == "SI=F" and len(vragen) == 1 else vol) for s in symbolen}
+            return pd.concat(delen, axis=1)
+        uit = koersen.download(markten, haal=haal)
+        self.assertEqual(vragen, [["GC=F", "SI=F"], ["SI=F"]])
+        self.assertEqual(len(uit["ZILVER"].dropna()), 2)
+
+    def test_tweede_mislukking_blijft_geen_koersen(self):
+        import pandas as pd
+        from marktradar import koersen
+
+        def haal(symbolen):
+            if len(symbolen) == 1:
+                raise RuntimeError("Yahoo weigert")
+            return pd.DataFrame()
+        uit = koersen.download([dict(naam="ZILVER", symbool="SI=F"), dict(naam="GOUD", symbool="GC=F")], haal=haal)
+        self.assertTrue(all(len(v) == 0 for v in uit.values()))
+
     def test_lopende_candle_telt_niet(self):
         df = uurdata(50, einde="2026-11-06T13:00:00Z")
         self.assertEqual(kz.einde(kz.afgesloten(df, PEIL)), pd.Timestamp("2026-11-06T12:00:00Z"))

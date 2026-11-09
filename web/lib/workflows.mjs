@@ -12,11 +12,16 @@ const CONCLUSIE = {
   cancelled: ["aandacht", "Geannuleerd"], stale: ["aandacht", "Verlopen op GitHub"], action_required: ["aandacht", "Wacht op goedkeuring"],
 };
 
-// Een run in de wachtrij mag een lopende run niet verbergen: de reserve-planning van de keten staat vaak achter de lopende run.
-export const hoofdRun = (runs) => runs.find((r) => r.status === "in_progress") ?? runs[0];
+// Een geplande run die geannuleerd is, was een reserve: concurrency laat die vallen als er al een run liep of wachtte.
+// Dat is de bedoeling (de keten herstart zichzelf) en dus geen fout.
+const reserveVervallen = (r) => r.event === "schedule" && r.status === "completed" && r.conclusion === "cancelled";
+
+// Een run in de wachtrij of een vervallen reserve mag de echte run niet verbergen.
+export const hoofdRun = (runs) => runs.find((r) => r.status === "in_progress") ?? runs.find((r) => !reserveVervallen(r)) ?? runs[0];
 
 export function statusVanRun(run) {
   if (run.status === "in_progress") return ["bezig", "Bezig"];
+  if (reserveVervallen(run)) return ["klaar", "Reserve niet nodig, er liep al een run"];
   if (run.status !== "completed") return ["wachtend", run.status === "waiting" ? "Wacht op goedkeuring" : "In de wachtrij"];
   return CONCLUSIE[run.conclusion] || ["aandacht", `Onbekende uitkomst: ${run.conclusion}`];
 }
