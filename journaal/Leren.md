@@ -1,5 +1,55 @@
 # Leren
 
+## 2026-11-08 20:09 NY
+
+### NQ (ICT-varianten, ter informatie): gewisseld naar een duidelijk betere variant; score <= 0 of te weinig trades: markt op pauze
+Geheugen: 1756 uitkomsten.
+
+| variant | trades | win | gem R | score | totaal R |
+|---|---|---|---|---|---|
+| basis · TP 2.0 · NY AM + London · bias 1H mee | 67 | 40% | +0.089 | -0.200 | -0.6 |
+| basis · TP 1.5 · alle sessies · bias 1H mee | 75 | 45% | +0.031 | -0.215 | -0.2 |
+| basis · TP 1.5 · NY AM + London · bias 1H mee | 67 | 46% | +0.025 | -0.234 | +1.4 |
+| basis · TP 2.0 · alle sessies · bias 1H mee | 75 | 39% | +0.007 | -0.263 | -5.0 |
+| basis · TP 1.0 · NY AM + London · bias geen | 170 | 49% | -0.123 | -0.267 | -11.0 |
+| strenger · TP 1.5 · NY AM · bias 1H mee | 37 | 57% | +0.030 | -0.273 | +9.8 |
+| strenger · TP 2.0 · NY AM · bias 1H mee | 37 | 49% | +0.034 | -0.276 | +5.4 |
+| strenger · TP 1.5 · NY AM + London · bias geen | 154 | 44% | -0.104 | -0.281 | +5.0 |
+
+Controle op de laatste 60 dagen (alleen ter informatie, verandert de keuze niet): train -0.079R over 62 trades, nieuw +0.336R over 5 trades.
+
+### EURUSD (ICT-varianten, ter informatie): gewisseld naar een duidelijk betere variant; score <= 0 of te weinig trades: markt op pauze
+Geheugen: 1936 uitkomsten.
+
+| variant | trades | win | gem R | score | totaal R |
+|---|---|---|---|---|---|
+| strenger · TP 1.0 · alle sessies · bias geen | 185 | 54% | +0.096 | -0.043 | -1.8 |
+| strenger · TP 1.0 · NY AM + London · bias geen | 159 | 53% | +0.083 | -0.065 | -4.3 |
+| strenger · TP 1.5 · alle sessies · bias geen | 185 | 45% | +0.074 | -0.096 | +1.1 |
+| basis · TP 1.0 · alle sessies · bias 1H mee | 82 | 55% | +0.093 | -0.113 | +1.1 |
+| strenger · TP 1.0 · alle sessies · bias 1H mee | 69 | 55% | +0.099 | -0.122 | +0.5 |
+| strenger · TP 1.5 · NY AM + London · bias geen | 159 | 45% | +0.041 | -0.140 | +2.1 |
+| basis · TP 1.0 · NY AM + London · bias 1H mee | 73 | 56% | +0.072 | -0.154 | +3.8 |
+| strenger · TP DOL · alle sessies · bias geen | 185 | 41% | +0.031 | -0.158 | -14.4 |
+
+Controle op de laatste 60 dagen (alleen ter informatie, verandert de keuze niet): train +0.190R over 164 trades, nieuw +0.023R over 21 trades.
+
+### GOUD (ICT-varianten, ter informatie): gewisseld naar een duidelijk betere variant
+Geheugen: 1232 uitkomsten.
+
+| variant | trades | win | gem R | score | totaal R |
+|---|---|---|---|---|---|
+| basis · TP 2.0 · NY AM · bias geen | 61 | 49% | +0.489 | +0.128 | +15.6 |
+| basis · TP DOL · NY AM · bias geen | 61 | 49% | +0.405 | +0.059 | +10.1 |
+| basis · TP 2.0 · NY AM + London · bias geen | 124 | 37% | +0.289 | +0.029 | -9.8 |
+| basis · TP 1.5 · NY AM · bias geen | 61 | 49% | +0.291 | -0.013 | +7.4 |
+| basis · TP 2.0 · alle sessies · bias geen | 147 | 35% | +0.208 | -0.033 | -16.2 |
+| strenger · TP 2.0 · alle sessies · bias geen | 120 | 38% | +0.225 | -0.033 | -7.6 |
+| basis · TP 1.0 · alle sessies · bias geen | 147 | 44% | +0.112 | -0.058 | -23.4 |
+| basis · TP 1.0 · alle sessies · bias 1H mee | 56 | 43% | +0.218 | -0.059 | -11.0 |
+
+Controle op de laatste 60 dagen (alleen ter informatie, verandert de keuze niet): train +0.169R over 54 trades, nieuw +0.673R over 7 trades.
+
 ## 2026-11-05 20:43 NY
 
 ### NQ (ICT-varianten, ter informatie): gewisseld naar een duidelijk betere variant; score <= 0 of te weinig trades: markt op pauze
