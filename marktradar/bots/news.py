@@ -1,6 +1,6 @@
 """News: agenda en nieuwsberichten per gekozen markt.
 
-De agenda komt uit code en geeft nooit een richting. Berichten labelt de LLM, onder strikte voorwaarden:
+De agenda komt uit code en geeft nooit een richting. Berichten labelt de LLM, als die is ingesteld, onder strikte voorwaarden:
   - de LLM krijgt geen tools en de berichten staan als JSON-data in de vraag;
   - bron, link en tijdstip komen uit onze eigen ophaalcode, nooit uit de LLM;
   - elk label wordt gecontroleerd: bekend bericht, gekozen markt, geldige waarden, geen link in de tekst;
@@ -98,9 +98,7 @@ def draai(context, berichten, agenda, llm, fouten=()):
     ontbreekt = list(fouten)
     bevindingen = _agenda(context, agenda)
     berichten = recent(berichten, peil)
-    if berichten and llm is None:
-        ontbreekt.append(f"LLM niet beschikbaar, {len(berichten)} berichten niet gelabeld")
-    elif berichten:
+    if berichten and llm is not None:       # zonder LLM (bewuste keuze: geen sleutel) blijft alleen de agenda over
         vraag = json.dumps(dict(markten=context["markten"], berichten=[{k: b[k] for k in ("id", "naam", "titel", "tekst", "tijdstip")} for b in berichten]),
                            ensure_ascii=False)
         try:
