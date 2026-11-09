@@ -12,16 +12,31 @@ UUR = pd.Timedelta(hours=1)
 KOLOMMEN = ["Open", "High", "Low", "Close", "Volume"]
 
 
-def download(markten=LAB_MARKETS, period="730d"):
-    import yfinance as yf
-    ruw = yf.download([m["symbool"] for m in markten], interval="1h", period=period, group_by="ticker", auto_adjust=False,
-                      progress=False, threads=True)
-    uit = {}
-    for m in markten:
+def _leeg(df):
+    return not len(df.dropna(subset=["Open", "High", "Low", "Close"], how="all"))
+
+
+def download(markten=LAB_MARKETS, period="730d", haal=None):
+    """Haalt alles in één keer op. Yahoo laat daarbij soms één ticker leeg: die wordt los opnieuw gevraagd."""
+    if haal is None:
+        import yfinance as yf
+        haal = lambda symbolen: yf.download(symbolen, interval="1h", period=period, group_by="ticker",
+                                            auto_adjust=False, progress=False, threads=True)
+
+    def uit_tabel(ruw, symbool):
         try:
-            uit[m["naam"]] = ruw[m["symbool"]][KOLOMMEN].copy()
-        except KeyError:
-            uit[m["naam"]] = pd.DataFrame(columns=KOLOMMEN)
+            return ruw[symbool][KOLOMMEN].copy()
+        except (KeyError, TypeError):
+            return pd.DataFrame(columns=KOLOMMEN)
+
+    ruw = haal([m["symbool"] for m in markten])
+    uit = {m["naam"]: uit_tabel(ruw, m["symbool"]) for m in markten}
+    for m in markten:
+        if _leeg(uit[m["naam"]]):
+            try:
+                uit[m["naam"]] = uit_tabel(haal([m["symbool"]]), m["symbool"])
+            except Exception:       # een tweede mislukking telt als "geen koersen", zoals de eerste
+                pass
     return uit
 
 
