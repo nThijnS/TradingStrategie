@@ -1,6 +1,6 @@
 # Huidige strategie
 
-Bijgewerkt: 2026-11-08 20:09 NY. De bot kiest dit per markt zelf uit alle strategieën (ICT is er één van) met een vaste poort tegen overfitting; zie learning/selector.py.
+Bijgewerkt: 2026-11-09 22:44 NY. De bot kiest dit per markt zelf uit alle strategieën (ICT is er één van) met een vaste poort tegen overfitting; zie learning/selector.py.
 
 | markt | status | strategie | ondergrens validatie | sinds | reden |
 |---|---|---|---|---|---|
@@ -10,7 +10,7 @@ Bijgewerkt: 2026-11-08 20:09 NY. De bot kiest dit per markt zelf uit alle strate
 | GOUD | onderzoek | Onderzoek: Breakout (geen orders)  | - | 2026-11-02 | geen strategie haalt de poort; breakout is in train en validatie positief en wordt gevolgd zonder orders |
 | NQ | onderzoek | Onderzoek: Trend volgen (geen orders)  | - | 2026-11-04 | geen strategie haalt de poort; trend is in train en validatie positief en wordt gevolgd zonder orders |
 | OLIE | onderzoek | Onderzoek: Volatiliteit (squeeze) (geen orders)  | - | 2026-11-03 | geen strategie haalt de poort; volatiliteit is in train en validatie positief en wordt gevolgd zonder orders |
-| USDJPY | onderzoek | Onderzoek: Momentum (geen orders)  | - | 2026-11-07 | geen strategie haalt de poort; momentum is in train en validatie positief en wordt gevolgd zonder orders |
+| USDJPY | onderzoek | Onderzoek: Volatiliteit (squeeze) (geen orders)  | - | 2026-11-09 | geen strategie haalt de poort; volatiliteit is in train en validatie positief en wordt gevolgd zonder orders |
 | AAPL | pauze | Geen trade  | - | 2026-10-30 | geen strategie haalt de poort en geen is in beide perioden positief: pauze |
 | BTC | pauze | Geen trade  | - | 2026-11-05 | geen strategie haalt de poort en geen is in beide perioden positief: pauze |
 | DAX | pauze | Geen trade  | - | 2026-10-30 | geen strategie haalt de poort en geen is in beide perioden positief: pauze |
