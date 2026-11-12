@@ -624,6 +624,30 @@
      "P5: zonder de 5 beste validatietrades niet positief"
     ]
    }
+  },
+  {
+   "sinds": "2026-11-11",
+   "status": "onderzoek",
+   "strategie": null,
+   "titel": "Onderzoek: Volatiliteit (squeeze) (geen orders)",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort; volatiliteit is in train en validatie positief en wordt gevolgd zonder orders",
+   "geblokkeerd": {},
+   "onderzoek": {
+    "strategie": "volatiliteit",
+    "titel": "Volatiliteit (squeeze)",
+    "variant_key": "{\"p\": 0.2, \"sm\": 2.0, \"tp\": 3.0}",
+    "variant_txt": "squeeze onderste 20%, stop 2xATR, doel 3R",
+    "redenen": [
+     "P2: validatie +0.088R bij 1.5x kosten, ondergrens -0.111R",
+     "P4: Deflated Sharpe 0.07 (< 0.95, 89 varianten geprobeerd)",
+     "P5: zonder de 5 beste validatietrades niet positief"
+    ]
+   }
   }
  ],
  "ZILVER": [

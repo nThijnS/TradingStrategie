@@ -1,13 +1,13 @@
 # Huidige strategie
 
-Bijgewerkt: 2026-11-10 20:25 NY. De bot kiest dit per markt zelf uit alle strategieën (ICT is er één van) met een vaste poort tegen overfitting; zie learning/selector.py.
+Bijgewerkt: 2026-11-11 21:26 NY. De bot kiest dit per markt zelf uit alle strategieën (ICT is er één van) met een vaste poort tegen overfitting; zie learning/selector.py.
 
 | markt | status | strategie | ondergrens validatie | sinds | reden |
 |---|---|---|---|---|---|
 | ES | onderzoek | Onderzoek: Momentum (geen orders)  | - | 2026-11-02 | geen strategie haalt de poort; momentum is in train en validatie positief en wordt gevolgd zonder orders |
 | ETH | onderzoek | Onderzoek: Trend volgen (geen orders)  | - | 2026-11-08 | geen strategie haalt de poort; trend is in train en validatie positief en wordt gevolgd zonder orders |
 | EURUSD | onderzoek | Onderzoek: Volatiliteit (squeeze) (geen orders)  | - | 2026-11-02 | geen strategie haalt de poort; volatiliteit is in train en validatie positief en wordt gevolgd zonder orders |
-| GOUD | onderzoek | Onderzoek: Breakout (geen orders)  | - | 2026-11-02 | geen strategie haalt de poort; breakout is in train en validatie positief en wordt gevolgd zonder orders |
+| GOUD | onderzoek | Onderzoek: Volatiliteit (squeeze) (geen orders)  | - | 2026-11-11 | geen strategie haalt de poort; volatiliteit is in train en validatie positief en wordt gevolgd zonder orders |
 | NQ | onderzoek | Onderzoek: Trend volgen (geen orders)  | - | 2026-11-04 | geen strategie haalt de poort; trend is in train en validatie positief en wordt gevolgd zonder orders |
 | OLIE | onderzoek | Onderzoek: Volatiliteit (squeeze) (geen orders)  | - | 2026-11-03 | geen strategie haalt de poort; volatiliteit is in train en validatie positief en wordt gevolgd zonder orders |
 | USDJPY | onderzoek | Onderzoek: Volatiliteit (squeeze) (geen orders)  | - | 2026-11-09 | geen strategie haalt de poort; volatiliteit is in train en validatie positief en wordt gevolgd zonder orders |

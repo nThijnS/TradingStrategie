@@ -1,5 +1,5 @@
 {
- "bijgewerkt": "2026-11-10T20:25-05:00",
+ "bijgewerkt": "2026-11-11T21:26-05:00",
  "markten": {
   "EURUSD": {
    "actief": false,
@@ -43,11 +43,11 @@
    "need_bias_b": false,
    "variant": "strenger · TP DOL · NY AM + London · bias geen",
    "score": {
-    "n": 38,
-    "gem": -0.172,
-    "score": -0.48,
-    "win": 0.342,
-    "totaal": -6.52
+    "n": 37,
+    "gem": -0.211,
+    "score": -0.493,
+    "win": 0.324,
+    "totaal": -7.79
    },
    "sinds": "2026-11-02",
    "selectie": {
@@ -81,7 +81,7 @@
    "selectie": {
     "status": "onderzoek",
     "strategie": null,
-    "reden": "geen strategie haalt de poort; breakout is in train en validatie positief en wordt gevolgd zonder orders"
+    "reden": "geen strategie haalt de poort; volatiliteit is in train en validatie positief en wordt gevolgd zonder orders"
    }
   }
  }
