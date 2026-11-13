@@ -61,6 +61,30 @@
    "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
    "geblokkeerd": {},
    "onderzoek": null
+  },
+  {
+   "sinds": "2026-11-12",
+   "status": "onderzoek",
+   "strategie": null,
+   "titel": "Onderzoek: Momentum (geen orders)",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort; momentum is in train en validatie positief en wordt gevolgd zonder orders",
+   "geblokkeerd": {},
+   "onderzoek": {
+    "strategie": "momentum",
+    "titel": "Momentum",
+    "variant_key": "{\"er\": 0.5, \"lb\": 15, \"sm\": 2.0, \"tp\": 2.0}",
+    "variant_txt": "efficiëntie > 0.5, stop 2xATR, lookback 15, doel 2R",
+    "redenen": [
+     "P2: validatie +0.025R bij 1.5x kosten, ondergrens -0.333R",
+     "P4: Deflated Sharpe 0.05 (< 0.95, 44 varianten geprobeerd)",
+     "P5: zonder de 5 beste validatietrades niet positief"
+    ]
+   }
   }
  ],
  "ETH": [
@@ -645,6 +669,30 @@
     "redenen": [
      "P2: validatie +0.088R bij 1.5x kosten, ondergrens -0.111R",
      "P4: Deflated Sharpe 0.07 (< 0.95, 89 varianten geprobeerd)",
+     "P5: zonder de 5 beste validatietrades niet positief"
+    ]
+   }
+  },
+  {
+   "sinds": "2026-11-12",
+   "status": "onderzoek",
+   "strategie": null,
+   "titel": "Onderzoek: Breakout (geen orders)",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort; breakout is in train en validatie positief en wordt gevolgd zonder orders",
+   "geblokkeerd": {},
+   "onderzoek": {
+    "strategie": "breakout",
+    "titel": "Breakout",
+    "variant_key": "{\"n\": 48, \"sm\": 1.5, \"tp\": 3.0}",
+    "variant_txt": "kanaal 48 uur, stop 1.5xATR, doel 3R",
+    "redenen": [
+     "P2: validatie +0.103R bij 1.5x kosten, ondergrens -0.190R",
+     "P4: Deflated Sharpe 0.15 (< 0.95, 89 varianten geprobeerd)",
      "P5: zonder de 5 beste validatietrades niet positief"
     ]
    }
