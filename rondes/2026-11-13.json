@@ -1,0 +1,545 @@
+{
+ "briefing": "MarktRadar 2026-11-13\nNVDA: GEEN_ACTIE. Te weinig zekerheid.\nBTC: GEEN_ACTIE. Te weinig zekerheid.\nETH: GEEN_ACTIE. Te weinig zekerheid.\nES: GEEN_ACTIE. Geen richting met bron gevonden.\nNQ: GEEN_ACTIE. Geen richting met bron gevonden.\nGeen financieel advies.",
+ "droog": false,
+ "kosten_usd": 0.0,
+ "markten": [
+  "NVDA",
+  "BTC",
+  "ETH",
+  "ES",
+  "NQ"
+ ],
+ "modellen": {},
+ "niet_meegeteld": [],
+ "ontbreekt": [],
+ "oordelen": [
+  {
+   "markt": "NVDA",
+   "oordeel": "GEEN_ACTIE",
+   "reden": "Te weinig zekerheid.",
+   "richting": "geen",
+   "steun": [],
+   "zekerheid": null
+  },
+  {
+   "markt": "BTC",
+   "oordeel": "GEEN_ACTIE",
+   "reden": "Te weinig zekerheid.",
+   "richting": "geen",
+   "steun": [],
+   "zekerheid": null
+  },
+  {
+   "markt": "ETH",
+   "oordeel": "GEEN_ACTIE",
+   "reden": "Te weinig zekerheid.",
+   "richting": "geen",
+   "steun": [],
+   "zekerheid": null
+  },
+  {
+   "markt": "ES",
+   "oordeel": "GEEN_ACTIE",
+   "reden": "Geen richting met bron gevonden.",
+   "richting": "geen",
+   "steun": [],
+   "zekerheid": null
+  },
+  {
+   "markt": "NQ",
+   "oordeel": "GEEN_ACTIE",
+   "reden": "Geen richting met bron gevonden.",
+   "richting": "geen",
+   "steun": [],
+   "zekerheid": null
+  }
+ ],
+ "peilmoment": "2026-11-13T18:20:24Z",
+ "ronde_id": "2026-11-13",
+ "ruw": {
+  "charts": {
+   "bevindingen": [
+    {
+     "bewering": "Trend: dag Downtrend (efficiëntie 0.47), uur Downtrend.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h NVDA",
+       "tijdstip": "2026-11-13T17:30:00Z",
+       "url": "https://finance.yahoo.com/quote/NVDA"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NVDA",
+     "richting": "omlaag",
+     "zekerheid": 0.542
+    },
+    {
+     "bewering": "Volatiliteit: Hoge volatiliteit (hoger dan 100% van de dagen dit jaar).",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h NVDA",
+       "tijdstip": "2026-11-13T17:30:00Z",
+       "url": "https://finance.yahoo.com/quote/NVDA"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NVDA",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Niveaus: slot 161.46, vorige dag 148.8-167.14, 20 dagen 148.8-222.19.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h NVDA",
+       "tijdstip": "2026-11-13T17:30:00Z",
+       "url": "https://finance.yahoo.com/quote/NVDA"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NVDA",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Trend: dag Downtrend (efficiëntie 0.47), uur Downtrend.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h BTC-USD",
+       "tijdstip": "2026-11-13T18:00:00Z",
+       "url": "https://finance.yahoo.com/quote/BTC-USD"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "BTC",
+     "richting": "omlaag",
+     "zekerheid": 0.542
+    },
+    {
+     "bewering": "Volatiliteit: Normale volatiliteit (hoger dan 78% van de dagen dit jaar).",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h BTC-USD",
+       "tijdstip": "2026-11-13T18:00:00Z",
+       "url": "https://finance.yahoo.com/quote/BTC-USD"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "BTC",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Niveaus: slot 68875, vorige dag 71042.3-74115.6, 20 dagen 71042.3-81870.4.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h BTC-USD",
+       "tijdstip": "2026-11-13T18:00:00Z",
+       "url": "https://finance.yahoo.com/quote/BTC-USD"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "BTC",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Trend: dag Downtrend (efficiëntie 0.45), uur Downtrend.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h ETH-USD",
+       "tijdstip": "2026-11-13T18:00:00Z",
+       "url": "https://finance.yahoo.com/quote/ETH-USD"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ETH",
+     "richting": "omlaag",
+     "zekerheid": 0.537
+    },
+    {
+     "bewering": "Volatiliteit: Hoge volatiliteit (hoger dan 85% van de dagen dit jaar).",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h ETH-USD",
+       "tijdstip": "2026-11-13T18:00:00Z",
+       "url": "https://finance.yahoo.com/quote/ETH-USD"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ETH",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Niveaus: slot 1936.59, vorige dag 1981.92-2063.57, 20 dagen 1981.92-2446.84.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h ETH-USD",
+       "tijdstip": "2026-11-13T18:00:00Z",
+       "url": "https://finance.yahoo.com/quote/ETH-USD"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ETH",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Trend: dag Zijwaarts (efficiëntie 0.15), uur Zijwaarts.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h ES=F",
+       "tijdstip": "2026-11-13T18:00:00Z",
+       "url": "https://finance.yahoo.com/quote/ES=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ES",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Volatiliteit: Hoge volatiliteit (hoger dan 99% van de dagen dit jaar).",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h ES=F",
+       "tijdstip": "2026-11-13T18:00:00Z",
+       "url": "https://finance.yahoo.com/quote/ES=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ES",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Niveaus: slot 7558.75, vorige dag 7572-7674.75, 20 dagen 7322.25-7819.5.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h ES=F",
+       "tijdstip": "2026-11-13T18:00:00Z",
+       "url": "https://finance.yahoo.com/quote/ES=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ES",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Trend: dag Zijwaarts (efficiëntie 0.21), uur Zijwaarts.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h NQ=F",
+       "tijdstip": "2026-11-13T18:00:00Z",
+       "url": "https://finance.yahoo.com/quote/NQ=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NQ",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Volatiliteit: Hoge volatiliteit (hoger dan 100% van de dagen dit jaar).",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h NQ=F",
+       "tijdstip": "2026-11-13T18:00:00Z",
+       "url": "https://finance.yahoo.com/quote/NQ=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NQ",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Niveaus: slot 27914.5, vorige dag 28013.8-28652.2, 20 dagen 26366.5-30178.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h NQ=F",
+       "tijdstip": "2026-11-13T18:00:00Z",
+       "url": "https://finance.yahoo.com/quote/NQ=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NQ",
+     "richting": "geen",
+     "zekerheid": 0.5
+    }
+   ],
+   "bot": "charts",
+   "data_tot": "2026-11-13T18:00:00Z",
+   "gemaakt_op": "2026-11-13T18:20:24Z",
+   "ontbreekt": [],
+   "ronde_id": "2026-11-13"
+  },
+  "news": {
+   "bevindingen": [],
+   "bot": "news",
+   "data_tot": "2026-11-13T18:20:24Z",
+   "gemaakt_op": "2026-11-13T18:20:24Z",
+   "ontbreekt": [],
+   "ronde_id": "2026-11-13"
+  },
+  "scout": {
+   "bevindingen": [
+    {
+     "bewering": "Opvallend: 24 uur -1.53% (beweging hoger dan 52% van de historie), volatiliteit 100%, volume 100%.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h NVDA",
+       "tijdstip": "2026-11-13T17:30:00Z",
+       "url": "https://finance.yahoo.com/quote/NVDA"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NVDA",
+     "richting": "geen",
+     "zekerheid": 1.0
+    },
+    {
+     "bewering": "Opvallend: 24 uur -4.11% (beweging hoger dan 94% van de historie), volatiliteit 98%, volume onbekend.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h BTC-USD",
+       "tijdstip": "2026-11-13T18:00:00Z",
+       "url": "https://finance.yahoo.com/quote/BTC-USD"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "BTC",
+     "richting": "geen",
+     "zekerheid": 0.979
+    },
+    {
+     "bewering": "Opvallend: 24 uur -3.88% (beweging hoger dan 88% van de historie), volatiliteit 94%, volume onbekend.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h ETH-USD",
+       "tijdstip": "2026-11-13T18:00:00Z",
+       "url": "https://finance.yahoo.com/quote/ETH-USD"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ETH",
+     "richting": "geen",
+     "zekerheid": 0.937
+    },
+    {
+     "bewering": "Opvallend: 24 uur -1.25% (beweging hoger dan 91% van de historie), volatiliteit 93%, volume 87%.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h ES=F",
+       "tijdstip": "2026-11-13T18:00:00Z",
+       "url": "https://finance.yahoo.com/quote/ES=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ES",
+     "richting": "geen",
+     "zekerheid": 0.933
+    },
+    {
+     "bewering": "Opvallend: 24 uur -2.12% (beweging hoger dan 90% van de historie), volatiliteit 91%, volume 91%.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h NQ=F",
+       "tijdstip": "2026-11-13T18:00:00Z",
+       "url": "https://finance.yahoo.com/quote/NQ=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NQ",
+     "richting": "geen",
+     "zekerheid": 0.909
+    }
+   ],
+   "bot": "scout",
+   "data_tot": "2026-11-13T18:00:00Z",
+   "gemaakt_op": "2026-11-13T18:20:24Z",
+   "ontbreekt": [],
+   "ronde_id": "2026-11-13"
+  },
+  "sentiment": {
+   "bevindingen": [
+    {
+     "bewering": "Klanten 93% long. Nog geen vergelijking: 4 van 60 metingen.",
+     "bronnen": [
+      {
+       "naam": "Capital.com klantsentiment",
+       "tijdstip": "2026-11-13T18:20:24Z",
+       "url": "https://open-api.capital.com/"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NVDA",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Klanten 86% long. Nog geen vergelijking: 4 van 60 metingen.",
+     "bronnen": [
+      {
+       "naam": "Capital.com klantsentiment",
+       "tijdstip": "2026-11-13T18:20:24Z",
+       "url": "https://open-api.capital.com/"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "BTC",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Klanten 90% long. Nog geen vergelijking: 4 van 60 metingen.",
+     "bronnen": [
+      {
+       "naam": "Capital.com klantsentiment",
+       "tijdstip": "2026-11-13T18:20:24Z",
+       "url": "https://open-api.capital.com/"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ETH",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Klanten 74% long. Nog geen vergelijking: 4 van 60 metingen.",
+     "bronnen": [
+      {
+       "naam": "Capital.com klantsentiment",
+       "tijdstip": "2026-11-13T18:20:24Z",
+       "url": "https://open-api.capital.com/"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ES",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Klanten 71% long. Nog geen vergelijking: 4 van 60 metingen.",
+     "bronnen": [
+      {
+       "naam": "Capital.com klantsentiment",
+       "tijdstip": "2026-11-13T18:20:24Z",
+       "url": "https://open-api.capital.com/"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NQ",
+     "richting": "geen",
+     "zekerheid": 0.5
+    }
+   ],
+   "bot": "sentiment",
+   "data_tot": "2026-11-13T18:20:24Z",
+   "gemaakt_op": "2026-11-13T18:20:24Z",
+   "ontbreekt": [],
+   "ronde_id": "2026-11-13"
+  },
+  "skeptic": {
+   "bevindingen": [
+    {
+     "bewering": "Tegenbewijs: Geen tegenbewijs volgens de vaste regels; de zekerheden van de bots zijn niet gemeten.",
+     "bronnen": [
+      {
+       "naam": "Gemeten kosten",
+       "tijdstip": "2026-11-13T18:20:24Z",
+       "url": "core/markets.py"
+      },
+      {
+       "naam": "Onderzoek O9",
+       "tijdstip": "2026-11-13T18:20:24Z",
+       "url": "rapport/2_onderzoek.md"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NVDA",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Tegenbewijs: Geen tegenbewijs volgens de vaste regels; de zekerheden van de bots zijn niet gemeten.",
+     "bronnen": [
+      {
+       "naam": "Gemeten kosten",
+       "tijdstip": "2026-11-13T18:20:24Z",
+       "url": "core/markets.py"
+      },
+      {
+       "naam": "Onderzoek O9",
+       "tijdstip": "2026-11-13T18:20:24Z",
+       "url": "rapport/2_onderzoek.md"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "BTC",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Tegenbewijs: Geen tegenbewijs volgens de vaste regels; de zekerheden van de bots zijn niet gemeten.",
+     "bronnen": [
+      {
+       "naam": "Gemeten kosten",
+       "tijdstip": "2026-11-13T18:20:24Z",
+       "url": "core/markets.py"
+      },
+      {
+       "naam": "Onderzoek O9",
+       "tijdstip": "2026-11-13T18:20:24Z",
+       "url": "rapport/2_onderzoek.md"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ETH",
+     "richting": "geen",
+     "zekerheid": 0.5
+    }
+   ],
+   "bot": "skeptic",
+   "data_tot": "2026-11-13T18:20:24Z",
+   "gemaakt_op": "2026-11-13T18:20:24Z",
+   "ontbreekt": [],
+   "ronde_id": "2026-11-13",
+   "veto": []
+  }
+ },
+ "status": "volledig",
+ "toelichting": {},
+ "versie": 1,
+ "voorspellingen": [
+  {
+   "bron": "charts",
+   "horizon": "1d",
+   "id": "2026-11-13:charts:NVDA:0",
+   "markt": "NVDA",
+   "richting": "omlaag",
+   "vastgelegd_op": "2026-11-13T18:20:24Z",
+   "zekerheid": 0.542
+  },
+  {
+   "bron": "charts",
+   "horizon": "1d",
+   "id": "2026-11-13:charts:BTC:1",
+   "markt": "BTC",
+   "richting": "omlaag",
+   "vastgelegd_op": "2026-11-13T18:20:24Z",
+   "zekerheid": 0.542
+  },
+  {
+   "bron": "charts",
+   "horizon": "1d",
+   "id": "2026-11-13:charts:ETH:2",
+   "markt": "ETH",
+   "richting": "omlaag",
+   "vastgelegd_op": "2026-11-13T18:20:24Z",
+   "zekerheid": 0.537
+  }
+ ]
+}
