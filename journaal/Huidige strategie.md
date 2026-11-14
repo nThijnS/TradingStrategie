@@ -1,6 +1,6 @@
 # Huidige strategie
 
-Bijgewerkt: 2026-11-12 21:03 NY. De bot kiest dit per markt zelf uit alle strategieën (ICT is er één van) met een vaste poort tegen overfitting; zie learning/selector.py.
+Bijgewerkt: 2026-11-13 20:37 NY. De bot kiest dit per markt zelf uit alle strategieën (ICT is er één van) met een vaste poort tegen overfitting; zie learning/selector.py.
 
 | markt | status | strategie | ondergrens validatie | sinds | reden |
 |---|---|---|---|---|---|
@@ -10,13 +10,13 @@ Bijgewerkt: 2026-11-12 21:03 NY. De bot kiest dit per markt zelf uit alle strate
 | EURUSD | onderzoek | Onderzoek: Volatiliteit (squeeze) (geen orders)  | - | 2026-11-02 | geen strategie haalt de poort; volatiliteit is in train en validatie positief en wordt gevolgd zonder orders |
 | GOUD | onderzoek | Onderzoek: Breakout (geen orders)  | - | 2026-11-12 | geen strategie haalt de poort; breakout is in train en validatie positief en wordt gevolgd zonder orders |
 | NQ | onderzoek | Onderzoek: Trend volgen (geen orders)  | - | 2026-11-04 | geen strategie haalt de poort; trend is in train en validatie positief en wordt gevolgd zonder orders |
-| OLIE | onderzoek | Onderzoek: Volatiliteit (squeeze) (geen orders)  | - | 2026-11-03 | geen strategie haalt de poort; volatiliteit is in train en validatie positief en wordt gevolgd zonder orders |
 | USDJPY | onderzoek | Onderzoek: Volatiliteit (squeeze) (geen orders)  | - | 2026-11-09 | geen strategie haalt de poort; volatiliteit is in train en validatie positief en wordt gevolgd zonder orders |
 | AAPL | pauze | Geen trade  | - | 2026-10-30 | geen strategie haalt de poort en geen is in beide perioden positief: pauze |
 | DAX | pauze | Geen trade  | - | 2026-10-30 | geen strategie haalt de poort en geen is in beide perioden positief: pauze |
 | GBPUSD | pauze | Geen trade  | - | 2026-11-03 | geen strategie haalt de poort en geen is in beide perioden positief: pauze |
 | MSFT | pauze | Geen trade  | - | 2026-10-30 | geen strategie haalt de poort en geen is in beide perioden positief: pauze |
 | NVDA | pauze | Geen trade  | - | 2026-11-02 | geen strategie haalt de poort en geen is in beide perioden positief: pauze |
+| OLIE | pauze | Geen trade  | - | 2026-11-13 | geen strategie haalt de poort en geen is in beide perioden positief: pauze |
 | SOL | pauze | Geen trade  | - | 2026-11-02 | geen strategie haalt de poort en geen is in beide perioden positief: pauze |
 | ZILVER | pauze | Geen trade  | - | 2026-11-02 | geen strategie haalt de poort en geen is in beide perioden positief: pauze |
 
