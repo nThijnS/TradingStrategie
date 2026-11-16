@@ -1,5 +1,5 @@
 {
- "bijgewerkt": "2026-11-14T20:13-05:00",
+ "bijgewerkt": "2026-11-15T20:19-05:00",
  "markten": {
   "EURUSD": {
    "actief": false,
@@ -16,11 +16,11 @@
    "need_bias_b": false,
    "variant": "strenger · TP 1.5 · NY AM + London · bias geen",
    "score": {
-    "n": 48,
-    "gem": 0.057,
-    "score": -0.087,
-    "win": 0.5,
-    "totaal": 2.74
+    "n": 47,
+    "gem": 0.082,
+    "score": -0.076,
+    "win": 0.511,
+    "totaal": 3.88
    },
    "sinds": "2026-10-30",
    "selectie": {
@@ -43,11 +43,11 @@
    "need_bias_b": false,
    "variant": "strenger · TP DOL · NY AM + London · bias geen",
    "score": {
-    "n": 37,
-    "gem": -0.211,
-    "score": -0.493,
-    "win": 0.324,
-    "totaal": -7.79
+    "n": 36,
+    "gem": -0.248,
+    "score": -0.535,
+    "win": 0.306,
+    "totaal": -8.92
    },
    "sinds": "2026-11-02",
    "selectie": {
@@ -71,11 +71,11 @@
    "need_bias_b": false,
    "variant": "basis · TP 2.0 · NY AM + London · bias geen",
    "score": {
-    "n": 29,
-    "gem": 0.08,
-    "score": -0.284,
-    "win": 0.414,
-    "totaal": 2.31
+    "n": 28,
+    "gem": 0.12,
+    "score": -0.258,
+    "win": 0.429,
+    "totaal": 3.37
    },
    "sinds": "2026-10-30",
    "selectie": {
