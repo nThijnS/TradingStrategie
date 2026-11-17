@@ -814,6 +814,30 @@
      "P5: zonder de 5 beste validatietrades niet positief"
     ]
    }
+  },
+  {
+   "sinds": "2026-11-16",
+   "status": "onderzoek",
+   "strategie": null,
+   "titel": "Onderzoek: Momentum (geen orders)",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort; momentum is in train en validatie positief en wordt gevolgd zonder orders",
+   "geblokkeerd": {},
+   "onderzoek": {
+    "strategie": "momentum",
+    "titel": "Momentum",
+    "variant_key": "{\"er\": 0.4, \"lb\": 15, \"sm\": 1.5, \"tp\": 3.0}",
+    "variant_txt": "efficiëntie > 0.4, stop 1.5xATR, lookback 15, doel 3R",
+    "redenen": [
+     "P2: validatie -0.020R bij 1.5x kosten, ondergrens -0.220R",
+     "P4: Deflated Sharpe 0.10 (< 0.95, 54 varianten geprobeerd)",
+     "P5: zonder de 5 beste validatietrades niet positief"
+    ]
+   }
   }
  ],
  "AAPL": [
