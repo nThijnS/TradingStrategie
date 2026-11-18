@@ -1,0 +1,500 @@
+{
+ "briefing": "MarktRadar 2026-11-18\nNVDA: ONDERZOEKEN (omlaag, zekerheid 0.58). Eén aanwijzing of beperkte zekerheid; nog geen bevestiging.\nZILVER: GEEN_ACTIE. Geen richting met bron gevonden.\nGOUD: GEEN_ACTIE. Geen richting met bron gevonden.\nNQ: GEEN_ACTIE. Geen richting met bron gevonden.\nES: GEEN_ACTIE. Geen richting met bron gevonden.\nGeen financieel advies.",
+ "droog": false,
+ "kosten_usd": 0.0,
+ "markten": [
+  "NVDA",
+  "ZILVER",
+  "GOUD",
+  "NQ",
+  "ES"
+ ],
+ "modellen": {},
+ "niet_meegeteld": [],
+ "ontbreekt": [],
+ "oordelen": [
+  {
+   "markt": "NVDA",
+   "oordeel": "ONDERZOEKEN",
+   "reden": "Eén aanwijzing of beperkte zekerheid; nog geen bevestiging.",
+   "richting": "omlaag",
+   "steun": [
+    "charts"
+   ],
+   "zekerheid": 0.58
+  },
+  {
+   "markt": "ZILVER",
+   "oordeel": "GEEN_ACTIE",
+   "reden": "Geen richting met bron gevonden.",
+   "richting": "geen",
+   "steun": [],
+   "zekerheid": null
+  },
+  {
+   "markt": "GOUD",
+   "oordeel": "GEEN_ACTIE",
+   "reden": "Geen richting met bron gevonden.",
+   "richting": "geen",
+   "steun": [],
+   "zekerheid": null
+  },
+  {
+   "markt": "NQ",
+   "oordeel": "GEEN_ACTIE",
+   "reden": "Geen richting met bron gevonden.",
+   "richting": "geen",
+   "steun": [],
+   "zekerheid": null
+  },
+  {
+   "markt": "ES",
+   "oordeel": "GEEN_ACTIE",
+   "reden": "Geen richting met bron gevonden.",
+   "richting": "geen",
+   "steun": [],
+   "zekerheid": null
+  }
+ ],
+ "peilmoment": "2026-11-18T19:12:58Z",
+ "ronde_id": "2026-11-18",
+ "ruw": {
+  "charts": {
+   "bevindingen": [
+    {
+     "bewering": "Trend: dag Downtrend (efficiëntie 0.62), uur Downtrend.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h NVDA",
+       "tijdstip": "2026-11-18T18:30:00Z",
+       "url": "https://finance.yahoo.com/quote/NVDA"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NVDA",
+     "richting": "omlaag",
+     "zekerheid": 0.58
+    },
+    {
+     "bewering": "Volatiliteit: Hoge volatiliteit (hoger dan 100% van de dagen dit jaar).",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h NVDA",
+       "tijdstip": "2026-11-18T18:30:00Z",
+       "url": "https://finance.yahoo.com/quote/NVDA"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NVDA",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Niveaus: slot 152.13, vorige dag 150.33-157.46, 20 dagen 148.8-222.19.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h NVDA",
+       "tijdstip": "2026-11-18T18:30:00Z",
+       "url": "https://finance.yahoo.com/quote/NVDA"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NVDA",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Trend: dag Downtrend (efficiëntie 0.40), uur Zijwaarts.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h SI=F",
+       "tijdstip": "2026-11-18T19:00:00Z",
+       "url": "https://finance.yahoo.com/quote/SI=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ZILVER",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Volatiliteit: Normale volatiliteit (hoger dan 50% van de dagen dit jaar).",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h SI=F",
+       "tijdstip": "2026-11-18T19:00:00Z",
+       "url": "https://finance.yahoo.com/quote/SI=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ZILVER",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Niveaus: slot 45.17, vorige dag 46.755-47.92, 20 dagen 46.46-54.685.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h SI=F",
+       "tijdstip": "2026-11-18T19:00:00Z",
+       "url": "https://finance.yahoo.com/quote/SI=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ZILVER",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Trend: dag Zijwaarts (efficiëntie 0.27), uur Downtrend.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h GC=F",
+       "tijdstip": "2026-11-18T19:00:00Z",
+       "url": "https://finance.yahoo.com/quote/GC=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "GOUD",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Volatiliteit: Normale volatiliteit (hoger dan 62% van de dagen dit jaar).",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h GC=F",
+       "tijdstip": "2026-11-18T19:00:00Z",
+       "url": "https://finance.yahoo.com/quote/GC=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "GOUD",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Niveaus: slot 3740.4, vorige dag 3839.2-3894, 20 dagen 3835.2-4157.7.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h GC=F",
+       "tijdstip": "2026-11-18T19:00:00Z",
+       "url": "https://finance.yahoo.com/quote/GC=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "GOUD",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Trend: dag Zijwaarts (efficiëntie 0.25), uur Zijwaarts.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h NQ=F",
+       "tijdstip": "2026-11-18T19:00:00Z",
+       "url": "https://finance.yahoo.com/quote/NQ=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NQ",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Volatiliteit: Hoge volatiliteit (hoger dan 100% van de dagen dit jaar).",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h NQ=F",
+       "tijdstip": "2026-11-18T19:00:00Z",
+       "url": "https://finance.yahoo.com/quote/NQ=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NQ",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Niveaus: slot 27262.5, vorige dag 26658.5-27609.8, 20 dagen 26366.5-30178.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h NQ=F",
+       "tijdstip": "2026-11-18T19:00:00Z",
+       "url": "https://finance.yahoo.com/quote/NQ=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NQ",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Trend: dag Zijwaarts (efficiëntie 0.24), uur Zijwaarts.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h ES=F",
+       "tijdstip": "2026-11-18T19:00:00Z",
+       "url": "https://finance.yahoo.com/quote/ES=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ES",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Volatiliteit: Hoge volatiliteit (hoger dan 100% van de dagen dit jaar).",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h ES=F",
+       "tijdstip": "2026-11-18T19:00:00Z",
+       "url": "https://finance.yahoo.com/quote/ES=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ES",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Niveaus: slot 7367.25, vorige dag 7308-7456.75, 20 dagen 7308-7819.5.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h ES=F",
+       "tijdstip": "2026-11-18T19:00:00Z",
+       "url": "https://finance.yahoo.com/quote/ES=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ES",
+     "richting": "geen",
+     "zekerheid": 0.5
+    }
+   ],
+   "bot": "charts",
+   "data_tot": "2026-11-18T19:00:00Z",
+   "gemaakt_op": "2026-11-18T19:12:58Z",
+   "ontbreekt": [],
+   "ronde_id": "2026-11-18"
+  },
+  "news": {
+   "bevindingen": [],
+   "bot": "news",
+   "data_tot": "2026-11-18T19:12:58Z",
+   "gemaakt_op": "2026-11-18T19:12:58Z",
+   "ontbreekt": [],
+   "ronde_id": "2026-11-18"
+  },
+  "scout": {
+   "bevindingen": [
+    {
+     "bewering": "Opvallend: 24 uur -1.28% (beweging hoger dan 45% van de historie), volatiliteit 95%, volume 100%.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h NVDA",
+       "tijdstip": "2026-11-18T18:30:00Z",
+       "url": "https://finance.yahoo.com/quote/NVDA"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NVDA",
+     "richting": "geen",
+     "zekerheid": 0.999
+    },
+    {
+     "bewering": "Opvallend: 24 uur -4.55% (beweging hoger dan 93% van de historie), volatiliteit 95%, volume 99%.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h SI=F",
+       "tijdstip": "2026-11-18T19:00:00Z",
+       "url": "https://finance.yahoo.com/quote/SI=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ZILVER",
+     "richting": "geen",
+     "zekerheid": 0.988
+    },
+    {
+     "bewering": "Opvallend: 24 uur -3.05% (beweging hoger dan 96% van de historie), volatiliteit 94%, volume 97%.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h GC=F",
+       "tijdstip": "2026-11-18T19:00:00Z",
+       "url": "https://finance.yahoo.com/quote/GC=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "GOUD",
+     "richting": "geen",
+     "zekerheid": 0.971
+    },
+    {
+     "bewering": "Opvallend: 24 uur +1.10% (beweging hoger dan 68% van de historie), volatiliteit 94%, volume 97%.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h NQ=F",
+       "tijdstip": "2026-11-18T19:00:00Z",
+       "url": "https://finance.yahoo.com/quote/NQ=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NQ",
+     "richting": "geen",
+     "zekerheid": 0.967
+    },
+    {
+     "bewering": "Opvallend: 24 uur +0.25% (beweging hoger dan 31% van de historie), volatiliteit 96%, volume 94%.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h ES=F",
+       "tijdstip": "2026-11-18T19:00:00Z",
+       "url": "https://finance.yahoo.com/quote/ES=F"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ES",
+     "richting": "geen",
+     "zekerheid": 0.963
+    }
+   ],
+   "bot": "scout",
+   "data_tot": "2026-11-18T19:00:00Z",
+   "gemaakt_op": "2026-11-18T19:12:58Z",
+   "ontbreekt": [],
+   "ronde_id": "2026-11-18"
+  },
+  "sentiment": {
+   "bevindingen": [
+    {
+     "bewering": "Klanten 95% long. Nog geen vergelijking: 7 van 60 metingen.",
+     "bronnen": [
+      {
+       "naam": "Capital.com klantsentiment",
+       "tijdstip": "2026-11-18T19:12:57Z",
+       "url": "https://open-api.capital.com/"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NVDA",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Klanten 88% long. Nog geen vergelijking: 7 van 60 metingen.",
+     "bronnen": [
+      {
+       "naam": "Capital.com klantsentiment",
+       "tijdstip": "2026-11-18T19:12:57Z",
+       "url": "https://open-api.capital.com/"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ZILVER",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Klanten 75% long. Nog geen vergelijking: 7 van 60 metingen.",
+     "bronnen": [
+      {
+       "naam": "Capital.com klantsentiment",
+       "tijdstip": "2026-11-18T19:12:57Z",
+       "url": "https://open-api.capital.com/"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "GOUD",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Klanten 70% long. Nog geen vergelijking: 7 van 60 metingen.",
+     "bronnen": [
+      {
+       "naam": "Capital.com klantsentiment",
+       "tijdstip": "2026-11-18T19:12:57Z",
+       "url": "https://open-api.capital.com/"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NQ",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Klanten 77% long. Nog geen vergelijking: 7 van 60 metingen.",
+     "bronnen": [
+      {
+       "naam": "Capital.com klantsentiment",
+       "tijdstip": "2026-11-18T19:12:57Z",
+       "url": "https://open-api.capital.com/"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "ES",
+     "richting": "geen",
+     "zekerheid": 0.5
+    }
+   ],
+   "bot": "sentiment",
+   "data_tot": "2026-11-18T19:12:57Z",
+   "gemaakt_op": "2026-11-18T19:12:58Z",
+   "ontbreekt": [],
+   "ronde_id": "2026-11-18"
+  },
+  "skeptic": {
+   "bevindingen": [
+    {
+     "bewering": "Tegenbewijs: Geen tegenbewijs volgens de vaste regels; de zekerheden van de bots zijn niet gemeten.",
+     "bronnen": [
+      {
+       "naam": "Gemeten kosten",
+       "tijdstip": "2026-11-18T19:12:58Z",
+       "url": "core/markets.py"
+      },
+      {
+       "naam": "Onderzoek O9",
+       "tijdstip": "2026-11-18T19:12:58Z",
+       "url": "rapport/2_onderzoek.md"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "NVDA",
+     "richting": "geen",
+     "zekerheid": 0.5
+    }
+   ],
+   "bot": "skeptic",
+   "data_tot": "2026-11-18T19:12:58Z",
+   "gemaakt_op": "2026-11-18T19:12:58Z",
+   "ontbreekt": [],
+   "ronde_id": "2026-11-18",
+   "veto": []
+  }
+ },
+ "status": "volledig",
+ "toelichting": {},
+ "versie": 1,
+ "voorspellingen": [
+  {
+   "bron": "chief",
+   "horizon": "1d",
+   "id": "2026-11-18:chief:NVDA:0",
+   "markt": "NVDA",
+   "richting": "omlaag",
+   "vastgelegd_op": "2026-11-18T19:12:58Z",
+   "zekerheid": 0.58
+  },
+  {
+   "bron": "charts",
+   "horizon": "1d",
+   "id": "2026-11-18:charts:NVDA:1",
+   "markt": "NVDA",
+   "richting": "omlaag",
+   "vastgelegd_op": "2026-11-18T19:12:58Z",
+   "zekerheid": 0.58
+  }
+ ]
+}
