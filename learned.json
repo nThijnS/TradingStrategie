@@ -1,5 +1,5 @@
 {
- "bijgewerkt": "2026-11-16T23:07-05:00",
+ "bijgewerkt": "2026-11-17T22:05-05:00",
  "markten": {
   "EURUSD": {
    "actief": false,
@@ -16,11 +16,11 @@
    "need_bias_b": false,
    "variant": "strenger · TP 1.5 · NY AM + London · bias geen",
    "score": {
-    "n": 48,
-    "gem": 0.058,
-    "score": -0.159,
-    "win": 0.5,
-    "totaal": 2.76
+    "n": 49,
+    "gem": 0.085,
+    "score": -0.148,
+    "win": 0.51,
+    "totaal": 4.14
    },
    "sinds": "2026-10-30",
    "selectie": {
