@@ -173,6 +173,20 @@
      "P5: zonder de 5 beste validatietrades niet positief"
     ]
    }
+  },
+  {
+   "sinds": "2026-11-18",
+   "status": "pauze",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+   "geblokkeerd": {},
+   "onderzoek": null
   }
  ],
  "SOL": [
@@ -838,6 +852,20 @@
      "P5: zonder de 5 beste validatietrades niet positief"
     ]
    }
+  },
+  {
+   "sinds": "2026-11-18",
+   "status": "pauze",
+   "strategie": null,
+   "titel": "Geen trade",
+   "variant": null,
+   "variant_key": null,
+   "variant_txt": "",
+   "ondergrens": null,
+   "n": 0,
+   "reden": "geen strategie haalt de poort en geen is in beide perioden positief: pauze",
+   "geblokkeerd": {},
+   "onderzoek": null
   }
  ],
  "AAPL": [

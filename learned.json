@@ -1,5 +1,5 @@
 {
- "bijgewerkt": "2026-11-17T22:05-05:00",
+ "bijgewerkt": "2026-11-18T21:45-05:00",
  "markten": {
   "EURUSD": {
    "actief": false,
@@ -16,11 +16,11 @@
    "need_bias_b": false,
    "variant": "strenger · TP 1.5 · NY AM + London · bias geen",
    "score": {
-    "n": 49,
-    "gem": 0.085,
-    "score": -0.148,
-    "win": 0.51,
-    "totaal": 4.14
+    "n": 48,
+    "gem": 0.111,
+    "score": -0.134,
+    "win": 0.521,
+    "totaal": 5.33
    },
    "sinds": "2026-10-30",
    "selectie": {
@@ -59,23 +59,24 @@
   "GOUD": {
    "actief": false,
    "cfg": {
-    "disp_pct": 0.6,
-    "disp_atr": 1.2,
+    "disp_pct": 0.7,
+    "disp_atr": 1.5,
     "tp_mode": "R",
     "tp_r": 2.0
    },
    "kans_sess": [
+    "London",
     "NY AM",
-    "London"
+    "NY PM"
    ],
    "need_bias_b": false,
-   "variant": "basis · TP 2.0 · NY AM + London · bias geen",
+   "variant": "strenger · TP 2.0 · alle sessies · bias geen",
    "score": {
-    "n": 28,
-    "gem": 0.12,
-    "score": -0.258,
-    "win": 0.429,
-    "totaal": 3.37
+    "n": 27,
+    "gem": 0.194,
+    "score": -0.089,
+    "win": 0.444,
+    "totaal": 5.24
    },
    "sinds": "2026-10-30",
    "selectie": {
