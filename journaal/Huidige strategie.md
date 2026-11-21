@@ -1,6 +1,6 @@
 # Huidige strategie
 
-Bijgewerkt: 2026-11-19 21:31 NY. De bot kiest dit per markt zelf uit alle strategieën (ICT is er één van) met een vaste poort tegen overfitting; zie learning/selector.py.
+Bijgewerkt: 2026-11-20 21:42 NY. De bot kiest dit per markt zelf uit alle strategieën (ICT is er één van) met een vaste poort tegen overfitting; zie learning/selector.py.
 
 | markt | status | strategie | ondergrens validatie | sinds | reden |
 |---|---|---|---|---|---|
