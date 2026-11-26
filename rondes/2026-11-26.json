@@ -1,0 +1,161 @@
+{
+ "briefing": "MarktRadar 2026-11-26\nDAX: GEEN_ACTIE. Geen richting met bron gevonden.\nOntbreekt: scout: NQ: koers te oud voor een open markt; scout: ES: koers te oud voor een open markt; scout: GOUD: koers te oud voor een open markt; scout: ZILVER: koers te oud voor een open markt; scout: OLIE: koers te oud voor een open markt; scout: AAPL: koers te oud voor een open markt; scout: NVDA: koers te oud voor een open markt; scout: MSFT: koers te oud voor een open markt\nGeen financieel advies.",
+ "droog": false,
+ "kosten_usd": 0.0,
+ "markten": [
+  "DAX"
+ ],
+ "modellen": {},
+ "niet_meegeteld": [],
+ "ontbreekt": [
+  "scout: NQ: koers te oud voor een open markt",
+  "scout: ES: koers te oud voor een open markt",
+  "scout: GOUD: koers te oud voor een open markt",
+  "scout: ZILVER: koers te oud voor een open markt",
+  "scout: OLIE: koers te oud voor een open markt",
+  "scout: AAPL: koers te oud voor een open markt",
+  "scout: NVDA: koers te oud voor een open markt",
+  "scout: MSFT: koers te oud voor een open markt"
+ ],
+ "oordelen": [
+  {
+   "markt": "DAX",
+   "oordeel": "GEEN_ACTIE",
+   "reden": "Geen richting met bron gevonden.",
+   "richting": "geen",
+   "steun": [],
+   "zekerheid": null
+  }
+ ],
+ "peilmoment": "2026-11-26T19:56:30Z",
+ "ronde_id": "2026-11-26",
+ "ruw": {
+  "charts": {
+   "bevindingen": [
+    {
+     "bewering": "Trend: dag Zijwaarts (efficiëntie 0.13), uur Zijwaarts.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h ^GDAXI",
+       "tijdstip": "2026-11-26T17:00:00Z",
+       "url": "https://finance.yahoo.com/quote/^GDAXI"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "DAX",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Volatiliteit: Hoge volatiliteit (hoger dan 83% van de dagen dit jaar).",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h ^GDAXI",
+       "tijdstip": "2026-11-26T17:00:00Z",
+       "url": "https://finance.yahoo.com/quote/^GDAXI"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "DAX",
+     "richting": "geen",
+     "zekerheid": 0.5
+    },
+    {
+     "bewering": "Niveaus: slot 25230.7, vorige dag 24698.2-25151.4, 20 dagen 24698.2-27001.7.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h ^GDAXI",
+       "tijdstip": "2026-11-26T17:00:00Z",
+       "url": "https://finance.yahoo.com/quote/^GDAXI"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "DAX",
+     "richting": "geen",
+     "zekerheid": 0.5
+    }
+   ],
+   "bot": "charts",
+   "data_tot": "2026-11-26T17:00:00Z",
+   "gemaakt_op": "2026-11-26T19:56:30Z",
+   "ontbreekt": [],
+   "ronde_id": "2026-11-26"
+  },
+  "news": {
+   "bevindingen": [],
+   "bot": "news",
+   "data_tot": "2026-11-26T19:56:30Z",
+   "gemaakt_op": "2026-11-26T19:56:30Z",
+   "ontbreekt": [],
+   "ronde_id": "2026-11-26"
+  },
+  "scout": {
+   "bevindingen": [
+    {
+     "bewering": "Opvallend: 24 uur +2.00% (beweging hoger dan 93% van de historie), volatiliteit 75%, volume onbekend.",
+     "bronnen": [
+      {
+       "naam": "Yahoo Finance 1h ^GDAXI",
+       "tijdstip": "2026-11-26T17:00:00Z",
+       "url": "https://finance.yahoo.com/quote/^GDAXI"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "DAX",
+     "richting": "geen",
+     "zekerheid": 0.929
+    }
+   ],
+   "bot": "scout",
+   "data_tot": "2026-11-26T19:00:00Z",
+   "gemaakt_op": "2026-11-26T19:56:30Z",
+   "ontbreekt": [
+    "NQ: koers te oud voor een open markt",
+    "ES: koers te oud voor een open markt",
+    "GOUD: koers te oud voor een open markt",
+    "ZILVER: koers te oud voor een open markt",
+    "OLIE: koers te oud voor een open markt",
+    "AAPL: koers te oud voor een open markt",
+    "NVDA: koers te oud voor een open markt",
+    "MSFT: koers te oud voor een open markt"
+   ],
+   "ronde_id": "2026-11-26"
+  },
+  "sentiment": {
+   "bevindingen": [
+    {
+     "bewering": "Klanten 67% long. Nog geen vergelijking: 13 van 60 metingen.",
+     "bronnen": [
+      {
+       "naam": "Capital.com klantsentiment",
+       "tijdstip": "2026-11-26T19:56:30Z",
+       "url": "https://open-api.capital.com/"
+      }
+     ],
+     "horizon": "1d",
+     "markt": "DAX",
+     "richting": "geen",
+     "zekerheid": 0.5
+    }
+   ],
+   "bot": "sentiment",
+   "data_tot": "2026-11-26T19:56:30Z",
+   "gemaakt_op": "2026-11-26T19:56:30Z",
+   "ontbreekt": [],
+   "ronde_id": "2026-11-26"
+  },
+  "skeptic": {
+   "bevindingen": [],
+   "bot": "skeptic",
+   "data_tot": "2026-11-26T19:56:30Z",
+   "gemaakt_op": "2026-11-26T19:56:30Z",
+   "ontbreekt": [],
+   "ronde_id": "2026-11-26",
+   "veto": []
+  }
+ },
+ "status": "onvolledig",
+ "toelichting": {},
+ "versie": 1,
+ "voorspellingen": []
+}
